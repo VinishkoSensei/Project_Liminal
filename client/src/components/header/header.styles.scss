@@ -1,0 +1,31 @@
+.header {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+
+  .header-logo {
+    height: 100%;
+    width: 70px;
+    padding: 25px;
+  }
+
+  .header-links {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    div {
+      padding: 10px 15px;
+      cursor: pointer;
+
+      a {
+        text-decoration: none;
+        color: black;
+      }
+    }
+  }
+}
