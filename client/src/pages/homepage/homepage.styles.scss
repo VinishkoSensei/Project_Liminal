@@ -1,0 +1,63 @@
+.main {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+
+  .toppart {
+    height: 140px;
+    background-color: linen;
+    margin-bottom: 20px;
+  }
+
+  .main-part {
+    width: 100%;
+    flex-grow: 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: lightslategrey;
+
+    .main-space {
+      border: 1px solid black;
+      background-color: lightcyan;
+      width: 80vw;
+      padding: 10% 0;
+
+      .main-container {
+        width: 80%;
+        height: 100%;
+        background-color: mediumpurple;
+        margin: 0 auto;
+      }
+    }
+
+    .rightpanel {
+      width: 20vw;
+      height: 50vh;
+      border: 1px solid black;
+      display: flex;
+      flex-direction: column;
+      background-color: lightpink;
+
+      .profile {
+        border: 1px solid black;
+        height: 50%;
+        background-color: limegreen;
+      }
+
+      .news {
+        border: 1px solid black;
+        background-color: lightsteelblue;
+        height: 50%;
+      }
+    }
+  }
+
+  .footer {
+    height: 20px;
+    width: 100%;
+    border-top: 1px solid black;
+    background-color: lightgray;
+  }
+}
