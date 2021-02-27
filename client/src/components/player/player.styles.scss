@@ -1,15 +1,18 @@
-.player {
-  height: 70px;
+.player-container {
+  height: 50%;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 25px;
   border-bottom: 1px solid black;
-  background-color: lightgray;
 
-  audio {
+  .player {
+    height: 100%;
     width: 100%;
-    margin: auto 0;
-    outline: none;
+    display: flex;
+    justify-content: space-between;
+
+    audio {
+      width: 100%;
+      margin: auto 0;
+      outline: none;
+    }
   }
 }
