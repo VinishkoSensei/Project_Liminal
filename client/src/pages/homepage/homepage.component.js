@@ -1,11 +1,12 @@
 import React from 'react';
 import Header from '../../components/header/header.component';
+import Player from '../../components/player/player.component';
 
 const HomePage = () => {
   return (
     <div>
       <Header />
-      123body123
+      <Player />
     </div>
   );
 };

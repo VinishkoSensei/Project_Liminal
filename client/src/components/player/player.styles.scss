@@ -1,0 +1,15 @@
+.player {
+  height: 70px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  border-bottom: 1px solid black;
+  background-color: lightgray;
+
+  audio {
+    width: 100%;
+    margin: auto 0;
+    outline: none;
+  }
+}
