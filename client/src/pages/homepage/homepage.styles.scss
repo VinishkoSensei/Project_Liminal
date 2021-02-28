@@ -40,13 +40,16 @@
           .card-center {
             height: 5%;
             width: 100%;
+            z-index: 3;
 
             .card-center-icon {
               width: 6%;
               height: 85%;
               border: 2px solid maroon;
+              background-color: mediumpurple;
               margin: 0 auto;
               border-radius: 100%;
+              z-index: 3;
             }
           }
 
@@ -62,6 +65,8 @@
               width: 40%;
               height: 100%;
               background-color: navy;
+              border-radius: 16%;
+              z-index: 3;
             }
           }
         }

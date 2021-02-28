@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './homepage.styles.scss';
 import LineTo from 'react-lineto';
 
@@ -6,6 +6,13 @@ import Header from '../../components/header/header.component';
 import Player from '../../components/player/player.component';
 
 const HomePage = () => {
+  const [windowSize, setWindowSize] = useState(
+    window.innerWidth * window.innerHeight
+  );
+  window.addEventListener('resize', () =>
+    setWindowSize(window.innerWidth * window.innerHeight)
+  );
+
   return (
     <div className="main">
       <div className="toppart">
@@ -36,10 +43,34 @@ const HomePage = () => {
         </div>
       </div>
       <div className="footer"></div>
-      <LineTo from="card-center-icon" to="card lt" toAnchor="bottom right" />
-      <LineTo from="card-center-icon" to="card rt" toAnchor="bottom left" />
-      <LineTo from="card-center-icon" to="card lb" toAnchor="top right" />
-      <LineTo from="card-center-icon" to="card rb" toAnchor="top left" />
+      <LineTo
+        from="card-center-icon"
+        to="card lt"
+        delay={0}
+        zIndex={2}
+        className={`line ${windowSize}`}
+      />
+      <LineTo
+        from="card-center-icon"
+        to="card rt"
+        delay={0}
+        zIndex={2}
+        className={`line ${windowSize}`}
+      />
+      <LineTo
+        from="card-center-icon"
+        to="card lb"
+        delay={0}
+        zIndex={2}
+        className={`line ${windowSize}`}
+      />
+      <LineTo
+        from="card-center-icon"
+        to="card rb"
+        delay={0}
+        zIndex={2}
+        className={`line ${windowSize}`}
+      />
     </div>
   );
 };
