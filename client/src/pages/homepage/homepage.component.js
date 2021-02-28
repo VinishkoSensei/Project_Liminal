@@ -5,6 +5,8 @@ import LineTo from 'react-lineto';
 import Header from '../../components/header/header.component';
 import Player from '../../components/player/player.component';
 
+import { profiledummy } from '../../dummies/profile-dummy';
+
 const HomePage = () => {
   const [windowSize, setWindowSize] = useState(
     window.innerWidth * window.innerHeight
@@ -38,7 +40,19 @@ const HomePage = () => {
           </div>
         </div>
         <div className="rightpanel">
-          <div className="profile"></div>
+          <div className="profile">
+            <div className="profile-icon-container">
+              <img src={`/${profiledummy.photourl}`} alt="profileimage" />
+            </div>
+            <div className="profile-info">
+              <p>{profiledummy.name}</p>
+              <p>
+                <i>{profiledummy.email}</i>
+              </p>
+              <p>{profiledummy.dateofbirth}</p>
+              <p>{profiledummy.status}</p>
+            </div>
+          </div>
           <div className="news"></div>
         </div>
       </div>
