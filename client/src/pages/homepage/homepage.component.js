@@ -6,8 +6,10 @@ import Header from '../../components/header/header.component';
 import Player from '../../components/player/player.component';
 
 import { profiledummy } from '../../dummies/profile-dummy';
+import { tracksdummy } from '../../dummies/tracks-dummy';
 
 const HomePage = () => {
+  const [changedCards, setChangedCards] = useState(false);
   const [windowSize, setWindowSize] = useState(
     window.innerWidth * window.innerHeight
   );
@@ -25,7 +27,7 @@ const HomePage = () => {
         <div className="main-space">
           <div className="main-container">
             <div className="cards-container">
-              <div className="cards top">
+              {/*s<div className="cards top">
                 <div className="card lt">
                   <div className="card-image-container">
                     <img src="/images/ai.svg" alt="ai" />
@@ -50,6 +52,76 @@ const HomePage = () => {
                   <div className="card-image-container">
                     <img src="/images/music.svg" alt="music" />
                   </div>
+                </div>
+              </div>*/}
+              <div className="card-big-container">
+                <div
+                  className={`card-big-primary${
+                    changedCards ? ' disabled' : ''
+                  }`}
+                  onClick={() => setChangedCards(false)}
+                >
+                  <div className="card-big-cover-container">
+                    <img src={`/${profiledummy.photourl}`} alt="profileimage" />
+                  </div>
+                  <div className="card-big-controls">
+                    <div className="card-big-control">
+                      <img
+                        src="/images/forward.svg"
+                        alt="backward"
+                        style={{
+                          WebkitTransform: 'scaleX(-1)',
+                          transform: 'scaleX(-1)',
+                        }}
+                      />
+                    </div>
+                    <div className="card-big-control">
+                      <img src="/images/play.svg" alt="play" />
+                    </div>
+                    <div className="card-big-control">
+                      <img src="/images/forward.svg" alt="forward" />
+                    </div>
+                  </div>
+                  <div
+                    className={`card-big-blur${
+                      changedCards ? '' : ' disabled'
+                    }`}
+                  ></div>
+                </div>
+                <div
+                  className={`card-big-secondary${
+                    changedCards ? '' : ' disabled'
+                  }`}
+                  onClick={() => setChangedCards(true)}
+                >
+                  <div className="card-big-table">
+                    {tracksdummy.map((track) => (
+                      <div className="track">
+                        <div className="track-cover-container">
+                          <img
+                            src={track.cover}
+                            alt="cover"
+                            width="60px"
+                            height="60px"
+                          />
+                        </div>
+                        <div className="track-info">
+                          <div>{track.name}</div>
+                          <div>
+                            <i>{track.author}</i>
+                          </div>
+                        </div>
+                        <div className="track-duration">
+                          <p>{track.duration}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div
+                    className={`card-big-blur${
+                      changedCards ? ' disabled' : ''
+                    }`}
+                  ></div>
                 </div>
               </div>
             </div>
