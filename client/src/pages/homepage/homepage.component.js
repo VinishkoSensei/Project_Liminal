@@ -98,7 +98,13 @@ const HomePage = () => {
                   <div className="card-big-table">
                     {tracksdummy.map((track) => (
                       <div className="track">
-                        <div className="track-cover-container">
+                        <div
+                          cllocal
+                          repository
+                          contains
+                          deleted
+                          branchassName="track-cover-container"
+                        >
                           <img
                             src={track.cover}
                             alt="cover"
@@ -135,15 +141,18 @@ const HomePage = () => {
           >
             <div className="profile-icon-container">
               <img src={`/${profiledummy.photourl}`} alt="profileimage" />
+              <div className="profile-info-minified">{profiledummy.name}</div>
             </div>
             <div className="profile-info">
-              <p>{profiledummy.name}</p>
-              <div className="profile-additional">
-                <p>
-                  <i>{profiledummy.email}</i>
-                </p>
-                <p>{profiledummy.dateofbirth}</p>
-                <p>{profiledummy.status}</p>
+              <div className="profile-info-minifying">{profiledummy.name}</div>
+              <div className="profile-info-minifying">
+                <i>{profiledummy.email}</i>
+              </div>
+              <div className="profile-info-minifying">
+                {profiledummy.dateofbirth}
+              </div>
+              <div className="profile-info-minifying">
+                {profiledummy.status}
               </div>
             </div>
           </div>
