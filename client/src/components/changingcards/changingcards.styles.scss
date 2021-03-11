@@ -1,0 +1,65 @@
+@mixin animation($type, $sec) {
+  -webkit-transition: $type $sec ease;
+  -moz-transition: $type $sec ease;
+  -o-transition: $type $sec ease;
+  -ms-transition: $type $sec ease;
+  transition: $type $sec ease;
+}
+
+@mixin flexeddiv($flexdirection, $justifycontent) {
+  display: flex;
+  flex-direction: $flexdirection;
+  justify-content: $justifycontent;
+}
+
+@mixin setwidthandheight($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin setborderwithradius($border, $radius) {
+  border: $border;
+  border-radius: $radius;
+}
+
+.card-big-container {
+  @include setwidthandheight(100%, 100%);
+
+  .card-big-primary {
+    @include setwidthandheight(50%, 60%);
+    position: absolute;
+    z-index: 6;
+    @include animation(all, 2s);
+
+    &.disabled {
+      z-index: 5;
+      transform: translate(20%, 10%);
+    }
+  }
+
+  .card-big-secondary {
+    @include setwidthandheight(50%, 60%);
+    position: absolute;
+    z-index: 6;
+    @include animation(all, 2s);
+
+    &.disabled {
+      z-index: 5;
+      transform: translate(20%, 10%);
+    }
+  }
+
+  .card-big-blur {
+    position: absolute;
+    @include setwidthandheight(100%, 100%);
+    @include setborderwithradius(unset, inherit);
+    backdrop-filter: blur(10px);
+    @include animation(backdrop-filter, 2s);
+    cursor: pointer;
+
+    &.disabled {
+      backdrop-filter: unset;
+      width: 0;
+    }
+  }
+}

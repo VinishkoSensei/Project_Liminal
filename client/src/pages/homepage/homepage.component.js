@@ -8,6 +8,9 @@ import Player from '../../components/player/player.component';
 import { profiledummy } from '../../dummies/profile-dummy';
 import { tracksdummy } from '../../dummies/tracks-dummy';
 
+import ChangingCards from '../../components/changingcards/changingcards.component';
+import MainMenu from '../../components/mainmenu/mainmenu.component';
+
 const HomePage = () => {
   const [changedCards, setChangedCards] = useState(false);
   const [minifiedProfile, setMinifiedProfile] = useState(false);
@@ -28,109 +31,8 @@ const HomePage = () => {
         <div className="main-space">
           <div className="main-container">
             <div className="cards-container">
-              {/*s<div className="cards top">
-                <div className="card lt">
-                  <div className="card-image-container">
-                    <img src="/images/ai.svg" alt="ai" />
-                  </div>
-                </div>
-                <div className="card rt">
-                  <div className="card-image-container">
-                    <img src="/images/broadcast.svg" alt="broadcast" />
-                  </div>
-                </div>
-              </div>
-              <div className="card-center">
-                <div className="card-center-icon" />
-              </div>
-              <div className="cards bottom">
-                <div className="card lb">
-                  <div className="card-image-container">
-                    <img src="/images/playlist.svg" alt="playlist" />
-                  </div>
-                </div>
-                <div className="card rb">
-                  <div className="card-image-container">
-                    <img src="/images/music.svg" alt="music" />
-                  </div>
-                </div>
-              </div>*/}
-              <div className="card-big-container">
-                <div
-                  className={`card-big-primary${
-                    changedCards ? ' disabled' : ''
-                  }`}
-                  onClick={() => setChangedCards(false)}
-                >
-                  <div className="card-big-cover-container">
-                    <img src={`/${profiledummy.photourl}`} alt="profileimage" />
-                  </div>
-                  <div className="card-big-controls">
-                    <div className="card-big-control">
-                      <img
-                        src="/images/forward.svg"
-                        alt="backward"
-                        style={{
-                          WebkitTransform: 'scaleX(-1)',
-                          transform: 'scaleX(-1)',
-                        }}
-                      />
-                    </div>
-                    <div className="card-big-control">
-                      <img src="/images/play.svg" alt="play" />
-                    </div>
-                    <div className="card-big-control">
-                      <img src="/images/forward.svg" alt="forward" />
-                    </div>
-                  </div>
-                  <div
-                    className={`card-big-blur${
-                      changedCards ? '' : ' disabled'
-                    }`}
-                  ></div>
-                </div>
-                <div
-                  className={`card-big-secondary${
-                    changedCards ? '' : ' disabled'
-                  }`}
-                  onClick={() => setChangedCards(true)}
-                >
-                  <div className="card-big-table">
-                    {tracksdummy.map((track) => (
-                      <div className="track">
-                        <div
-                          cllocal
-                          repository
-                          contains
-                          deleted
-                          branchassName="track-cover-container"
-                        >
-                          <img
-                            src={track.cover}
-                            alt="cover"
-                            width="60px"
-                            height="60px"
-                          />
-                        </div>
-                        <div className="track-info">
-                          <div>{track.name}</div>
-                          <div>
-                            <i>{track.author}</i>
-                          </div>
-                        </div>
-                        <div className="track-duration">
-                          <p>{track.duration}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div
-                    className={`card-big-blur${
-                      changedCards ? ' disabled' : ''
-                    }`}
-                  ></div>
-                </div>
-              </div>
+              <ChangingCards />
+              {/* <MainMenu /> */}
             </div>
           </div>
         </div>

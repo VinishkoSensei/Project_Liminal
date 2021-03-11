@@ -1,0 +1,54 @@
+@mixin animation($type, $sec) {
+  -webkit-transition: $type $sec ease;
+  -moz-transition: $type $sec ease;
+  -o-transition: $type $sec ease;
+  -ms-transition: $type $sec ease;
+  transition: $type $sec ease;
+}
+
+@mixin flexeddiv($flexdirection, $justifycontent) {
+  display: flex;
+  flex-direction: $flexdirection;
+  justify-content: $justifycontent;
+}
+
+@mixin setwidthandheight($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin setborderwithradius($border, $radius) {
+  border: $border;
+  border-radius: $radius;
+}
+.mainmenu-cards-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+
+  .cards {
+    @include setwidthandheight(100%, unset);
+    flex-grow: 1;
+    background-color: mediumspringgreen;
+    @include flexeddiv(row, space-between);
+
+    .card {
+      @include setwidthandheight(40%, 100%);
+      background-color: lightskyblue;
+      z-index: 3;
+      vertical-align: middle;
+      @include setborderwithradius(2px solid black, 16%);
+
+      .card-image-container {
+        margin: 0 auto;
+        @include setwidthandheight(150px, 100%);
+
+        img {
+          @include setwidthandheight(100%, 100%);
+        }
+      }
+    }
+  }
+}
