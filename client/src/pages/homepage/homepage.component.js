@@ -10,10 +10,10 @@ import { tracksdummy } from '../../dummies/tracks-dummy';
 
 import ChangingCards from '../../components/changingcards/changingcards.component';
 import MainMenu from '../../components/mainmenu/mainmenu.component';
+import Profile from '../../components/profile/profile.component';
 
 const HomePage = () => {
   const [changedCards, setChangedCards] = useState(false);
-  const [minifiedProfile, setMinifiedProfile] = useState(false);
   const [windowSize, setWindowSize] = useState(
     window.innerWidth * window.innerHeight
   );
@@ -37,27 +37,7 @@ const HomePage = () => {
           </div>
         </div>
         <div className="rightpanel">
-          <div
-            className={`profile${minifiedProfile ? ' minified' : ''}`}
-            onClick={() => setMinifiedProfile(!minifiedProfile)}
-          >
-            <div className="profile-icon-container">
-              <img src={`/${profiledummy.photourl}`} alt="profileimage" />
-              <div className="profile-info-minified">{profiledummy.name}</div>
-            </div>
-            <div className="profile-info">
-              <div className="profile-info-minifying">{profiledummy.name}</div>
-              <div className="profile-info-minifying">
-                <i>{profiledummy.email}</i>
-              </div>
-              <div className="profile-info-minifying">
-                {profiledummy.dateofbirth}
-              </div>
-              <div className="profile-info-minifying">
-                {profiledummy.status}
-              </div>
-            </div>
-          </div>
+          <Profile />
           <div className="news"></div>
         </div>
       </div>
