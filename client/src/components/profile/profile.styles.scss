@@ -1,0 +1,93 @@
+@mixin animation($type, $sec) {
+  -webkit-transition: $type $sec ease;
+  -moz-transition: $type $sec ease;
+  -o-transition: $type $sec ease;
+  -ms-transition: $type $sec ease;
+  transition: $type $sec ease;
+}
+
+@mixin flexeddiv($flexdirection, $justifycontent) {
+  display: flex;
+  flex-direction: $flexdirection;
+  justify-content: $justifycontent;
+}
+
+@mixin setwidthandheight($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin setborderwithradius($border, $radius) {
+  border: $border;
+  border-radius: $radius;
+}
+
+.profile {
+  background-color: limegreen;
+  @include setborderwithradius(1px solid black, 8px);
+  @include flexeddiv(column, unset);
+  text-align: center;
+  padding: 10px 0;
+  margin-bottom: 10px;
+  cursor: default;
+  @include animation(all, 2s);
+
+  .profile-info {
+    @include flexeddiv(column, space-around);
+    border-radius: 100%;
+
+    .profile-info-minifying {
+      @include animation(all, 2s);
+    }
+  }
+
+  .profile-icon-container {
+    margin: 0 auto;
+    @include animation(all, 2s);
+
+    img {
+      @include setwidthandheight(70px, 70px);
+      @include setborderwithradius(unset, 100%);
+      @include animation(all, 2s);
+    }
+
+    .profile-info-minified {
+      margin: 5px 0px;
+      @include setwidthandheight(0, 0);
+      opacity: 0;
+    }
+  }
+
+  &.minified {
+    text-align: center;
+    border-radius: 30px;
+    padding: 2px 5px;
+
+    .profile-icon-container {
+      margin: 0 0 0 0;
+      @include flexeddiv(unset, space-around);
+
+      .profile-info-minified {
+        border-radius: 100%;
+        line-height: 200%;
+        margin: 0;
+        @include setwidthandheight(100%, 100%);
+        opacity: 100%;
+        @include animation(opacity, 2s);
+      }
+    }
+
+    img {
+      @include setwidthandheight(30px, 30px);
+      @include setborderwithradius(unset, 50%);
+    }
+
+    .profile-info {
+      @include setwidthandheight(100%, 0);
+      .profile-info-minifying {
+        border-radius: 0;
+        opacity: 0%;
+      }
+    }
+  }
+}
