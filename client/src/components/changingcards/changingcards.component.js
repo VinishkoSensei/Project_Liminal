@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import './changingcards.styles.scss';
 
-import CardMusic from '../../components/card-music/card-music.component';
-import CardPlaylist from '../../components/card-playlist/card-playlist.component';
-
-const ChangingCards = () => {
+const ChangingCards = (props) => {
   const [changedCards, setChangedCards] = useState(false);
 
   return (
@@ -13,19 +10,37 @@ const ChangingCards = () => {
         className={`card-big-primary${changedCards ? ' disabled' : ''}`}
         onClick={() => setChangedCards(false)}
       >
-        <CardMusic
+        {/*<CardMusic
           changedCards={changedCards}
           setChangedCards={setChangedCards}
-        />
+        />*/}
+        {/*<FirstCard
+          changedCards={changedCards}
+          setChangedCards={setChangedCards}
+        />*/}
+        {/*props.children[0]*/}
+        {React.cloneElement(props.children[0], {
+          changedCards: changedCards,
+          setChangedCards: setChangedCards,
+        })}
       </div>
       <div
         className={`card-big-secondary${changedCards ? '' : ' disabled'}`}
         onClick={() => setChangedCards(true)}
       >
-        <CardPlaylist
+        {/*<CardPlaylist
           changedCards={changedCards}
           setChangedCards={setChangedCards}
-        />
+        />*/}
+        {/*<SecondCard
+          changedCards={changedCards}
+          setChangedCards={setChangedCards}
+        />*/}
+        {/*props.children[1]*/}
+        {React.cloneElement(props.children[1], {
+          changedCards: changedCards,
+          setChangedCards: setChangedCards,
+        })}
       </div>
     </div>
   );
