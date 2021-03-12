@@ -8,6 +8,8 @@ import MainMenuLines from '../../components/mainmenu-lines/mainmenu-lines.compon
 import ChangingCards from '../../components/changingcards/changingcards.component';
 import MainMenu from '../../components/mainmenu/mainmenu.component';
 import Profile from '../../components/profile/profile.component';
+import CardMusic from '../../components/card-music/card-music.component';
+import CardPlaylist from '../../components/card-playlist/card-playlist.component';
 
 const HomePage = () => {
   return (
@@ -20,8 +22,11 @@ const HomePage = () => {
         <div className="main-space">
           <div className="main-container">
             <div className="cards-container">
-              <ChangingCards />
               {/* <MainMenu />*/}
+              <ChangingCards>
+                <CardMusic />
+                <CardPlaylist />
+              </ChangingCards>
             </div>
           </div>
         </div>
