@@ -7,14 +7,8 @@ const CardPlaylist = ({ changedCards, setChangedCards }) => {
     <div className="card-playlist">
       <div className="card-big-table">
         {tracksdummy.map((track) => (
-          <div className="track">
-            <div
-              cllocal
-              repository
-              contains
-              deleted
-              branchassName="track-cover-container"
-            >
+          <div className="track" key={track.id}>
+            <div className="track-cover-container">
               <img src={track.cover} alt="cover" width="60px" height="60px" />
             </div>
             <div className="track-info">
