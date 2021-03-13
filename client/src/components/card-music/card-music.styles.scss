@@ -25,7 +25,7 @@
 .card-music {
   @include setwidthandheight(100%, 100%);
   background-color: lightskyblue;
-  @include setborderwithradius(2px solid black, 16%);
+  @include setborderwithradius(2px solid black, 52px);
   @include flexeddiv(column, space-around);
 
   .card-big-cover-container {

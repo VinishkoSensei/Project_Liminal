@@ -25,7 +25,7 @@
 .card-playlist {
   @include setwidthandheight(100%, 100%);
   background-color: lightsalmon;
-  @include setborderwithradius(2px solid black, 16%);
+  @include setborderwithradius(2px solid black, 52px);
   @include flexeddiv(unset, center);
   align-items: center;
 
