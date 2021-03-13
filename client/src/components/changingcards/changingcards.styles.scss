@@ -6,6 +6,14 @@
   transition: $type $sec ease;
 }
 
+@mixin animationwithdelay($type, $sec, $cd) {
+  -webkit-transition: $type $sec ease $cd;
+  -moz-transition: $type $sec ease $cd;
+  -o-transition: $type $sec ease $cd;
+  -ms-transition: $type $sec ease $cd;
+  transition: $type $sec ease $cd;
+}
+
 @mixin flexeddiv($flexdirection, $justifycontent) {
   display: flex;
   flex-direction: $flexdirection;
@@ -52,7 +60,7 @@
   .card-big-blur {
     position: absolute;
     @include setwidthandheight(100%, 100%);
-    @include setborderwithradius(unset, inherit);
+    @include setborderwithradius(unset, 52px);
     backdrop-filter: blur(10px);
     @include animation(backdrop-filter, 2s);
     cursor: pointer;
@@ -60,6 +68,7 @@
     &.disabled {
       backdrop-filter: unset;
       width: 0;
+      @include animationwithdelay(all, 0.1s, 0.5s);
     }
   }
 }
