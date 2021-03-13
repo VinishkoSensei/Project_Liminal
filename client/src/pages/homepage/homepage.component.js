@@ -10,6 +10,7 @@ import MainMenu from '../../components/mainmenu/mainmenu.component';
 import Profile from '../../components/profile/profile.component';
 import CardMusic from '../../components/card-music/card-music.component';
 import CardPlaylist from '../../components/card-playlist/card-playlist.component';
+import CardSearch from '../../components/card-search/card-search.component';
 
 const HomePage = () => {
   return (
@@ -25,7 +26,8 @@ const HomePage = () => {
               {/* <MainMenu />*/}
               <ChangingCards>
                 <CardMusic />
-                <CardPlaylist />
+                {/*<CardPlaylist />*/}
+                <CardSearch />
               </ChangingCards>
             </div>
           </div>
