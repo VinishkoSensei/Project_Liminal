@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './card-search.styles.scss';
 
 const CardSearch = ({ changedCards }) => {
+  const [query, setQuery] = useState('');
+  const [searchbarOnTop, setSearchbarOnTop] = useState(false);
+  const handleChange = (event) => {
+    setQuery(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setSearchbarOnTop(query.length);
+  };
+
   return (
-    <div className="card-playlist">
+    <div className={`card-playlist${searchbarOnTop ? ' searched' : ''}`}>
       <div className="placeholder" />
-      <div className="searchbar">
+      <form className="searchbar" onSubmit={handleSubmit}>
         <div className="searchbar-image">
           <img
             src="images/magnifier.svg"
@@ -15,9 +26,9 @@ const CardSearch = ({ changedCards }) => {
           />
         </div>
         <div className="searchbar-query">
-          <input type="text" />
+          <input type="text" onChange={handleChange} />
         </div>
-      </div>
+      </form>
       {/*<div className="card-big-table">
         tracksdummy.map((track) => (
           <div className="track" key={track.id}>
