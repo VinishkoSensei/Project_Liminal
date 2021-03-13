@@ -18,12 +18,14 @@ const CardSearch = ({ changedCards }) => {
       <div className="placeholder" />
       <form className="searchbar" onSubmit={handleSubmit}>
         <div className="searchbar-image">
-          <img
-            src="images/magnifier.svg"
-            alt="magnifier"
-            width="100%"
-            height="100%"
-          />
+          <button type="submit" className="searchbar-image-button">
+            <img
+              src="images/magnifier.svg"
+              alt="magnifier"
+              width="100%"
+              height="100%"
+            />
+          </button>
         </div>
         <div className="searchbar-query">
           <input type="text" onChange={handleChange} />
