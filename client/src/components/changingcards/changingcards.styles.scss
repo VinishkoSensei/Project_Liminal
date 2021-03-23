@@ -34,7 +34,7 @@
   @include setwidthandheight(100%, 100%);
 
   .card-big-primary {
-    @include setwidthandheight(50%, 60%);
+    @include setwidthandheight(90%, 80%);
     position: absolute;
     z-index: 6;
     @include animation(all, 2s);
@@ -46,7 +46,7 @@
   }
 
   .card-big-secondary {
-    @include setwidthandheight(50%, 60%);
+    @include setwidthandheight(90%, 80%);
     position: absolute;
     z-index: 6;
     @include animation(all, 2s);
