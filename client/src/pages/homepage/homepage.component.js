@@ -4,7 +4,6 @@ import './homepage.styles.scss';
 import Header from '../../components/header/header.component';
 import Player from '../../components/player/player.component';
 
-//import MainMenuLines from '../../components/mainmenu-lines/mainmenu-lines.component';
 import ChangingCards from '../../components/changingcards/changingcards.component';
 import MainMenu from '../../components/mainmenu/mainmenu.component';
 import Profile from '../../components/profile/profile.component';
@@ -15,26 +14,13 @@ import CardSearch from '../../components/card-search/card-search.component';
 import ReactCardFlip from 'react-card-flip';
 
 const HomePage = () => {
-  const [isFlipped, setIsFlipped] = useState(true);
+  const [isFlipped, setIsFlipped] = useState(false);
   const [chosenCard, setChosenCard] = useState(null);
 
   const FlipCard = (e) => {
     if (e.target.id) setChosenCard(e.target.id);
     setIsFlipped(!isFlipped);
   };
-
-  /*const ChooseCard = () => {
-    switch (chosenCard) {
-      case 'ai':
-      case 'playlist':
-        return <CardPlaylist />;
-      case 'broadcast':
-      case 'music':
-        return <CardSearch />;
-      default:
-        return null;
-    }
-  };*/
 
   return (
     <div className="main">
@@ -63,7 +49,6 @@ const HomePage = () => {
                 <MainMenu FlipCard={FlipCard} />
                 <ChangingCards>
                   <CardMusic />
-                  {/*<ChooseCard />*/}
                   {chosenCard === 'ai' || chosenCard === 'playlist' ? (
                     <CardPlaylist />
                   ) : (
@@ -80,7 +65,6 @@ const HomePage = () => {
         </div>
       </div>
       <div className="footer"></div>
-      {/*<MainMenuLines />*/}
     </div>
   );
 };

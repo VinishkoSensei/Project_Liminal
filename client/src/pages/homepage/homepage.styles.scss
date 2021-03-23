@@ -54,34 +54,10 @@
 
             .card-center-icon {
               @include setwidthandheight(6%, 85%);
-              background-color: mediumpurple;
-              margin: 0 auto;
-              @include setborderwithradius(2px solid maroon, 100%);
-              z-index: 3;
-            }
-          }
-
-          .cards {
-            @include setwidthandheight(100%, unset);
-            flex-grow: 1;
-            background-color: mediumspringgreen;
-            @include flexeddiv(row, space-between);
-
-            .card {
-              @include setwidthandheight(40%, 100%);
               background-color: lightskyblue;
+              margin: 0 auto;
+              @include setborderwithradius(2px solid black, 100%);
               z-index: 3;
-              vertical-align: middle;
-              @include setborderwithradius(2px solid black, 16%);
-
-              .card-image-container {
-                margin: 0 auto;
-                @include setwidthandheight(150px, 100%);
-
-                img {
-                  @include setwidthandheight(100%, 100%);
-                }
-              }
             }
           }
 
