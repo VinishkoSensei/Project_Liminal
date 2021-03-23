@@ -41,7 +41,10 @@ const HomePage = () => {
                 isFlipped={isFlipped}
                 flipSpeedBackToFront={2}
                 flipSpeedFrontToBack={2}
-                style={{ width: '100%', height: '100%' }}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                }}
                 containerStyle={{ width: '100%', height: '100%' }}
               >
                 <MainMenu FlipCard={FlipCard} />
@@ -50,13 +53,6 @@ const HomePage = () => {
                   <CardPlaylist />
                 </ChangingCards>
               </ReactCardFlip>
-
-              {/* <MainMenu />}
-              <ChangingCards>
-                <CardMusic />
-                {/*<CardPlaylist />}
-                <CardSearch />
-               </ChangingCards>*/}
             </div>
           </div>
         </div>
