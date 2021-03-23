@@ -3,7 +3,6 @@ import './card-playlist.styles.scss';
 import { tracksdummy } from '../../dummies/tracks-dummy';
 
 const CardPlaylist = ({ changedCards, setChangedCards }) => {
-  console.log(changedCards);
   return (
     <div className="card-playlist">
       <div className="card-big-table">
