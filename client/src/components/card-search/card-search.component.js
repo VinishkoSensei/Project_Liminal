@@ -14,7 +14,7 @@ const CardSearch = ({ changedCards }) => {
   };
 
   return (
-    <div className={`card-playlist${searchbarOnTop ? ' searched' : ''}`}>
+    <div className={`card-search${searchbarOnTop ? ' searched' : ''}`}>
       <div className="placeholder" />
       <form className="searchbar" onSubmit={handleSubmit}>
         <div className="searchbar-image">

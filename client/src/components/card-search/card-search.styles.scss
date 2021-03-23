@@ -30,7 +30,7 @@
   border-radius: $radius;
 }
 
-.card-playlist {
+.card-search {
   @include setwidthandheight(100%, 100%);
   background-color: lightsalmon;
   @include setborderwithradius(2px solid black, 52px);
