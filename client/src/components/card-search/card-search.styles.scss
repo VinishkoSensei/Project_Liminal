@@ -34,7 +34,7 @@
   @include setwidthandheight(100%, 100%);
   background-color: lightsalmon;
   @include setborderwithradius(2px solid black, 52px);
-  @include flexeddiv(column, start);
+  @include flexeddiv(column, flex-start);
   align-items: center;
   @include animation(all, 5s);
 
@@ -45,7 +45,7 @@
   }
 
   &.searched {
-    @include flexeddiv(column, start);
+    @include flexeddiv(column, flex-start);
 
     .placeholder {
       height: 0;
