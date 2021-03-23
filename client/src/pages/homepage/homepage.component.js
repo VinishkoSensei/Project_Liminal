@@ -4,7 +4,7 @@ import './homepage.styles.scss';
 import Header from '../../components/header/header.component';
 import Player from '../../components/player/player.component';
 
-import MainMenuLines from '../../components/mainmenu-lines/mainmenu-lines.component';
+//import MainMenuLines from '../../components/mainmenu-lines/mainmenu-lines.component';
 import ChangingCards from '../../components/changingcards/changingcards.component';
 import MainMenu from '../../components/mainmenu/mainmenu.component';
 import Profile from '../../components/profile/profile.component';
@@ -19,9 +19,22 @@ const HomePage = () => {
   const [chosenCard, setChosenCard] = useState(null);
 
   const FlipCard = (e) => {
-    //setChosenCard(e.target.id);
+    if (e.target.id) setChosenCard(e.target.id);
     setIsFlipped(!isFlipped);
   };
+
+  /*const ChooseCard = () => {
+    switch (chosenCard) {
+      case 'ai':
+      case 'playlist':
+        return <CardPlaylist />;
+      case 'broadcast':
+      case 'music':
+        return <CardSearch />;
+      default:
+        return null;
+    }
+  };*/
 
   return (
     <div className="main">
@@ -50,7 +63,12 @@ const HomePage = () => {
                 <MainMenu FlipCard={FlipCard} />
                 <ChangingCards>
                   <CardMusic />
-                  <CardPlaylist />
+                  {/*<ChooseCard />*/}
+                  {chosenCard === 'ai' || chosenCard === 'playlist' ? (
+                    <CardPlaylist />
+                  ) : (
+                    <CardSearch />
+                  )}
                 </ChangingCards>
               </ReactCardFlip>
             </div>
