@@ -13,8 +13,6 @@ const CardSearch = ({ changedCards }) => {
     setSearchbarOnTop(query.length);
   };
 
-  console.log(changedCards);
-
   return (
     <div className={`card-search${searchbarOnTop ? ' searched' : ''}`}>
       <div className="placeholder" />
