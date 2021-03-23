@@ -3,6 +3,8 @@ import './changingcards.styles.scss';
 
 const ChangingCards = (props) => {
   const [changedCards, setChangedCards] = useState(false);
+  console.log(props.children[0]);
+  console.log(props.children[1]);
 
   return (
     <div className="card-big-container">
