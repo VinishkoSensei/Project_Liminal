@@ -31,7 +31,6 @@
   .cards {
     @include setwidthandheight(100%, unset);
     flex-grow: 1;
-    background-color: mediumspringgreen;
     @include flexeddiv(row, space-between);
 
     .card {
@@ -39,7 +38,7 @@
       background-color: lightskyblue;
       z-index: 3;
       vertical-align: middle;
-      @include setborderwithradius(2px solid black, 16%);
+      @include setborderwithradius(2px solid black, 30px);
 
       .card-image-container {
         margin: 0 auto;
