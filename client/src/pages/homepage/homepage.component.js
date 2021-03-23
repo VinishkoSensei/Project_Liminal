@@ -14,7 +14,7 @@ import CardSearch from '../../components/card-search/card-search.component';
 import ReactCardFlip from 'react-card-flip';
 
 const HomePage = () => {
-  const [isFlipped, setIsFlipped] = useState(true);
+  const [isFlipped, setIsFlipped] = useState(false);
   const [chosenCard, setChosenCard] = useState(null);
 
   const FlipCard = (e) => {
