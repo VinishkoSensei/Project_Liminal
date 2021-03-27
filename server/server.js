@@ -1,25 +1,29 @@
-const express = require('express');
-const fs = require('fs');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const Throttle = require('throttle');
-const { PassThrough } = require('stream');
 const Path = require('path');
+const Hapi = require('hapi');
+const Static = require('./routes/index.js');
+const { startStreaming } = require('./streaming');
 
-const { startStreaming } = require('./streaming.js');
-const { streamHandler } = require('./streaming.js');
-
-const app = express();
-app.use(bodyParser.json());
-app.use(cors());
-
-startStreaming();
-app.use(express.static('public'));
-
-app.get('/stream', (req, res) => {
-  streamHandler(req, res);
+const server = Hapi.server({
+  port: 3001,
+  host: 'localhost',
+  compression: false,
+  routes: {
+    files: {
+      relativeTo: Path.join(__dirname, 'public'),
+    },
+  },
 });
 
-app.listen(3001, () => {
-  console.log('running');
-});
+const startApp = async () => {
+  try {
+    await server.register(Static);
+    startStreaming();
+    console.log(`Server running at ${server.info.uri}`);
+    await server.start();
+  } catch (err) {
+    console.log(`Server error: ${err}`);
+    process.exit(1);
+  }
+};
+
+startApp();
