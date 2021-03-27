@@ -3,10 +3,10 @@ const { PassThrough } = require('stream');
 const Throttle = require('throttle');
 
 const sinks = [];
-const songs = [
-  Fs.createReadStream('./files/music/1.mp3'),
-  Fs.createReadStream('./files/music/2.mp3'),
-  Fs.createReadStream('./files/music/3.mp3'),
+const radioQueue = [
+  './files/music/1.mp3',
+  './files/music/2.mp3',
+  './files/music/3.mp3',
 ];
 
 const streamHandler = (request, h) => {
@@ -40,10 +40,10 @@ const startStreaming = () => {
   let songNum = 0;
 
   (function playLoop() {
-    const song = songs[songNum++];
+    const song = Fs.createReadStream(radioQueue[songNum++]);
     const throttle = new Throttle(128000 / 8);
     throttle.on('data', (chunk) => sinks.forEach((sink) => sink.write(chunk)));
-    if (songs.length === songNum) songNum = 0;
+    if (radioQueue.length === songNum) songNum = 0;
     song.pipe(throttle, { end: false });
     song.on('end', playLoop);
   })();
