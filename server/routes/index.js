@@ -25,6 +25,12 @@ const plugin = {
       method: 'GET',
       path: '/tracks/{trackId}',
       handler: streamTrack,
+      /*config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },*/
     });
   },
 };
