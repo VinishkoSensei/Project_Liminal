@@ -52,6 +52,11 @@
       @include flexeddiv(row, space-between);
       padding: 10px 20px;
       border-bottom: 1px solid;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgb(248, 196, 176);
+      }
 
       .track-info {
         @include flexeddiv(column, space-around);

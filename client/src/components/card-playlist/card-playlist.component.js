@@ -2,12 +2,20 @@ import React from 'react';
 import './card-playlist.styles.scss';
 import { tracksdummy } from '../../dummies/tracks-dummy';
 
-const CardPlaylist = ({ changedCards, setChangedCards }) => {
+const CardPlaylist = ({ changedCards, setChangedCards, setSrc }) => {
+  const PlayTrack = (id) => {
+    setSrc(`http://localhost:3001/tracks/${id}`);
+  };
+
   return (
     <div className="card-playlist">
       <div className="card-big-table">
         {tracksdummy.map((track) => (
-          <div className="track" key={track.id}>
+          <div
+            className="track"
+            key={track.id}
+            onClick={() => PlayTrack(track.id)}
+          >
             <div className="track-cover-container">
               <img src={track.cover} alt="cover" width="60px" height="60px" />
             </div>
