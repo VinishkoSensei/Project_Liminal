@@ -23,7 +23,7 @@ const plugin = {
 
     server.route({
       method: 'GET',
-      path: '/track',
+      path: '/tracks/{trackId}',
       handler: streamTrack,
     });
   },
