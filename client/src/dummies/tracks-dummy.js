@@ -1,6 +1,6 @@
 export const tracksdummy = [
   {
-    id: 0,
+    id: 1,
     author: 'John Doe',
     name: 'Sample Track',
     genre: 'Sample',
@@ -8,20 +8,12 @@ export const tracksdummy = [
     cover: '/images/1.jpg',
   },
   {
-    id: 1,
-    author: 'John Doe',
-    name: 'Sample Track',
-    genre: 'Sample',
-    duration: '01:30',
-    cover: '/images/ai.svg',
-  },
-  {
     id: 2,
     author: 'John Doe',
     name: 'Sample Track',
     genre: 'Sample',
     duration: '01:30',
-    cover: '/images/broadcast.svg',
+    cover: '/images/ai.svg',
   },
   {
     id: 3,
@@ -29,7 +21,7 @@ export const tracksdummy = [
     name: 'Sample Track',
     genre: 'Sample',
     duration: '01:30',
-    cover: '/images/music.svg',
+    cover: '/images/broadcast.svg',
   },
   {
     id: 4,
@@ -37,7 +29,7 @@ export const tracksdummy = [
     name: 'Sample Track',
     genre: 'Sample',
     duration: '01:30',
-    cover: '/images/play.svg',
+    cover: '/images/music.svg',
   },
   {
     id: 5,
@@ -45,7 +37,7 @@ export const tracksdummy = [
     name: 'Sample Track',
     genre: 'Sample',
     duration: '01:30',
-    cover: '/images/playlist.svg',
+    cover: '/images/play.svg',
   },
   {
     id: 6,
@@ -53,10 +45,18 @@ export const tracksdummy = [
     name: 'Sample Track',
     genre: 'Sample',
     duration: '01:30',
-    cover: '/images/ai.svg',
+    cover: '/images/playlist.svg',
   },
   {
     id: 7,
+    author: 'John Doe',
+    name: 'Sample Track',
+    genre: 'Sample',
+    duration: '01:30',
+    cover: '/images/ai.svg',
+  },
+  {
+    id: 8,
     author: 'John Doe',
     name: 'Sample Track',
     genre: 'Sample',
