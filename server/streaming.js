@@ -17,7 +17,7 @@ const streamHandler = (request, h) => {
 };
 
 const streamTrack = (req, h) => {
-  const path = `./files/music/1.mp3`;
+  const path = `./files/music/${req.params.trackId}.mp3`;
   const stat = Fs.statSync(path);
   const fileSize = stat.size;
   const range = req.headers.range;
