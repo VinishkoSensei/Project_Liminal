@@ -36,6 +36,24 @@
     flex-grow: 2;
     @include flexeddiv(row, space-between);
 
+    .btn-back {
+      @include setwidthandheight(50px, 50px);
+      background-color: darkgray;
+      @include setborderwithradius(1px solid black, 12px);
+      position: absolute;
+      margin-left: 20px;
+      cursor: pointer;
+      background-size: 70% 80%;
+      background-position: center;
+      background-repeat: no-repeat;
+      -webkit-transform: scaleX(-1);
+      transform: scaleX(-1);
+
+      &:hover {
+        background-color: rgb(214, 214, 214);
+      }
+    }
+
     .main-space {
       @include setwidthandheight(80vw, unset);
       padding: 10% 0;
