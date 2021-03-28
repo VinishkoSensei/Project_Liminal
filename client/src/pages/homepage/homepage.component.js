@@ -30,10 +30,15 @@ const HomePage = () => {
         <Player src={src} />
       </div>
       <div className="main-part">
-        <button
-          style={!isFlipped ? { display: 'none' } : {}}
+        <div
+          className="btn-back"
+          style={
+            !isFlipped
+              ? { display: 'none' }
+              : { backgroundImage: `url('/images/play.svg')` }
+          }
           onClick={FlipCard}
-        />
+        ></div>
         <div className="main-space">
           <div className="main-container">
             <div className="cards-container">
