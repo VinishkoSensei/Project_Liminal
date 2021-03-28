@@ -1,6 +1,16 @@
 const Fs = require('fs');
 const { PassThrough } = require('stream');
 const Throttle = require('throttle');
+const pgp = require('pg-promise')({});
+
+const cn = {
+  host: 'localhost', // 'localhost' is the default;
+  port: 5432, // 5432 is the default;
+  database: 'liminal',
+  user: 'postgres',
+  password: 'root',
+};
+const db = pgp(cn);
 
 const sinks = [];
 const radioQueue = [
@@ -16,8 +26,13 @@ const streamHandler = (request, h) => {
   return h.response(sink).type('audio/mpeg');
 };
 
-const streamTrack = (req, h) => {
-  const path = `./files/music/${req.params.trackId}.mp3`;
+const streamTrack = async (req, h) => {
+  const trackt = await db
+    .one('SELECT * FROM liminal.track WHERE id = $1', req.params.trackId)
+    .then((trackData) => {
+      return trackData;
+    });
+  const path = trackt.path;
   const stat = Fs.statSync(path);
   const fileSize = stat.size;
   const range = req.headers.range;
