@@ -32,7 +32,7 @@ const getTrackCover = (req, h) => {
 
 const getTrackList = async (req, h) => {
   const trackData = await db.any(
-    'SELECT t.id, t."path", t."name", t.cover, a.nickname as "author", g.name as "genre" FROM liminal.track t JOIN liminal.author a ON t.author_id=a.id JOIN liminal.genre g ON t.genre_id=g.id order by t.id'
+    `SELECT t.id, t."path", t."name", t.cover, to_char(t.duration,'MM:SS') as "duration", a.nickname as "author", g.name as "genre" FROM liminal.track t JOIN liminal.author a ON t.author_id=a.id JOIN liminal.genre g ON t.genre_id=g.id order by t.id`
   );
   return h.response(trackData);
   /*const response = await trackData.map((track) => {
