@@ -47,7 +47,7 @@ const CardPlaylist = ({ changedCards, setChangedCards, setSrc }) => {
               </div>
             </div>
             <div className="track-duration">
-              <p>01:00</p>
+              <p>{track.duration}</p>
             </div>
           </div>
         ))}
