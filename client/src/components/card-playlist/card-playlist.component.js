@@ -1,23 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './card-playlist.styles.scss';
 import { tracksdummy } from '../../dummies/tracks-dummy';
 
 const CardPlaylist = ({ changedCards, setChangedCards, setSrc }) => {
+  const [trackList, setTrackList] = useState();
+
   const PlayTrack = (id) => {
     setSrc(`http://localhost:3001/tracks/${id}`);
   };
 
+  useEffect(() => {
+    const getTrackList = async () => {
+      try {
+        const res = await fetch(`http://localhost:3001/gettracklist`);
+        const data = await res.json();
+        setTrackList(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getTrackList();
+  }, []);
+
   return (
     <div className="card-playlist">
       <div className="card-big-table">
-        {tracksdummy.map((track) => (
+        {trackList?.map((track) => (
           <div
             className="track"
             key={track.id}
             onClick={() => PlayTrack(track.id)}
           >
             <div className="track-cover-container">
-              <img src={track.cover} alt="cover" width="60px" height="60px" />
+              <img
+                src={`http://localhost:3001/gettrackcover/${track.cover}`}
+                alt="cover"
+                width="60px"
+                height="60px"
+              />
             </div>
             <div className="track-info">
               <div>{track.name}</div>
@@ -26,7 +47,7 @@ const CardPlaylist = ({ changedCards, setChangedCards, setSrc }) => {
               </div>
             </div>
             <div className="track-duration">
-              <p>{track.duration}</p>
+              <p>01:00</p>
             </div>
           </div>
         ))}

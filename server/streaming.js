@@ -26,6 +26,26 @@ const streamHandler = (request, h) => {
   return h.response(sink).type('audio/mpeg');
 };
 
+const getTrackCover = (req, h) => {
+  return h.file('../public/files/covers/' + req.params.trackCoverPath);
+};
+
+const getTrackList = async (req, h) => {
+  const trackData = await db.any(
+    'SELECT t.id, t."path", t."name", t.cover, a.nickname as "author", g.name as "genre" FROM liminal.track t JOIN liminal.author a ON t.author_id=a.id JOIN liminal.genre g ON t.genre_id=g.id order by t.id'
+  );
+  return h.response(trackData);
+  /*const response = await trackData.map((track) => {
+    const tr = {
+      ...track,
+      cover: 'localhost:3001/files/covers/' + track.cover,
+    };
+    console.log(tr);
+    return tr;
+  });
+  */
+};
+
 const streamTrack = async (req, h) => {
   const trackt = await db
     .one('SELECT * FROM liminal.track WHERE id = $1', req.params.trackId)
@@ -64,4 +84,10 @@ const startStreaming = () => {
   })();
 };
 
-module.exports = { streamHandler, startStreaming, streamTrack };
+module.exports = {
+  streamHandler,
+  startStreaming,
+  getTrackCover,
+  streamTrack,
+  getTrackList,
+};
