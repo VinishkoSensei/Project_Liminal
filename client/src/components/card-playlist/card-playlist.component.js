@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './card-playlist.styles.scss';
-import { tracksdummy } from '../../dummies/tracks-dummy';
 
 const CardPlaylist = ({ changedCards, setChangedCards, setSrc }) => {
   const [trackList, setTrackList] = useState();
