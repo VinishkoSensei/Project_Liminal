@@ -1,5 +1,10 @@
 const File = require('inert');
-const { streamHandler, streamTrack } = require('../streaming');
+const {
+  streamHandler,
+  streamTrack,
+  getTrackList,
+  getTrackCover,
+} = require('../streaming');
 
 const plugin = {
   name: 'streamServer',
@@ -19,6 +24,30 @@ const plugin = {
       method: 'GET',
       path: '/stream',
       handler: streamHandler,
+    });
+
+    server.route({
+      method: 'GET',
+      path: '/gettrackcover/{trackCoverPath}',
+      handler: getTrackCover,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'GET',
+      path: '/gettracklist',
+      handler: getTrackList,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
     });
 
     server.route({
