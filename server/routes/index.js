@@ -4,6 +4,9 @@ const {
   streamTrack,
   getTrackList,
   getTrackCover,
+  getTracksByNameAndAuthor,
+  getTracksByName,
+  getTracksByAuthor,
 } = require('../streaming');
 
 const plugin = {
@@ -42,6 +45,40 @@ const plugin = {
       method: 'GET',
       path: '/gettracklist',
       handler: getTrackList,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'GET',
+      path: '/gettracksbynameandauthor/{name}',
+      handler: getTracksByNameAndAuthor,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+    server.route({
+      method: 'GET',
+      path: '/gettracksbyname/{name}',
+      handler: getTracksByName,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+    server.route({
+      method: 'GET',
+      path: '/gettracksbyauthor/{name}',
+      handler: getTracksByAuthor,
       config: {
         cors: {
           origin: ['*'],
