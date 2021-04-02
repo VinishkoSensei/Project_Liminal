@@ -42,18 +42,22 @@ const Track = ({
         <div
           className="track-menu-item"
           onClick={
-            addTrackToPlaylistEnd ? () => addTrackToPlaylistEnd(track) : null
-          }
-          style={{ backgroundImage: `url('/images/play.svg')` }}
-        />
-        <div
-          className="track-menu-item"
-          onClick={
             addTrackToPlaylistStart
               ? () => addTrackToPlaylistStart(track)
               : null
           }
-          style={{ backgroundImage: `url('/images/trash.svg')` }}
+          style={{
+            backgroundImage: `url('/images/addtopl.svg')`,
+            WebkitTransform: 'scaleX(-1) scaleY(-1)',
+            transform: 'scaleX(-1) scaleY(-1)',
+          }}
+        />
+        <div
+          className="track-menu-item"
+          onClick={
+            addTrackToPlaylistEnd ? () => addTrackToPlaylistEnd(track) : null
+          }
+          style={{ backgroundImage: `url('/images/addtopl.svg')` }}
         />
       </div>
     </div>
