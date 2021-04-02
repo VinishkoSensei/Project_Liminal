@@ -20,6 +20,8 @@
   }
 
   .track-duration {
+    width: 25%;
+    text-align: right;
     vertical-align: middle;
     border-radius: 100%;
   }
@@ -28,13 +30,14 @@
     .track-menu {
       display: flex;
     }
+    .track-duration {
+      display: none;
+    }
   }
 
   .track-menu {
     width: 40%;
-    right: 10%;
     height: 60px;
-    position: absolute;
     display: none;
     justify-content: flex-end;
     flex-direction: row;
