@@ -60,7 +60,11 @@ const HomePage = () => {
                   <ChangingCards>
                     <CardMusic isNotRadio={true} />
                     {chosenCard === 'ai' || chosenCard === 'playlist' ? (
-                      <CardPlaylist setSrc={setSrc} playlist={playlist} />
+                      <CardPlaylist
+                        setSrc={setSrc}
+                        playlist={playlist}
+                        setPlaylist={setPlaylist}
+                      />
                     ) : (
                       <CardSearch playlist={playlist} />
                     )}

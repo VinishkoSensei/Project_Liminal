@@ -1,9 +1,24 @@
 import React, { useEffect } from 'react';
 import './card-playlist.styles.scss';
 
-const CardPlaylist = ({ changedCards, setChangedCards, setSrc, playlist }) => {
-  const PlayTrack = (id) => {
+const CardPlaylist = ({
+  changedCards,
+  setChangedCards,
+  setSrc,
+  playlist,
+  setPlaylist,
+}) => {
+  const playTrack = (id, index) => {
     setSrc(`http://localhost:3001/tracks/${id}`);
+    deleteFromPlaylist(index);
+  };
+
+  const deleteFromPlaylist = (index) => {
+    setPlaylist(
+      playlist.filter((el, ind) => {
+        return ind !== index;
+      })
+    );
   };
   /*
   useEffect(() => {
@@ -24,11 +39,7 @@ const CardPlaylist = ({ changedCards, setChangedCards, setSrc, playlist }) => {
     <div className="card-playlist">
       <div className="card-big-table">
         {playlist?.map((track, index) => (
-          <div
-            className="track"
-            key={index}
-            onClick={() => PlayTrack(track.id)}
-          >
+          <div className="track" key={index}>
             <div className="track-cover-container">
               <img
                 src={`http://localhost:3001/gettrackcover/${track.cover}`}
@@ -45,6 +56,18 @@ const CardPlaylist = ({ changedCards, setChangedCards, setSrc, playlist }) => {
             </div>
             <div className="track-duration">
               <p>{track.duration}</p>
+            </div>
+            <div className="track-menu">
+              <div
+                className="track-menu-item"
+                onClick={() => playTrack(track.id, index)}
+                style={{ backgroundImage: `url('/images/play.svg')` }}
+              />
+              <div
+                className="track-menu-item"
+                onClick={() => deleteFromPlaylist(index)}
+                style={{ backgroundImage: `url('/images/trash.svg')` }}
+              />
             </div>
           </div>
         ))}
