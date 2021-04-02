@@ -24,6 +24,14 @@ const HomePage = () => {
     setIsFlipped(!isFlipped);
   };
 
+  const addTrackToPlaylistEnd = (id) => {
+    playlist.push(id);
+  };
+
+  const addTrackToPlaylistStart = (id) => {
+    playlist.unshift(id);
+  };
+
   return (
     <div className="main">
       <div className="toppart">
@@ -64,9 +72,15 @@ const HomePage = () => {
                         setSrc={setSrc}
                         playlist={playlist}
                         setPlaylist={setPlaylist}
+                        addTrackToPlaylistEnd={addTrackToPlaylistEnd}
+                        addTrackToPlaylistStart={addTrackToPlaylistStart}
                       />
                     ) : (
-                      <CardSearch playlist={playlist} />
+                      <CardSearch
+                        playlist={playlist}
+                        addTrackToPlaylistEnd={addTrackToPlaylistEnd}
+                        addTrackToPlaylistStart={addTrackToPlaylistStart}
+                      />
                     )}
                   </ChangingCards>
                 )}

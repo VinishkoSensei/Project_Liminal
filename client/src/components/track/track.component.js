@@ -1,7 +1,14 @@
 import React from 'react';
 import './track.styles.scss';
 
-const Track = ({ track, index, playTrack, deleteFromPlaylist }) => {
+const Track = ({
+  track,
+  index,
+  playTrack,
+  deleteFromPlaylist,
+  addTrackToPlaylistEnd,
+  addTrackToPlaylistStart,
+}) => {
   return (
     <div className="track" key={index}>
       <div className="track-cover-container">
@@ -30,6 +37,22 @@ const Track = ({ track, index, playTrack, deleteFromPlaylist }) => {
         <div
           className="track-menu-item"
           onClick={deleteFromPlaylist ? () => deleteFromPlaylist(index) : null}
+          style={{ backgroundImage: `url('/images/trash.svg')` }}
+        />
+        <div
+          className="track-menu-item"
+          onClick={
+            addTrackToPlaylistEnd ? () => addTrackToPlaylistEnd(track) : null
+          }
+          style={{ backgroundImage: `url('/images/play.svg')` }}
+        />
+        <div
+          className="track-menu-item"
+          onClick={
+            addTrackToPlaylistStart
+              ? () => addTrackToPlaylistStart(track)
+              : null
+          }
           style={{ backgroundImage: `url('/images/trash.svg')` }}
         />
       </div>

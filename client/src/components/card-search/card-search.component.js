@@ -2,21 +2,17 @@ import React, { useState } from 'react';
 import Track from '../track/track.component';
 import './card-search.styles.scss';
 
-const CardSearch = ({ changedCards, playlist }) => {
+const CardSearch = ({
+  changedCards,
+  addTrackToPlaylistEnd,
+  addTrackToPlaylistStart,
+}) => {
   const [tracks, setTracks] = useState();
   const [query, setQuery] = useState('');
   const [searchbarOnTop, setSearchbarOnTop] = useState(false);
   const [searchType, setSearchType] = useState('all');
   const handleChange = (event) => {
     setQuery(event.target.value);
-  };
-
-  const AddTrackToPlaylistEnd = (id) => {
-    playlist.push(id);
-  };
-
-  const AddTrackToPlaylistStart = (id) => {
-    playlist.unshift(id);
   };
 
   const handleSubmit = async (event) => {
@@ -93,7 +89,12 @@ const CardSearch = ({ changedCards, playlist }) => {
         <div className="searchlist-list">
           <div className="searchlist-tracks">
             {tracks?.map((track, index) => (
-              <Track track={track} index={index} />
+              <Track
+                track={track}
+                index={index}
+                addTrackToPlaylistEnd={addTrackToPlaylistEnd}
+                addTrackToPlaylistStart={addTrackToPlaylistStart}
+              />
             ))}
           </div>
         </div>
