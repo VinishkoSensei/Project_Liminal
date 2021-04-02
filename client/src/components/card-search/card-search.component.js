@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Track from '../track/track.component';
 import './card-search.styles.scss';
 
 const CardSearch = ({ changedCards, playlist }) => {
@@ -91,32 +92,8 @@ const CardSearch = ({ changedCards, playlist }) => {
         </div>
         <div className="searchlist-list">
           <div className="searchlist-tracks">
-            {tracks?.map((track) => (
-              <div className="track" key={track.id}>
-                <div
-                  className="track-cover-container"
-                  onClick={() => AddTrackToPlaylistStart(track)}
-                >
-                  <img
-                    src={`http://localhost:3001/gettrackcover/${track.cover}`}
-                    alt="cover"
-                    width="60px"
-                    height="60px"
-                  />
-                </div>
-                <div
-                  className="track-info"
-                  onClick={() => AddTrackToPlaylistEnd(track)}
-                >
-                  <div>{track.name}</div>
-                  <div>
-                    <i>{track.author}</i>
-                  </div>
-                </div>
-                <div className="track-duration">
-                  <p>{track.duration}</p>
-                </div>
-              </div>
+            {tracks?.map((track, index) => (
+              <Track track={track} index={index} />
             ))}
           </div>
         </div>
