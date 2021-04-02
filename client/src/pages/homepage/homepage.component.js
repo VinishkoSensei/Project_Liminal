@@ -24,6 +24,27 @@ const HomePage = () => {
     setIsFlipped(!isFlipped);
   };
 
+  const addTrackToPlaylistEnd = (id) => {
+    playlist.push(id);
+  };
+
+  const addTrackToPlaylistStart = (id) => {
+    playlist.unshift(id);
+  };
+
+  const playTrack = (id, index) => {
+    setSrc(`http://localhost:3001/tracks/${id}`);
+    deleteFromPlaylist(index);
+  };
+
+  const deleteFromPlaylist = (index) => {
+    setPlaylist(
+      playlist.filter((el, ind) => {
+        return ind !== index;
+      })
+    );
+  };
+
   return (
     <div className="main">
       <div className="toppart">
@@ -61,12 +82,17 @@ const HomePage = () => {
                     <CardMusic isNotRadio={true} />
                     {chosenCard === 'ai' || chosenCard === 'playlist' ? (
                       <CardPlaylist
-                        setSrc={setSrc}
                         playlist={playlist}
-                        setPlaylist={setPlaylist}
+                        playTrack={playTrack}
+                        deleteFromPlaylist={deleteFromPlaylist}
                       />
                     ) : (
-                      <CardSearch playlist={playlist} />
+                      <CardSearch
+                        playlist={playlist}
+                        playTrack={playTrack}
+                        addTrackToPlaylistEnd={addTrackToPlaylistEnd}
+                        addTrackToPlaylistStart={addTrackToPlaylistStart}
+                      />
                     )}
                   </ChangingCards>
                 )}
