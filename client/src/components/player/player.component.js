@@ -3,18 +3,19 @@ import './player.styles.scss';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 
-const Player = ({ src }) => {
+const Player = ({ src, setSrc, playlist }) => {
+  const onTrackEnded = () => {
+    const nextTrack = playlist.shift();
+    setSrc(`http://localhost:3001/tracks/${nextTrack.id}`);
+  };
+
   return (
     <div className="player-container">
       <div className="player">
-        {/*<audio controls>
-          <source src="localhost:3001/stream" />
-        </audio>*/}
         <AudioPlayer
           id="audio"
-          //src="http://localhost:3001/track"
           src={src}
-          loop={true}
+          loop={false}
           preload="none"
           autoplay="false"
           customVolumeControls={[]}
@@ -22,6 +23,7 @@ const Player = ({ src }) => {
           showJumpControls={false}
           defaultCurrentTime=""
           defaultDuration=""
+          onEnded={onTrackEnded}
         ></AudioPlayer>
       </div>
     </div>
