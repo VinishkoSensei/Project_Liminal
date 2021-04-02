@@ -24,12 +24,12 @@ const Track = ({ track, index, playTrack, deleteFromPlaylist }) => {
       <div className="track-menu">
         <div
           className="track-menu-item"
-          onClick={() => playTrack(track.id, index)}
+          onClick={playTrack ? () => playTrack(track.id, index) : null}
           style={{ backgroundImage: `url('/images/play.svg')` }}
         />
         <div
           className="track-menu-item"
-          onClick={() => deleteFromPlaylist(index)}
+          onClick={deleteFromPlaylist ? () => deleteFromPlaylist(index) : null}
           style={{ backgroundImage: `url('/images/trash.svg')` }}
         />
       </div>
