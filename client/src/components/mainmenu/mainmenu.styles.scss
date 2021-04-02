@@ -40,13 +40,14 @@
       vertical-align: middle;
       @include setborderwithradius(2px solid black, 30px);
 
-      .card-image-container {
-        margin: 0 auto;
-        @include setwidthandheight(150px, 100%);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      cursor: pointer;
+      @include animation(background-color, 0.5s);
 
-        img {
-          @include setwidthandheight(100%, 100%);
-        }
+      &:hover {
+        background-color: rgb(212, 237, 253);
       }
     }
   }
