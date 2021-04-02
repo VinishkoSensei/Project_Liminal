@@ -38,7 +38,7 @@
 
     .btn-back {
       @include setwidthandheight(50px, 50px);
-      background-color: darkgray;
+      background-color: lightskyblue;
       @include setborderwithradius(1px solid black, 12px);
       position: absolute;
       margin-left: 20px;
@@ -46,11 +46,13 @@
       background-size: 70% 80%;
       background-position: center;
       background-repeat: no-repeat;
-      -webkit-transform: scaleX(-1);
-      transform: scaleX(-1);
+      @include animation(all, 0.5s);
 
       &:hover {
-        background-color: rgb(214, 214, 214);
+        background-color: lightsalmon;
+        background-image: url('http://localhost:3000/images/play.svg') !important;
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
       }
     }
 
