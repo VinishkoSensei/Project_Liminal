@@ -45,6 +45,38 @@ const HomePage = () => {
     );
   };
 
+  const BtnBack = () => {
+    /*switch (chosenCard) {
+      case '':
+        break;
+      default:
+        return null;
+    }*/
+    /*return (
+      <div
+        className="btn-back"
+        style={
+          !isFlipped
+            ? { display: 'none' }
+            : { backgroundImage: `url('/images/play.svg')` }
+        }
+        onClick={FlipCard}
+      />
+    );*/
+
+    return (
+      <div
+        className="btn-back"
+        style={
+          !isFlipped
+            ? { display: 'none' }
+            : { backgroundImage: `url('/images/${chosenCard}.svg')` }
+        }
+        onClick={FlipCard}
+      />
+    );
+  };
+
   return (
     <div className="main">
       <div className="toppart">
@@ -52,15 +84,7 @@ const HomePage = () => {
         <Player src={src} setSrc={setSrc} playlist={playlist} />
       </div>
       <div className="main-part">
-        <div
-          className="btn-back"
-          style={
-            !isFlipped
-              ? { display: 'none' }
-              : { backgroundImage: `url('/images/play.svg')` }
-          }
-          onClick={FlipCard}
-        ></div>
+        <BtnBack />
         <div className="main-space">
           <div className="main-container">
             <div className="cards-container">
