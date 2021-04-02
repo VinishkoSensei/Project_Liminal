@@ -2,19 +2,12 @@ import React, { useEffect } from 'react';
 import Track from '../track/track.component';
 import './card-playlist.styles.scss';
 
-const CardPlaylist = ({ changedCards, setSrc, playlist, setPlaylist }) => {
-  const playTrack = (id, index) => {
-    setSrc(`http://localhost:3001/tracks/${id}`);
-    deleteFromPlaylist(index);
-  };
-
-  const deleteFromPlaylist = (index) => {
-    setPlaylist(
-      playlist.filter((el, ind) => {
-        return ind !== index;
-      })
-    );
-  };
+const CardPlaylist = ({
+  changedCards,
+  playlist,
+  playTrack,
+  deleteFromPlaylist,
+}) => {
   /*
   useEffect(() => {
     const getTrackList = async () => {

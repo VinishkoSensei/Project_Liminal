@@ -32,6 +32,19 @@ const HomePage = () => {
     playlist.unshift(id);
   };
 
+  const playTrack = (id, index) => {
+    setSrc(`http://localhost:3001/tracks/${id}`);
+    deleteFromPlaylist(index);
+  };
+
+  const deleteFromPlaylist = (index) => {
+    setPlaylist(
+      playlist.filter((el, ind) => {
+        return ind !== index;
+      })
+    );
+  };
+
   return (
     <div className="main">
       <div className="toppart">
@@ -69,15 +82,14 @@ const HomePage = () => {
                     <CardMusic isNotRadio={true} />
                     {chosenCard === 'ai' || chosenCard === 'playlist' ? (
                       <CardPlaylist
-                        setSrc={setSrc}
                         playlist={playlist}
-                        setPlaylist={setPlaylist}
-                        addTrackToPlaylistEnd={addTrackToPlaylistEnd}
-                        addTrackToPlaylistStart={addTrackToPlaylistStart}
+                        playTrack={playTrack}
+                        deleteFromPlaylist={deleteFromPlaylist}
                       />
                     ) : (
                       <CardSearch
                         playlist={playlist}
+                        playTrack={playTrack}
                         addTrackToPlaylistEnd={addTrackToPlaylistEnd}
                         addTrackToPlaylistStart={addTrackToPlaylistStart}
                       />
