@@ -48,7 +48,7 @@ const CardPlaylist = ({
           />
         ))}
       </div>
-      <div className={`card-big-blur${changedCards ? ' disabled' : ''}`}></div>
+      <div className={`card-big-blur${changedCards ? ' disabled' : ''}`} />
     </div>
   );
 };
