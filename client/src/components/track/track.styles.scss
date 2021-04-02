@@ -9,7 +9,7 @@
   padding: 10px 20px;
   border-bottom: 1px solid;
   cursor: pointer;
-  height: 14%;
+  height: 60px;
 
   &:hover {
     background-color: rgb(248, 196, 176);
@@ -33,7 +33,7 @@
   .track-menu {
     width: 40%;
     right: 10%;
-    height: inherit;
+    height: 60px;
     position: absolute;
     display: none;
     justify-content: flex-end;
@@ -45,7 +45,6 @@
       border: 1px black solid;
       border-radius: 5px;
       width: 32%;
-      height: 87%;
       background-repeat: no-repeat;
       background-position: center;
       background-size: 65% 70%;
