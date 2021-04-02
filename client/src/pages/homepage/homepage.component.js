@@ -17,6 +17,7 @@ const HomePage = () => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [chosenCard, setChosenCard] = useState(null);
   const [src, setSrc] = useState();
+  const [playlist, setPlaylist] = useState([]);
 
   const FlipCard = (e) => {
     if (e.target.id) setChosenCard(e.target.id);
@@ -27,7 +28,7 @@ const HomePage = () => {
     <div className="main">
       <div className="toppart">
         <Header />
-        <Player src={src} />
+        <Player src={src} setSrc={setSrc} playlist={playlist} />
       </div>
       <div className="main-part">
         <div
@@ -59,9 +60,9 @@ const HomePage = () => {
                   <ChangingCards>
                     <CardMusic isNotRadio={true} />
                     {chosenCard === 'ai' || chosenCard === 'playlist' ? (
-                      <CardPlaylist setSrc={setSrc} />
+                      <CardPlaylist setSrc={setSrc} playlist={playlist} />
                     ) : (
-                      <CardSearch />
+                      <CardSearch playlist={playlist} />
                     )}
                   </ChangingCards>
                 )}
