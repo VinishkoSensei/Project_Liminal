@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './card-playlist.styles.scss';
 
-const CardPlaylist = ({ changedCards, setChangedCards, setSrc }) => {
-  const [trackList, setTrackList] = useState();
-
+const CardPlaylist = ({ changedCards, setChangedCards, setSrc, playlist }) => {
   const PlayTrack = (id) => {
     setSrc(`http://localhost:3001/tracks/${id}`);
   };
-
+  /*
   useEffect(() => {
     const getTrackList = async () => {
       try {
@@ -20,12 +18,12 @@ const CardPlaylist = ({ changedCards, setChangedCards, setSrc }) => {
     };
 
     getTrackList();
-  }, []);
+  }, []);*/
 
   return (
     <div className="card-playlist">
       <div className="card-big-table">
-        {trackList?.map((track) => (
+        {playlist?.map((track) => (
           <div
             className="track"
             key={track.id}
