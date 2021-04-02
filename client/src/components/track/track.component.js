@@ -29,36 +29,40 @@ const Track = ({
         <p>{track.duration}</p>
       </div>
       <div className="track-menu">
-        <div
-          className="track-menu-item"
-          onClick={playTrack ? () => playTrack(track.id, index) : null}
-          style={{ backgroundImage: `url('/images/play.svg')` }}
-        />
-        <div
-          className="track-menu-item"
-          onClick={deleteFromPlaylist ? () => deleteFromPlaylist(index) : null}
-          style={{ backgroundImage: `url('/images/trash.svg')` }}
-        />
-        <div
-          className="track-menu-item"
-          onClick={
-            addTrackToPlaylistStart
-              ? () => addTrackToPlaylistStart(track)
-              : null
-          }
-          style={{
-            backgroundImage: `url('/images/addtopl.svg')`,
-            WebkitTransform: 'scaleX(-1) scaleY(-1)',
-            transform: 'scaleX(-1) scaleY(-1)',
-          }}
-        />
-        <div
-          className="track-menu-item"
-          onClick={
-            addTrackToPlaylistEnd ? () => addTrackToPlaylistEnd(track) : null
-          }
-          style={{ backgroundImage: `url('/images/addtopl.svg')` }}
-        />
+        {playTrack ? (
+          <div
+            className="track-menu-item"
+            onClick={() => playTrack(track.id, index)}
+            style={{ backgroundImage: `url('/images/play.svg')` }}
+          />
+        ) : null}
+        {deleteFromPlaylist ? (
+          <div
+            className="track-menu-item"
+            onClick={() => deleteFromPlaylist(index)}
+            style={{ backgroundImage: `url('/images/trash.svg')` }}
+          />
+        ) : null}
+
+        {addTrackToPlaylistStart ? (
+          <div
+            className="track-menu-item"
+            onClick={() => addTrackToPlaylistStart(track)}
+            style={{
+              backgroundImage: `url('/images/addtopl.svg')`,
+              WebkitTransform: 'scaleX(-1) scaleY(-1)',
+              transform: 'scaleX(-1) scaleY(-1)',
+            }}
+          />
+        ) : null}
+
+        {addTrackToPlaylistEnd ? (
+          <div
+            className="track-menu-item"
+            onClick={() => addTrackToPlaylistEnd(track)}
+            style={{ backgroundImage: `url('/images/addtopl.svg')` }}
+          />
+        ) : null}
       </div>
     </div>
   );
