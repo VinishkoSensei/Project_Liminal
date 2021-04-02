@@ -23,10 +23,10 @@ const CardPlaylist = ({ changedCards, setChangedCards, setSrc, playlist }) => {
   return (
     <div className="card-playlist">
       <div className="card-big-table">
-        {playlist?.map((track) => (
+        {playlist?.map((track, index) => (
           <div
             className="track"
-            key={track.id}
+            key={index}
             onClick={() => PlayTrack(track.id)}
           >
             <div className="track-cover-container">
