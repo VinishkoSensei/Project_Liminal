@@ -1,13 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './card-search.styles.scss';
 
-const CardSearch = ({ changedCards }) => {
+const CardSearch = ({ changedCards, playlist }) => {
   const [tracks, setTracks] = useState();
   const [query, setQuery] = useState('');
   const [searchbarOnTop, setSearchbarOnTop] = useState(false);
   const [searchType, setSearchType] = useState('all');
   const handleChange = (event) => {
     setQuery(event.target.value);
+  };
+
+  const AddTrackToPlaylistEnd = (id) => {
+    playlist.push(id);
+  };
+
+  const AddTrackToPlaylistStart = (id) => {
+    playlist.unshift(id);
   };
 
   const handleSubmit = async (event) => {
@@ -41,20 +49,6 @@ const CardSearch = ({ changedCards }) => {
       console.log(error);
     }
   };
-
-  /*useEffect(() => {
-    const getTrackList = async () => {
-      try {
-        const res = await fetch(`http://localhost:3001/gettracklist`);
-        const data = await res.json();
-        setTracks(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    getTrackList();
-  }, []);*/
 
   return (
     <div className={`card-search${searchbarOnTop ? ' searched' : ''}`}>
@@ -99,7 +93,10 @@ const CardSearch = ({ changedCards }) => {
           <div className="searchlist-tracks">
             {tracks?.map((track) => (
               <div className="track" key={track.id}>
-                <div className="track-cover-container">
+                <div
+                  className="track-cover-container"
+                  onClick={() => AddTrackToPlaylistStart(track)}
+                >
                   <img
                     src={`http://localhost:3001/gettrackcover/${track.cover}`}
                     alt="cover"
@@ -107,7 +104,10 @@ const CardSearch = ({ changedCards }) => {
                     height="60px"
                   />
                 </div>
-                <div className="track-info">
+                <div
+                  className="track-info"
+                  onClick={() => AddTrackToPlaylistEnd(track)}
+                >
                   <div>{track.name}</div>
                   <div>
                     <i>{track.author}</i>
@@ -121,24 +121,6 @@ const CardSearch = ({ changedCards }) => {
           </div>
         </div>
       </div>
-      {/*<div className="card-big-table">
-        tracksdummy.map((track) => (
-          <div className="track" key={track.id}>
-            <div className="track-cover-container">
-              <img src={track.cover} alt="cover" width="60px" height="60px" />
-            </div>
-            <div className="track-info">
-              <div>{track.name}</div>
-              <div>
-                <i>{track.author}</i>
-              </div>
-            </div>
-            <div className="track-duration">
-              <p>{track.duration}</p>
-            </div>
-          </div>
-        ))
-      </div>*/}
       <div className={`card-big-blur${changedCards ? ' disabled' : ''}`}></div>
     </div>
   );
