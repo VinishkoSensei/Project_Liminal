@@ -6,6 +6,7 @@ const CardSearch = ({
   changedCards,
   addTrackToPlaylistEnd,
   addTrackToPlaylistStart,
+  playTrack,
 }) => {
   const [tracks, setTracks] = useState();
   const [query, setQuery] = useState('');
@@ -92,6 +93,7 @@ const CardSearch = ({
               <Track
                 track={track}
                 index={index}
+                playTrack={playTrack}
                 addTrackToPlaylistEnd={addTrackToPlaylistEnd}
                 addTrackToPlaylistStart={addTrackToPlaylistStart}
               />
