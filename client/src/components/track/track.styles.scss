@@ -1,3 +1,9 @@
+@mixin flexeddiv($flexdirection, $justifycontent) {
+  display: flex;
+  flex-direction: $flexdirection;
+  justify-content: $justifycontent;
+}
+
 .track {
   @include flexeddiv(row, space-between);
   padding: 10px 20px;
