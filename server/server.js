@@ -1,7 +1,7 @@
 const Path = require('path');
 const Hapi = require('hapi');
 const Static = require('./routes/index.js');
-const { startStreaming } = require('./streaming');
+const { startStreaming } = require('./functions/audio');
 
 const server = Hapi.server({
   port: 3001,
