@@ -91,6 +91,7 @@ const CardSearch = ({
           <div className="searchlist-tracks">
             {tracks?.map((track, index) => (
               <Track
+                key={index}
                 track={track}
                 index={index}
                 playTrack={playTrack}
