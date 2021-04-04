@@ -7,6 +7,8 @@ const {
   getTracksByNameAndAuthor,
   getTracksByName,
   getTracksByAuthor,
+  getProfile,
+  getProfileImage,
 } = require('../streaming');
 
 const plugin = {
@@ -43,8 +45,32 @@ const plugin = {
 
     server.route({
       method: 'GET',
+      path: '/getprofileimage/{avatar}',
+      handler: getProfileImage,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'GET',
       path: '/gettracklist',
       handler: getTrackList,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'GET',
+      path: '/getprofile',
+      handler: getProfile,
       config: {
         cors: {
           origin: ['*'],
