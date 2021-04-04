@@ -1,10 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './profile.styles.scss';
-
-import { profiledummy } from '../../dummies/profile-dummy';
 
 const Profile = () => {
   const [minifiedProfile, setMinifiedProfile] = useState(false);
+  const [profile, setProfile] = useState({
+    id: -1,
+    first_name: '',
+    last_name: '',
+    middle_name: '',
+    phone: '',
+    email: '',
+    avatar: '',
+    birth_date: '',
+    subscribed: false,
+  });
+
+  //console.log(profile);
+  useEffect(() => {
+    const getProfileInfo = async () => {
+      const res = await fetch(`http://localhost:3001/getprofile`);
+      const data = await res.json();
+      setProfile(data);
+    };
+
+    getProfileInfo();
+  }, []);
 
   return (
     <div
@@ -12,16 +32,25 @@ const Profile = () => {
       onClick={() => setMinifiedProfile(!minifiedProfile)}
     >
       <div className="profile-icon-container">
-        <img src={`/${profiledummy.photourl}`} alt="profileimage" />
-        <div className="profile-info-minified">{profiledummy.name}</div>
+        <img
+          src={`http://localhost:3001/getprofileimage/${profile.avatar}`}
+          alt="profileimage"
+        />
+        <div className="profile-info-minified">
+          {profile.first_name}&nbsp;{profile.last_name}
+        </div>
       </div>
       <div className="profile-info">
-        <div className="profile-info-minifying">{profiledummy.name}</div>
         <div className="profile-info-minifying">
-          <i>{profiledummy.email}</i>
+          {profile.first_name}&nbsp;{profile.last_name}
         </div>
-        <div className="profile-info-minifying">{profiledummy.dateofbirth}</div>
-        <div className="profile-info-minifying">{profiledummy.status}</div>
+        <div className="profile-info-minifying">
+          <i>{profile.email}</i>
+        </div>
+        <div className="profile-info-minifying">{profile.birth_date}</div>
+        <div className="profile-info-minifying">
+          {profile.subscribed ? 'subscribed' : 'not subscribed'}
+        </div>
       </div>
     </div>
   );

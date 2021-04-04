@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './homepage.styles.scss';
 
 import Header from '../../components/header/header.component';

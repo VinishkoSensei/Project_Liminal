@@ -9,6 +9,8 @@ const Track = ({
   addTrackToPlaylistEnd,
   addTrackToPlaylistStart,
 }) => {
+  console.log(track.cover);
+
   return (
     <div className="track" key={index}>
       <div className="track-cover-container">

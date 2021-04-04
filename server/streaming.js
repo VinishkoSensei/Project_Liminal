@@ -30,6 +30,10 @@ const getTrackCover = (req, h) => {
   return h.file('../public/files/covers/' + req.params.trackCoverPath);
 };
 
+const getProfileImage = (req, h) => {
+  return h.file('../public/files/images/avatars/' + req.params.avatar);
+};
+
 const getTrackList = async (req, h) => {
   const trackData = await db.any(
     `SELECT t.id, t."path", t."name", t.cover, to_char(t.duration,'MI:SS') as "duration", a.nickname as "author", g.name as "genre" FROM liminal.track t JOIN liminal.author a ON t.author_id=a.id JOIN liminal.genre g ON t.genre_id=g.id order by t.id`
@@ -71,6 +75,15 @@ const getTracksByAuthor = async (req, h) => {
     nm
   );
   return h.response(trackData);
+};
+
+const getProfile = async (req, h) => {
+  const profile = await db.oneOrNone(
+    `SELECT id, last_name, first_name, middle_name, to_char(birth_date,'DD.MM.YYYY') as "birth_date", subscribed, email, phone, avatar
+FROM liminal.users
+where id =1`
+  );
+  return h.response(profile);
 };
 
 const streamTrack = async (req, h) => {
@@ -120,4 +133,6 @@ module.exports = {
   getTracksByNameAndAuthor,
   getTracksByName,
   getTracksByAuthor,
+  getProfile,
+  getProfileImage,
 };
