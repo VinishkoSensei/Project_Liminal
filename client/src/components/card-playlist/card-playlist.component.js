@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Track from '../track/track.component';
 import './card-playlist.styles.scss';
 

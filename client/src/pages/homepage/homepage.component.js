@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './homepage.styles.scss';
 
 import Header from '../../components/header/header.component';
 import Player from '../../components/player/player.component';
-
 import ChangingCards from '../../components/changingcards/changingcards.component';
 import MainMenu from '../../components/mainmenu/mainmenu.component';
 import Profile from '../../components/profile/profile.component';
