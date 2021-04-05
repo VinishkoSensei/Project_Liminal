@@ -2,12 +2,7 @@ import React, { useState } from 'react';
 import Track from '../track/track.component';
 import './card-search.styles.scss';
 
-const CardSearch = ({
-  changedCards,
-  addTrackToPlaylistEnd,
-  addTrackToPlaylistStart,
-  playTrack,
-}) => {
+const CardSearch = ({ changedCards }) => {
   const [tracks, setTracks] = useState();
   const [query, setQuery] = useState('');
   const [searchbarOnTop, setSearchbarOnTop] = useState(false);
@@ -90,14 +85,7 @@ const CardSearch = ({
         <div className="searchlist-list">
           <div className="searchlist-tracks">
             {tracks?.map((track, index) => (
-              <Track
-                key={index}
-                track={track}
-                index={index}
-                playTrack={playTrack}
-                addTrackToPlaylistEnd={addTrackToPlaylistEnd}
-                addTrackToPlaylistStart={addTrackToPlaylistStart}
-              />
+              <Track key={index} track={track} index={index} />
             ))}
           </div>
         </div>

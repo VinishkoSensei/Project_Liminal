@@ -1,9 +1,9 @@
-export const addTrackToPlaylistEnd = (playlist, track) => {
-  return [...playlist, { track }];
+export const addTrackToPlaylistEnd = (playlist, { track }) => {
+  return [...playlist, track];
 };
 
-export const addTrackToPlaylistStart = (playlist, track) => {
-  return [{ track }, ...playlist];
+export const addTrackToPlaylistStart = (playlist, { track }) => {
+  return [track, ...playlist];
 };
 
 export const playTrack = (id) => {
