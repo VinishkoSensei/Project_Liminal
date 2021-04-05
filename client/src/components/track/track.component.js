@@ -1,5 +1,12 @@
 import React from 'react';
 import './track.styles.scss';
+import { connect } from 'react-redux';
+import {
+  addTrackToPlaylistStart,
+  addTrackToPlaylistEnd,
+  playTrack,
+  deleteFromPlaylist,
+} from '../../redux/music/music.actions';
 
 const Track = ({
   track,
@@ -47,7 +54,7 @@ const Track = ({
         {addTrackToPlaylistStart ? (
           <div
             className="track-menu-item"
-            onClick={() => addTrackToPlaylistStart(track)}
+            onClick={() => addTrackToPlaylistStart({ track })}
             style={{
               backgroundImage: `url('/images/addtopl.svg')`,
               WebkitTransform: 'scaleX(-1) scaleY(-1)',
@@ -59,7 +66,7 @@ const Track = ({
         {addTrackToPlaylistEnd ? (
           <div
             className="track-menu-item"
-            onClick={() => addTrackToPlaylistEnd(track)}
+            onClick={() => addTrackToPlaylistEnd({ track })}
             style={{ backgroundImage: `url('/images/addtopl.svg')` }}
           />
         ) : null}
@@ -68,4 +75,11 @@ const Track = ({
   );
 };
 
-export default Track;
+const mapDispatchToProps = (dispatch) => ({
+  playTrack: (id, index) => dispatch(playTrack(id, index)),
+  deleteFromPlaylist: (index) => dispatch(deleteFromPlaylist(index)),
+  addTrackToPlaylistEnd: (id) => dispatch(addTrackToPlaylistEnd(id)),
+  addTrackToPlaylistStart: (id) => dispatch(addTrackToPlaylistStart(id)),
+});
+
+export default connect(null, mapDispatchToProps)(Track);
