@@ -1,15 +1,14 @@
 const File = require('inert');
+
+const { streamHandler, streamTrack } = require('../functions/audio');
+const { getTrackCover, getProfileImage } = require('../functions/file');
 const {
-  streamHandler,
-  streamTrack,
   getTrackList,
-  getTrackCover,
   getTracksByNameAndAuthor,
   getTracksByName,
   getTracksByAuthor,
   getProfile,
-  getProfileImage,
-} = require('../streaming');
+} = require('../functions/db');
 
 const plugin = {
   name: 'streamServer',
