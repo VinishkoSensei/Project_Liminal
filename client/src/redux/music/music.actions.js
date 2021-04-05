@@ -1,13 +1,13 @@
 import MusicActionTypes from './music.types';
 
-export const addTrackToPlaylistStart = (id) => ({
+export const addTrackToPlaylistStart = (track) => ({
   type: MusicActionTypes.ADD_TRACK_TO_PLAYLIST_START,
-  payload: id,
+  payload: track,
 });
 
-export const addTrackToPlaylistEnd = (id) => ({
+export const addTrackToPlaylistEnd = (track) => ({
   type: MusicActionTypes.ADD_TRACK_TO_PLAYLIST_END,
-  payload: id,
+  payload: track,
 });
 
 export const playTrack = (id, index) => ({
