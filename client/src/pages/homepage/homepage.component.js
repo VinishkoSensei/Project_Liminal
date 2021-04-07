@@ -23,27 +23,6 @@ const HomePage = () => {
     setIsFlipped(!isFlipped);
   };
 
-  const addTrackToPlaylistEnd = (id) => {
-    playlist.push(id);
-  };
-
-  const addTrackToPlaylistStart = (id) => {
-    playlist.unshift(id);
-  };
-
-  const playTrack = (id, index) => {
-    setSrc(`http://localhost:3001/tracks/${id}`);
-    deleteFromPlaylist(index);
-  };
-
-  const deleteFromPlaylist = (index) => {
-    setPlaylist(
-      playlist.filter((el, ind) => {
-        return ind !== index;
-      })
-    );
-  };
-
   const BtnBack = () => {
     /*switch (chosenCard) {
       case '':
@@ -106,12 +85,7 @@ const HomePage = () => {
                     {chosenCard === 'ai' || chosenCard === 'playlist' ? (
                       <CardPlaylist />
                     ) : (
-                      <CardSearch
-                        playlist={playlist}
-                        playTrack={playTrack}
-                        addTrackToPlaylistEnd={addTrackToPlaylistEnd}
-                        addTrackToPlaylistStart={addTrackToPlaylistStart}
-                      />
+                      <CardSearch />
                     )}
                   </ChangingCards>
                 )}
