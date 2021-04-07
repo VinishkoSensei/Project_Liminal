@@ -5,16 +5,6 @@ import { signInStart } from '../../redux/user/user.actions';
 
 const Profile = ({ signInStart, profile }) => {
   const [minifiedProfile, setMinifiedProfile] = useState(false);
-  //const [profile, setProfile] = useState();
-  /*useEffect(() => {
-    const getProfileInfo = async () => {
-      const res = await fetch(`http://localhost:3001/getprofile`);
-      const data = await res.json();
-      setProfile(data);
-    };
-
-    getProfileInfo();
-  }, []);*/
 
   useEffect(() => {
     signInStart('', '');
