@@ -1,15 +1,17 @@
 import React from 'react';
 import './card-music.styles.scss';
+import { connect } from 'react-redux';
 import { profiledummy } from '../../dummies/profile-dummy';
+import { playNextTrack, playRadio } from '../../redux/music/music.actions';
 
-const CardMusic = ({ changedCards, isNotRadio, setSrc }) => {
+const CardMusic = ({ changedCards, isNotRadio, playNextTrack, playRadio }) => {
   return (
     <div className="card-music">
       <div className="card-big-cover-container">
         <img src={`/${profiledummy.photourl}`} alt="profileimage" />
       </div>
-      <div className="card-big-controls">
-        {isNotRadio ? (
+      {isNotRadio ? (
+        <div className="card-big-controls">
           <div className="card-big-control">
             <img
               src="/images/forward.svg"
@@ -20,24 +22,28 @@ const CardMusic = ({ changedCards, isNotRadio, setSrc }) => {
               }}
             />
           </div>
-        ) : null}
-
-        <div
-          className="card-big-control"
-          onClick={() => setSrc('http://localhost:3001/stream')}
-        >
-          <img src="/images/play.svg" alt="play" />
-        </div>
-
-        {isNotRadio ? (
+          <div className="card-big-control" onClick={() => playNextTrack()}>
+            <img src="/images/play.svg" alt="play" />
+          </div>
           <div className="card-big-control">
             <img src="/images/forward.svg" alt="forward" />
           </div>
-        ) : null}
-      </div>
+        </div>
+      ) : (
+        <div className="card-big-controls">
+          <div className="card-big-control" onClick={() => playRadio()}>
+            <img src="/images/play.svg" alt="play" />
+          </div>
+        </div>
+      )}
       <div className={`card-big-blur${changedCards ? '' : ' disabled'}`}></div>
     </div>
   );
 };
 
-export default CardMusic;
+const mapDispatchToProps = (dispatch) => ({
+  playNextTrack: () => dispatch(playNextTrack()),
+  playRadio: () => dispatch(playRadio()),
+});
+
+export default connect(null, mapDispatchToProps)(CardMusic);
