@@ -1,14 +1,13 @@
 import React from 'react';
 import './card-music.styles.scss';
 import { connect } from 'react-redux';
-import { profiledummy } from '../../dummies/profile-dummy';
 import { playNextTrack, playRadio } from '../../redux/music/music.actions';
 
 const CardMusic = ({ changedCards, isNotRadio, playNextTrack, playRadio }) => {
   return (
     <div className="card-music">
       <div className="card-big-cover-container">
-        <img src={`/${profiledummy.photourl}`} alt="profileimage" />
+        <img src={`/images/1.jpg`} alt="profileimage" />
       </div>
       {isNotRadio ? (
         <div className="card-big-controls">
