@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import './card-playlist.styles.scss';
 
 const CardPlaylist = ({ changedCards, playlist }) => {
-  console.log(playlist);
   /*
   useEffect(() => {
     const getTrackList = async () => {
