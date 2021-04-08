@@ -1,13 +1,10 @@
 import React from 'react';
 import Track from '../track/track.component';
+import { connect } from 'react-redux';
 import './card-playlist.styles.scss';
 
-const CardPlaylist = ({
-  changedCards,
-  playlist,
-  playTrack,
-  deleteFromPlaylist,
-}) => {
+const CardPlaylist = ({ changedCards, playlist }) => {
+  console.log(playlist);
   /*
   useEffect(() => {
     const getTrackList = async () => {
@@ -27,12 +24,7 @@ const CardPlaylist = ({
     <div className="card-playlist">
       <div className="card-big-table">
         {playlist?.map((track, index) => (
-          <Track
-            track={track}
-            index={index}
-            playTrack={playTrack}
-            deleteFromPlaylist={deleteFromPlaylist}
-          />
+          <Track track={track} index={index} key={index} />
         ))}
       </div>
       <div className={`card-big-blur${changedCards ? ' disabled' : ''}`} />
@@ -40,4 +32,8 @@ const CardPlaylist = ({
   );
 };
 
-export default CardPlaylist;
+const mapStateToProps = (state) => ({
+  playlist: state.music.playlist,
+});
+
+export default connect(mapStateToProps)(CardPlaylist);
