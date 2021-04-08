@@ -44,7 +44,7 @@ const musicReducer = (state = INITIAL_STATE, action) => {
     case MusicActionTypes.PLAY_RADIO:
       return {
         ...state,
-        src: playRadio,
+        src: playRadio(),
       };
 
     case MusicActionTypes.DELETE_FROM_PLAYLIST:
