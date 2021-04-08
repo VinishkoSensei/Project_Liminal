@@ -18,6 +18,14 @@ export const playTrack = (id, index) => ({
   },
 });
 
+export const playNextTrack = () => ({
+  type: MusicActionTypes.PLAY_NEXT_TRACK,
+});
+
+export const playRadio = () => ({
+  type: MusicActionTypes.PLAY_RADIO,
+});
+
 export const deleteFromPlaylist = (index) => ({
   type: MusicActionTypes.DELETE_FROM_PLAYLIST,
   payload: index,

@@ -15,8 +15,6 @@ import ReactCardFlip from 'react-card-flip';
 const HomePage = () => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [chosenCard, setChosenCard] = useState(null);
-  const [src, setSrc] = useState();
-  const [playlist, setPlaylist] = useState([]);
 
   const FlipCard = (e) => {
     if (e.target.id) setChosenCard(e.target.id);
@@ -59,7 +57,7 @@ const HomePage = () => {
     <div className="main">
       <div className="toppart">
         <Header />
-        <Player src={src} setSrc={setSrc} playlist={playlist} />
+        <Player />
       </div>
       <div className="main-part">
         <BtnBack />
@@ -78,7 +76,7 @@ const HomePage = () => {
               >
                 <MainMenu FlipCard={FlipCard} />
                 {chosenCard === 'broadcast' ? (
-                  <CardMusic isNotRadio={false} setSrc={setSrc} />
+                  <CardMusic isNotRadio={false} />
                 ) : (
                   <ChangingCards>
                     <CardMusic isNotRadio={true} />

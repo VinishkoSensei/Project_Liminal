@@ -1,8 +1,10 @@
 import React from 'react';
 import './card-music.styles.scss';
+import { connect } from 'react-redux';
 import { profiledummy } from '../../dummies/profile-dummy';
+import { playNextTrack, playRadio } from '../../redux/music/music.actions';
 
-const CardMusic = ({ changedCards, isNotRadio, setSrc }) => {
+const CardMusic = ({ changedCards, isNotRadio, playNextTrack, playRadio }) => {
   return (
     <div className="card-music">
       <div className="card-big-cover-container">
@@ -24,7 +26,8 @@ const CardMusic = ({ changedCards, isNotRadio, setSrc }) => {
 
         <div
           className="card-big-control"
-          onClick={() => setSrc('http://localhost:3001/stream')}
+          /* onClick={() => ('http://localhost:3001/stream')}*/
+          onClick={() => playNextTrack()}
         >
           <img src="/images/play.svg" alt="play" />
         </div>
@@ -40,4 +43,9 @@ const CardMusic = ({ changedCards, isNotRadio, setSrc }) => {
   );
 };
 
-export default CardMusic;
+const mapDispatchToProps = (dispatch) => ({
+  playNextTrack: () => dispatch(playNextTrack()),
+  playRadio: () => dispatch(playRadio()),
+});
+
+export default connect(null, mapDispatchToProps)(CardMusic);
