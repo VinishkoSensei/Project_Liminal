@@ -15,33 +15,10 @@ import ReactCardFlip from 'react-card-flip';
 const HomePage = () => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [chosenCard, setChosenCard] = useState(null);
-  const [src, setSrc] = useState();
-  const [playlist, setPlaylist] = useState([]);
 
   const FlipCard = (e) => {
     if (e.target.id) setChosenCard(e.target.id);
     setIsFlipped(!isFlipped);
-  };
-
-  const addTrackToPlaylistEnd = (id) => {
-    playlist.push(id);
-  };
-
-  const addTrackToPlaylistStart = (id) => {
-    playlist.unshift(id);
-  };
-
-  const playTrack = (id, index) => {
-    setSrc(`http://localhost:3001/tracks/${id}`);
-    deleteFromPlaylist(index);
-  };
-
-  const deleteFromPlaylist = (index) => {
-    setPlaylist(
-      playlist.filter((el, ind) => {
-        return ind !== index;
-      })
-    );
   };
 
   const BtnBack = () => {
@@ -80,7 +57,7 @@ const HomePage = () => {
     <div className="main">
       <div className="toppart">
         <Header />
-        <Player src={src} setSrc={setSrc} playlist={playlist} />
+        <Player />
       </div>
       <div className="main-part">
         <BtnBack />
@@ -99,23 +76,14 @@ const HomePage = () => {
               >
                 <MainMenu FlipCard={FlipCard} />
                 {chosenCard === 'broadcast' ? (
-                  <CardMusic isNotRadio={false} setSrc={setSrc} />
+                  <CardMusic isNotRadio={false} />
                 ) : (
                   <ChangingCards>
                     <CardMusic isNotRadio={true} />
                     {chosenCard === 'ai' || chosenCard === 'playlist' ? (
-                      <CardPlaylist
-                        playlist={playlist}
-                        playTrack={playTrack}
-                        deleteFromPlaylist={deleteFromPlaylist}
-                      />
+                      <CardPlaylist />
                     ) : (
-                      <CardSearch
-                        playlist={playlist}
-                        playTrack={playTrack}
-                        addTrackToPlaylistEnd={addTrackToPlaylistEnd}
-                        addTrackToPlaylistStart={addTrackToPlaylistStart}
-                      />
+                      <CardSearch />
                     )}
                   </ChangingCards>
                 )}
