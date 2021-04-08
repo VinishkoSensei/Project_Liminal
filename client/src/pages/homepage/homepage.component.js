@@ -22,24 +22,6 @@ const HomePage = () => {
   };
 
   const BtnBack = () => {
-    /*switch (chosenCard) {
-      case '':
-        break;
-      default:
-        return null;
-    }*/
-    /*return (
-      <div
-        className="btn-back"
-        style={
-          !isFlipped
-            ? { display: 'none' }
-            : { backgroundImage: `url('/images/play.svg')` }
-        }
-        onClick={FlipCard}
-      />
-    );*/
-
     return (
       <div
         className="btn-back"
