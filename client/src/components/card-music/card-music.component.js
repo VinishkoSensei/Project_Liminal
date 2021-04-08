@@ -10,8 +10,8 @@ const CardMusic = ({ changedCards, isNotRadio, playNextTrack, playRadio }) => {
       <div className="card-big-cover-container">
         <img src={`/${profiledummy.photourl}`} alt="profileimage" />
       </div>
-      <div className="card-big-controls">
-        {isNotRadio ? (
+      {isNotRadio ? (
+        <div className="card-big-controls">
           <div className="card-big-control">
             <img
               src="/images/forward.svg"
@@ -22,22 +22,20 @@ const CardMusic = ({ changedCards, isNotRadio, playNextTrack, playRadio }) => {
               }}
             />
           </div>
-        ) : null}
-
-        <div
-          className="card-big-control"
-          /* onClick={() => ('http://localhost:3001/stream')}*/
-          onClick={() => playNextTrack()}
-        >
-          <img src="/images/play.svg" alt="play" />
-        </div>
-
-        {isNotRadio ? (
+          <div className="card-big-control" onClick={() => playNextTrack()}>
+            <img src="/images/play.svg" alt="play" />
+          </div>
           <div className="card-big-control">
             <img src="/images/forward.svg" alt="forward" />
           </div>
-        ) : null}
-      </div>
+        </div>
+      ) : (
+        <div className="card-big-controls">
+          <div className="card-big-control" onClick={() => playRadio()}>
+            <img src="/images/play.svg" alt="play" />
+          </div>
+        </div>
+      )}
       <div className={`card-big-blur${changedCards ? '' : ' disabled'}`}></div>
     </div>
   );
