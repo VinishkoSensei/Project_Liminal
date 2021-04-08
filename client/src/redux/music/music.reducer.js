@@ -4,6 +4,8 @@ import {
   addTrackToPlaylistEnd,
   playTrack,
   deleteFromPlaylist,
+  playNextTrack,
+  playRadio,
 } from './music.utils';
 
 const INITIAL_STATE = {
@@ -30,6 +32,19 @@ const musicReducer = (state = INITIAL_STATE, action) => {
         ...state,
         src: playTrack(action.payload.id),
         playlist: deleteFromPlaylist(state.playlist, action.payload.index),
+      };
+
+    case MusicActionTypes.PLAY_NEXT_TRACK:
+      return {
+        ...state,
+        src: playNextTrack(state.playlist),
+        playlist: deleteFromPlaylist(state.playlist, 0),
+      };
+
+    case MusicActionTypes.PLAY_RADIO:
+      return {
+        ...state,
+        src: playRadio,
       };
 
     case MusicActionTypes.DELETE_FROM_PLAYLIST:
