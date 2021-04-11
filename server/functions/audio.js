@@ -40,6 +40,7 @@ const startStreaming = () => {
 
   (function playLoop() {
     const song = Fs.createReadStream(radioQueue[songNum++]);
+    console.log('Current song: ', song.path);
     const throttle = new Throttle(128000 / 8);
     throttle.on('data', (chunk) => sinks.forEach((sink) => sink.write(chunk)));
     if (radioQueue.length === songNum) songNum = 0;
