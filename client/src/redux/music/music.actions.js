@@ -18,12 +18,21 @@ export const playTrack = (id, index) => ({
   },
 });
 
+export const changePlayingState = (playingState) => ({
+  type: MusicActionTypes.CHANGE_PLAYING_STATE,
+  payload: playingState,
+});
+
 export const playNextTrack = () => ({
   type: MusicActionTypes.PLAY_NEXT_TRACK,
 });
 
 export const playRadio = () => ({
   type: MusicActionTypes.PLAY_RADIO,
+});
+
+export const emptySrc = () => ({
+  type: MusicActionTypes.EMPTY_SRC,
 });
 
 export const deleteFromPlaylist = (index) => ({
