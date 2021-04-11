@@ -29,7 +29,7 @@
   text-align: center;
   margin-bottom: 10px;
   cursor: default;
-  border-radius: 30px;
+  border-radius: 8px;
   padding: 2px 5px;
   cursor: pointer;
 
@@ -41,11 +41,12 @@
     @include setwidthandheight(100%, 100%);
     opacity: 100%;
     @include animation(opacity, 2s);
+    word-break: break-word;
   }
 
   .profile-icon-container {
     margin: 0 0 0 0;
-    @include flexeddiv(unset, space-around);
+    @include flexeddiv(column, center);
 
     img {
       @include animation(all, 2s);
@@ -71,6 +72,6 @@
   &.minified {
     height: 0;
     padding: 0;
-    border: 0;
+    @include setborderwithradius(0px solid black, 8px);
   }
 }

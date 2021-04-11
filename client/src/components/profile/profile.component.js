@@ -4,7 +4,7 @@ import './profile.styles.scss';
 import { signInStart } from '../../redux/user/user.actions';
 
 const Profile = ({ signInStart, profile }) => {
-  const [minifiedProfile, setMinifiedProfile] = useState(false);
+  const [minifiedProfile, setMinifiedProfile] = useState(true);
 
   useEffect(() => {
     signInStart('', '');
