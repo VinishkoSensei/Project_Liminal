@@ -11,6 +11,7 @@ import {
 const INITIAL_STATE = {
   src: '',
   playlist: [],
+  isPlaying: false,
 };
 
 const musicReducer = (state = INITIAL_STATE, action) => {
@@ -45,6 +46,18 @@ const musicReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         src: playRadio(),
+      };
+
+    case MusicActionTypes.EMPTY_SRC:
+      return {
+        ...state,
+        src: '',
+      };
+
+    case MusicActionTypes.CHANGE_PLAYING_STATE:
+      return {
+        ...state,
+        isPlaying: action.payload,
       };
 
     case MusicActionTypes.DELETE_FROM_PLAYLIST:

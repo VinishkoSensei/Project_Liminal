@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './homepage.styles.scss';
 
 import Header from '../../components/header/header.component';
@@ -15,6 +15,7 @@ import ReactCardFlip from 'react-card-flip';
 const HomePage = () => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [chosenCard, setChosenCard] = useState(null);
+  const playerRef = useRef(null);
 
   const FlipCard = (e) => {
     if (e.target.id) setChosenCard(e.target.id);
@@ -39,7 +40,7 @@ const HomePage = () => {
     <div className="main">
       <div className="toppart">
         <Header />
-        <Player />
+        <Player playerRef={playerRef} />
       </div>
       <div className="main-part">
         <BtnBack />
@@ -58,10 +59,10 @@ const HomePage = () => {
               >
                 <MainMenu FlipCard={FlipCard} />
                 {chosenCard === 'broadcast' ? (
-                  <CardMusic isNotRadio={false} />
+                  <CardMusic isNotRadio={false} playerRef={playerRef} />
                 ) : (
                   <ChangingCards>
-                    <CardMusic isNotRadio={true} />
+                    <CardMusic isNotRadio={true} playerRef={playerRef} />
                     {chosenCard === 'ai' || chosenCard === 'playlist' ? (
                       <CardPlaylist />
                     ) : (
