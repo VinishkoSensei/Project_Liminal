@@ -22,72 +22,56 @@
   border-radius: $radius;
 }
 
-.profile {
+.profile-main {
   background-color: limegreen;
   @include setborderwithradius(1px solid black, 8px);
-  @include flexeddiv(column, unset);
+  @include flexeddiv(row, unset);
   text-align: center;
-  padding: 10px 0;
   margin-bottom: 10px;
   cursor: default;
-  @include animation(all, 2s);
+  border-radius: 8px;
+  padding: 2px 5px;
+  cursor: pointer;
 
-  .profile-info {
+  .profile-info-main {
     @include flexeddiv(column, space-around);
     border-radius: 100%;
-
-    .profile-info-minifying {
-      @include animation(all, 2s);
-    }
+    line-height: 200%;
+    margin: 0;
+    @include setwidthandheight(100%, 100%);
+    opacity: 100%;
+    @include animation(opacity, 2s);
+    word-break: break-word;
   }
 
   .profile-icon-container {
-    margin: 0 auto;
-    @include animation(all, 2s);
+    margin: 0 0 0 0;
+    @include flexeddiv(column, center);
 
     img {
-      @include setwidthandheight(70px, 70px);
-      @include setborderwithradius(unset, 100%);
       @include animation(all, 2s);
-    }
-
-    .profile-info-minified {
-      margin: 5px 0px;
-      @include setwidthandheight(0, 0);
-      opacity: 0;
-    }
-  }
-
-  &.minified {
-    text-align: center;
-    border-radius: 30px;
-    padding: 2px 5px;
-
-    .profile-icon-container {
-      margin: 0 0 0 0;
-      @include flexeddiv(unset, space-around);
-
-      .profile-info-minified {
-        border-radius: 100%;
-        line-height: 200%;
-        margin: 0;
-        @include setwidthandheight(100%, 100%);
-        opacity: 100%;
-        @include animation(opacity, 2s);
-      }
-    }
-
-    img {
       @include setwidthandheight(30px, 30px);
       @include setborderwithradius(unset, 50%);
     }
+  }
+}
 
-    .profile-info {
-      @include setwidthandheight(100%, 0);
-      .profile-info-minifying {
-        border-radius: 0;
-        opacity: 0%;
-      }
-    }
+.profile-info {
+  background-color: limegreen;
+  @include setborderwithradius(1px solid black, 8px);
+  @include flexeddiv(column, space-around);
+  text-align: center;
+  padding: 10px 2px;
+  margin-bottom: 10px;
+  cursor: default;
+  @include animation(all, 2s);
+  overflow: hidden;
+  height: 85px;
+  cursor: pointer;
+
+  &.minified {
+    height: 0;
+    padding: 0;
+    @include setborderwithradius(0px solid black, 8px);
   }
 }
