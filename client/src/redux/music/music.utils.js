@@ -7,7 +7,8 @@ export const addTrackToPlaylistStart = (playlist, { track }) => {
 };
 
 export const copyTrackFromPlaylistToPrevPlaylist = (prevPlaylist, playlist) => {
-  return [...prevPlaylist, playlist[0]];
+  if (playlist[0]) return [...prevPlaylist, playlist[0]];
+  else return prevPlaylist;
 };
 
 export const playTrack = (id) => {
