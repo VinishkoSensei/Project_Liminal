@@ -10,10 +10,10 @@ export const addTrackToPlaylistEnd = (track) => ({
   payload: track,
 });
 
-export const playTrack = (id, index) => ({
+export const playTrack = (track, index) => ({
   type: MusicActionTypes.PLAY_TRACK,
   payload: {
-    id,
+    track,
     index,
   },
 });
