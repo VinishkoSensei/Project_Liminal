@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import Track from '../track/track.component';
 import { connect } from 'react-redux';
 import './card-playlist.styles.scss';
 
-const CardPlaylist = ({ changedCards, playlist }) => {
+const CardPlaylist = ({ changedCards, playlist, prevPlaylist }) => {
+  const hrRef = React.useRef(null);
   /*
   useEffect(() => {
     const getTrackList = async () => {
@@ -19,9 +20,19 @@ const CardPlaylist = ({ changedCards, playlist }) => {
     getTrackList();
   }, []);*/
 
+  useEffect(() => {
+    hrRef.current.scrollIntoView({
+      behavior: 'smooth',
+    });
+  }, []);
+
   return (
     <div className="card-playlist">
       <div className="card-big-table">
+        {prevPlaylist?.map((track, index) => (
+          <Track track={track} index={index} key={index} />
+        ))}
+        <hr ref={hrRef} />
         {playlist?.map((track, index) => (
           <Track track={track} index={index} key={index} />
         ))}
@@ -33,6 +44,7 @@ const CardPlaylist = ({ changedCards, playlist }) => {
 
 const mapStateToProps = (state) => ({
   playlist: state.music.playlist,
+  prevPlaylist: state.music.prevPlaylist,
 });
 
 export default connect(mapStateToProps)(CardPlaylist);
