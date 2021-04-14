@@ -85,7 +85,13 @@ const CardSearch = ({ changedCards }) => {
         <div className="searchlist-list">
           <div className="searchlist-tracks">
             {tracks?.map((track, index) => (
-              <Track key={index} track={track} index={index} />
+              <Track
+                key={index}
+                track={track}
+                index={index}
+                showAddToStart
+                showAddToEnd
+              />
             ))}
           </div>
         </div>
