@@ -6,11 +6,13 @@ import {
   deleteFromPlaylist,
   playNextTrack,
   playRadio,
+  copyTrackFromPlaylistToPrevPlaylist,
 } from './music.utils';
 
 const INITIAL_STATE = {
   src: '',
   playlist: [],
+  prevPlaylist: [],
   isPlaying: false,
 };
 
@@ -31,13 +33,18 @@ const musicReducer = (state = INITIAL_STATE, action) => {
     case MusicActionTypes.PLAY_TRACK:
       return {
         ...state,
-        src: playTrack(action.payload.id),
+        src: playTrack(action.payload.track.id),
+        prevPlaylist: [action.payload.track],
         playlist: deleteFromPlaylist(state.playlist, action.payload.index),
       };
 
     case MusicActionTypes.PLAY_NEXT_TRACK:
       return {
         ...state,
+        prevPlaylist: copyTrackFromPlaylistToPrevPlaylist(
+          state.prevPlaylist,
+          state.playlist
+        ),
         src: playNextTrack(state.playlist),
         playlist: deleteFromPlaylist(state.playlist, 0),
       };

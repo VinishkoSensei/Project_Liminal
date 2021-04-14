@@ -39,7 +39,7 @@ const Track = ({
         {playTrack ? (
           <div
             className="track-menu-item"
-            onClick={() => playTrack(track.id, index)}
+            onClick={() => playTrack(track, index)}
             style={{ backgroundImage: `url('/images/play.svg')` }}
           />
         ) : null}
@@ -76,7 +76,7 @@ const Track = ({
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  playTrack: (id, index) => dispatch(playTrack(id, index)),
+  playTrack: (track, index) => dispatch(playTrack(track, index)),
   deleteFromPlaylist: (index) => dispatch(deleteFromPlaylist(index)),
   addTrackToPlaylistEnd: (id) => dispatch(addTrackToPlaylistEnd(id)),
   addTrackToPlaylistStart: (id) => dispatch(addTrackToPlaylistStart(id)),
