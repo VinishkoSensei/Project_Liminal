@@ -30,11 +30,23 @@ const CardPlaylist = ({ changedCards, playlist, prevPlaylist }) => {
     <div className="card-playlist">
       <div className="card-big-table">
         {prevPlaylist?.map((track, index) => (
-          <Track track={track} index={index} key={index} />
+          <Track
+            track={track}
+            index={index}
+            key={index}
+            showAddToStart
+            showAddToEnd
+          />
         ))}
         <hr ref={hrRef} />
         {playlist?.map((track, index) => (
-          <Track track={track} index={index} key={index} />
+          <Track
+            track={track}
+            index={index}
+            key={index}
+            showDelete
+            showAddToEnd
+          />
         ))}
       </div>
       <div className={`card-big-blur${changedCards ? ' disabled' : ''}`} />
