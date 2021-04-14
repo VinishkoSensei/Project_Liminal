@@ -9,6 +9,7 @@ import Profile from '../../components/profile/profile.component';
 import CardMusic from '../../components/card-music/card-music.component';
 import CardPlaylist from '../../components/card-playlist/card-playlist.component';
 import CardSearch from '../../components/card-search/card-search.component';
+import CardProfile from '../../components/card-profile/card-profile.component';
 
 import ReactCardFlip from 'react-card-flip';
 
@@ -16,6 +17,7 @@ const HomePage = () => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [chosenCard, setChosenCard] = useState(null);
   const playerRef = useRef(null);
+  const [profileExpanded, setProfileExpanded] = useState(false);
 
   const FlipCard = (e) => {
     if (e.target.id) setChosenCard(e.target.id);
@@ -75,10 +77,14 @@ const HomePage = () => {
           </div>
         </div>
         <div className="rightpanel">
-          <Profile />
+          <Profile
+            setProfileExpanded={setProfileExpanded}
+            profileExpanded={profileExpanded}
+          />
           <div className="news"></div>
         </div>
       </div>
+      <CardProfile profileExpanded={profileExpanded} />
       <div className="footer"></div>
     </div>
   );
