@@ -15,6 +15,9 @@ const Track = ({
   deleteFromPlaylist,
   addTrackToPlaylistEnd,
   addTrackToPlaylistStart,
+  showDelete,
+  showAddToStart,
+  showAddToEnd,
 }) => {
   return (
     <div className="track" key={index}>
@@ -36,14 +39,12 @@ const Track = ({
         <p>{track.duration}</p>
       </div>
       <div className="track-menu">
-        {playTrack ? (
-          <div
-            className="track-menu-item"
-            onClick={() => playTrack(track, index)}
-            style={{ backgroundImage: `url('/images/play.svg')` }}
-          />
-        ) : null}
-        {deleteFromPlaylist ? (
+        <div
+          className="track-menu-item"
+          onClick={() => playTrack(track, index)}
+          style={{ backgroundImage: `url('/images/play.svg')` }}
+        />
+        {showDelete ? (
           <div
             className="track-menu-item"
             onClick={() => deleteFromPlaylist(index)}
@@ -51,7 +52,7 @@ const Track = ({
           />
         ) : null}
 
-        {addTrackToPlaylistStart ? (
+        {showAddToStart ? (
           <div
             className="track-menu-item"
             onClick={() => addTrackToPlaylistStart({ track })}
@@ -63,7 +64,7 @@ const Track = ({
           />
         ) : null}
 
-        {addTrackToPlaylistEnd ? (
+        {showAddToEnd ? (
           <div
             className="track-menu-item"
             onClick={() => addTrackToPlaylistEnd({ track })}
