@@ -6,6 +6,11 @@ export const addTrackToPlaylistStart = (playlist, { track }) => {
   return [track, ...playlist];
 };
 
+export const copyTrackFromPlaylistToPrevPlaylist = (prevPlaylist, playlist) => {
+  if (playlist[0]) return [...prevPlaylist, playlist[0]];
+  else return prevPlaylist;
+};
+
 export const playTrack = (id) => {
   return `http://localhost:3001/tracks/${id}`;
 };
