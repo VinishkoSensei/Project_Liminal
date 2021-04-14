@@ -3,7 +3,12 @@ import { connect } from 'react-redux';
 import './profile.styles.scss';
 import { signInStart } from '../../redux/user/user.actions';
 
-const Profile = ({ signInStart, profile }) => {
+const Profile = ({
+  signInStart,
+  profile,
+  setProfileExpanded,
+  profileExpanded,
+}) => {
   const [minifiedProfile, setMinifiedProfile] = useState(true);
 
   useEffect(() => {
@@ -30,7 +35,7 @@ const Profile = ({ signInStart, profile }) => {
           </div>
           <div
             className={`profile-info${minifiedProfile ? ' minified' : ''}`}
-            onClick={() => setMinifiedProfile(!minifiedProfile)}
+            onClick={() => setProfileExpanded(!profileExpanded)}
           >
             <div>
               <i>{profile.email}</i>
