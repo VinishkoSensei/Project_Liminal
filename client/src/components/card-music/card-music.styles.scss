@@ -30,7 +30,13 @@
 
   .card-big-cover-container {
     @include setwidthandheight(60%, 50%);
+    @include setborderwithradius(2px solid black, 20px);
+    overflow: hidden;
     margin: 0 auto;
+    background-color: rgb(212, 247, 248);
+    background-repeat: no-repeat;
+    background-size: 50% 50%;
+    background-position: center;
 
     img {
       @include setwidthandheight(100%, 100%);

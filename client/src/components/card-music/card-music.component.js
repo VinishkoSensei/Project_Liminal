@@ -15,11 +15,24 @@ const CardMusic = ({
   playerRef,
   playNextTrack,
   emptySrc,
+  currentTrack,
 }) => {
   return (
     <div className="card-music">
-      <div className="card-big-cover-container">
-        <img src={`/images/1.jpg`} alt="profileimage" />
+      <div
+        className="card-big-cover-container"
+        style={{
+          backgroundImage: `url(${
+            isNotRadio ? `/images/music.svg` : `/images/broadcast.svg`
+          })`,
+        }}
+      >
+        {currentTrack ? (
+          <img
+            src={`http://localhost:3001/gettrackcover/${currentTrack.cover}`}
+            alt="profileimage"
+          />
+        ) : null}
       </div>
       {isNotRadio ? (
         <div className="card-big-controls">
@@ -73,6 +86,7 @@ const CardMusic = ({
 
 const mapStateToProps = (state) => ({
   isPlaying: state.music.isPlaying,
+  currentTrack: state.music.currentTrack,
 });
 
 const mapDispatchToProps = (dispatch) => ({
