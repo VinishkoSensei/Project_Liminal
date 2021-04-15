@@ -11,6 +11,7 @@ import {
 
 const INITIAL_STATE = {
   src: '',
+  currentTrack: {},
   playlist: [],
   prevPlaylist: [],
   isPlaying: false,
@@ -34,6 +35,7 @@ const musicReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         src: playTrack(action.payload.track.id),
+        currentTrack: action.payload.track,
         prevPlaylist: [action.payload.track],
         playlist: deleteFromPlaylist(state.playlist, action.payload.index),
       };
@@ -45,6 +47,7 @@ const musicReducer = (state = INITIAL_STATE, action) => {
           state.prevPlaylist,
           state.playlist
         ),
+        currentTrack: state.playlist[0],
         src: playNextTrack(state.playlist),
         playlist: deleteFromPlaylist(state.playlist, 0),
       };
