@@ -5,7 +5,11 @@ import { connect } from 'react-redux';
 const CardSignIn = ({changedCards}) => {
   return (
     <div className="card-signin">
-      <div />
+      <form>
+        <input placeholder="Email"/>
+        <input placeholder="Password" type="password"/>
+        <input type="submit" value="Sign In"/>
+        </form>
       <div className={`card-big-blur${changedCards ? '' : ' disabled'}`}></div>
       </div>
   );
