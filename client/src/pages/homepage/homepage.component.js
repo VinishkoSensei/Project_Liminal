@@ -10,6 +10,8 @@ import CardMusic from '../../components/card-music/card-music.component';
 import CardPlaylist from '../../components/card-playlist/card-playlist.component';
 import CardSearch from '../../components/card-search/card-search.component';
 import CardProfile from '../../components/card-profile/card-profile.component';
+import CardSignIn from '../../components/card-signin/card-signin.component';
+import CardSignUp from '../../components/card-signup/card-signup.component';
 
 import ReactCardFlip from 'react-card-flip';
 
@@ -49,7 +51,13 @@ const HomePage = () => {
         <div className="main-space">
           <div className="main-container">
             <div className="cards-container">
-              <ReactCardFlip
+              <div className="auth">
+                <ChangingCards>
+                  <CardSignIn />
+                  <CardSignUp />
+                </ChangingCards>
+              </div>
+              {/*<ReactCardFlip 
                 isFlipped={isFlipped}
                 flipSpeedBackToFront={2}
                 flipSpeedFrontToBack={2}
@@ -72,7 +80,7 @@ const HomePage = () => {
                     )}
                   </ChangingCards>
                 )}
-              </ReactCardFlip>
+              </ReactCardFlip>*/}
             </div>
           </div>
         </div>
