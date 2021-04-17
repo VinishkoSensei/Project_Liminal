@@ -1,6 +1,6 @@
 import ProfileActionTypes from './user.types';
 
-export const signInStart = ({ email, password }) => ({
+export const signInStart = (email, password) => ({
   type: ProfileActionTypes.SIGN_IN_START,
   payload: { email, password },
 });
