@@ -53,10 +53,15 @@ const getTracksByAuthor = async (req, h) => {
 };
 
 const getProfile = async (req, h) => {
+  const { email, password } = req.payload;
+  if (!email || !password) {
+    return Promise.reject('incorrect form submission');
+  }
   const profile = await db.oneOrNone(
     `SELECT id, last_name, first_name, middle_name, to_char(birth_date,'DD.MM.YYYY') as "birth_date", subscribed, email, phone, avatar
 FROM liminal.users
-where id =1`
+where email like $1 AND password like $2`,
+    [email, password]
   );
   return h.response(profile);
 };

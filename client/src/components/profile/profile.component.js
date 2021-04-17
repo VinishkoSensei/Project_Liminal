@@ -12,7 +12,7 @@ const Profile = ({
   const [minifiedProfile, setMinifiedProfile] = useState(true);
 
   useEffect(() => {
-    signInStart('', '');
+    signInStart('johndoe@gmail.com', 'johndoe');
   }, []);
 
   return (

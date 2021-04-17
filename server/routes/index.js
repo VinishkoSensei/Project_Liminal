@@ -67,7 +67,7 @@ const plugin = {
     });
 
     server.route({
-      method: 'GET',
+      method: 'POST',
       path: '/getprofile',
       handler: getProfile,
       config: {
