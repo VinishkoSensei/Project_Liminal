@@ -3,8 +3,9 @@ import CustomButton from '../custombutton/custombutton.component';
 import FormInput from '../forminput/forminput.component';
 import './card-signin.styles.scss';
 import { connect } from 'react-redux';
+import { signInStart } from '../../redux/user/user.actions';
 
-const CardSignIn = ({ changedCards }) => {
+const CardSignIn = ({ changedCards, signInStart }) => {
   const selectedItemInitialState = {
     email: '',
     password: '',
@@ -31,9 +32,14 @@ const CardSignIn = ({ changedCards }) => {
     },
   ];
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    signInStart(email, password);
+  };
+
   return (
     <div className="card-signin">
-      <form method="post">
+      <form method="post" onSubmit={handleSubmit}>
         {Inputs.map((input) => (
           <FormInput
             name={input.name}
@@ -55,12 +61,10 @@ const mapStateToProps = (state) => ({
   isPlaying: state.music.isPlaying,
   currentTrack: state.music.currentTrack,
 });
-
+*/
 const mapDispatchToProps = (dispatch) => ({
-  playNextTrack: () => dispatch(playNextTrack()),
-  playRadio: () => dispatch(playRadio()),
-  emptySrc: () => dispatch(emptySrc()),
-});*/
+  signInStart: (email, password) => dispatch(signInStart(email, password)),
+});
 
 //export default connect(mapStateToProps, mapDispatchToProps)(CardMusic);
-export default CardSignIn;
+export default connect(null, mapDispatchToProps)(CardSignIn);
