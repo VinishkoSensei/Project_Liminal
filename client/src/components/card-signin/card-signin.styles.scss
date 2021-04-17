@@ -29,11 +29,10 @@
   @include flexeddiv(column, space-around);
 
   form {
-    margin:  auto 15%;
+    margin: auto 15%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    height: 20%;
+    height: 40%;
   }
-
 }

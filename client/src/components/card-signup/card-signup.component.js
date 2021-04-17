@@ -1,22 +1,88 @@
-import React from 'react';
+import React, { useState } from 'react';
+import CustomButton from '../custombutton/custombutton.component';
+import FormInput from '../forminput/forminput.component';
 import './card-signup.styles.scss';
 import { connect } from 'react-redux';
 
-const CardSignUp = ({changedCards}) => {
+const CardSignUp = ({ changedCards }) => {
+  const selectedItemInitialState = {
+    email: '',
+    firstname: '',
+    lastname: '',
+    file: '',
+    password: '',
+    passwordconf: '',
+  };
+
+  const [selectedItem, setSelectedItem] = useState(selectedItemInitialState);
+  const handleChange = (event) => {
+    const { value, name } = event.target;
+    setSelectedItem({ ...selectedItem, [name]: value });
+  };
+  const {
+    email,
+    firstname,
+    lastname,
+    file,
+    password,
+    passwordconf,
+  } = selectedItem;
+  const Inputs = [
+    {
+      name: 'email',
+      value: email,
+      label: 'Email:',
+      type: 'email',
+    },
+    {
+      name: 'firstname',
+      value: firstname,
+      label: 'Firstname:',
+      type: 'text',
+    },
+    {
+      name: 'lastname',
+      value: lastname,
+      label: 'Lastname:',
+      type: 'text',
+    },
+    {
+      name: 'file',
+      value: file,
+      label: '',
+      type: 'file',
+    },
+    {
+      name: 'password',
+      value: password,
+      label: 'Password:',
+      type: 'password',
+    },
+    {
+      name: 'passwordconf',
+      value: passwordconf,
+      label: 'Password confirmation:',
+      type: 'password',
+    },
+  ];
+
   return (
     <div className="card-signup">
-      <form>
-        <input placeholder="Email"/>
-        <input placeholder="Username"/>
-        <input placeholder="Firstname"/>
-        <input placeholder="Lastname"/>
-        <input type="file"/>
-        <input placeholder="Password" type="password"/>
-        <input placeholder="Password confirmation" type="password"/>
-        <input type="submit" value="Sign Up"/>
-        </form>
+      <form method="post">
+        {Inputs.map((input) => (
+          <FormInput
+            name={input.name}
+            value={input.value}
+            label={input.label}
+            handleChange={handleChange}
+            type={input.type}
+            required
+          />
+        ))}
+        <CustomButton type="submit">Sign Up</CustomButton>
+      </form>
       <div className={`card-big-blur${changedCards ? ' disabled' : ''}`} />
-      </div>
+    </div>
   );
 };
 /*

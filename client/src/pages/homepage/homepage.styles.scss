@@ -68,9 +68,9 @@
           @include setwidthandheight(100%, 100%);
 
           .auth {
-            .card-big-primary, .card-big-secondary {
+            .card-big-primary,
+            .card-big-secondary {
               @include setwidthandheight(55%, 55%);
-              cursor: pointer;
             }
           }
 
