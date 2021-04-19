@@ -1,4 +1,5 @@
 const pgp = require('pg-promise')({});
+const Boom = require('boom');
 
 const cn = {
   host: 'localhost', // 'localhost' is the default;
@@ -67,16 +68,22 @@ where email like $1 AND password like $2`,
 };
 
 const createProfile = async (req, h) => {
-  const { email, firstname, lastname, date, phone, password } = req.payload;
-  const profile = await db.one(
-    `INSERT INTO liminal.users(email, first_name, last_name, birth_date, phone, password)
+  try {
+    const { email, firstname, lastname, date, phone, password } = req.payload;
+    await db.none(
+      `INSERT INTO liminal.users(email, first_name, last_name, birth_date, phone, password)
 VALUES ($1, $2, $3, $4, $5, $6)`,
-    [email, firstname, lastname, date, phone, password]
-  );
-  console.log(profile);
-  return h.response({
-    profile: { email, firstname, lastname, date, phone, password },
-  });
+      [email, firstname, lastname, date, phone, password]
+    );
+    return h.response().code(200);
+  } catch (err) {
+    switch (err.routine) {
+      case '_bt_check_unique':
+        throw Boom.notAcceptable('NOT UNIQUE');
+      default:
+        throw Boom.badRequest(err);
+    }
+  }
 };
 
 const getTrack = async (trackId) => {

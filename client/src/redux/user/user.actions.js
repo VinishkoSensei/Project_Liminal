@@ -34,5 +34,5 @@ export const signUpSuccess = (profile) => ({
 
 export const signUpFailure = (error) => ({
   type: ProfileActionTypes.SIGN_UP_FAILURE,
-  payload: error,
+  payload: error.message,
 });
