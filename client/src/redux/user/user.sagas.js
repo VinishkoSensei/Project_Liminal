@@ -6,18 +6,11 @@ import {
   signUpSuccess,
   signUpFailure,
 } from './user.actions';
+import { handleSignIn } from './user.utils';
 
 export function* signIn({ payload: { email, password } }) {
   try {
-    const userdata = yield fetch(`http://localhost:3001/getprofile`, {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    });
-    const user = yield userdata.json();
+    const user = yield handleSignIn(email, password);
     yield put(
       signInSuccess({
         user: user,
@@ -34,15 +27,7 @@ export function* onSignInStart() {
 
 export function* signInAfterSignUp({ payload: { email, password } }) {
   try {
-    const userdata = yield fetch(`http://localhost:3001/getprofile`, {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    });
-    const user = yield userdata.json();
+    const user = yield handleSignIn(email, password);
     yield put(
       signInSuccess({
         user: user,
