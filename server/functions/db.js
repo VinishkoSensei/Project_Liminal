@@ -66,6 +66,19 @@ where email like $1 AND password like $2`,
   return h.response(profile);
 };
 
+const createProfile = async (req, h) => {
+  const { email, firstname, lastname, date, phone, password } = req.payload;
+  const profile = await db.one(
+    `INSERT INTO liminal.users(email, first_name, last_name, birth_date, phone, password)
+VALUES ($1, $2, $3, $4, $5, $6)`,
+    [email, firstname, lastname, date, phone, password]
+  );
+  console.log(profile);
+  return h.response({
+    profile: { email, firstname, lastname, date, phone, password },
+  });
+};
+
 const getTrack = async (trackId) => {
   const track = await db
     .one('SELECT * FROM liminal.track WHERE id = $1', trackId)
@@ -81,5 +94,6 @@ module.exports = {
   getTracksByName,
   getTracksByAuthor,
   getProfile,
+  createProfile,
   getTrack,
 };
