@@ -15,7 +15,9 @@ import CardSignUp from '../../components/card-signup/card-signup.component';
 
 import ReactCardFlip from 'react-card-flip';
 
-const HomePage = () => {
+import { connect } from 'react-redux';
+
+const HomePage = ({ profile }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [chosenCard, setChosenCard] = useState(null);
   const playerRef = useRef(null);
@@ -51,36 +53,39 @@ const HomePage = () => {
         <div className="main-space">
           <div className="main-container">
             <div className="cards-container">
-              <div className="auth">
-                <ChangingCards>
-                  <CardSignIn />
-                  <CardSignUp />
-                </ChangingCards>
-              </div>
-              {/*<ReactCardFlip 
-                isFlipped={isFlipped}
-                flipSpeedBackToFront={2}
-                flipSpeedFrontToBack={2}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                }}
-                containerStyle={{ width: '100%', height: '100%' }}
-              >
-                <MainMenu FlipCard={FlipCard} />
-                {chosenCard === 'broadcast' ? (
-                  <CardMusic isNotRadio={false} playerRef={playerRef} />
-                ) : (
+              {profile ? (
+                <ReactCardFlip
+                  isFlipped={isFlipped}
+                  flipSpeedBackToFront={2}
+                  flipSpeedFrontToBack={2}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                  }}
+                  containerStyle={{ width: '100%', height: '100%' }}
+                >
+                  <MainMenu FlipCard={FlipCard} />
+                  {chosenCard === 'broadcast' ? (
+                    <CardMusic isNotRadio={false} playerRef={playerRef} />
+                  ) : (
+                    <ChangingCards>
+                      <CardMusic isNotRadio={true} playerRef={playerRef} />
+                      {chosenCard === 'ai' || chosenCard === 'playlist' ? (
+                        <CardPlaylist />
+                      ) : (
+                        <CardSearch />
+                      )}
+                    </ChangingCards>
+                  )}
+                </ReactCardFlip>
+              ) : (
+                <div className="auth">
                   <ChangingCards>
-                    <CardMusic isNotRadio={true} playerRef={playerRef} />
-                    {chosenCard === 'ai' || chosenCard === 'playlist' ? (
-                      <CardPlaylist />
-                    ) : (
-                      <CardSearch />
-                    )}
+                    <CardSignIn />
+                    <CardSignUp />
                   </ChangingCards>
-                )}
-              </ReactCardFlip>*/}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -98,4 +103,8 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+const mapStateToProps = (state) => ({
+  profile: state.user.profile,
+});
+
+export default connect(mapStateToProps)(HomePage);
