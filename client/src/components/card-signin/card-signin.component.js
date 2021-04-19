@@ -23,12 +23,14 @@ const CardSignIn = ({ changedCards, signInStart }) => {
       value: email,
       label: 'Email:',
       type: 'email',
+      key: 'email',
     },
     {
       name: 'password',
       value: password,
       label: 'Password:',
       type: 'password',
+      key: 'password',
     },
   ];
 
@@ -47,6 +49,7 @@ const CardSignIn = ({ changedCards, signInStart }) => {
             label={input.label}
             handleChange={handleChange}
             type={input.type}
+            key={input.key}
             required
           />
         ))}
