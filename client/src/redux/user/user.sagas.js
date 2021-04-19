@@ -46,7 +46,7 @@ export function* signUp({
   payload: { email, firstname, lastname, date, phone, password },
 }) {
   try {
-    yield fetch(`http://localhost:3001/createprofile`, {
+    const response = yield fetch(`http://localhost:3001/createprofile`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -58,6 +58,10 @@ export function* signUp({
         password: password,
       }),
     });
+    if (!response.ok) {
+      const res = yield response.json();
+      throw new Error(res.message);
+    }
     yield put(signUpSuccess({ email, password }));
   } catch (e) {
     yield put(signUpFailure(e));
