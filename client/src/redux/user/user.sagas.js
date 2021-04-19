@@ -6,7 +6,7 @@ import {
   signUpSuccess,
   signUpFailure,
 } from './user.actions';
-import { handleSignIn } from './user.utils';
+import { handleSignIn, handleSignUp } from './user.utils';
 
 export function* signIn({ payload: { email, password } }) {
   try {
@@ -45,19 +45,15 @@ export function* onSignUpSuccess() {
 export function* signUp({
   payload: { email, firstname, lastname, date, phone, password },
 }) {
+  const response = yield handleSignUp(
+    email,
+    firstname,
+    lastname,
+    date,
+    phone,
+    password
+  );
   try {
-    const response = yield fetch(`http://localhost:3001/createprofile`, {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email,
-        firstname: firstname,
-        lastname: lastname,
-        date: date,
-        phone: phone,
-        password: password,
-      }),
-    });
     if (!response.ok) {
       const res = yield response.json();
       throw new Error(res.message);
