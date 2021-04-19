@@ -5,7 +5,7 @@ import './card-signup.styles.scss';
 import { connect } from 'react-redux';
 import { signUpStart } from '../../redux/user/user.actions';
 
-const CardSignUp = ({ changedCards, signUpStart }) => {
+const CardSignUp = ({ changedCards, signUpStart, error }) => {
   const selectedItemInitialState = {
     email: '',
     firstname: '',
@@ -102,17 +102,18 @@ const CardSignUp = ({ changedCards, signUpStart }) => {
           />
         ))}
         <CustomButton type="submit">Sign Up</CustomButton>
+        {error ? <div className="error">{error}</div> : null}
       </form>
+
       <div className={`card-big-blur${changedCards ? ' disabled' : ''}`} />
     </div>
   );
 };
-/*
-const mapStateToProps = (state) => ({
-  isPlaying: state.music.isPlaying,
-  currentTrack: state.music.currentTrack,
-});
 
+const mapStateToProps = (state) => ({
+  error: state.user.error,
+});
+/*
 const mapDispatchToProps = (dispatch) => ({
   playNextTrack: () => dispatch(playNextTrack()),
   playRadio: () => dispatch(playRadio()),
@@ -126,4 +127,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 //export default connect(mapStateToProps, mapDispatchToProps)(CardMusic);
-export default connect(null, mapDispatchToProps)(CardSignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(CardSignUp);
