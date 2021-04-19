@@ -3,12 +3,15 @@ import CustomButton from '../custombutton/custombutton.component';
 import FormInput from '../forminput/forminput.component';
 import './card-signup.styles.scss';
 import { connect } from 'react-redux';
+import { signUpStart } from '../../redux/user/user.actions';
 
-const CardSignUp = ({ changedCards }) => {
+const CardSignUp = ({ changedCards, signUpStart }) => {
   const selectedItemInitialState = {
     email: '',
     firstname: '',
     lastname: '',
+    date: '',
+    phone: '',
     file: '',
     password: '',
     passwordconf: '',
@@ -23,6 +26,8 @@ const CardSignUp = ({ changedCards }) => {
     email,
     firstname,
     lastname,
+    date,
+    phone,
     file,
     password,
     passwordconf,
@@ -47,6 +52,18 @@ const CardSignUp = ({ changedCards }) => {
       type: 'text',
     },
     {
+      name: 'date',
+      value: date,
+      label: '',
+      type: 'date',
+    },
+    {
+      name: 'phone',
+      value: phone,
+      label: 'Phone:',
+      type: 'tel',
+    },
+    {
       name: 'file',
       value: file,
       label: '',
@@ -66,9 +83,14 @@ const CardSignUp = ({ changedCards }) => {
     },
   ];
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    signUpStart(email, firstname, lastname, date, phone, password);
+  };
+
   return (
     <div className="card-signup">
-      <form method="post">
+      <form method="post" onSubmit={handleSubmit}>
         {Inputs.map((input) => (
           <FormInput
             name={input.name}
@@ -98,4 +120,10 @@ const mapDispatchToProps = (dispatch) => ({
 });*/
 
 //export default connect(mapStateToProps, mapDispatchToProps)(CardMusic);
-export default CardSignUp;
+const mapDispatchToProps = (dispatch) => ({
+  signUpStart: (email, firstname, lastname, date, phone, password) =>
+    dispatch(signUpStart(email, firstname, lastname, date, phone, password)),
+});
+
+//export default connect(mapStateToProps, mapDispatchToProps)(CardMusic);
+export default connect(null, mapDispatchToProps)(CardSignUp);

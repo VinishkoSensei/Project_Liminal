@@ -1,6 +1,11 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects';
 import ProfileActionTypes from './user.types';
-import { signInSuccess, signInFailure } from './user.actions';
+import {
+  signInSuccess,
+  signInFailure,
+  signUpSuccess,
+  signUpFailure,
+} from './user.actions';
 
 export function* signIn({ payload: { email, password } }) {
   try {
@@ -27,6 +32,36 @@ export function* onSignInStart() {
   yield takeLatest(ProfileActionTypes.SIGN_IN_START, signIn);
 }
 
+export function* onSignUpSuccess() {
+  //yield takeLatest(ProfileActionTypes.SIGN_UP_SUCCESS, signInAfterSignUp);
+}
+
+export function* signUp({
+  payload: { email, firstname, lastname, date, phone, password },
+}) {
+  try {
+    yield fetch(`http://localhost:3001/createprofile`, {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: email,
+        firstname: firstname,
+        lastname: lastname,
+        date: date,
+        phone: phone,
+        password: password,
+      }),
+    });
+    yield put(signUpSuccess({ email, password }));
+  } catch (e) {
+    yield put(signUpFailure(e));
+  }
+}
+
+export function* onSignUpStart() {
+  yield takeLatest(ProfileActionTypes.SIGN_UP_START, signUp);
+}
+
 export function* userSagas() {
-  yield all([call(onSignInStart)]);
+  yield all([call(onSignInStart), call(onSignUpStart)]);
 }

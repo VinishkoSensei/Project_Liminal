@@ -8,6 +8,7 @@ const {
   getTracksByName,
   getTracksByAuthor,
   getProfile,
+  createProfile,
 } = require('../functions/db');
 
 const plugin = {
@@ -70,6 +71,18 @@ const plugin = {
       method: 'POST',
       path: '/getprofile',
       handler: getProfile,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'POST',
+      path: '/createprofile',
+      handler: createProfile,
       config: {
         cors: {
           origin: ['*'],
