@@ -22,7 +22,7 @@ export function* signIn({ payload: { email, password } }) {
 }
 
 export function* onSignInStart() {
-  yield takeLatest(ProfileActionTypes.SIGN_UP_SUCCESS, onSignUpSuccess);
+  yield takeLatest(ProfileActionTypes.SIGN_IN_START, signIn);
 }
 
 export function* signInAfterSignUp({ payload: { email, password } }) {
