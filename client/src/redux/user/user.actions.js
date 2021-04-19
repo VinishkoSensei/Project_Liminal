@@ -27,9 +27,9 @@ export const signUpStart = (
   payload: { email, firstname, lastname, date, phone, password },
 });
 
-export const signUpSuccess = ({ user, additionalData }) => ({
+export const signUpSuccess = (profile) => ({
   type: ProfileActionTypes.SIGN_UP_SUCCESS,
-  payload: { user, additionalData },
+  payload: profile,
 });
 
 export const signUpFailure = (error) => ({

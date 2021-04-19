@@ -29,11 +29,32 @@ export function* signIn({ payload: { email, password } }) {
 }
 
 export function* onSignInStart() {
-  yield takeLatest(ProfileActionTypes.SIGN_IN_START, signIn);
+  yield takeLatest(ProfileActionTypes.SIGN_UP_SUCCESS, onSignUpSuccess);
+}
+
+export function* signInAfterSignUp({ payload: { email, password } }) {
+  try {
+    const userdata = yield fetch(`http://localhost:3001/getprofile`, {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    });
+    const user = yield userdata.json();
+    yield put(
+      signInSuccess({
+        user: user,
+      })
+    );
+  } catch (e) {
+    put(signInFailure(e));
+  }
 }
 
 export function* onSignUpSuccess() {
-  //yield takeLatest(ProfileActionTypes.SIGN_UP_SUCCESS, signInAfterSignUp);
+  yield takeLatest(ProfileActionTypes.SIGN_UP_SUCCESS, signInAfterSignUp);
 }
 
 export function* signUp({
@@ -63,5 +84,5 @@ export function* onSignUpStart() {
 }
 
 export function* userSagas() {
-  yield all([call(onSignInStart), call(onSignUpStart)]);
+  yield all([call(onSignInStart), call(onSignUpStart), call(onSignUpSuccess)]);
 }
