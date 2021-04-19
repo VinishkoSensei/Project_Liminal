@@ -38,48 +38,56 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
       value: email,
       label: 'Email:',
       type: 'email',
+      key: 'email',
     },
     {
       name: 'firstname',
       value: firstname,
       label: 'Firstname:',
       type: 'text',
+      key: 'firstname',
     },
     {
       name: 'lastname',
       value: lastname,
       label: 'Lastname:',
       type: 'text',
+      key: 'lastname',
     },
     {
       name: 'date',
       value: date,
       label: '',
       type: 'date',
+      key: 'date',
     },
     {
       name: 'phone',
       value: phone,
       label: 'Phone:',
       type: 'tel',
+      key: 'phone',
     },
     {
       name: 'file',
       value: file,
       label: '',
       type: 'file',
+      key: 'file',
     },
     {
       name: 'password',
       value: password,
       label: 'Password:',
       type: 'password',
+      key: 'password',
     },
     {
       name: 'passwordconf',
       value: passwordconf,
       label: 'Password confirmation:',
       type: 'password',
+      key: 'passwordconf',
     },
   ];
 
@@ -98,6 +106,7 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
             label={input.label}
             handleChange={handleChange}
             type={input.type}
+            key={input.key}
             required
           />
         ))}
