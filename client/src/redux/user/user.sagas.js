@@ -43,7 +43,7 @@ export function* onSignUpSuccess() {
 }
 
 export function* signUp({
-  payload: { email, firstname, lastname, date, phone, password },
+  payload: { email, firstname, lastname, date, phone, file, password },
 }) {
   const response = yield handleSignUp(
     email,
@@ -51,6 +51,7 @@ export function* signUp({
     lastname,
     date,
     phone,
+    file,
     password
   );
   try {

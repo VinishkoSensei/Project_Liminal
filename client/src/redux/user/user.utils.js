@@ -16,6 +16,7 @@ export const handleSignUp = async (
   lastname,
   date,
   phone,
+  file,
   password
 ) => {
   const response = await fetch(`http://localhost:3001/createprofile`, {
@@ -27,6 +28,7 @@ export const handleSignUp = async (
       lastname: lastname,
       date: date,
       phone: phone,
+      file: file,
       password: password,
     }),
   });
