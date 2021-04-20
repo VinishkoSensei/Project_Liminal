@@ -69,13 +69,6 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
       key: 'phone',
     },
     {
-      name: 'file',
-      value: file,
-      label: '',
-      type: 'file',
-      key: 'file',
-    },
-    {
       name: 'password',
       value: password,
       label: 'Password:',
@@ -91,9 +84,19 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
     },
   ];
 
+  const fileSelectHandler = (e) => {
+    const param = e.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(param);
+    console.log(reader);
+    console.log(e.target.files[0]);
+    setSelectedItem({ ...selectedItem, file: reader.result });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    signUpStart(email, firstname, lastname, date, phone, password);
+    console.log(selectedItem);
+    //signUpStart(email, firstname, lastname, date, phone, file, password);
   };
 
   return (
@@ -110,6 +113,13 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
             required
           />
         ))}
+        <FormInput
+          name="file"
+          handleChange={fileSelectHandler}
+          type="file"
+          key="file"
+          required
+        />
         <CustomButton type="submit">Sign Up</CustomButton>
         {error ? <div className="error">{error}</div> : null}
       </form>
@@ -131,8 +141,10 @@ const mapDispatchToProps = (dispatch) => ({
 
 //export default connect(mapStateToProps, mapDispatchToProps)(CardMusic);
 const mapDispatchToProps = (dispatch) => ({
-  signUpStart: (email, firstname, lastname, date, phone, password) =>
-    dispatch(signUpStart(email, firstname, lastname, date, phone, password)),
+  signUpStart: (email, firstname, lastname, date, phone, file, password) =>
+    dispatch(
+      signUpStart(email, firstname, lastname, date, phone, file, password)
+    ),
 });
 
 //export default connect(mapStateToProps, mapDispatchToProps)(CardMusic);
