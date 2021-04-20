@@ -69,7 +69,16 @@ where email like $1 AND password like $2`,
 
 const createProfile = async (req, h) => {
   try {
-    const { email, firstname, lastname, date, phone, password } = req.payload;
+    const {
+      email,
+      firstname,
+      lastname,
+      date,
+      phone,
+      file,
+      password,
+    } = req.payload;
+    console.log(req.payload);
     await db.none(
       `INSERT INTO liminal.users(email, first_name, last_name, birth_date, phone, password)
 VALUES ($1, $2, $3, $4, $5, $6)`,
