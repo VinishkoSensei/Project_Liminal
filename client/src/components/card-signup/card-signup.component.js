@@ -104,7 +104,6 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      console.log(file.type);
       setSelectedItem({
         ...selectedItem,
         file: { image: getFileType(file.type), imagePreviewUrl: reader.result },
@@ -114,7 +113,6 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(selectedItem);
     signUpStart(email, firstname, lastname, date, phone, file, password);
   };
 
@@ -151,14 +149,7 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
 const mapStateToProps = (state) => ({
   error: state.user.error,
 });
-/*
-const mapDispatchToProps = (dispatch) => ({
-  playNextTrack: () => dispatch(playNextTrack()),
-  playRadio: () => dispatch(playRadio()),
-  emptySrc: () => dispatch(emptySrc()),
-});*/
 
-//export default connect(mapStateToProps, mapDispatchToProps)(CardMusic);
 const mapDispatchToProps = (dispatch) => ({
   signUpStart: (email, firstname, lastname, date, phone, file, password) =>
     dispatch(
@@ -166,5 +157,4 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-//export default connect(mapStateToProps, mapDispatchToProps)(CardMusic);
 export default connect(mapStateToProps, mapDispatchToProps)(CardSignUp);
