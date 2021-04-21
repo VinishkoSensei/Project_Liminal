@@ -1,5 +1,7 @@
 const pgp = require('pg-promise')({});
 const Boom = require('boom');
+const Fs = require('fs');
+const { v4: uuidv4 } = require('uuid');
 
 const cn = {
   host: 'localhost', // 'localhost' is the default;
@@ -78,11 +80,21 @@ const createProfile = async (req, h) => {
       file,
       password,
     } = req.payload;
-    console.log(req.payload);
+
+    const base64Data = file.imagePreviewUrl.split(',')[1];
+    const imagename = `${uuidv4()}${file.image}`;
+    Fs.writeFileSync(
+      `public/files/images/avatars/${imagename}`,
+      base64Data,
+      'base64',
+      function (err) {
+        console.log(err);
+      }
+    );
     await db.none(
-      `INSERT INTO liminal.users(email, first_name, last_name, birth_date, phone, password)
-VALUES ($1, $2, $3, $4, $5, $6)`,
-      [email, firstname, lastname, date, phone, password]
+      `INSERT INTO liminal.users(email, first_name, last_name, birth_date, phone, avatar, password)
+VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [email, firstname, lastname, date, phone, imagename, password]
     );
     return h.response().code(200);
   } catch (err) {

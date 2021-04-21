@@ -84,19 +84,38 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
     },
   ];
 
+  const getFileType = (filetype) => {
+    switch (filetype) {
+      case 'image/jpeg':
+        return '.jpg';
+      case 'image/svg+xml':
+        return '.svg';
+      case 'vnd.microsoft.icon':
+        return '.ico';
+      case 'png':
+        return '.png';
+      default:
+        return '.dat';
+    }
+  };
+
   const fileSelectHandler = (e) => {
-    const param = e.target.files[0];
-    let reader = new FileReader();
-    reader.readAsDataURL(param);
-    console.log(reader);
-    console.log(e.target.files[0]);
-    setSelectedItem({ ...selectedItem, file: reader.result });
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      console.log(file.type);
+      setSelectedItem({
+        ...selectedItem,
+        file: { image: getFileType(file.type), imagePreviewUrl: reader.result },
+      });
+    };
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(selectedItem);
-    //signUpStart(email, firstname, lastname, date, phone, file, password);
+    signUpStart(email, firstname, lastname, date, phone, file, password);
   };
 
   return (
