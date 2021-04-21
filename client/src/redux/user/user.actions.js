@@ -21,10 +21,11 @@ export const signUpStart = (
   lastname,
   date,
   phone,
+  file,
   password
 ) => ({
   type: ProfileActionTypes.SIGN_UP_START,
-  payload: { email, firstname, lastname, date, phone, password },
+  payload: { email, firstname, lastname, date, phone, file, password },
 });
 
 export const signUpSuccess = (profile) => ({
