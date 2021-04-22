@@ -32,11 +32,30 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
     password,
     passwordconf,
   } = selectedItem;
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    signUpStart(email, firstname, lastname, date, phone, file, password);
+  };
+
+  const fileSelectHandler = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setSelectedItem({
+        ...selectedItem,
+        file: { image: getFileType(file.type), imagePreviewUrl: reader.result },
+      });
+    };
+  };
+
   const Inputs = [
     {
       name: 'email',
       value: email,
       label: 'Email:',
+      handleChange: handleChange,
       type: 'email',
       key: 'email',
     },
@@ -44,6 +63,7 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
       name: 'firstname',
       value: firstname,
       label: 'Firstname:',
+      handleChange: handleChange,
       type: 'text',
       key: 'firstname',
     },
@@ -51,6 +71,7 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
       name: 'lastname',
       value: lastname,
       label: 'Lastname:',
+      handleChange: handleChange,
       type: 'text',
       key: 'lastname',
     },
@@ -58,6 +79,7 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
       name: 'date',
       value: date,
       label: '',
+      handleChange: handleChange,
       type: 'date',
       key: 'date',
     },
@@ -65,19 +87,30 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
       name: 'phone',
       value: phone,
       label: 'Phone:',
+      handleChange: handleChange,
       type: 'tel',
       key: 'phone',
+    },
+    {
+      name: 'file',
+      value: '',
+      label: '',
+      handleChange: fileSelectHandler,
+      type: 'file',
+      key: 'file',
     },
     {
       name: 'password',
       value: password,
       label: 'Password:',
+      handleChange: handleChange,
       type: 'password',
       key: 'password',
     },
     {
       name: 'passwordconf',
       value: passwordconf,
+      handleChange: handleChange,
       label: 'Password confirmation:',
       type: 'password',
       key: 'passwordconf',
@@ -99,23 +132,6 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
     }
   };
 
-  const fileSelectHandler = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setSelectedItem({
-        ...selectedItem,
-        file: { image: getFileType(file.type), imagePreviewUrl: reader.result },
-      });
-    };
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    signUpStart(email, firstname, lastname, date, phone, file, password);
-  };
-
   return (
     <div className="card-signup">
       <form method="post" onSubmit={handleSubmit}>
@@ -130,13 +146,6 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
             required
           />
         ))}
-        <FormInput
-          name="file"
-          handleChange={fileSelectHandler}
-          type="file"
-          key="file"
-          required
-        />
         <CustomButton type="submit">Sign Up</CustomButton>
         {error ? <div className="error">{error}</div> : null}
       </form>
