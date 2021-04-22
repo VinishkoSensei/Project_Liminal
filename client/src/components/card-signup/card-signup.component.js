@@ -17,11 +17,9 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
     passwordconf: '',
   };
 
+  const [doPasswordsMatch, setDoPasswordsMatch] = useState(true);
+
   const [selectedItem, setSelectedItem] = useState(selectedItemInitialState);
-  const handleChange = (event) => {
-    const { value, name } = event.target;
-    setSelectedItem({ ...selectedItem, [name]: value });
-  };
   const {
     email,
     firstname,
@@ -32,6 +30,25 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
     password,
     passwordconf,
   } = selectedItem;
+
+  const checkDoPasswordsMatch = (name, value) => {
+    switch (name) {
+      case 'password':
+        setDoPasswordsMatch(value === selectedItem.passwordconf);
+        break;
+      case 'passwordconf':
+        setDoPasswordsMatch(value === selectedItem.password);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setSelectedItem({ ...selectedItem, [name]: value });
+    checkDoPasswordsMatch(name, value);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -146,6 +163,9 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
             required
           />
         ))}
+        {!doPasswordsMatch ? (
+          <div className="error">Passwords do not match</div>
+        ) : null}
         <CustomButton type="submit">Sign Up</CustomButton>
         {error ? <div className="error">{error}</div> : null}
       </form>
