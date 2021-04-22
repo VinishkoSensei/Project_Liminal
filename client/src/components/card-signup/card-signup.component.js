@@ -52,7 +52,8 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    signUpStart(email, firstname, lastname, date, phone, file, password);
+    if (doPasswordsMatch)
+      signUpStart(email, firstname, lastname, date, phone, file, password);
   };
 
   const fileSelectHandler = (e) => {
@@ -110,7 +111,6 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
     },
     {
       name: 'file',
-      value: '',
       label: '',
       handleChange: fileSelectHandler,
       type: 'file',
@@ -157,7 +157,7 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
             name={input.name}
             value={input.value}
             label={input.label}
-            handleChange={handleChange}
+            handleChange={input.handleChange}
             type={input.type}
             key={input.key}
             required
