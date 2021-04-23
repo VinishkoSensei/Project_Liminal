@@ -9,15 +9,20 @@ import {
 import { handleSignIn, handleSignUp } from './user.utils';
 
 export function* signIn({ payload: { email, password } }) {
+  const response = yield handleSignIn(email, password);
   try {
-    const user = yield handleSignIn(email, password);
-    yield put(
-      signInSuccess({
-        user: user,
-      })
-    );
+    const res = yield response.json();
+    if (!response.ok) {
+      throw new Error(res.message);
+    } else {
+      yield put(
+        signInSuccess({
+          user: res,
+        })
+      );
+    }
   } catch (e) {
-    put(signInFailure(e));
+    yield put(signInFailure(e));
   }
 }
 
@@ -25,21 +30,8 @@ export function* onSignInStart() {
   yield takeLatest(ProfileActionTypes.SIGN_IN_START, signIn);
 }
 
-export function* signInAfterSignUp({ payload: { email, password } }) {
-  try {
-    const user = yield handleSignIn(email, password);
-    yield put(
-      signInSuccess({
-        user: user,
-      })
-    );
-  } catch (e) {
-    put(signInFailure(e));
-  }
-}
-
 export function* onSignUpSuccess() {
-  yield takeLatest(ProfileActionTypes.SIGN_UP_SUCCESS, signInAfterSignUp);
+  yield takeLatest(ProfileActionTypes.SIGN_UP_SUCCESS, signIn);
 }
 
 export function* signUp({
