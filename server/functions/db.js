@@ -2,6 +2,11 @@ const pgp = require('pg-promise')({});
 const Boom = require('boom');
 const Fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const redis = require('redis');
+
+//const redisClient = redis.createClient({ host: 'localhost' });
 
 const cn = {
   host: 'localhost', // 'localhost' is the default;
@@ -60,13 +65,25 @@ const getProfile = async (req, h) => {
   if (!email || !password) {
     return Promise.reject('incorrect form submission');
   }
-  const profile = await db.oneOrNone(
-    `SELECT id, last_name, first_name, middle_name, to_char(birth_date,'DD.MM.YYYY') as "birth_date", subscribed, email, phone, avatar
-FROM liminal.users
-where email like $1 AND password like $2`,
-    [email, password]
+  const signindata = await db.any(
+    'SELECT id, email, hash FROM liminal.login WHERE email like $1',
+    email
   );
-  return h.response(profile);
+  if (bcrypt.compareSync(password, signindata[0].hash)) {
+    try {
+      const profile = await db.one(
+        `SELECT id, last_name, first_name, middle_name, to_char(birth_date,'DD.MM.YYYY') as "birth_date", subscribed, email, phone, avatar
+FROM liminal.user
+where email like $1`,
+        email
+      );
+      return h.response(profile);
+    } catch (err) {
+      throw Boom.badRequest('unable to get user');
+    }
+  } else {
+    throw Boom.badRequest('wrong email or password');
+  }
 };
 
 const createProfile = async (req, h) => {
@@ -80,6 +97,17 @@ const createProfile = async (req, h) => {
       file,
       password,
     } = req.payload;
+    if (
+      !email ||
+      !firstname ||
+      !lastname ||
+      !date ||
+      !phone ||
+      !file ||
+      !password
+    ) {
+      throw Boom.badRequest('incorrect form submission');
+    }
 
     const base64Data = file.imagePreviewUrl.split(',')[1];
     const imagename = `${uuidv4()}${file.image}`;
@@ -91,10 +119,17 @@ const createProfile = async (req, h) => {
         console.log(err);
       }
     );
+
+    const hash = bcrypt.hashSync(password);
     await db.none(
-      `INSERT INTO liminal.users(email, first_name, last_name, birth_date, phone, avatar, password)
-VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-      [email, firstname, lastname, date, phone, imagename, password]
+      `INSERT INTO liminal.login(email, hash)
+VALUES ($1, $2)`,
+      [email, hash]
+    );
+    await db.none(
+      `INSERT INTO liminal.user(email, first_name, last_name, birth_date, phone, avatar)
+VALUES ($1, $2, $3, $4, $5, $6)`,
+      [email, firstname, lastname, date, phone, imagename]
     );
     return h.response().code(200);
   } catch (err) {
@@ -102,7 +137,7 @@ VALUES ($1, $2, $3, $4, $5, $6, $7)`,
       case '_bt_check_unique':
         throw Boom.notAcceptable('NOT UNIQUE');
       default:
-        throw Boom.badRequest(err);
+        throw Boom.badRequest('unable to register');
     }
   }
 };
