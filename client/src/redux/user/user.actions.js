@@ -10,9 +10,9 @@ export const signInSuccess = (user) => ({
   payload: user,
 });
 
-export const signInFailure = (e) => ({
+export const signInFailure = (error) => ({
   type: ProfileActionTypes.SIGN_IN_FAILURE,
-  payload: e,
+  payload: error.message,
 });
 
 export const signUpStart = (

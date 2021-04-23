@@ -7,7 +7,7 @@ export const handleSignIn = async (email, password) => {
       password: password,
     }),
   });
-  return userdata.json();
+  return userdata;
 };
 
 export const handleSignUp = async (
