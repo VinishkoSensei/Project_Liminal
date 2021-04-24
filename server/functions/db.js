@@ -6,14 +6,14 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const redis = require('redis');
 
-//const redisClient = redis.createClient({ host: 'localhost' });
+const redisClient = redis.createClient({ host: 'localhost', password: 'root' });
 
 const cn = {
-  host: 'localhost', // 'localhost' is the default;
-  port: 5432, // 5432 is the default;
-  database: 'liminal',
-  user: 'postgres',
-  password: 'root',
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  database: process.env.DB_NAME,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
 };
 const db = pgp(cn);
 
@@ -31,6 +31,44 @@ const getTrackList = async (req, h) => {
     return tr;
   });
   */
+};
+
+const getAuthTokenId = (req, h) => {
+  console.log('getAuthTokenId');
+  const { authorization } = req.headers;
+  return redisClient.get(authorization, (err, reply) => {
+    if (err || !reply) {
+      console.log('Unauthorized');
+      throw Boom.badRequest('Unauthorized');
+    }
+    console.log('Authorized');
+    return h.response({ id: reply });
+  });
+};
+
+const signToken = (email) => {
+  const jwtPayload = { email };
+  console.log('signToken', jwtPayload);
+  return jwt.sign(jwtPayload, 'JWT_SECRET', { expiresIn: '2 days' });
+};
+
+const setToken = (key, value) => {
+  console.log('setToken');
+  return Promise.resolve(redisClient.set(key, value));
+};
+
+const createSessions = (user) => {
+  console.log('createSessions');
+  const { email, id } = user;
+  const token = signToken(email);
+  return setToken(token, id)
+    .then(() => {
+      console.log('i work', id, token);
+      return { success: 'true', userId: id, token };
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 const getTracksByNameAndAuthor = async (req, h) => {
@@ -62,6 +100,7 @@ const getTracksByAuthor = async (req, h) => {
 
 const getProfile = async (req, h) => {
   const { email, password } = req.payload;
+  console.log('getProfile');
   if (!email || !password) {
     return Promise.reject('incorrect form submission');
   }
@@ -77,13 +116,31 @@ FROM liminal.user
 where email like $1`,
         email
       );
-      return h.response(profile);
+      //console.log(profile);
+      return profile;
     } catch (err) {
       throw Boom.badRequest('unable to get user');
     }
   } else {
     throw Boom.badRequest('wrong email or password');
   }
+};
+
+const signinAuth = (req, h) => {
+  const { authorization } = req.headers;
+  return authorization
+    ? getAuthTokenId(req, h)
+    : getProfile(req, h)
+        .then((data) => {
+          return data.id && data.email
+            ? createSessions(data)
+            : Promise.reject(data);
+        })
+        .then((session) => {
+          console.log(session);
+          return h.response(session);
+        })
+        .catch((err) => Boom.badRequest(err));
 };
 
 const createProfile = async (req, h) => {
@@ -159,4 +216,5 @@ module.exports = {
   getProfile,
   createProfile,
   getTrack,
+  signinAuth,
 };
