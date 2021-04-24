@@ -9,6 +9,7 @@ const {
   getTracksByAuthor,
   getProfile,
   createProfile,
+  signinAuth,
 } = require('../functions/db');
 
 const plugin = {
@@ -70,7 +71,7 @@ const plugin = {
     server.route({
       method: 'POST',
       path: '/getprofile',
-      handler: getProfile,
+      handler: signinAuth,
       config: {
         cors: {
           origin: ['*'],
