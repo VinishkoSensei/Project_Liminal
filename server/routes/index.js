@@ -7,7 +7,9 @@ const {
   getTracksByNameAndAuthor,
   getTracksByName,
   getTracksByAuthor,
-  getProfile,
+  createProfile,
+  signinAuth,
+  handleGetProfile,
 } = require('../functions/db');
 
 const plugin = {
@@ -19,9 +21,7 @@ const plugin = {
     server.route({
       method: 'GET',
       path: '/',
-      handler: function (request, h) {
-        return h.file('index.html');
-      },
+      handler: (request, h) => h.file('index.html'),
     });
 
     server.route({
@@ -68,8 +68,32 @@ const plugin = {
 
     server.route({
       method: 'GET',
-      path: '/getprofile',
-      handler: getProfile,
+      path: '/profile/{id}',
+      handler: handleGetProfile,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'POST',
+      path: '/signin',
+      handler: signinAuth,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'POST',
+      path: '/createprofile',
+      handler: createProfile,
       config: {
         cors: {
           origin: ['*'],
