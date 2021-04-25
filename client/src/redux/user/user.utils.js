@@ -1,11 +1,34 @@
-export const handleSignIn = async (email, password) => {
-  const userdata = await fetch(`http://localhost:3001/getprofile`, {
-    method: 'post',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      email: email,
-      password: password,
-    }),
+export const handleSignIn = async ({ userCredentials, token }) => {
+  if (userCredentials) {
+    const { email, password } = userCredentials;
+    const userdata = await fetch(`http://localhost:3001/signin`, {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    });
+    return userdata;
+  } else {
+    const userdata = await fetch(`http://localhost:3001/signin`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+    });
+    return userdata;
+  }
+};
+
+export const handleGetProfile = async (userId, token) => {
+  const userdata = await fetch(`http://localhost:3001/profile/${userId}`, {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: token,
+    },
   });
   return userdata;
 };

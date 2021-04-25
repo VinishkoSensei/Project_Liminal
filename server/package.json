@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@dropb/ffprobe": "^2.0.0",
+    "async-redis": "^1.1.7",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "boom": "^7.3.0",
@@ -21,8 +22,6 @@
     "music-metadata": "^7.8.1",
     "pez": "^4.0.5",
     "pg-promise": "^10.9.5",
-    "redis": "^3.1.2",
-    "speaker": "^0.5.3",
     "stream": "^0.0.2",
     "throttle": "^1.0.3",
     "throttle-stream": "^0.0.8",

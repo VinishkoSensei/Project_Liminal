@@ -6,18 +6,29 @@ import {
   signUpSuccess,
   signUpFailure,
 } from './user.actions';
-import { handleSignIn, handleSignUp } from './user.utils';
+import { handleSignIn, handleSignUp, handleGetProfile } from './user.utils';
+
+const saveAuthTokenInSession = (token) => {
+  window.sessionStorage.setItem('token', token);
+};
+
+const deleteAuthTokenFromSession = () => {
+  window.sessionStorage.removeItem('token');
+};
 
 export function* signIn({ payload: { email, password } }) {
-  const response = yield handleSignIn(email, password);
+  const response = yield handleSignIn({ userCredentials: { email, password } });
   try {
     const res = yield response.json();
     if (!response.ok) {
       throw new Error(res.message);
     } else {
+      yield saveAuthTokenInSession(res.token);
+      const resp = yield handleGetProfile(res.userId, res.token);
+      const re = yield resp.json();
       yield put(
         signInSuccess({
-          user: res,
+          user: re,
         })
       );
     }
@@ -61,6 +72,43 @@ export function* onSignUpStart() {
   yield takeLatest(ProfileActionTypes.SIGN_UP_START, signUp);
 }
 
+export function* isUserAutentificated() {
+  const token = window.sessionStorage.getItem('token');
+  if (token) {
+    const response = yield handleSignIn({ token });
+    try {
+      const res = yield response.json();
+      if (!response.ok) {
+        throw new Error(res.message);
+      } else {
+        const resp = yield handleGetProfile(res.userId, res.token);
+        if (!resp.ok) {
+          const res = yield resp.json();
+          yield deleteAuthTokenFromSession();
+          throw new Error(res.message);
+        }
+        const re = yield resp.json();
+        yield put(
+          signInSuccess({
+            user: re,
+          })
+        );
+      }
+    } catch (e) {
+      yield put(signInFailure(e));
+    }
+  } else yield put(signInFailure({ message: 'No token' }));
+}
+
+export function* onCheckUserSession() {
+  yield takeLatest(ProfileActionTypes.CHECK_USER_SESSION, isUserAutentificated);
+}
+
 export function* userSagas() {
-  yield all([call(onSignInStart), call(onSignUpStart), call(onSignUpSuccess)]);
+  yield all([
+    call(onSignInStart),
+    call(onSignUpStart),
+    call(onCheckUserSession),
+    call(onSignUpSuccess),
+  ]);
 }
