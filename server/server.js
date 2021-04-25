@@ -13,6 +13,12 @@ const cn = {
 };
 const db = pgp(cn);
 
+const redisClient = require('async-redis').createClient({
+  host: 'localhost',
+  password: 'root',
+});
+redisClient.on('error', (err) => console.log('Error ' + err));
+
 const server = Hapi.server({
   port: process.env.SERVER_PORT,
   host: process.env.SERVER_HOST,
@@ -31,6 +37,9 @@ const startApp = async () => {
     console.log(`Server running at ${server.info.uri}`);
     await server.decorate('request', 'getDb', function () {
       return db;
+    });
+    await server.decorate('request', 'getRedis', function () {
+      return redisClient;
     });
     await server.start();
   } catch (err) {
