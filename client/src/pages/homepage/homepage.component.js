@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './homepage.styles.scss';
 
 import Header from '../../components/header/header.component';
@@ -10,10 +10,16 @@ import CardMusic from '../../components/card-music/card-music.component';
 import CardPlaylist from '../../components/card-playlist/card-playlist.component';
 import CardSearch from '../../components/card-search/card-search.component';
 import CardProfile from '../../components/card-profile/card-profile.component';
+import CardSignIn from '../../components/card-signin/card-signin.component';
+import CardSignUp from '../../components/card-signup/card-signup.component';
 
 import ReactCardFlip from 'react-card-flip';
 
-const HomePage = () => {
+import { connect } from 'react-redux';
+
+import { checkUserSession } from '../../redux/user/user.actions';
+
+const HomePage = ({ profile, checkUserSession }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [chosenCard, setChosenCard] = useState(null);
   const playerRef = useRef(null);
@@ -38,6 +44,10 @@ const HomePage = () => {
     );
   };
 
+  useEffect(() => {
+    checkUserSession();
+  }, [checkUserSession]);
+
   return (
     <div className="main">
       <div className="toppart">
@@ -49,30 +59,39 @@ const HomePage = () => {
         <div className="main-space">
           <div className="main-container">
             <div className="cards-container">
-              <ReactCardFlip
-                isFlipped={isFlipped}
-                flipSpeedBackToFront={2}
-                flipSpeedFrontToBack={2}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                }}
-                containerStyle={{ width: '100%', height: '100%' }}
-              >
-                <MainMenu FlipCard={FlipCard} />
-                {chosenCard === 'broadcast' ? (
-                  <CardMusic isNotRadio={false} playerRef={playerRef} />
-                ) : (
+              {profile ? (
+                <ReactCardFlip
+                  isFlipped={isFlipped}
+                  flipSpeedBackToFront={2}
+                  flipSpeedFrontToBack={2}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                  }}
+                  containerStyle={{ width: '100%', height: '100%' }}
+                >
+                  <MainMenu FlipCard={FlipCard} />
+                  {chosenCard === 'broadcast' ? (
+                    <CardMusic isNotRadio={false} playerRef={playerRef} />
+                  ) : (
+                    <ChangingCards>
+                      <CardMusic isNotRadio={true} playerRef={playerRef} />
+                      {chosenCard === 'ai' || chosenCard === 'playlist' ? (
+                        <CardPlaylist />
+                      ) : (
+                        <CardSearch />
+                      )}
+                    </ChangingCards>
+                  )}
+                </ReactCardFlip>
+              ) : (
+                <div className="auth">
                   <ChangingCards>
-                    <CardMusic isNotRadio={true} playerRef={playerRef} />
-                    {chosenCard === 'ai' || chosenCard === 'playlist' ? (
-                      <CardPlaylist />
-                    ) : (
-                      <CardSearch />
-                    )}
+                    <CardSignIn />
+                    <CardSignUp />
                   </ChangingCards>
-                )}
-              </ReactCardFlip>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -90,4 +109,12 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+const mapStateToProps = (state) => ({
+  profile: state.user.profile,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  checkUserSession: () => dispatch(checkUserSession()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

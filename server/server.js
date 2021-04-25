@@ -1,11 +1,12 @@
+require('dotenv').config();
 const Path = require('path');
 const Hapi = require('hapi');
 const Static = require('./routes/index.js');
 const { startStreaming } = require('./functions/audio');
 
 const server = Hapi.server({
-  port: 3001,
-  host: 'localhost',
+  port: process.env.SERVER_PORT,
+  host: process.env.SERVER_HOST,
   compression: false,
   routes: {
     files: {
