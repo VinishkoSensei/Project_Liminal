@@ -2,7 +2,7 @@ const Fs = require('fs');
 const { PassThrough } = require('stream');
 const Throttle = require('throttle');
 
-const { getTrack } = require('./db');
+const { getTrack } = require('./db/track.db');
 const { radioQueue } = require('./file');
 
 const sinks = [];
@@ -37,6 +37,7 @@ const streamTrack = async (req, h) => {
 
 const startStreaming = () => {
   let songNum = 0;
+  console.log('Started streaming radio');
 
   (function playLoop() {
     const song = Fs.createReadStream(radioQueue[songNum++]);
