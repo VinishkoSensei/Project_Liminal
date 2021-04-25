@@ -3,6 +3,21 @@ const Path = require('path');
 const Hapi = require('hapi');
 const Static = require('./routes/index.js');
 const { startStreaming } = require('./functions/audio');
+const pgp = require('pg-promise')({});
+const cn = {
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  database: process.env.DB_NAME,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+};
+const db = pgp(cn);
+
+const redisClient = require('async-redis').createClient({
+  host: 'localhost',
+  password: 'root',
+});
+redisClient.on('error', (err) => console.log('Error ' + err));
 
 const server = Hapi.server({
   port: process.env.SERVER_PORT,
@@ -18,9 +33,15 @@ const server = Hapi.server({
 const startApp = async () => {
   try {
     await server.register(Static);
-    startStreaming();
-    console.log(`Server running at ${server.info.uri}`);
+    await server.decorate('request', 'getDb', function () {
+      return db;
+    });
+    await server.decorate('request', 'getRedis', function () {
+      return redisClient;
+    });
     await server.start();
+    console.log(`Server running at ${server.info.uri}`);
+    startStreaming();
   } catch (err) {
     console.log(`Server error: ${err}`);
     process.exit(1);

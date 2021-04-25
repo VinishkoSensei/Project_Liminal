@@ -1,16 +1,17 @@
 const File = require('inert');
-
 const { streamHandler, streamTrack } = require('../functions/audio');
 const { getTrackCover, getProfileImage } = require('../functions/file');
+const {
+  createProfile,
+  signinAuth,
+  handleGetProfile,
+} = require('../functions/db/profile.db');
 const {
   getTrackList,
   getTracksByNameAndAuthor,
   getTracksByName,
   getTracksByAuthor,
-  createProfile,
-  signinAuth,
-  handleGetProfile,
-} = require('../functions/db');
+} = require('../functions/db/track.db');
 
 const plugin = {
   name: 'streamServer',
@@ -18,11 +19,11 @@ const plugin = {
   register: async (server, options) => {
     await server.register(File);
 
-    server.route({
+    /*server.route({
       method: 'GET',
       path: '/',
       handler: (request, h) => h.file('index.html'),
-    });
+    });*/
 
     server.route({
       method: 'GET',
