@@ -23,3 +23,5 @@
 /*/yarn-error.log*
 
 /*/.env
+/server/public/files/images/avatars
+/server/public/index.html
