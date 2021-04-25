@@ -37,6 +37,7 @@ const streamTrack = async (req, h) => {
 
 const startStreaming = () => {
   let songNum = 0;
+  console.log('Started streaming radio');
 
   (function playLoop() {
     const song = Fs.createReadStream(radioQueue[songNum++]);
