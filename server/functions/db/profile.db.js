@@ -1,11 +1,6 @@
 const Boom = require('boom');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const redis = require('async-redis');
-
-const redisClient = redis.createClient({ host: 'localhost', password: 'root' });
-redisClient.on('error', (err) => console.log('Error ' + err));
-
 const { createFileWithRandomId } = require('../file');
 
 const signToken = (email) => {
@@ -13,14 +8,14 @@ const signToken = (email) => {
   return jwt.sign(jwtPayload, 'JWT_SECRET', { expiresIn: '2 days' });
 };
 
-const setToken = (key, value) => {
+const setToken = (redisClient, key, value) => {
   return Promise.resolve(redisClient.set(key, value));
 };
 
-const createSessions = (user) => {
+const createSessions = (redisClient, user) => {
   const { email, id } = user;
   const token = signToken(email);
-  return setToken(token, id)
+  return setToken(redisClient, token, id)
     .then(() => {
       return { success: 'true', userId: id, token };
     })
@@ -58,6 +53,7 @@ where email like $1`,
 
 const signinAuth = async (req, h) => {
   const { authorization } = req.headers;
+  const redisClient = req.getRedis();
   if (authorization) {
     const reply = await redisClient.get(authorization);
     if (reply) {
@@ -72,7 +68,7 @@ const signinAuth = async (req, h) => {
   } else {
     const profile = await getProfile(req, h);
     if (profile.id && profile.email) {
-      const session = await createSessions(profile);
+      const session = await createSessions(redisClient, profile);
       return h.response(session);
     } else {
       throw Boom.badRequest('signinauth error');
@@ -145,6 +141,7 @@ const handleGetProfile = async (req, h) => {
       `SELECT id, last_name, first_name, middle_name, to_char(birth_date,'DD.MM.YYYY') as "birth_date", subscribed, email, phone, avatar FROM liminal.user WHERE id = $1`,
       id
     );
+    const redisClient = req.getRedis();
     const auth = await redisClient.get(authorization);
     if (auth) {
       return h.response(user);
