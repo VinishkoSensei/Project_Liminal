@@ -1,7 +1,4 @@
-const pgp = require('pg-promise')({});
 const Boom = require('boom');
-const Fs = require('fs');
-const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const redis = require('async-redis');
@@ -9,39 +6,7 @@ const redis = require('async-redis');
 const redisClient = redis.createClient({ host: 'localhost', password: 'root' });
 redisClient.on('error', (err) => console.log('Error ' + err));
 
-const cn = {
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  database: process.env.DB_NAME,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-};
-const db = pgp(cn);
-
-const getTrackList = async (req, h) => {
-  const trackData = await db.any(
-    `SELECT t.id, t."path", t."name", t.cover, to_char(t.duration,'MI:SS') as "duration", a.nickname as "author", g.name as "genre" FROM liminal.track t JOIN liminal.author a ON t.author_id=a.id JOIN liminal.genre g ON t.genre_id=g.id order by t.id`
-  );
-  return h.response(trackData);
-};
-
-const handleGetProfile = async (req, h) => {
-  const { id } = req.params;
-  const { authorization } = req.headers;
-  if (!authorization) {
-    throw Boom.badRequest('Unauthorized');
-  }
-
-  try {
-    const user = await db.one('SELECT * FROM liminal.user WHERE id = $1', id);
-    const auth = await redisClient.get(authorization);
-    if (auth) {
-      return h.response(user);
-    } else throw Boom.badRequest('Unauthorized');
-  } catch (err) {
-    throw Boom.badRequest('Unauthorized');
-  }
-};
+const { createFileWithRandomId } = require('../file');
 
 const signToken = (email) => {
   const jwtPayload = { email };
@@ -64,35 +29,9 @@ const createSessions = (user) => {
     });
 };
 
-const getTracksByNameAndAuthor = async (req, h) => {
-  const nm = req.params.name;
-  const trackData = await db.any(
-    `SELECT t.id, t."path", t."name", t.cover, to_char(t.duration,'MI:SS') as "duration", a.nickname as "author", g.name as "genre" FROM liminal.track t JOIN liminal.author a ON t.author_id=a.id JOIN liminal.genre g ON t.genre_id=g.id WHERE lower(t."name") like '%'||lower($1)||'%' OR lower(a.nickname) like '%'||lower($1)||'%' order by t.id`,
-    nm
-  );
-  return h.response(trackData);
-};
-
-const getTracksByName = async (req, h) => {
-  const nm = req.params.name;
-  const trackData = await db.any(
-    `SELECT t.id, t."path", t."name", t.cover, to_char(t.duration,'MI:SS') as "duration", a.nickname as "author", g.name as "genre" FROM liminal.track t JOIN liminal.author a ON t.author_id=a.id JOIN liminal.genre g ON t.genre_id=g.id WHERE lower(t."name") like '%'||lower($1)||'%' order by t.id`,
-    nm
-  );
-  return h.response(trackData);
-};
-
-const getTracksByAuthor = async (req, h) => {
-  const nm = req.params.name;
-  const trackData = await db.any(
-    `SELECT t.id, t."path", t."name", t.cover, to_char(t.duration,'MI:SS') as "duration", a.nickname as "author", g.name as "genre" FROM liminal.track t JOIN liminal.author a ON t.author_id=a.id JOIN liminal.genre g ON t.genre_id=g.id WHERE lower(a.nickname) like '%'||lower($1)||'%' order by t.id`,
-    nm
-  );
-  return h.response(trackData);
-};
-
 const getProfile = async (req, h) => {
   const { email, password } = req.payload;
+  const db = req.getDb();
   if (!email || !password) {
     return Promise.reject('incorrect form submission');
   }
@@ -163,16 +102,13 @@ const createProfile = async (req, h) => {
     ) {
       throw Boom.badRequest('incorrect form submission');
     }
-
+    const db = req.getDb();
     const base64Data = file.imagePreviewUrl.split(',')[1];
-    const imagename = `${uuidv4()}${file.image}`;
-    Fs.writeFileSync(
-      `public/files/images/avatars/${imagename}`,
-      base64Data,
+    const imagename = createFileWithRandomId(
+      'images/avatars/',
+      file.image,
       'base64',
-      function (err) {
-        return err;
-      }
+      base64Data
     );
     const hash = bcrypt.hashSync(password);
     await db.none(
@@ -196,23 +132,31 @@ VALUES ($1, $2, $3, $4, $5, $6)`,
   }
 };
 
-const getTrack = async (trackId) => {
-  const track = await db
-    .one('SELECT * FROM liminal.track WHERE id = $1', trackId)
-    .then((trackData) => {
-      return trackData;
-    });
-  return track;
+const handleGetProfile = async (req, h) => {
+  const { id } = req.params;
+  const { authorization } = req.headers;
+  const db = req.getDb();
+  if (!authorization) {
+    throw Boom.badRequest('Unauthorized');
+  }
+
+  try {
+    const user = await db.one(
+      `SELECT id, last_name, first_name, middle_name, to_char(birth_date,'DD.MM.YYYY') as "birth_date", subscribed, email, phone, avatar FROM liminal.user WHERE id = $1`,
+      id
+    );
+    const auth = await redisClient.get(authorization);
+    if (auth) {
+      return h.response(user);
+    } else throw Boom.badRequest('Unauthorized');
+  } catch (err) {
+    throw Boom.badRequest('Unauthorized');
+  }
 };
 
 module.exports = {
-  getTrackList,
-  getTracksByNameAndAuthor,
-  getTracksByName,
-  getTracksByAuthor,
   getProfile,
   createProfile,
-  getTrack,
   signinAuth,
   handleGetProfile,
 };
