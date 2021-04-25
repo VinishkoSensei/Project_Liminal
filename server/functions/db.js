@@ -4,9 +4,10 @@ const Fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const redis = require('redis');
+const redis = require('async-redis');
 
 const redisClient = redis.createClient({ host: 'localhost', password: 'root' });
+redisClient.on('error', (err) => console.log('Error ' + err));
 
 const cn = {
   host: process.env.DB_HOST,
@@ -33,41 +34,42 @@ const getTrackList = async (req, h) => {
   */
 };
 
-const getAuthTokenId = (req, h) => {
-  console.log('getAuthTokenId');
+const handleGetProfile = async (req, h) => {
+  const { id } = req.params;
   const { authorization } = req.headers;
-  return redisClient.get(authorization, (err, reply) => {
-    if (err || !reply) {
-      console.log('Unauthorized');
-      throw Boom.badRequest('Unauthorized');
-    }
-    console.log('Authorized');
-    return h.response({ id: reply });
-  });
+  if (!authorization) {
+    throw Boom.badRequest('Unauthorized');
+  }
+
+  try {
+    const user = await db.one('SELECT * FROM liminal.user WHERE id = $1', id);
+    const auth = await redisClient.get(authorization);
+    if (auth) {
+      return h.response(user);
+    } else throw Boom.badRequest('Unauthorized');
+  } catch (err) {
+    throw Boom.badRequest('Unauthorized');
+  }
 };
 
 const signToken = (email) => {
   const jwtPayload = { email };
-  console.log('signToken', jwtPayload);
   return jwt.sign(jwtPayload, 'JWT_SECRET', { expiresIn: '2 days' });
 };
 
 const setToken = (key, value) => {
-  console.log('setToken');
   return Promise.resolve(redisClient.set(key, value));
 };
 
 const createSessions = (user) => {
-  console.log('createSessions');
   const { email, id } = user;
   const token = signToken(email);
   return setToken(token, id)
     .then(() => {
-      console.log('i work', id, token);
       return { success: 'true', userId: id, token };
     })
     .catch((err) => {
-      console.log(err);
+      return err;
     });
 };
 
@@ -100,7 +102,6 @@ const getTracksByAuthor = async (req, h) => {
 
 const getProfile = async (req, h) => {
   const { email, password } = req.payload;
-  console.log('getProfile');
   if (!email || !password) {
     return Promise.reject('incorrect form submission');
   }
@@ -116,7 +117,6 @@ FROM liminal.user
 where email like $1`,
         email
       );
-      //console.log(profile);
       return profile;
     } catch (err) {
       throw Boom.badRequest('unable to get user');
@@ -126,21 +126,28 @@ where email like $1`,
   }
 };
 
-const signinAuth = (req, h) => {
+const signinAuth = async (req, h) => {
   const { authorization } = req.headers;
-  return authorization
-    ? getAuthTokenId(req, h)
-    : getProfile(req, h)
-        .then((data) => {
-          return data.id && data.email
-            ? createSessions(data)
-            : Promise.reject(data);
-        })
-        .then((session) => {
-          console.log(session);
-          return h.response(session);
-        })
-        .catch((err) => Boom.badRequest(err));
+  if (authorization) {
+    const reply = await redisClient.get(authorization);
+    if (reply) {
+      return h.response({
+        success: 'true',
+        userId: reply,
+        token: authorization,
+      });
+    } else {
+      throw Boom.badRequest('Unauthorized');
+    }
+  } else {
+    const profile = await getProfile(req, h);
+    if (profile.id && profile.email) {
+      const session = await createSessions(profile);
+      return h.response(session);
+    } else {
+      throw Boom.badRequest('signinauth error');
+    }
+  }
 };
 
 const createProfile = async (req, h) => {
@@ -173,10 +180,9 @@ const createProfile = async (req, h) => {
       base64Data,
       'base64',
       function (err) {
-        console.log(err);
+        return err;
       }
     );
-
     const hash = bcrypt.hashSync(password);
     await db.none(
       `INSERT INTO liminal.login(email, hash)
@@ -217,4 +223,5 @@ module.exports = {
   createProfile,
   getTrack,
   signinAuth,
+  handleGetProfile,
 };

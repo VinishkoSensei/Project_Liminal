@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './homepage.styles.scss';
 
 import Header from '../../components/header/header.component';
@@ -17,7 +17,9 @@ import ReactCardFlip from 'react-card-flip';
 
 import { connect } from 'react-redux';
 
-const HomePage = ({ profile }) => {
+import { checkUserSession } from '../../redux/user/user.actions';
+
+const HomePage = ({ profile, checkUserSession }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [chosenCard, setChosenCard] = useState(null);
   const playerRef = useRef(null);
@@ -41,6 +43,10 @@ const HomePage = ({ profile }) => {
       />
     );
   };
+
+  useEffect(() => {
+    checkUserSession();
+  }, [checkUserSession]);
 
   return (
     <div className="main">
@@ -107,4 +113,8 @@ const mapStateToProps = (state) => ({
   profile: state.user.profile,
 });
 
-export default connect(mapStateToProps)(HomePage);
+const mapDispatchToProps = (dispatch) => ({
+  checkUserSession: () => dispatch(checkUserSession()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
