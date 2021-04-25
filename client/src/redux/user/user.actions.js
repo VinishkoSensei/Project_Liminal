@@ -28,6 +28,10 @@ export const signUpStart = (
   payload: { email, firstname, lastname, date, phone, file, password },
 });
 
+export const checkUserSession = () => ({
+  type: ProfileActionTypes.CHECK_USER_SESSION,
+});
+
 export const signUpSuccess = (profile) => ({
   type: ProfileActionTypes.SIGN_UP_SUCCESS,
   payload: profile,

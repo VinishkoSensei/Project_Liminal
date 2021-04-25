@@ -5,6 +5,7 @@ const ProfileActionTypes = {
   SIGN_UP_START: 'SIGN_UP_START',
   SIGN_UP_SUCCESS: ' SIGN_UP_SUCCESS',
   SIGN_UP_FAILURE: 'SIGN_UP_FAILURE',
+  CHECK_USER_SESSION: 'CHECK_USER_SESSION',
 };
 
 export default ProfileActionTypes;
