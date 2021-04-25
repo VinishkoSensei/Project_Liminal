@@ -1,3 +1,6 @@
+const Fs = require('fs');
+const { v4: uuidv4 } = require('uuid');
+
 const radioQueue = [
   './files/music/1.mp3',
   './files/music/2.mp3',
@@ -12,8 +15,22 @@ const getProfileImage = (req, h) => {
   return h.file('../public/files/images/avatars/' + req.params.avatar);
 };
 
+const createFileWithRandomId = (path, ext, type, file) => {
+  const filename = `${uuidv4()}${ext}`;
+  Fs.writeFileSync(
+    `public/files/${path}${filename}`,
+    file,
+    type,
+    function (err) {
+      return err;
+    }
+  );
+  return filename;
+};
+
 module.exports = {
   radioQueue,
   getTrackCover,
   getProfileImage,
+  createFileWithRandomId,
 };

@@ -2,7 +2,7 @@ const Fs = require('fs');
 const { PassThrough } = require('stream');
 const Throttle = require('throttle');
 
-const { getTrack } = require('./db');
+const { getTrack } = require('./db/track.db');
 const { radioQueue } = require('./file');
 
 const sinks = [];
