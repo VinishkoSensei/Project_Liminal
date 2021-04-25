@@ -19,11 +19,11 @@ const plugin = {
   register: async (server, options) => {
     await server.register(File);
 
-    server.route({
+    /*server.route({
       method: 'GET',
       path: '/',
       handler: (request, h) => h.file('index.html'),
-    });
+    });*/
 
     server.route({
       method: 'GET',

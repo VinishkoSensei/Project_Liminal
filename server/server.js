@@ -33,8 +33,6 @@ const server = Hapi.server({
 const startApp = async () => {
   try {
     await server.register(Static);
-    startStreaming();
-    console.log(`Server running at ${server.info.uri}`);
     await server.decorate('request', 'getDb', function () {
       return db;
     });
@@ -42,6 +40,8 @@ const startApp = async () => {
       return redisClient;
     });
     await server.start();
+    console.log(`Server running at ${server.info.uri}`);
+    startStreaming();
   } catch (err) {
     console.log(`Server error: ${err}`);
     process.exit(1);
