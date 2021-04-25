@@ -22,12 +22,14 @@ const Track = ({
   return (
     <div className="track" key={index}>
       <div className="track-cover-container">
-        <img
-          src={`http://localhost:3001/gettrackcover/${track.cover}`}
-          alt="cover"
-          width="60px"
-          height="60px"
-        />
+        {track.cover ? (
+          <img
+            src={`http://localhost:3001/gettrackcover/${track.cover}`}
+            alt="cover"
+            width="60px"
+            height="60px"
+          />
+        ) : null}
       </div>
       <div className="track-info">
         <div>{track.name}</div>

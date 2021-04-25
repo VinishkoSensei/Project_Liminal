@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import './profile.styles.scss';
 import { signInStart } from '../../redux/user/user.actions';
@@ -11,9 +11,10 @@ const Profile = ({
 }) => {
   const [minifiedProfile, setMinifiedProfile] = useState(true);
 
-  useEffect(() => {
-    //signInStart('john1doe@gmail.com', 'johndoe');
-  }, []);
+  const handleImgError = (e) => {
+    e.target.onError = null;
+    e.target.src = 'images/emptyprofile.svg';
+  };
 
   return (
     <div>
@@ -27,6 +28,7 @@ const Profile = ({
               <img
                 src={`http://localhost:3001/getprofileimage/${profile.avatar}`}
                 alt="profileimage"
+                onError={handleImgError}
               />
             </div>
             <div className="profile-info-main">
