@@ -30,19 +30,14 @@ const getProfile = async (req, h) => {
   if (!email || !password) {
     return Promise.reject('incorrect form submission');
   }
-  const signindata = await db.any(
-    'SELECT id, email, hash FROM liminal.login WHERE email like $1',
-    email
-  );
+  const signindata = await db.func('liminal.getusercreds', email);
   if (bcrypt.compareSync(password, signindata[0].hash)) {
     try {
-      const profile = await db.one(
-        `SELECT id, last_name, first_name, middle_name, to_char(birth_date,'DD.MM.YYYY') as "birth_date", subscribed, email, phone, avatar
-FROM liminal.user
-where email like $1`,
-        email
-      );
-      return profile;
+      const profile = await db.func(`liminal.getuser`, [
+        signindata[0].id,
+        email,
+      ]);
+      return profile[0];
     } catch (err) {
       throw Boom.badRequest('unable to get user');
     }
@@ -107,16 +102,15 @@ const createProfile = async (req, h) => {
       base64Data
     );
     const hash = bcrypt.hashSync(password);
-    await db.none(
-      `INSERT INTO liminal.login(email, hash)
-VALUES ($1, $2)`,
-      [email, hash]
-    );
-    await db.none(
-      `INSERT INTO liminal.user(email, first_name, last_name, birth_date, phone, avatar)
-VALUES ($1, $2, $3, $4, $5, $6)`,
-      [email, firstname, lastname, date, phone, imagename]
-    );
+    await db.proc('liminal.register', [
+      lastname,
+      firstname,
+      date,
+      email,
+      phone,
+      imagename,
+      hash,
+    ]);
     return h.response().code(200);
   } catch (err) {
     switch (err.routine) {
@@ -137,14 +131,11 @@ const handleGetProfile = async (req, h) => {
   }
 
   try {
-    const user = await db.one(
-      `SELECT id, last_name, first_name, middle_name, to_char(birth_date,'DD.MM.YYYY') as "birth_date", subscribed, email, phone, avatar FROM liminal.user WHERE id = $1`,
-      id
-    );
+    const user = await db.func(`liminal.getuser`, id);
     const redisClient = req.getRedis();
     const auth = await redisClient.get(authorization);
     if (auth) {
-      return h.response(user);
+      return h.response(user[0]);
     } else throw Boom.badRequest('Unauthorized');
   } catch (err) {
     throw Boom.badRequest('Unauthorized');
