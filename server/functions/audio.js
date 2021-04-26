@@ -15,7 +15,7 @@ const streamHandler = (request, h) => {
 };
 
 const streamTrack = async (req, h) => {
-  const track = await getTrack(req.params.trackId);
+  const track = await getTrack(req, h);
   const path = track.path;
   const stat = Fs.statSync(path);
   const fileSize = stat.size;
