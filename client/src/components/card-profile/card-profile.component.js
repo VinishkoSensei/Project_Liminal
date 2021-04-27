@@ -1,8 +1,15 @@
 import React from 'react';
 import './card-profile.styles.scss';
 import { connect } from 'react-redux';
+import CustomButton from '../custombutton/custombutton.component';
+import { signOutStart } from '../../redux/user/user.actions';
 
-const CardProfile = ({ changedCards, profile, profileExpanded }) => {
+const CardProfile = ({
+  changedCards,
+  profile,
+  profileExpanded,
+  signOutStart,
+}) => {
   return (
     <div className={`card-profile${profileExpanded ? ' expanded' : ''}`}>
       {profile ? (
@@ -22,6 +29,9 @@ const CardProfile = ({ changedCards, profile, profileExpanded }) => {
             </div>
             <div>{profile.birth_date}</div>
             <div>{profile.subscribed ? 'subscribed' : 'not subscribed'}</div>
+            <CustomButton type="button" onClick={() => signOutStart()}>
+              Sign Out
+            </CustomButton>
           </div>
         </div>
       ) : null}
@@ -33,4 +43,8 @@ const mapStateToProps = (state) => ({
   profile: state.user.profile,
 });
 
-export default connect(mapStateToProps)(CardProfile);
+const mapDispatchToProps = (dispatch) => ({
+  signOutStart: () => dispatch(signOutStart()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CardProfile);

@@ -15,6 +15,19 @@ export const signInFailure = (error) => ({
   payload: error.message,
 });
 
+export const signOutStart = () => ({
+  type: ProfileActionTypes.SIGN_OUT_START,
+});
+
+export const signOutSuccess = () => ({
+  type: ProfileActionTypes.SIGN_OUT_SUCCESS,
+});
+
+export const signOutFailure = (error) => ({
+  type: ProfileActionTypes.SIGN_OUT_FAILURE,
+  payload: error,
+});
+
 export const signUpStart = (
   email,
   firstname,
