@@ -331,3 +331,175 @@ ALTER TABLE ONLY liminal.track
 -- PostgreSQL database dump complete
 --
 
+-- =========================================
+CREATE TABLE liminal.author (
+	id serial NOT NULL,
+	nickname varchar(50) NOT NULL,
+	family_name varchar(50) NULL,
+	"name" varchar(50) NULL,
+	CONSTRAINT author_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE liminal.genre (
+	id serial NOT NULL,
+	"name" varchar(50) NULL,
+	CONSTRAINT genre_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE liminal.login (
+	id serial NOT NULL,
+	email varchar(50) NOT NULL,
+	hash text NULL,
+	CONSTRAINT login_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE liminal.track (
+	id serial NOT NULL,
+	"path" varchar(150) NOT NULL,
+	"name" varchar(50) NOT NULL,
+	author_id int4 NULL,
+	genre_id int4 NULL,
+	cover varchar(150) NULL,
+	duration time(0) NULL,
+	CONSTRAINT track_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE liminal."user" (
+	id int4 NOT NULL,
+	last_name varchar(50) NOT NULL,
+	first_name varchar(50) NOT NULL,
+	middle_name varchar(50) NULL,
+	birth_date date NOT NULL,
+	subscribed bool NOT NULL DEFAULT false,
+	email varchar(50) NOT NULL,
+	phone varchar(15) NOT NULL,
+	avatar varchar(200) NULL,
+	CONSTRAINT users_c_email UNIQUE (email),
+	CONSTRAINT users_c_phone UNIQUE (phone),
+	CONSTRAINT users_pkey PRIMARY KEY (id)
+);
+
+CREATE OR REPLACE FUNCTION liminal.gettrack(tid integer)
+ RETURNS TABLE(id integer, path character varying, name character varying, cover character varying, duration text, author character varying, genre character varying)
+ LANGUAGE plpgsql
+AS $function$
+BEGIN
+	RETURN QUERY SELECT t.id, t."path",	t."name", t.cover, to_char(t.duration,'MI:SS') as "duration", a."name" , g."name" FROM liminal.track t
+	join liminal.author a on t.author_id = a.id 
+	join liminal.genre g on t.genre_id = g.id 
+	WHERE t.id = tid;
+END;
+$function$
+;
+
+CREATE OR REPLACE FUNCTION liminal.gettracklist(ttrackname character varying DEFAULT NULL::character varying, tnickname character varying DEFAULT NULL::character varying)
+ RETURNS TABLE(id integer, path character varying, name character varying, cover character varying, duration text, author character varying, genre character varying)
+ LANGUAGE plpgsql
+AS $function$
+BEGIN
+  
+	if ttrackname is null then 
+	RETURN QUERY SELECT t.id, t."path", t."name", t.cover, 
+	    to_char(t.duration,'MI:SS') as "duration", 
+		a.nickname as "author", g.name as "genre" 
+		FROM liminal.track t 
+		JOIN liminal.author a ON t.author_id=a.id 
+		JOIN liminal.genre g ON t.genre_id=g.id 
+		WHERE lower(a.nickname) ilike '%'||tnickname||'%' 
+		order by t.id;
+	
+	elseif tnickname is null then 
+	RETURN QUERY SELECT t.id, t."path", t."name", t.cover, 
+	    to_char(t.duration,'MI:SS') as "duration", 
+		a.nickname as "author", g.name as "genre" 
+		FROM liminal.track t 
+		JOIN liminal.author a ON t.author_id=a.id 
+		JOIN liminal.genre g ON t.genre_id=g.id 
+		WHERE lower(t."name") ilike '%'||ttrackname||'%'
+		order by t.id;
+	else 
+	RETURN QUERY SELECT t.id, t."path", t."name", t.cover, 
+	    to_char(t.duration,'MI:SS') as "duration", 
+		a.nickname as "author", g.name as "genre" 
+		FROM liminal.track t 
+		JOIN liminal.author a ON t.author_id=a.id 
+		JOIN liminal.genre g ON t.genre_id=g.id 
+		WHERE lower(a.nickname) ilike '%'||tnickname||'%' 
+		or lower(t."name") ilike '%'||ttrackname||'%'
+		order by t.id;
+  end if;  
+END;
+$function$
+;
+
+CREATE OR REPLACE FUNCTION liminal.gettracklist()
+ RETURNS TABLE(id integer, path character varying, name character varying, cover character varying, duration text, author character varying, genre character varying)
+ LANGUAGE plpgsql
+AS $function$
+BEGIN
+	RETURN QUERY SELECT t.id, t."path", t."name", t.cover, 
+	    to_char(t.duration,'MI:SS') as "duration", 
+		a.nickname as "author", g.name as "genre" 
+		FROM liminal.track t 
+		JOIN liminal.author a ON t.author_id=a.id 
+		JOIN liminal.genre g ON t.genre_id=g.id 
+		order by t.id; 
+END;
+$function$
+;
+
+CREATE OR REPLACE FUNCTION liminal.getuser(tid integer)
+ RETURNS TABLE(id integer, last_name character varying, first_name character varying, middle_name character varying, birth_date text, subscribed boolean, email character varying, phone character varying, avatar character varying)
+ LANGUAGE plpgsql
+AS $function$
+begin
+    RETURN QUERY SELECT u.id, u.last_name, u.first_name, u.middle_name, 
+    to_char(u.birth_date,'DD.MM.YYYY') as "birth_date", 
+    u.subscribed, u.email, u.phone, u.avatar
+	FROM liminal.user u
+	where u.id=tid;
+END;
+$function$
+;
+
+CREATE OR REPLACE FUNCTION liminal.getuser(tid integer, temail character varying)
+ RETURNS TABLE(id integer, last_name character varying, first_name character varying, middle_name character varying, birth_date text, subscribed boolean, email character varying, phone character varying, avatar character varying)
+ LANGUAGE plpgsql
+AS $function$
+begin
+    RETURN QUERY SELECT u.id, u.last_name, u.first_name, u.middle_name, 
+    to_char(u.birth_date,'DD.MM.YYYY') as "birth_date", 
+    u.subscribed, u.email, u.phone, u.avatar
+	FROM liminal.user u
+	where u.id=tid and u.email = temail;
+END;
+$function$
+;
+
+CREATE OR REPLACE FUNCTION liminal.getusercreds(temail character varying)
+ RETURNS TABLE(id integer, hash text)
+ LANGUAGE plpgsql
+AS $function$
+begin
+    RETURN QUERY SELECT l.id ,l.hash 
+	FROM liminal.login l
+	where l.email = temail;
+END;
+$function$
+;
+
+CREATE OR REPLACE PROCEDURE liminal.register(last_name character varying, first_name character varying, birth_date date, email character varying, phone character varying, avatar character varying, hash text)
+ LANGUAGE plpgsql
+AS $procedure$
+DECLARE
+   l_id integer;
+BEGIN
+	INSERT INTO liminal.login(email, hash)
+	VALUES (email, hash)
+	RETURNING id INTO l_id;
+
+	insert into liminal.user(id,last_name,first_name,birth_date,email,phone,avatar)
+	values (l_id,last_name,first_name,birth_date,email,phone,avatar);
+end;
+$procedure$
+;
