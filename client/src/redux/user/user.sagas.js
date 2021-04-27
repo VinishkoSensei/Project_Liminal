@@ -5,6 +5,8 @@ import {
   signInFailure,
   signUpSuccess,
   signUpFailure,
+  signOutSuccess,
+  signOutFailure,
 } from './user.actions';
 import { handleSignIn, handleSignUp, handleGetProfile } from './user.utils';
 
@@ -104,11 +106,24 @@ export function* onCheckUserSession() {
   yield takeLatest(ProfileActionTypes.CHECK_USER_SESSION, isUserAutentificated);
 }
 
+export function* signOut() {
+  try {
+    yield put(signOutSuccess());
+  } catch (e) {
+    put(signOutFailure(e));
+  }
+}
+
+export function* onSignOutStart() {
+  yield takeLatest(ProfileActionTypes.SIGN_OUT_START, signOut);
+}
+
 export function* userSagas() {
   yield all([
     call(onSignInStart),
     call(onSignUpStart),
     call(onCheckUserSession),
     call(onSignUpSuccess),
+    call(onSignOutStart),
   ]);
 }
