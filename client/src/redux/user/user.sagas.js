@@ -108,6 +108,7 @@ export function* onCheckUserSession() {
 
 export function* signOut() {
   try {
+    yield deleteAuthTokenFromSession();
     yield put(signOutSuccess());
   } catch (e) {
     put(signOutFailure(e));
