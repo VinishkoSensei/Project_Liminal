@@ -8,8 +8,14 @@ const CardProfile = ({
   changedCards,
   profile,
   profileExpanded,
+  setProfileExpanded,
   signOutStart,
 }) => {
+  const handleSignOut = () => {
+    setProfileExpanded(false);
+    signOutStart();
+  };
+
   return (
     <div className={`card-profile${profileExpanded ? ' expanded' : ''}`}>
       {profile ? (
@@ -29,7 +35,7 @@ const CardProfile = ({
             </div>
             <div>{profile.birth_date}</div>
             <div>{profile.subscribed ? 'subscribed' : 'not subscribed'}</div>
-            <CustomButton type="button" onClick={() => signOutStart()}>
+            <CustomButton type="button" onClick={handleSignOut}>
               Sign Out
             </CustomButton>
           </div>
