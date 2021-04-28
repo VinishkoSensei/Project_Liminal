@@ -103,7 +103,10 @@ const HomePage = ({ profile, checkUserSession }) => {
           <div className="news"></div>
         </div>
       </div>
-      <CardProfile profileExpanded={profileExpanded} />
+      <CardProfile
+        profileExpanded={profileExpanded}
+        setProfileExpanded={setProfileExpanded}
+      />
       <div className="footer"></div>
     </div>
   );
