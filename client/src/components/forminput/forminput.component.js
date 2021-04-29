@@ -1,9 +1,22 @@
 import React from 'react';
 import './forminput.styles.scss';
 
-const FormInput = ({ handleChange, label, ...otherProps }) => (
-  <div className="group">
-    <input className="forminput" onChange={handleChange} {...otherProps} />
+const FormInput = ({
+  handleChange,
+  label,
+  bordered,
+  handleChangingItemType,
+  ...otherProps
+}) => (
+  <div
+    className="group"
+    onClick={handleChangingItemType ? handleChangingItemType : null}
+  >
+    <input
+      className={`forminput${bordered ? ' border' : ''}`}
+      onChange={handleChange}
+      {...otherProps}
+    />
 
     {label ? (
       <label
