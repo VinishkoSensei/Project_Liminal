@@ -1,19 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './card-profile.styles.scss';
 import { connect } from 'react-redux';
 import CustomButton from '../custombutton/custombutton.component';
-import { signOutStart } from '../../redux/user/user.actions';
+import {
+  signOutStart,
+  changeProfileStart,
+} from '../../redux/user/user.actions';
+import FormInput from '../forminput/forminput.component';
 
 const CardProfile = ({
-  changedCards,
   profile,
   profileExpanded,
   setProfileExpanded,
   signOutStart,
+  changeProfileStart,
 }) => {
+  const [changedProfile, setChangedProfile] = useState(null);
+
+  useEffect(() => {
+    setChangedProfile(profile);
+  }, [profile]);
+
   const handleSignOut = () => {
     setProfileExpanded(false);
     signOutStart();
+  };
+
+  const handleChange = (event) => {
+    const { value, name } = event.target;
+    setChangedProfile({ ...changedProfile, [name]: value });
   };
 
   return (
@@ -33,8 +48,25 @@ const CardProfile = ({
             <div>
               <i>{profile.email}</i>
             </div>
+            <div>{profile.phone}</div>
+            {changedProfile ? (
+              <FormInput
+                name="phone"
+                value={changedProfile.phone}
+                label="Phone"
+                handleChange={handleChange}
+                key="phone"
+                required
+              />
+            ) : null}
             <div>{profile.birth_date}</div>
             <div>{profile.subscribed ? 'subscribed' : 'not subscribed'}</div>
+            <CustomButton
+              type="button"
+              onClick={() => changeProfileStart(changedProfile)}
+            >
+              Change
+            </CustomButton>
             <CustomButton type="button" onClick={handleSignOut}>
               Sign Out
             </CustomButton>
@@ -51,6 +83,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   signOutStart: () => dispatch(signOutStart()),
+  changeProfileStart: (changedProfile) =>
+    dispatch(changeProfileStart(changedProfile)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardProfile);

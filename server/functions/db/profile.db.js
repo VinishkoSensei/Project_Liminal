@@ -142,9 +142,21 @@ const handleGetProfile = async (req, h) => {
   }
 };
 
+const handleChangeProfile = async (req, h) => {
+  const { id, phone } = req.payload;
+  const db = req.getDb();
+  try {
+    const user = await db.func(`liminal.changeuser`, [id, phone]);
+    return h.response({ id, ...user[0] });
+  } catch (err) {
+    throw Boom.badRequest('Error');
+  }
+};
+
 module.exports = {
   getProfile,
   createProfile,
   signinAuth,
   handleGetProfile,
+  handleChangeProfile,
 };
