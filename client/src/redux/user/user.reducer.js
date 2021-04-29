@@ -14,12 +14,20 @@ const profileReducer = (state = INITIAL_STATE, action) => {
         error: null,
       };
 
+    case ProfileActionTypes.CHANGE_PROFILE_SUCCESS:
+      return {
+        ...state,
+        profile: action.payload,
+        error: null,
+      };
+
     case ProfileActionTypes.SIGN_OUT_SUCCESS:
       return { ...state, profile: null, error: null };
 
     case ProfileActionTypes.SIGN_IN_FAILURE:
     case ProfileActionTypes.SIGN_OUT_FAILURE:
     case ProfileActionTypes.SIGN_UP_FAILURE:
+    case ProfileActionTypes.CHANGE_PROFILE_FAILURE:
       return {
         ...state,
         error: action.payload,

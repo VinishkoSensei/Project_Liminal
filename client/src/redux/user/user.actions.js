@@ -54,3 +54,18 @@ export const signUpFailure = (error) => ({
   type: ProfileActionTypes.SIGN_UP_FAILURE,
   payload: error.message,
 });
+
+export const changeProfileStart = (profile) => ({
+  type: ProfileActionTypes.CHANGE_PROFILE_START,
+  payload: profile,
+});
+
+export const changeProfileSuccess = (profile) => ({
+  type: ProfileActionTypes.CHANGE_PROFILE_SUCCESS,
+  payload: profile,
+});
+
+export const changeProfileFailure = (error) => ({
+  type: ProfileActionTypes.CHANGE_PROFILE_FAILURE,
+  payload: error.message,
+});

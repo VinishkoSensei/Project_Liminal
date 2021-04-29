@@ -7,8 +7,15 @@ import {
   signUpFailure,
   signOutSuccess,
   signOutFailure,
+  changeProfileSuccess,
+  changeProfileFailure,
 } from './user.actions';
-import { handleSignIn, handleSignUp, handleGetProfile } from './user.utils';
+import {
+  handleSignIn,
+  handleSignUp,
+  handleGetProfile,
+  handleChangeProfile,
+} from './user.utils';
 
 const saveAuthTokenInSession = (token) => {
   window.sessionStorage.setItem('token', token);
@@ -119,6 +126,22 @@ export function* onSignOutStart() {
   yield takeLatest(ProfileActionTypes.SIGN_OUT_START, signOut);
 }
 
+export function* changeProfile({ payload }) {
+  try {
+    const { id, phone } = payload;
+    const newprofile = yield handleChangeProfile(id, phone);
+    const profile = yield newprofile.json();
+    console.log('NEWPROFILE', profile);
+    yield put(changeProfileSuccess(profile));
+  } catch (e) {
+    put(changeProfileFailure(e));
+  }
+}
+
+export function* onChangeProfileStart() {
+  yield takeLatest(ProfileActionTypes.CHANGE_PROFILE_START, changeProfile);
+}
+
 export function* userSagas() {
   yield all([
     call(onSignInStart),
@@ -126,5 +149,6 @@ export function* userSagas() {
     call(onCheckUserSession),
     call(onSignUpSuccess),
     call(onSignOutStart),
+    call(onChangeProfileStart),
   ]);
 }

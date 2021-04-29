@@ -5,6 +5,7 @@ const {
   createProfile,
   signinAuth,
   handleGetProfile,
+  handleChangeProfile,
 } = require('../functions/db/profile.db');
 const {
   getTrackList,
@@ -71,6 +72,18 @@ const plugin = {
       method: 'GET',
       path: '/profile/{id}',
       handler: handleGetProfile,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'POST',
+      path: '/profile/{id}',
+      handler: handleChangeProfile,
       config: {
         cors: {
           origin: ['*'],
