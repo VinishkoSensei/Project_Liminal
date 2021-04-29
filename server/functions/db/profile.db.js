@@ -143,14 +143,25 @@ const handleGetProfile = async (req, h) => {
 };
 
 const handleChangeProfile = async (req, h) => {
-  const { id, phone } = req.payload;
+  const { id, phone, changingItemType } = req.payload;
   const db = req.getDb();
-  try {
-    const user = await db.func(`liminal.changeuser`, [id, phone]);
-    return h.response({ id, ...user[0] });
-  } catch (err) {
-    throw Boom.badRequest('Error');
-  }
+  if (
+    changingItemType === 'firstname' ||
+    changingItemType === 'lastname' ||
+    changingItemType === 'phone' ||
+    changingItemType === 'password'
+  ) {
+    try {
+      const user = await db.func(`liminal.changeuser`, [
+        id,
+        phone,
+        changingItemType,
+      ]);
+      return h.response({ id, ...user[0] });
+    } catch (err) {
+      throw Boom.badRequest('Error');
+    }
+  } else throw Boom.badRequest('Wrong changing type');
 };
 
 module.exports = {

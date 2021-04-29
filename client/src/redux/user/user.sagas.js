@@ -128,10 +128,10 @@ export function* onSignOutStart() {
 
 export function* changeProfile({ payload }) {
   try {
-    const { id, phone } = payload;
-    const newprofile = yield handleChangeProfile(id, phone);
+    const { id, phone } = payload.profile;
+    const { changingItemType } = payload;
+    const newprofile = yield handleChangeProfile(id, phone, changingItemType);
     const profile = yield newprofile.json();
-    console.log('NEWPROFILE', profile);
     yield put(changeProfileSuccess(profile));
   } catch (e) {
     put(changeProfileFailure(e));

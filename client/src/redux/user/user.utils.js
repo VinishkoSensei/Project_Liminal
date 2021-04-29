@@ -59,13 +59,14 @@ export const handleSignUp = async (
   return response;
 };
 
-export const handleChangeProfile = async (id, phone) => {
+export const handleChangeProfile = async (id, phone, changingItemType) => {
   const response = await fetch(`http://localhost:3001/profile/${id}`, {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       id: id,
       phone: phone,
+      changingItemType: changingItemType,
     }),
   });
 

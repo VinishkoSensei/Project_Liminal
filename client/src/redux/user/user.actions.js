@@ -55,9 +55,9 @@ export const signUpFailure = (error) => ({
   payload: error.message,
 });
 
-export const changeProfileStart = (profile) => ({
+export const changeProfileStart = (profile, changingItemType) => ({
   type: ProfileActionTypes.CHANGE_PROFILE_START,
-  payload: profile,
+  payload: { profile, changingItemType },
 });
 
 export const changeProfileSuccess = (profile) => ({
