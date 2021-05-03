@@ -127,10 +127,19 @@ export function* onSignOutStart() {
 }
 
 export function* changeProfile({ payload }) {
+  const token = window.sessionStorage.getItem('token');
   try {
-    const { id, phone } = payload.profile;
     const { changingItemType } = payload;
-    const newprofile = yield handleChangeProfile(id, phone, changingItemType);
+    const newprofile = yield handleChangeProfile(
+      payload.profile.id,
+      payload.profile[changingItemType],
+      changingItemType,
+      token
+    );
+    if (!newprofile.ok) {
+      const res = yield newprofile.json();
+      throw new Error(res.message);
+    }
     const profile = yield newprofile.json();
     yield put(changeProfileSuccess(profile));
   } catch (e) {

@@ -17,6 +17,8 @@ const CardProfile = ({
 }) => {
   const [changedProfile, setChangedProfile] = useState(null);
   const [changingItemType, setChangingItemType] = useState(null);
+  const [error, setError] = useState(null);
+  const [doPasswordsMatch, setDoPasswordsMatch] = useState(true);
 
   useEffect(() => {
     setChangedProfile({ ...profile, password: '', passwordconf: '' });
@@ -31,9 +33,35 @@ const CardProfile = ({
     setChangingItemType(event.target.name);
   };
 
+  const checkDoPasswordsMatch = (name, value) => {
+    switch (name) {
+      case 'password':
+        setDoPasswordsMatch(value === changedProfile.passwordconf);
+        break;
+      case 'passwordconf':
+        setDoPasswordsMatch(value === changedProfile.password);
+        break;
+      default:
+        break;
+    }
+  };
+
   const handleChange = (event) => {
     const { value, name } = event.target;
     setChangedProfile({ ...changedProfile, [name]: value });
+    checkDoPasswordsMatch(name, value);
+  };
+
+  const handlePasswordChange = () => {
+    const { password, passwordconf } = changedProfile;
+    if (password === passwordconf && password !== '') {
+      changeProfileStart(changedProfile, 'password');
+    }
+  };
+
+  const handleEditingFinish = () => {
+    changeProfileStart(changedProfile, changingItemType);
+    setChangingItemType(null);
   };
 
   const getFileType = (filetype) => {
@@ -108,24 +136,26 @@ const CardProfile = ({
                   key="file"
                 />
                 <FormInput
-                  name="firstname"
+                  name="first_name"
                   value={changedProfile.first_name}
-                  label="firstname"
+                  label="first_name"
                   handleChange={handleChange}
                   handleChangingItemType={handleChangingItemType}
-                  key="firstname"
-                  bordered={changingItemType !== 'firstname'}
-                  disabled={changingItemType !== 'firstname'}
+                  handleEditingFinish={handleEditingFinish}
+                  key="first_name"
+                  bordered={changingItemType !== 'first_name'}
+                  disabled={changingItemType !== 'first_name'}
                 />
                 <FormInput
-                  name="lastname"
+                  name="last_name"
                   value={changedProfile.last_name}
-                  label="lastname"
+                  label="last_name"
                   handleChange={handleChange}
                   handleChangingItemType={handleChangingItemType}
-                  key="lastname"
-                  bordered={changingItemType !== 'lastname'}
-                  disabled={changingItemType !== 'lastname'}
+                  handleEditingFinish={handleEditingFinish}
+                  key="last_name"
+                  bordered={changingItemType !== 'last_name'}
+                  disabled={changingItemType !== 'last_name'}
                 />
                 <FormInput
                   name="phone"
@@ -133,51 +163,35 @@ const CardProfile = ({
                   label="Phone"
                   handleChange={handleChange}
                   handleChangingItemType={handleChangingItemType}
+                  handleEditingFinish={handleEditingFinish}
                   key="phone"
                   bordered={changingItemType !== 'phone'}
                   disabled={changingItemType !== 'phone'}
                 />
                 <FormInput
                   name="password"
-                  value=""
+                  type="password"
+                  value={changedProfile.password}
                   label="password"
                   handleChange={handleChange}
-                  handleChangingItemType={handleChangingItemType}
                   key="password"
-                  bordered={
-                    changingItemType !== 'password' &&
-                    changingItemType !== 'passwordconf'
-                  }
-                  disabled={
-                    changingItemType !== 'password' &&
-                    changingItemType !== 'passwordconf'
-                  }
                 />
                 <FormInput
                   name="passwordconf"
-                  value=""
+                  value={changedProfile.passwordconf}
                   label="passwordconf"
+                  type="password"
                   handleChange={handleChange}
-                  handleChangingItemType={handleChangingItemType}
                   key="passwordconf"
-                  bordered={
-                    changingItemType !== 'password' &&
-                    changingItemType !== 'passwordconf'
-                  }
-                  disabled={
-                    changingItemType !== 'password' &&
-                    changingItemType !== 'passwordconf'
-                  }
                 />
               </div>
             ) : null}
-            <CustomButton
-              type="button"
-              onClick={() =>
-                changeProfileStart(changedProfile, changingItemType)
-              }
-            >
-              Change
+
+            {!doPasswordsMatch ? (
+              <div className="error">Passwords do not match</div>
+            ) : null}
+            <CustomButton type="button" onClick={handlePasswordChange}>
+              Change password
             </CustomButton>
             <CustomButton type="button" onClick={handleSignOut}>
               Sign Out

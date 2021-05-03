@@ -12,6 +12,10 @@ const setToken = (redisClient, key, value) => {
   return Promise.resolve(redisClient.set(key, value));
 };
 
+const deleteToken = (redisClient, key) => {
+  return Promise.resolve(redisClient.del(key));
+};
+
 const createSessions = (redisClient, user) => {
   const { email, id } = user;
   const token = signToken(email);
@@ -143,25 +147,21 @@ const handleGetProfile = async (req, h) => {
 };
 
 const handleChangeProfile = async (req, h) => {
-  const { id, phone, changingItemType } = req.payload;
+  const { id, value, changingItemType } = req.payload;
+  const { authorization } = req.headers;
+  const redisClient = req.getRedis();
   const db = req.getDb();
-  if (
-    changingItemType === 'firstname' ||
-    changingItemType === 'lastname' ||
-    changingItemType === 'phone' ||
-    changingItemType === 'password'
-  ) {
-    try {
-      const user = await db.func(`liminal.changeuser`, [
-        id,
-        phone,
-        changingItemType,
-      ]);
-      return h.response({ id, ...user[0] });
-    } catch (err) {
-      throw Boom.badRequest('Error');
-    }
-  } else throw Boom.badRequest('Wrong changing type');
+  try {
+    const user = await db.func(`liminal.changeuser`, [
+      id,
+      changingItemType !== 'password' ? value : bcrypt.hashSync(value),
+      changingItemType,
+    ]);
+    await deleteToken(redisClient, authorization);
+    return h.response({ id, ...user[0] });
+  } catch (err) {
+    throw Boom.badRequest(err);
+  }
 };
 
 module.exports = {
