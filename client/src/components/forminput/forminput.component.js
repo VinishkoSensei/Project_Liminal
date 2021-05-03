@@ -6,6 +6,7 @@ const FormInput = ({
   label,
   bordered,
   handleChangingItemType,
+  handleEditingFinish,
   ...otherProps
 }) => (
   <div
@@ -15,6 +16,7 @@ const FormInput = ({
     <input
       className={`forminput${bordered ? ' border' : ''}`}
       onChange={handleChange}
+      onBlur={handleEditingFinish}
       {...otherProps}
     />
 
