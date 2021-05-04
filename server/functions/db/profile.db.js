@@ -62,7 +62,7 @@ const signinAuth = async (req, h) => {
         token: authorization,
       });
     } else {
-      throw Boom.badRequest('Unauthorized');
+      throw Boom.unauthorized('Unauthorized');
     }
   } else {
     const profile = await getProfile(req, h);
@@ -131,7 +131,7 @@ const handleGetProfile = async (req, h) => {
   const { authorization } = req.headers;
   const db = req.getDb();
   if (!authorization) {
-    throw Boom.badRequest('Unauthorized');
+    throw Boom.unauthorized('Unauthorized');
   }
 
   try {
@@ -140,20 +140,13 @@ const handleGetProfile = async (req, h) => {
     const auth = await redisClient.get(authorization);
     if (auth) {
       return h.response(user[0]);
-    } else throw Boom.badRequest('Unauthorized');
+    } else throw Boom.unauthorized('Unauthorized');
   } catch (err) {
     throw Boom.badRequest(err);
   }
 };
 
-const handleChangeProfileInfo = async (
-  req,
-  h,
-  db,
-  id,
-  value,
-  changingItemType
-) => {
+const handleChangeProfileInfo = async (db, id, value, changingItemType) => {
   try {
     const user = await db.func(`liminal.changeuser`, [
       id,
@@ -166,16 +159,9 @@ const handleChangeProfileInfo = async (
   }
 };
 
-const handleChangeProfilePassword = async (
-  req,
-  h,
-  db,
-  redisClient,
-  id,
-  value,
-  changingItemType
-) => {
+const handleChangeProfilePassword = async (db, id, value, changingItemType) => {
   try {
+    const redisClient = req.getRedis();
     await deleteToken(redisClient, authorization);
     const user = await db.func(`liminal.changeuser`, [
       id,
@@ -188,14 +174,7 @@ const handleChangeProfilePassword = async (
   }
 };
 
-const handleChangeProfileAvatar = async (
-  req,
-  h,
-  db,
-  id,
-  value,
-  changingItemType
-) => {
+const handleChangeProfileAvatar = async (db, id, value, changingItemType) => {
   try {
     const base64Data = value.imagePreviewUrl.split(',')[1];
     const imagename = createFileWithRandomId(
@@ -219,39 +198,43 @@ const handleChangeProfileAvatar = async (
 
 const handleChangeProfile = async (req, h) => {
   const { id, value, changingItemType } = req.payload;
-  const { authorization } = req.headers;
-  const redisClient = req.getRedis();
   const db = req.getDb();
-
-  if (!authorization) {
-    throw Boom.badRequest('Unauthorized');
-  }
 
   switch (changingItemType) {
     case 'password':
       return h.response(
-        await handleChangeProfilePassword(
-          req,
-          h,
-          db,
-          redisClient,
-          id,
-          value,
-          changingItemType
-        )
+        await handleChangeProfilePassword(db, id, value, changingItemType)
       );
     case 'file':
       return h.response(
-        await handleChangeProfileAvatar(req, h, db, id, value, changingItemType)
+        await handleChangeProfileAvatar(db, id, value, changingItemType)
       );
     case 'first_name':
     case 'last_name':
     case 'phone':
       return h.response(
-        await handleChangeProfileInfo(req, h, db, id, value, changingItemType)
+        await handleChangeProfileInfo(db, id, value, changingItemType)
       );
     default:
       throw Boom.badRequest('Wrong type');
+  }
+};
+
+const checkAuth = async (req, h) => {
+  const redisClient = req.getRedis();
+  const { authorization } = req.headers;
+  try {
+    if (!authorization) {
+      throw Boom.unauthorized('Unauthorized');
+    }
+    const reply = await redisClient.get(authorization);
+    if (reply) {
+      return reply;
+    } else {
+      throw Boom.unauthorized('Unauthorized');
+    }
+  } catch {
+    throw Boom.unauthorized('Unauthorized');
   }
 };
 
@@ -261,4 +244,5 @@ module.exports = {
   signinAuth,
   handleGetProfile,
   handleChangeProfile,
+  checkAuth,
 };
