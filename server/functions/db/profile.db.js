@@ -1,7 +1,7 @@
 const Boom = require('boom');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { createFileWithRandomId } = require('../file');
+const { createFileWithRandomId, deleteFile } = require('../file');
 
 const signToken = (email) => {
   const jwtPayload = { email };
@@ -10,6 +10,10 @@ const signToken = (email) => {
 
 const setToken = (redisClient, key, value) => {
   return Promise.resolve(redisClient.set(key, value));
+};
+
+const deleteToken = (redisClient, key) => {
+  return Promise.resolve(redisClient.del(key));
 };
 
 const createSessions = (redisClient, user) => {
@@ -58,7 +62,7 @@ const signinAuth = async (req, h) => {
         token: authorization,
       });
     } else {
-      throw Boom.badRequest('Unauthorized');
+      throw Boom.unauthorized('Unauthorized');
     }
   } else {
     const profile = await getProfile(req, h);
@@ -124,21 +128,104 @@ const createProfile = async (req, h) => {
 
 const handleGetProfile = async (req, h) => {
   const { id } = req.params;
-  const { authorization } = req.headers;
   const db = req.getDb();
-  if (!authorization) {
-    throw Boom.badRequest('Unauthorized');
-  }
 
   try {
     const user = await db.func(`liminal.getuser`, id);
-    const redisClient = req.getRedis();
-    const auth = await redisClient.get(authorization);
-    if (auth) {
-      return h.response(user[0]);
-    } else throw Boom.badRequest('Unauthorized');
+    return h.response(user[0]);
   } catch (err) {
-    throw Boom.badRequest('Unauthorized');
+    throw Boom.badRequest(err);
+  }
+};
+
+const handleChangeProfileInfo = async (db, id, value, changingItemType) => {
+  try {
+    const user = await db.func(`liminal.changeuserinfo`, [
+      id,
+      value,
+      changingItemType,
+    ]);
+    return { id, ...user[0] };
+  } catch (err) {
+    throw Boom.badRequest(err);
+  }
+};
+
+const handleChangeProfilePassword = async (req, db, id, value) => {
+  try {
+    const redisClient = req.getRedis();
+    const { authorization } = req.headers;
+
+    await deleteToken(redisClient, authorization);
+    const user = await db.func(`liminal.changeuserpassword`, [
+      id,
+      bcrypt.hashSync(value),
+    ]);
+    return { id, ...user[0] };
+  } catch (err) {
+    throw Boom.badRequest(err);
+  }
+};
+
+const handleChangeProfileAvatar = async (db, id, value, changingItemType) => {
+  try {
+    const base64Data = value.imagePreviewUrl.split(',')[1];
+    const imagename = createFileWithRandomId(
+      'images/avatars/',
+      value.image,
+      'base64',
+      base64Data
+    );
+    const oldimage = await db.func(`liminal.getavatar`, id);
+    const user = await db.func(`liminal.changeuserinfo`, [
+      id,
+      imagename,
+      changingItemType,
+    ]);
+    deleteFile('images/avatars/', oldimage[0].getavatar);
+    return { id, ...user[0] };
+  } catch (err) {
+    throw Boom.badRequest(err);
+  }
+};
+
+const handleChangeProfile = async (req, h) => {
+  const { id, value, changingItemType } = req.payload;
+  const db = req.getDb();
+
+  switch (changingItemType) {
+    case 'password':
+      return h.response(await handleChangeProfilePassword(req, db, id, value));
+    case 'file':
+      return h.response(
+        await handleChangeProfileAvatar(db, id, value, changingItemType)
+      );
+    case 'first_name':
+    case 'last_name':
+    case 'phone':
+      return h.response(
+        await handleChangeProfileInfo(db, id, value, changingItemType)
+      );
+    default:
+      throw Boom.badRequest('Wrong type');
+  }
+};
+
+const checkAuth = async (req, h) => {
+  const redisClient = req.getRedis();
+  const { authorization } = req.headers;
+  try {
+    if (!authorization) {
+      throw Boom.unauthorized('Unauthorized');
+    }
+    const reply = await redisClient.get(authorization);
+    if (reply) {
+      return reply;
+    } else {
+      throw Boom.unauthorized('Unauthorized');
+    }
+  } catch {
+    throw Boom.unauthorized('Unauthorized');
   }
 };
 
@@ -147,4 +234,6 @@ module.exports = {
   createProfile,
   signinAuth,
   handleGetProfile,
+  handleChangeProfile,
+  checkAuth,
 };
