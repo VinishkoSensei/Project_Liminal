@@ -17,7 +17,6 @@ const CardProfile = ({
 }) => {
   const [changedProfile, setChangedProfile] = useState(null);
   const [changingItemType, setChangingItemType] = useState(null);
-  const [error, setError] = useState(null);
   const [doPasswordsMatch, setDoPasswordsMatch] = useState(true);
 
   useEffect(() => {
@@ -57,6 +56,10 @@ const CardProfile = ({
     if (password === passwordconf && password !== '') {
       changeProfileStart(changedProfile, 'password');
     }
+  };
+
+  const handleFileChange = () => {
+    if (changedProfile.file.image) changeProfileStart(changedProfile, 'file');
   };
 
   const handleEditingFinish = () => {
@@ -130,11 +133,13 @@ const CardProfile = ({
                 <FormInput
                   name="file"
                   label=""
-                  value=""
                   handleChange={fileSelectHandler}
                   type="file"
                   key="file"
                 />
+                <CustomButton type="button" onClick={handleFileChange}>
+                  Change photo
+                </CustomButton>
                 <FormInput
                   name="first_name"
                   value={changedProfile.first_name}

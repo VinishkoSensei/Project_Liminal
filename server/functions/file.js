@@ -28,9 +28,17 @@ const createFileWithRandomId = (path, ext, type, file) => {
   return filename;
 };
 
+const deleteFile = async (path, filename) => {
+  Fs.unlink(`public/files/${path}${filename}`, (err) => {
+    if (err)
+      console.log(`Couldn't delete file ${err.path} with error ${err.code}`);
+  });
+};
+
 module.exports = {
   radioQueue,
   getTrackCover,
   getProfileImage,
   createFileWithRandomId,
+  deleteFile,
 };
