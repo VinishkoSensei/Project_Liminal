@@ -23,13 +23,13 @@
 }
 
 .card-profile {
-  @include setwidthandheight(70vw, 68vh);
+  @include setwidthandheight(70vw, 75vh);
   @include setborderwithradius(2px solid black, 52px);
   @include flexeddiv(row, center);
   @include animation(left, 2s);
   background-color: rgb(115, 107, 235);
   position: absolute;
-  top: 25%;
+  top: 20%;
   left: -100%;
 
   .card-profile-main {
@@ -37,8 +37,8 @@
     @include setwidthandheight(70%, 100%);
 
     .card-profile-image {
-      width: 200px;
-      height: 200px;
+      width: 130px;
+      height: 130px;
       margin: 0 auto;
       border-radius: 50%;
       border: 3px solid black;
@@ -50,8 +50,17 @@
 
     .profile-info-main {
       @include flexeddiv(column, space-around);
-      height: 30%;
+      height: 83%;
       text-align: center;
+    }
+
+    .forminput {
+      margin: 16px 0;
+    }
+
+    .custombutton {
+      height: 30px;
+      line-height: 30px;
     }
   }
 
