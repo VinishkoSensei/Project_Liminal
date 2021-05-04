@@ -1,7 +1,7 @@
 const Boom = require('boom');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { createFileWithRandomId } = require('../file');
+const { createFileWithRandomId, deleteFile } = require('../file');
 
 const signToken = (email) => {
   const jwtPayload = { email };
@@ -152,13 +152,38 @@ const handleChangeProfile = async (req, h) => {
   const redisClient = req.getRedis();
   const db = req.getDb();
   try {
-    const user = await db.func(`liminal.changeuser`, [
-      id,
-      changingItemType !== 'password' ? value : bcrypt.hashSync(value),
-      changingItemType,
-    ]);
-    await deleteToken(redisClient, authorization);
-    return h.response({ id, ...user[0] });
+    if (changingItemType === 'password') {
+      await deleteToken(redisClient, authorization);
+      const user = await db.func(`liminal.changeuser`, [
+        id,
+        bcrypt.hashSync(value),
+        changingItemType,
+      ]);
+      return h.response({ id, ...user[0] });
+    } else if (changingItemType === 'file') {
+      const base64Data = value.imagePreviewUrl.split(',')[1];
+      const imagename = createFileWithRandomId(
+        'images/avatars/',
+        value.image,
+        'base64',
+        base64Data
+      );
+      const oldimage = await db.func(`liminal.getavatar`, id);
+      const user = await db.func(`liminal.changeuser`, [
+        id,
+        imagename,
+        changingItemType,
+      ]);
+      deleteFile('images/avatars/', oldimage[0].getavatar);
+      return h.response({ id, ...user[0] });
+    } else {
+      const user = await db.func(`liminal.changeuser`, [
+        id,
+        value,
+        changingItemType,
+      ]);
+      return h.response({ id, ...user[0] });
+    }
   } catch (err) {
     throw Boom.badRequest(err);
   }
