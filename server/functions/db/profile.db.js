@@ -128,19 +128,11 @@ const createProfile = async (req, h) => {
 
 const handleGetProfile = async (req, h) => {
   const { id } = req.params;
-  const { authorization } = req.headers;
   const db = req.getDb();
-  if (!authorization) {
-    throw Boom.unauthorized('Unauthorized');
-  }
 
   try {
     const user = await db.func(`liminal.getuser`, id);
-    const redisClient = req.getRedis();
-    const auth = await redisClient.get(authorization);
-    if (auth) {
-      return h.response(user[0]);
-    } else throw Boom.unauthorized('Unauthorized');
+    return h.response(user[0]);
   } catch (err) {
     throw Boom.badRequest(err);
   }
@@ -148,7 +140,7 @@ const handleGetProfile = async (req, h) => {
 
 const handleChangeProfileInfo = async (db, id, value, changingItemType) => {
   try {
-    const user = await db.func(`liminal.changeuser`, [
+    const user = await db.func(`liminal.changeuserinfo`, [
       id,
       value,
       changingItemType,
@@ -159,14 +151,15 @@ const handleChangeProfileInfo = async (db, id, value, changingItemType) => {
   }
 };
 
-const handleChangeProfilePassword = async (db, id, value, changingItemType) => {
+const handleChangeProfilePassword = async (req, db, id, value) => {
   try {
     const redisClient = req.getRedis();
+    const { authorization } = req.headers;
+
     await deleteToken(redisClient, authorization);
-    const user = await db.func(`liminal.changeuser`, [
+    const user = await db.func(`liminal.changeuserpassword`, [
       id,
       bcrypt.hashSync(value),
-      changingItemType,
     ]);
     return { id, ...user[0] };
   } catch (err) {
@@ -184,7 +177,7 @@ const handleChangeProfileAvatar = async (db, id, value, changingItemType) => {
       base64Data
     );
     const oldimage = await db.func(`liminal.getavatar`, id);
-    const user = await db.func(`liminal.changeuser`, [
+    const user = await db.func(`liminal.changeuserinfo`, [
       id,
       imagename,
       changingItemType,
@@ -202,9 +195,7 @@ const handleChangeProfile = async (req, h) => {
 
   switch (changingItemType) {
     case 'password':
-      return h.response(
-        await handleChangeProfilePassword(db, id, value, changingItemType)
-      );
+      return h.response(await handleChangeProfilePassword(req, db, id, value));
     case 'file':
       return h.response(
         await handleChangeProfileAvatar(db, id, value, changingItemType)

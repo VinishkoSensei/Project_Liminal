@@ -75,6 +75,11 @@ const plugin = {
       path: '/profile/{id}',
       handler: handleGetProfile,
       config: {
+        pre: [
+          {
+            method: checkAuth,
+          },
+        ],
         cors: {
           origin: ['*'],
           additionalHeaders: ['cache-control', 'x-requested-with'],
