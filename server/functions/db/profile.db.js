@@ -142,7 +142,78 @@ const handleGetProfile = async (req, h) => {
       return h.response(user[0]);
     } else throw Boom.badRequest('Unauthorized');
   } catch (err) {
-    throw Boom.badRequest('Unauthorized');
+    throw Boom.badRequest(err);
+  }
+};
+
+const handleChangeProfileInfo = async (
+  req,
+  h,
+  db,
+  id,
+  value,
+  changingItemType
+) => {
+  try {
+    const user = await db.func(`liminal.changeuser`, [
+      id,
+      value,
+      changingItemType,
+    ]);
+    return { id, ...user[0] };
+  } catch (err) {
+    throw Boom.badRequest(err);
+  }
+};
+
+const handleChangeProfilePassword = async (
+  req,
+  h,
+  db,
+  redisClient,
+  id,
+  value,
+  changingItemType
+) => {
+  try {
+    await deleteToken(redisClient, authorization);
+    const user = await db.func(`liminal.changeuser`, [
+      id,
+      bcrypt.hashSync(value),
+      changingItemType,
+    ]);
+    return { id, ...user[0] };
+  } catch (err) {
+    throw Boom.badRequest(err);
+  }
+};
+
+const handleChangeProfileAvatar = async (
+  req,
+  h,
+  db,
+  id,
+  value,
+  changingItemType
+) => {
+  try {
+    const base64Data = value.imagePreviewUrl.split(',')[1];
+    const imagename = createFileWithRandomId(
+      'images/avatars/',
+      value.image,
+      'base64',
+      base64Data
+    );
+    const oldimage = await db.func(`liminal.getavatar`, id);
+    const user = await db.func(`liminal.changeuser`, [
+      id,
+      imagename,
+      changingItemType,
+    ]);
+    deleteFile('images/avatars/', oldimage[0].getavatar);
+    return { id, ...user[0] };
+  } catch (err) {
+    throw Boom.badRequest(err);
   }
 };
 
@@ -151,41 +222,36 @@ const handleChangeProfile = async (req, h) => {
   const { authorization } = req.headers;
   const redisClient = req.getRedis();
   const db = req.getDb();
-  try {
-    if (changingItemType === 'password') {
-      await deleteToken(redisClient, authorization);
-      const user = await db.func(`liminal.changeuser`, [
-        id,
-        bcrypt.hashSync(value),
-        changingItemType,
-      ]);
-      return h.response({ id, ...user[0] });
-    } else if (changingItemType === 'file') {
-      const base64Data = value.imagePreviewUrl.split(',')[1];
-      const imagename = createFileWithRandomId(
-        'images/avatars/',
-        value.image,
-        'base64',
-        base64Data
+
+  if (!authorization) {
+    throw Boom.badRequest('Unauthorized');
+  }
+
+  switch (changingItemType) {
+    case 'password':
+      return h.response(
+        await handleChangeProfilePassword(
+          req,
+          h,
+          db,
+          redisClient,
+          id,
+          value,
+          changingItemType
+        )
       );
-      const oldimage = await db.func(`liminal.getavatar`, id);
-      const user = await db.func(`liminal.changeuser`, [
-        id,
-        imagename,
-        changingItemType,
-      ]);
-      deleteFile('images/avatars/', oldimage[0].getavatar);
-      return h.response({ id, ...user[0] });
-    } else {
-      const user = await db.func(`liminal.changeuser`, [
-        id,
-        value,
-        changingItemType,
-      ]);
-      return h.response({ id, ...user[0] });
-    }
-  } catch (err) {
-    throw Boom.badRequest(err);
+    case 'file':
+      return h.response(
+        await handleChangeProfileAvatar(req, h, db, id, value, changingItemType)
+      );
+    case 'first_name':
+    case 'last_name':
+    case 'phone':
+      return h.response(
+        await handleChangeProfileInfo(req, h, db, id, value, changingItemType)
+      );
+    default:
+      throw Boom.badRequest('Wrong type');
   }
 };
 
