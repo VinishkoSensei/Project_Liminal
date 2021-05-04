@@ -1,10 +1,13 @@
 const File = require('inert');
+const Boom = require('boom');
 const { streamHandler, streamTrack } = require('../functions/audio');
 const { getTrackCover, getProfileImage } = require('../functions/file');
 const {
   createProfile,
   signinAuth,
   handleGetProfile,
+  handleChangeProfile,
+  checkAuth,
 } = require('../functions/db/profile.db');
 const {
   getTrackList,
@@ -72,6 +75,28 @@ const plugin = {
       path: '/profile/{id}',
       handler: handleGetProfile,
       config: {
+        pre: [
+          {
+            method: checkAuth,
+          },
+        ],
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'POST',
+      path: '/profile/{id}',
+      handler: handleChangeProfile,
+      config: {
+        pre: [
+          {
+            method: checkAuth,
+          },
+        ],
         cors: {
           origin: ['*'],
           additionalHeaders: ['cache-control', 'x-requested-with'],
@@ -141,12 +166,6 @@ const plugin = {
       method: 'GET',
       path: '/tracks/{trackId}',
       handler: streamTrack,
-      /*config: {
-        cors: {
-          origin: ['*'],
-          additionalHeaders: ['cache-control', 'x-requested-with'],
-        },
-      },*/
     });
   },
 };
