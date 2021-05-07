@@ -1,0 +1,16 @@
+const NotificationActionTypes = {
+  NOTIFICATION_ADD_START: 'NOTIFICATION_ADD_START',
+  NOTIFICATION_ADD_SUCCESS: 'NOTIFICATION_ADD_SUCCESS',
+  NOTIFICATION_DELETE: 'NOTIFICATION_DELETE',
+  NOTIFICATION_HIDE_START: 'NOTIFICATION_HIDE_START',
+  NOTIFICATION_HIDE_SUCCESS: 'NOTIFICATION_HIDE_SUCCESS',
+};
+
+export const NotificationTypes = {
+  ERROR: 'error',
+  WARNING: 'warning',
+  INFO: 'info',
+  SUCCESS: 'success',
+};
+
+export default NotificationActionTypes;
