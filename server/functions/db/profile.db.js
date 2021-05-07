@@ -30,6 +30,7 @@ const createSessions = (redisClient, user) => {
 
 const getProfile = async (req, h) => {
   const { email, password } = req.payload;
+  console.log(req.i18n.__('Test'));
   const db = req.getDb();
   if (!email || !password) {
     return Promise.reject('incorrect form submission');
