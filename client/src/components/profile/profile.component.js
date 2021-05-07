@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import './profile.styles.scss';
 import { signInStart } from '../../redux/user/user.actions';
+import { Trans } from '@lingui/macro';
 
 const Profile = ({
   signInStart,
@@ -43,7 +44,13 @@ const Profile = ({
               <i>{profile.email}</i>
             </div>
             <div>{profile.birth_date}</div>
-            <div>{profile.subscribed ? 'subscribed' : 'not subscribed'}</div>
+            <div>
+              {profile.subscribed ? (
+                <Trans>Subscribed</Trans>
+              ) : (
+                <Trans>Not subscribed</Trans>
+              )}
+            </div>
           </div>
         </div>
       ) : null}

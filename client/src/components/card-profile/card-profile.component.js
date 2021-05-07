@@ -7,6 +7,7 @@ import {
   changeProfileStart,
 } from '../../redux/user/user.actions';
 import FormInput from '../forminput/forminput.component';
+import { Trans } from '@lingui/macro';
 
 const CardProfile = ({
   profile,
@@ -105,12 +106,16 @@ const CardProfile = ({
             />
           </div>
           <div className="profile-info-main">
-            {changedProfile.email ? (
+            {changedProfile?.email ? (
               <div>
                 <FormInput
                   name="subscribed"
                   value={`${
-                    changedProfile.subscribed ? 'subscribed' : 'unsubscribed'
+                    changedProfile.subscribed ? (
+                      <Trans>Subscribed</Trans>
+                    ) : (
+                      <Trans>Not subscribed</Trans>
+                    )
                   }`}
                   label=""
                   key="subscribed"
@@ -138,12 +143,12 @@ const CardProfile = ({
                   key="file"
                 />
                 <CustomButton type="button" onClick={handleFileChange}>
-                  Change photo
+                  <Trans>Change photo</Trans>
                 </CustomButton>
                 <FormInput
                   name="first_name"
                   value={changedProfile.first_name}
-                  label="first_name"
+                  label={<Trans>First name</Trans>}
                   handleChange={handleChange}
                   handleChangingItemType={handleChangingItemType}
                   handleEditingFinish={handleEditingFinish}
@@ -154,7 +159,7 @@ const CardProfile = ({
                 <FormInput
                   name="last_name"
                   value={changedProfile.last_name}
-                  label="last_name"
+                  label={<Trans>Last name</Trans>}
                   handleChange={handleChange}
                   handleChangingItemType={handleChangingItemType}
                   handleEditingFinish={handleEditingFinish}
@@ -165,7 +170,7 @@ const CardProfile = ({
                 <FormInput
                   name="phone"
                   value={changedProfile.phone}
-                  label="Phone"
+                  label={<Trans>Phone</Trans>}
                   handleChange={handleChange}
                   handleChangingItemType={handleChangingItemType}
                   handleEditingFinish={handleEditingFinish}
@@ -177,14 +182,14 @@ const CardProfile = ({
                   name="password"
                   type="password"
                   value={changedProfile.password}
-                  label="password"
+                  label={<Trans>Password</Trans>}
                   handleChange={handleChange}
                   key="password"
                 />
                 <FormInput
                   name="passwordconf"
                   value={changedProfile.passwordconf}
-                  label="passwordconf"
+                  label={<Trans>Password confirmation</Trans>}
                   type="password"
                   handleChange={handleChange}
                   key="passwordconf"
@@ -193,13 +198,15 @@ const CardProfile = ({
             ) : null}
 
             {!doPasswordsMatch ? (
-              <div className="error">Passwords do not match</div>
+              <div className="error">
+                <Trans>Passwords do not match</Trans>
+              </div>
             ) : null}
             <CustomButton type="button" onClick={handlePasswordChange}>
-              Change password
+              <Trans>Change password</Trans>
             </CustomButton>
             <CustomButton type="button" onClick={handleSignOut}>
-              Sign Out
+              <Trans>Sign Out</Trans>
             </CustomButton>
           </div>
         </div>
