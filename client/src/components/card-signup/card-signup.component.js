@@ -4,6 +4,7 @@ import FormInput from '../forminput/forminput.component';
 import './card-signup.styles.scss';
 import { connect } from 'react-redux';
 import { signUpStart } from '../../redux/user/user.actions';
+import { Trans } from '@lingui/macro';
 
 const CardSignUp = ({ changedCards, signUpStart, error }) => {
   const selectedItemInitialState = {
@@ -72,7 +73,7 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
     {
       name: 'email',
       value: email,
-      label: 'Email:',
+      label: <Trans>Email</Trans>,
       handleChange: handleChange,
       type: 'email',
       key: 'email',
@@ -80,7 +81,7 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
     {
       name: 'firstname',
       value: firstname,
-      label: 'Firstname:',
+      label: <Trans>First name</Trans>,
       handleChange: handleChange,
       type: 'text',
       key: 'firstname',
@@ -88,7 +89,7 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
     {
       name: 'lastname',
       value: lastname,
-      label: 'Lastname:',
+      label: <Trans>Last name</Trans>,
       handleChange: handleChange,
       type: 'text',
       key: 'lastname',
@@ -104,7 +105,7 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
     {
       name: 'phone',
       value: phone,
-      label: 'Phone:',
+      label: <Trans>Phone</Trans>,
       handleChange: handleChange,
       type: 'tel',
       key: 'phone',
@@ -119,7 +120,7 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
     {
       name: 'password',
       value: password,
-      label: 'Password:',
+      label: <Trans>Password</Trans>,
       handleChange: handleChange,
       type: 'password',
       key: 'password',
@@ -128,7 +129,7 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
       name: 'passwordconf',
       value: passwordconf,
       handleChange: handleChange,
-      label: 'Password confirmation:',
+      label: <Trans>Password confirmation</Trans>,
       type: 'password',
       key: 'passwordconf',
     },
@@ -164,9 +165,13 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
           />
         ))}
         {!doPasswordsMatch ? (
-          <div className="error">Passwords do not match</div>
+          <div className="error">
+            <Trans>Passwords do not match</Trans>
+          </div>
         ) : null}
-        <CustomButton type="submit">Sign Up</CustomButton>
+        <CustomButton type="submit">
+          <Trans>Sign Up</Trans>
+        </CustomButton>
         {error ? <div className="error">{error}</div> : null}
       </form>
 
