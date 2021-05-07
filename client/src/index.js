@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -7,17 +7,30 @@ import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter } from 'react-router-dom';
+import { i18n } from '@lingui/core';
+import { I18nProvider } from '@lingui/react';
+import { defaultLocale, dynamicActivate } from './i18n';
 
-ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <PersistGate persistor={persistor}>
-        <App />
-      </PersistGate>
-    </BrowserRouter>
-  </Provider>,
-  document.getElementById('root')
-);
+const I18nApp = () => {
+  useEffect(() => {
+    // With this method we dynamically load the catalogs
+    dynamicActivate(defaultLocale);
+  }, []);
+
+  return (
+    <I18nProvider i18n={i18n}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <PersistGate persistor={persistor}>
+            <App />
+          </PersistGate>
+        </BrowserRouter>
+      </Provider>
+    </I18nProvider>
+  );
+};
+
+ReactDOM.render(<I18nApp />, document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
