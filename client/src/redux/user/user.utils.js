@@ -3,7 +3,7 @@ export const handleSignIn = async ({ userCredentials, token }) => {
     const { email, password } = userCredentials;
     const userdata = await fetch(`http://localhost:3001/signin`, {
       method: 'post',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Accept-Language': 'ru' },
       body: JSON.stringify({
         email: email,
         password: password,
