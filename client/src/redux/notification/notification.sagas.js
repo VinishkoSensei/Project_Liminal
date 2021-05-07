@@ -1,10 +1,14 @@
-import { takeEvery, put, all, call } from 'redux-saga/effects';
-import NotificationActionTypes from './notification.types';
+import { takeEvery, takeLatest, put, all, call } from 'redux-saga/effects';
+import NotificationActionTypes, {
+  NotificationTypes,
+} from './notification.types';
 import {
   deleteNotification,
   addNotificationSuccess,
   hideNotificationSuccess,
+  addNotificationStart,
 } from './notification.actions';
+import ProfileActionTypes from '../user/user.types';
 import _ from 'lodash';
 
 const timeout = (ms) => {
@@ -49,12 +53,103 @@ export function* onNotificationAddStart() {
 }
 
 export function* onNotificationHideStart() {
-  yield takeEvery(
+  yield takeLatest(
     NotificationActionTypes.NOTIFICATION_HIDE_START,
     onNotificationHiding
   );
 }
 
+export function* createSuccessNotifyForProfileChange({ payload }) {
+  yield put(
+    addNotificationStart(
+      `Successfully updated your profile, ${payload.first_name} ${payload.last_name}`,
+      NotificationTypes.SUCCESS
+    )
+  );
+}
+
+export function* createSuccessNotifyForSignOut() {
+  yield put(addNotificationStart(`Bye!`, NotificationTypes.SUCCESS));
+}
+
+export function* createSuccessNotifyForSignUp({ payload: { profile } }) {
+  yield put(
+    addNotificationStart(
+      `Welcome, ${profile.first_name} ${profile.last_name}`,
+      NotificationTypes.SUCCESS
+    )
+  );
+}
+
+export function* createSuccessNotifyForSignIn({ payload: { user } }) {
+  yield put(
+    addNotificationStart(
+      `Welcome back, ${user.first_name} ${user.last_name}`,
+      NotificationTypes.SUCCESS
+    )
+  );
+}
+
+export function* createErrorNotify(error) {
+  yield put(addNotificationStart(error.payload, NotificationTypes.ERROR));
+}
+
+export function* onChangeProfileSucceeded() {
+  yield takeLatest(
+    ProfileActionTypes.CHANGE_PROFILE_SUCCESS,
+    createSuccessNotifyForProfileChange
+  );
+}
+export function* onSignOutSucceeded() {
+  yield takeLatest(
+    ProfileActionTypes.SIGN_OUT_SUCCESS,
+    createSuccessNotifyForSignOut
+  );
+}
+export function* onSignUpSucceeded() {
+  yield takeLatest(
+    ProfileActionTypes.SIGN_UP_SUCCESS,
+    createSuccessNotifyForSignUp
+  );
+}
+
+export function* onSignInSucceeded() {
+  yield takeLatest(
+    ProfileActionTypes.SIGN_IN_SUCCESS,
+    createSuccessNotifyForSignIn
+  );
+}
+
+export function* onChangeProfileFailed() {
+  yield takeLatest(
+    ProfileActionTypes.CHANGE_PROFILE_FAILURE,
+    createErrorNotify
+  );
+}
+
+export function* onSignOutFailed() {
+  yield takeLatest(ProfileActionTypes.SIGN_OUT_FAILURE, createErrorNotify);
+}
+
+export function* onSignUpFailed() {
+  yield takeLatest(ProfileActionTypes.SIGN_UP_FAILURE, createErrorNotify);
+}
+
+export function* onSignInFailed() {
+  yield takeLatest(ProfileActionTypes.SIGN_IN_FAILURE, createErrorNotify);
+}
+
 export function* notificationSagas() {
-  yield all([call(onNotificationAddStart), call(onNotificationHideStart)]);
+  yield all([
+    call(onNotificationAddStart),
+    call(onNotificationHideStart),
+    call(onSignInFailed),
+    call(onSignUpFailed),
+    call(onSignOutFailed),
+    call(onChangeProfileFailed),
+    call(onSignInSucceeded),
+    call(onSignUpSucceeded),
+    call(onSignOutSucceeded),
+    call(onChangeProfileSucceeded),
+  ]);
 }

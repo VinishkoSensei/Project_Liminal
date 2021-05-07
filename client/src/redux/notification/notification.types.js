@@ -6,4 +6,11 @@ const NotificationActionTypes = {
   NOTIFICATION_HIDE_SUCCESS: 'NOTIFICATION_HIDE_SUCCESS',
 };
 
+export const NotificationTypes = {
+  ERROR: 'error',
+  WARNING: 'warning',
+  INFO: 'info',
+  SUCCESS: 'success',
+};
+
 export default NotificationActionTypes;
