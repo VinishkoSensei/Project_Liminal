@@ -15,6 +15,8 @@ import CardSignUp from '../../components/card-signup/card-signup.component';
 
 import ReactCardFlip from 'react-card-flip';
 
+import NotificationContainer from '../../components/shared/notification/notification.container';
+
 import { connect } from 'react-redux';
 
 import { checkUserSession } from '../../redux/user/user.actions';
@@ -107,6 +109,7 @@ const HomePage = ({ profile, checkUserSession }) => {
         profileExpanded={profileExpanded}
         setProfileExpanded={setProfileExpanded}
       />
+      <NotificationContainer />
       <div className="footer"></div>
     </div>
   );
