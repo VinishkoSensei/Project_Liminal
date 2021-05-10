@@ -4,6 +4,7 @@ import FormInput from '../forminput/forminput.component';
 import './card-signin.styles.scss';
 import { connect } from 'react-redux';
 import { signInStart } from '../../redux/user/user.actions';
+import { Trans } from '@lingui/macro';
 
 const CardSignIn = ({ changedCards, signInStart }) => {
   const selectedItemInitialState = {
@@ -21,14 +22,14 @@ const CardSignIn = ({ changedCards, signInStart }) => {
     {
       name: 'email',
       value: email,
-      label: 'Email:',
+      label: <Trans>Email</Trans>,
       type: 'email',
       key: 'email',
     },
     {
       name: 'password',
       value: password,
-      label: 'Password:',
+      label: <Trans>Password</Trans>,
       type: 'password',
       key: 'password',
     },
@@ -53,7 +54,9 @@ const CardSignIn = ({ changedCards, signInStart }) => {
             required
           />
         ))}
-        <CustomButton type="submit">Sign In</CustomButton>
+        <CustomButton type="submit">
+          <Trans>Sign In</Trans>
+        </CustomButton>
       </form>
       <div className={`card-big-blur${changedCards ? '' : ' disabled'}`}></div>
     </div>
