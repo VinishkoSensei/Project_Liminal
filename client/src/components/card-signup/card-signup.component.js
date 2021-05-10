@@ -172,7 +172,6 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
         <CustomButton type="submit">
           <Trans>Sign Up</Trans>
         </CustomButton>
-        {error ? <div className="error">{error}</div> : null}
       </form>
 
       <div className={`card-big-blur${changedCards ? ' disabled' : ''}`} />
