@@ -4,21 +4,7 @@ import { connect } from 'react-redux';
 import './card-playlist.styles.scss';
 
 const CardPlaylist = ({ changedCards, playlist, prevPlaylist }) => {
-  const hrRef = React.useRef(null);
-  /*
-  useEffect(() => {
-    const getTrackList = async () => {
-      try {
-        const res = await fetch(`http://localhost:3001/gettracklist`);
-        const data = await res.json();
-        setTrackList(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    getTrackList();
-  }, []);*/
+  const hrRef = useRef(null);
 
   useEffect(() => {
     hrRef.current.scrollIntoView({
