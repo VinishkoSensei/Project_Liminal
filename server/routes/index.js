@@ -22,6 +22,16 @@ const plugin = {
   register: async (server, options) => {
     await server.register(File);
 
+    await server.register({
+      plugin: require('hapi-i18n'),
+      options: {
+        locales: ['en', 'ru'],
+        directory: __dirname + '/locales',
+        languageHeaderField: 'Accept-Language',
+        defaultLocale: 'en',
+      },
+    });
+
     /*server.route({
       method: 'GET',
       path: '/',

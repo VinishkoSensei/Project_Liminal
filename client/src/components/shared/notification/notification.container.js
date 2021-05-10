@@ -7,7 +7,7 @@ const NotificationContainer = ({ notificationArray }) => {
   return (
     <div className="notification-container">
       {notificationArray.map((notification) => (
-        <Notification notification={notification} />
+        <Notification notification={notification} key={notification.key} />
       ))}
     </div>
   );

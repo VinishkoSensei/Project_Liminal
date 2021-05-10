@@ -10,6 +10,7 @@ import {
 } from './notification.actions';
 import ProfileActionTypes from '../user/user.types';
 import _ from 'lodash';
+import { Trans } from '@lingui/macro';
 
 const timeout = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -62,7 +63,10 @@ export function* onNotificationHideStart() {
 export function* createSuccessNotifyForProfileChange({ payload }) {
   yield put(
     addNotificationStart(
-      `Successfully updated your profile, ${payload.first_name} ${payload.last_name}`,
+      <Trans>
+        Successfully updated your profile, {payload.first_name}{' '}
+        {payload.last_name}
+      </Trans>,
       NotificationTypes.SUCCESS
     )
   );
@@ -75,7 +79,9 @@ export function* createSuccessNotifyForSignOut() {
 export function* createSuccessNotifyForSignUp({ payload: { profile } }) {
   yield put(
     addNotificationStart(
-      `Welcome, ${profile.first_name} ${profile.last_name}`,
+      <Trans>
+        Welcome, {profile.first_name} {profile.last_name}
+      </Trans>,
       NotificationTypes.SUCCESS
     )
   );
@@ -84,7 +90,9 @@ export function* createSuccessNotifyForSignUp({ payload: { profile } }) {
 export function* createSuccessNotifyForSignIn({ payload: { user } }) {
   yield put(
     addNotificationStart(
-      `Welcome back, ${user.first_name} ${user.last_name}`,
+      <Trans>
+        Welcome back, {user.first_name} {user.last_name}
+      </Trans>,
       NotificationTypes.SUCCESS
     )
   );
