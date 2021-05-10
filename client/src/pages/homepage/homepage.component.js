@@ -18,10 +18,7 @@ import ReactCardFlip from 'react-card-flip';
 import NotificationContainer from '../../components/shared/notification/notification.container';
 
 import { connect } from 'react-redux';
-
 import { checkUserSession } from '../../redux/user/user.actions';
-
-import { locales, dynamicActivate } from '../../i18n';
 
 const HomePage = ({ profile, checkUserSession }) => {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -56,17 +53,6 @@ const HomePage = ({ profile, checkUserSession }) => {
     <div className="main">
       <div className="toppart">
         <Header />
-        <div className="lang-container">
-          {Object.values(locales).map((locale, index) => (
-            <button
-              type="button"
-              onClick={() => dynamicActivate(Object.keys(locales)[index])}
-              key={locale}
-            >
-              {locale}
-            </button>
-          ))}
-        </div>
         <Player playerRef={playerRef} />
       </div>
       <div className="main-part">
