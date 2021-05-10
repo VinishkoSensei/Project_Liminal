@@ -1,1 +1,10 @@
-{ "Test": "Тест" }
+{
+  "Test": "Тест",
+  "Incorrect form submission": "Некорректное заполнение формы",
+  "Wrong email or password": "Неправильный email или пароль",
+  "Unauthorized": "Не авторизован",
+  "Signinauth error": "Ошибка аутентификации",
+  "User not unique": "Пользователь не уникален",
+  "Unable to register": "Не удалось зарегистрироваться",
+  "Wrong operation type": "Неправильный тип операции"
+}
