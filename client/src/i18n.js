@@ -1,10 +1,14 @@
 import { i18n } from '@lingui/core';
+import { en, ru } from 'make-plural/plurals';
 
 export const locales = {
   en: 'English',
   ru: 'Russian',
 };
 export const defaultLocale = 'en';
+
+i18n.loadLocaleData('en', { plurals: en });
+i18n.loadLocaleData('ru', { plurals: ru });
 
 /**
  * We do a dynamic import of just the catalog that we need
