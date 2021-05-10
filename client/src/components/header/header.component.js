@@ -1,20 +1,13 @@
 import React from 'react';
 import './header.styles.scss';
+import LangSelector from '../../components/lang-selector/lang-selector.component';
 
 const Header = () => {
   return (
     <div className="header">
       <div className="header-logo">Logo</div>
       <div className="header-links">
-        <div>
-          <a href="/">Option 1</a>
-        </div>
-        <div>
-          <a href="/">Option 2</a>
-        </div>
-        <div>
-          <a href="/">Option 3</a>
-        </div>
+        <LangSelector />
       </div>
     </div>
   );
