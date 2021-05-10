@@ -5,10 +5,7 @@ import { hideNotificationStart } from '../../../redux/notification/notification.
 
 const Notification = ({ notification, hideNotificationStart }) => {
   return (
-    <div
-      key={notification.key}
-      className={`notification ${notification.type} ${notification.status}`}
-    >
+    <div className={`notification ${notification.type} ${notification.status}`}>
       <div className="notification-content">
         <div>{notification.text}</div>
         <div
