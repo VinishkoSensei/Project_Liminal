@@ -16,7 +16,6 @@ import {
   handleGetProfile,
   handleChangeProfile,
 } from './user.utils';
-import { Trans } from '@lingui/macro';
 
 const saveAuthTokenInSession = (token) => {
   window.sessionStorage.setItem('token', token);
@@ -107,7 +106,7 @@ export function* isUserAutentificated() {
     } catch (e) {
       yield put(signInFailure(e));
     }
-  } else yield put(signInFailure({ message: <Trans>No token</Trans> }));
+  }
 }
 
 export function* onCheckUserSession() {
