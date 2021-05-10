@@ -1,1 +1,10 @@
-{ "Test": "Test" }
+{
+  "Test": "Test",
+  "Incorrect form submission": "Incorrect form submission",
+  "Wrong email or password": "Wrong email or password",
+  "Unauthorized": "Unauthorized",
+  "Signinauth error": "Signinauth error",
+  "User not unique": "User not unique",
+  "Unable to register": "Unable to register",
+  "Wrong operation type": "Wrong operation type"
+}

@@ -33,21 +33,21 @@ const getProfile = async (req, h) => {
   console.log(req.i18n.__('Test'));
   const db = req.getDb();
   if (!email || !password) {
-    return Promise.reject('incorrect form submission');
+    return Promise.reject(req.i18n.__('Incorrect form submission'));
   }
-  const signindata = await db.func('liminal.getusercreds', email);
-  if (bcrypt.compareSync(password, signindata[0].hash)) {
-    try {
+  try {
+    const signindata = await db.func('liminal.getusercreds', email);
+    if (bcrypt.compareSync(password, signindata[0].hash)) {
       const profile = await db.func(`liminal.getuser`, [
         signindata[0].id,
         email,
       ]);
       return profile[0];
-    } catch (err) {
-      throw Boom.badRequest('unable to get user');
+    } else {
+      throw Boom.badRequest(req.i18n.__('Wrong email or password'));
     }
-  } else {
-    throw Boom.badRequest('wrong email or password');
+  } catch (err) {
+    throw Boom.badRequest(req.i18n.__('Wrong email or password'));
   }
 };
 
@@ -63,7 +63,7 @@ const signinAuth = async (req, h) => {
         token: authorization,
       });
     } else {
-      throw Boom.unauthorized('Unauthorized');
+      throw Boom.unauthorized(req.i18n.__('Unauthorized'));
     }
   } else {
     const profile = await getProfile(req, h);
@@ -71,7 +71,7 @@ const signinAuth = async (req, h) => {
       const session = await createSessions(redisClient, profile);
       return h.response(session);
     } else {
-      throw Boom.badRequest('signinauth error');
+      throw Boom.badRequest(req.i18n.__('Signinauth error'));
     }
   }
 };
@@ -96,7 +96,7 @@ const createProfile = async (req, h) => {
       !file ||
       !password
     ) {
-      throw Boom.badRequest('incorrect form submission');
+      throw Boom.badRequest(req.i18n.__('Incorrect form submission'));
     }
     const db = req.getDb();
     const base64Data = file.imagePreviewUrl.split(',')[1];
@@ -120,9 +120,9 @@ const createProfile = async (req, h) => {
   } catch (err) {
     switch (err.routine) {
       case '_bt_check_unique':
-        throw Boom.notAcceptable('NOT UNIQUE');
+        throw Boom.notAcceptable(req.i18n.__('User not unique'));
       default:
-        throw Boom.badRequest('unable to register');
+        throw Boom.badRequest(req.i18n.__('Unable to register'));
     }
   }
 };
@@ -208,7 +208,7 @@ const handleChangeProfile = async (req, h) => {
         await handleChangeProfileInfo(db, id, value, changingItemType)
       );
     default:
-      throw Boom.badRequest('Wrong type');
+      throw Boom.badRequest(req.i18n.__('Wrong operation type'));
   }
 };
 
@@ -217,16 +217,16 @@ const checkAuth = async (req, h) => {
   const { authorization } = req.headers;
   try {
     if (!authorization) {
-      throw Boom.unauthorized('Unauthorized');
+      throw Boom.unauthorized(req.i18n.__('Unauthorized'));
     }
     const reply = await redisClient.get(authorization);
     if (reply) {
       return reply;
     } else {
-      throw Boom.unauthorized('Unauthorized');
+      throw Boom.unauthorized(req.i18n.__('Unauthorized'));
     }
   } catch {
-    throw Boom.unauthorized('Unauthorized');
+    throw Boom.unauthorized(req.i18n.__('Unauthorized'));
   }
 };
 
