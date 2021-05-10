@@ -5,6 +5,7 @@ export const locales = {
   en: 'English',
   ru: 'Russian',
 };
+
 export const defaultLocale = 'en';
 
 i18n.loadLocaleData('en', { plurals: en });
