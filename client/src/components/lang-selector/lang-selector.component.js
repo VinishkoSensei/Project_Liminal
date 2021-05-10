@@ -6,7 +6,7 @@ const LangSelector = () => {
   return (
     <div className="lang-container">
       {Object.values(locales).map((locale, index) => (
-        <div class="lang" key={locale}>
+        <div className="lang" key={locale}>
           <img
             src={`/images/locales/${Object.keys(locales)[index]}.svg`}
             alt={Object.keys(locales)[index]}
