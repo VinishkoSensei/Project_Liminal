@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CustomButton from '../custombutton/custombutton.component';
-import FormInput from '../forminput/forminput.component';
+import FormInput from '../forminputs/forminput/forminput.component';
+import FormFileInput from '../forminputs/formfileinput/formfileinput.component';
 import './card-signup.styles.scss';
 import { connect } from 'react-redux';
 import { signUpStart } from '../../redux/user/user.actions';
@@ -64,7 +65,10 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
     reader.onloadend = () => {
       setSelectedItem({
         ...selectedItem,
-        file: { image: getFileType(file.type), imagePreviewUrl: reader.result },
+        file: {
+          image: getFileType(file.type),
+          imagePreviewUrl: reader.result,
+        },
       });
     };
   };
@@ -153,17 +157,26 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
   return (
     <div className="card-signup">
       <form method="post" onSubmit={handleSubmit}>
-        {Inputs.map((input) => (
-          <FormInput
-            name={input.name}
-            value={input.value}
-            label={input.label}
-            handleChange={input.handleChange}
-            type={input.type}
-            key={input.key}
-            required
-          />
-        ))}
+        {Inputs.map((input) =>
+          input.type !== 'file' ? (
+            <FormInput
+              name={input.name}
+              value={input.value}
+              label={input.label}
+              handleChange={input.handleChange}
+              type={input.type}
+              key={input.key}
+              required
+            />
+          ) : (
+            <FormFileInput
+              handleChange={fileSelectHandler}
+              key={input.key}
+              required
+            />
+          )
+        )}
+
         {!doPasswordsMatch ? (
           <div className="error">
             <Trans>Passwords do not match</Trans>

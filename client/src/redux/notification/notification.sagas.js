@@ -76,11 +76,11 @@ export function* createSuccessNotifyForSignOut() {
   yield put(addNotificationStart(`Bye!`, NotificationTypes.SUCCESS));
 }
 
-export function* createSuccessNotifyForSignUp({ payload: { profile } }) {
+export function* createSuccessNotifyForSignUp({ payload }) {
   yield put(
     addNotificationStart(
       <Trans>
-        Welcome, {profile.first_name} {profile.last_name}
+        Welcome, {payload.firstname} {payload.lastname}
       </Trans>,
       NotificationTypes.SUCCESS
     )
@@ -91,7 +91,7 @@ export function* createSuccessNotifyForSignIn({ payload: { user } }) {
   yield put(
     addNotificationStart(
       <Trans>
-        Welcome back, {user.first_name} {user.last_name}
+        Welcome, {user.first_name} {user.last_name}
       </Trans>,
       NotificationTypes.SUCCESS
     )
