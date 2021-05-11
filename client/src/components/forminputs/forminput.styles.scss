@@ -22,22 +22,41 @@ $main-color: black;
     border-radius: 6px;
     border-bottom: 1px solid $sub-color;
 
-    &:focus {
-      outline: none;
-    }
+    &.ord {
+      &:focus {
+        outline: none;
+      }
 
-    &:focus ~ .forminputlabel {
-      @include shrinkLabel();
-    }
+      &:focus ~ .forminputlabel {
+        @include shrinkLabel();
+      }
 
-    &:disabled {
-      background-color: transparent;
-      border: none;
+      &:disabled {
+        background-color: transparent;
+        border: none;
+      }
     }
 
     &.border {
       border: 1px solid black;
       cursor: pointer;
+    }
+
+    &.file {
+      cursor: pointer;
+      background: none;
+      background-color: white;
+      color: $sub-color;
+      padding: 6px 0;
+      display: block;
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      border-bottom: 1px solid $sub-color;
+      font-size: 15px;
+      position: absolute;
+      padding: 3px 0;
+      opacity: 0;
     }
   }
 
@@ -59,4 +78,8 @@ $main-color: black;
       @include shrinkLabel();
     }
   }
+}
+
+::-webkit-file-upload-button {
+  cursor: pointer;
 }

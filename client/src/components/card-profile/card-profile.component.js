@@ -6,7 +6,7 @@ import {
   signOutStart,
   changeProfileStart,
 } from '../../redux/user/user.actions';
-import FormInput from '../forminput/forminput.component';
+import FormInput from '../forminputs/forminput/forminput.component';
 import { Trans } from '@lingui/macro';
 
 const CardProfile = ({

@@ -71,7 +71,7 @@ export function* signUp({
       const res = yield response.json();
       throw new Error(res.message);
     }
-    yield put(signUpSuccess({ email, password }));
+    yield put(signUpSuccess({ email, password, firstname, lastname }));
   } catch (e) {
     yield put(signUpFailure(e));
   }
