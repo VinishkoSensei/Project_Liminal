@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CustomButton from '../custombutton/custombutton.component';
-import FormInput from '../forminput/forminput.component';
-import FormFileInput from '../formfileinput/formfileinput.component';
+import FormInput from '../forminputs/forminput/forminput.component';
+import FormFileInput from '../forminputs/formfileinput/formfileinput.component';
 import './card-signup.styles.scss';
 import { connect } from 'react-redux';
 import { signUpStart } from '../../redux/user/user.actions';
@@ -65,7 +65,10 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
     reader.onloadend = () => {
       setSelectedItem({
         ...selectedItem,
-        file: { image: getFileType(file.type), imagePreviewUrl: reader.result },
+        file: {
+          image: getFileType(file.type),
+          imagePreviewUrl: reader.result,
+        },
       });
     };
   };
@@ -166,10 +169,13 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
               required
             />
           ) : (
-            <FormFileInput handleChange={fileSelectHandler} required />
+            <FormFileInput
+              handleChange={fileSelectHandler}
+              key={input.key}
+              required
+            />
           )
         )}
-        {/**/}
 
         {!doPasswordsMatch ? (
           <div className="error">
