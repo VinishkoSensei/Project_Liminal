@@ -76,17 +76,6 @@ export function* createSuccessNotifyForSignOut() {
   yield put(addNotificationStart(`Bye!`, NotificationTypes.SUCCESS));
 }
 
-export function* createSuccessNotifyForSignUp({ payload }) {
-  yield put(
-    addNotificationStart(
-      <Trans>
-        Welcome, {payload.firstname} {payload.lastname}
-      </Trans>,
-      NotificationTypes.SUCCESS
-    )
-  );
-}
-
 export function* createSuccessNotifyForSignIn({ payload: { user } }) {
   yield put(
     addNotificationStart(
@@ -108,16 +97,11 @@ export function* onChangeProfileSucceeded() {
     createSuccessNotifyForProfileChange
   );
 }
+
 export function* onSignOutSucceeded() {
   yield takeLatest(
     ProfileActionTypes.SIGN_OUT_SUCCESS,
     createSuccessNotifyForSignOut
-  );
-}
-export function* onSignUpSucceeded() {
-  yield takeLatest(
-    ProfileActionTypes.SIGN_UP_SUCCESS,
-    createSuccessNotifyForSignUp
   );
 }
 
@@ -156,7 +140,6 @@ export function* notificationSagas() {
     call(onSignOutFailed),
     call(onChangeProfileFailed),
     call(onSignInSucceeded),
-    call(onSignUpSucceeded),
     call(onSignOutSucceeded),
     call(onChangeProfileSucceeded),
   ]);
