@@ -109,7 +109,6 @@ const HomePage = ({ profile, checkUserSession }) => {
         setProfileExpanded={setProfileExpanded}
       />
       <NotificationContainer />
-      <div className="footer"></div>
     </div>
   );
 };
