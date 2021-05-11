@@ -1,13 +1,14 @@
 const Fs = require('fs');
 const { PassThrough } = require('stream');
 const Throttle = require('throttle');
+const mm = require('music-metadata');
 
 const { getTrack } = require('./db/track.db');
 const { radioQueue } = require('./file');
 
 const sinks = [];
 
-const streamHandler = (request, h) => {
+const streamHandler = (req, h) => {
   const sink = new PassThrough();
   sinks.push(sink);
   console.log(sinks.length);
@@ -38,16 +39,17 @@ const streamTrack = async (req, h) => {
 const startStreaming = () => {
   let songNum = 0;
   console.log('Started streaming radio');
-
-  (function playLoop() {
+  const playLoop = async () => {
     const song = Fs.createReadStream(radioQueue[songNum++]);
     console.log('Current song: ', song.path);
-    const throttle = new Throttle(128000 / 8);
+    const metadata = await mm.parseFile(song.path);
+    const throttle = new Throttle(metadata.format.bitrate / 8);
     throttle.on('data', (chunk) => sinks.forEach((sink) => sink.write(chunk)));
     if (radioQueue.length === songNum) songNum = 0;
     song.pipe(throttle, { end: false });
-    song.on('end', playLoop);
-  })();
+    song.on('end', () => playLoop());
+  };
+  playLoop();
 };
 
 module.exports = {
