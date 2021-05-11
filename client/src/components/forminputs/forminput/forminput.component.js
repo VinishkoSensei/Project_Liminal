@@ -1,5 +1,5 @@
 import React from 'react';
-import './forminput.styles.scss';
+import '../forminput.styles.scss';
 
 const FormInput = ({
   handleChange,
@@ -14,7 +14,7 @@ const FormInput = ({
     onClick={handleChangingItemType ? handleChangingItemType : null}
   >
     <input
-      className={`forminput${bordered ? ' border' : ''}`}
+      className={`forminput ord${bordered ? ' border' : ''}`}
       onChange={handleChange}
       onBlur={handleEditingFinish}
       {...otherProps}
