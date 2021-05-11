@@ -20,7 +20,7 @@
     "iron": "^5.0.6",
     "jsonwebtoken": "^8.5.1",
     "lame": "^1.2.4",
-    "music-metadata": "^7.8.1",
+    "music-metadata": "^7.8.5",
     "pez": "^4.0.5",
     "pg-promise": "^10.9.5",
     "stream": "^0.0.2",
