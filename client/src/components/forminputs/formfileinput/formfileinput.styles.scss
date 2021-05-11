@@ -1,0 +1,41 @@
+$sub-color: black;
+$main-color: black;
+
+.group-file {
+  position: relative;
+
+  .formfileinput {
+    cursor: pointer;
+    background: none;
+    background-color: white;
+    color: $sub-color;
+    padding: 6px 0;
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 6px;
+    border-bottom: 1px solid $sub-color;
+    font-size: 15px;
+
+    &.file {
+      position: absolute;
+      padding: 3px 0;
+      opacity: 0;
+    }
+  }
+
+  .formfileinputlabel {
+    color: $sub-color;
+    font-size: 15px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 5px;
+    transition: 300ms ease all;
+  }
+}
+
+::-webkit-file-upload-button {
+  cursor: pointer;
+}
