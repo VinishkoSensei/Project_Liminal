@@ -7,6 +7,7 @@ import {
   changeProfileStart,
 } from '../../redux/user/user.actions';
 import FormInput from '../forminputs/forminput/forminput.component';
+import FormFileInput from '../forminputs/formfileinput/formfileinput.component';
 import { Trans } from '@lingui/macro';
 
 const CardProfile = ({
@@ -109,19 +110,6 @@ const CardProfile = ({
             {changedProfile?.email ? (
               <div>
                 <FormInput
-                  name="subscribed"
-                  value={`${
-                    changedProfile.subscribed ? (
-                      <Trans>Subscribed</Trans>
-                    ) : (
-                      <Trans>Not subscribed</Trans>
-                    )
-                  }`}
-                  label=""
-                  key="subscribed"
-                  disabled
-                />
-                <FormInput
                   name="email"
                   value={changedProfile.email}
                   label=""
@@ -135,13 +123,7 @@ const CardProfile = ({
                   key="date"
                   disabled
                 />
-                <FormInput
-                  name="file"
-                  label=""
-                  handleChange={fileSelectHandler}
-                  type="file"
-                  key="file"
-                />
+                <FormFileInput handleChange={fileSelectHandler} key="file" />
                 <CustomButton type="button" onClick={handleFileChange}>
                   <Trans>Change photo</Trans>
                 </CustomButton>

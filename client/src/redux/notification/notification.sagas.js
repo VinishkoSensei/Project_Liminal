@@ -91,7 +91,7 @@ export function* createSuccessNotifyForSignIn({ payload: { user } }) {
   yield put(
     addNotificationStart(
       <Trans>
-        Welcome back, {user.first_name} {user.last_name}
+        Welcome, {user.first_name} {user.last_name}
       </Trans>,
       NotificationTypes.SUCCESS
     )
