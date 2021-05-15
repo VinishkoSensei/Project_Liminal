@@ -1,0 +1,22 @@
+@mixin flexeddiv($flexdirection, $justifycontent) {
+  display: flex;
+  flex-direction: $flexdirection;
+  justify-content: $justifycontent;
+}
+
+@mixin setwidthandheight($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin setborderwithradius($border, $radius) {
+  border: $border;
+  border-radius: $radius;
+}
+
+.card-track-analysis {
+  @include setwidthandheight(100%, 100%);
+  background-color: lightsalmon;
+  @include setborderwithradius(2px solid black, 52px);
+  @include flexeddiv(column, space-around);
+}
