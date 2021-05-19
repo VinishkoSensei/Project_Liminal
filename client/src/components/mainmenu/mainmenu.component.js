@@ -1,5 +1,6 @@
 import React from 'react';
 import './mainmenu.styles.scss';
+import SmallButton from '../shared/small-button/small-button.component';
 
 const MainMenu = ({ FlipCard }) => {
   return (
@@ -16,7 +17,9 @@ const MainMenu = ({ FlipCard }) => {
           id="broadcast"
           onClick={FlipCard}
           style={{ backgroundImage: `url('/images/broadcast.svg')` }}
-        ></div>
+        >
+          <SmallButton />
+        </div>
       </div>
       <div className="card-center">
         <div className="card-center-icon" />

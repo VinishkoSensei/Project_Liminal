@@ -32,10 +32,51 @@ const getTrack = async (req, h) => {
   return track[0];
 };
 
+const getRadioQueue = async (db) => {
+  const radioQueue = await db.func('liminal.gettrackqueue');
+  return radioQueue;
+};
+
+const getRadioQueueFromFront = async (req, h) => {
+  const db = req.getDb();
+  const radioQueue = await db.func('liminal.getradioqueue');
+  return radioQueue;
+};
+
+const getNextTrackFromRadioQueue = async (db) => {
+  const nextTrack = await db.func('liminal.getnexttrackfromradioqueue');
+  return nextTrack[0].getnexttrackfromradioqueue;
+};
+
+const addTrackToRadioQueue = async (req, h) => {
+  const db = req.getDb();
+  const { trackid } = req.payload;
+  const radioQueue = await db.func('liminal.addtoradioqueue', trackid);
+  return radioQueue;
+};
+
+const deleteTrackFromRadioQueue = async (req, h) => {
+  const db = req.getDb();
+  const { index } = req.payload;
+  const radioQueue = await db.func('liminal.deletefromradioqueue', index);
+  return radioQueue;
+};
+
+const clearCycle = async (db) => {
+  await db.proc('liminal.clearcycle');
+  return;
+};
+
 module.exports = {
   getTrackList,
   getTracksByNameAndAuthor,
   getTracksByName,
   getTracksByAuthor,
   getTrack,
+  getNextTrackFromRadioQueue,
+  addTrackToRadioQueue,
+  clearCycle,
+  getRadioQueue,
+  getRadioQueueFromFront,
+  deleteTrackFromRadioQueue,
 };
