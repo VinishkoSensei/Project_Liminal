@@ -41,7 +41,7 @@ const startApp = async () => {
     });
     await server.start();
     console.log(`Server running at ${server.info.uri}`);
-    startStreaming();
+    startStreaming(db);
   } catch (err) {
     console.log(`Server error: ${err}`);
     process.exit(1);

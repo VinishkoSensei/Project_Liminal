@@ -18,6 +18,9 @@ const Track = ({
   showDelete,
   showAddToStart,
   showAddToEnd,
+  deleteFromRadioQueue,
+  addToRadioQueueStart,
+  addToRadioQueueEnd,
 }) => {
   return (
     <div className="track" key={index}>
@@ -54,6 +57,14 @@ const Track = ({
           />
         ) : null}
 
+        {deleteFromRadioQueue ? (
+          <div
+            className="track-menu-item"
+            onClick={() => deleteFromRadioQueue(index)}
+            style={{ backgroundImage: `url('/images/trash.svg')` }}
+          />
+        ) : null}
+
         {showAddToStart ? (
           <div
             className="track-menu-item"
@@ -70,6 +81,26 @@ const Track = ({
           <div
             className="track-menu-item"
             onClick={() => addTrackToPlaylistEnd({ track })}
+            style={{ backgroundImage: `url('/images/addtopl.svg')` }}
+          />
+        ) : null}
+
+        {addToRadioQueueStart ? (
+          <div
+            className="track-menu-item"
+            onClick={() => addToRadioQueueStart({ track })}
+            style={{
+              backgroundImage: `url('/images/addtopl.svg')`,
+              WebkitTransform: 'scaleX(-1) scaleY(-1)',
+              transform: 'scaleX(-1) scaleY(-1)',
+            }}
+          />
+        ) : null}
+
+        {addToRadioQueueEnd ? (
+          <div
+            className="track-menu-item"
+            onClick={() => addToRadioQueueEnd({ track })}
             style={{ backgroundImage: `url('/images/addtopl.svg')` }}
           />
         ) : null}

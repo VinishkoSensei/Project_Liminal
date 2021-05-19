@@ -12,6 +12,7 @@ import CardSearch from '../../components/card-search/card-search.component';
 import CardProfile from '../../components/card-profile/card-profile.component';
 import CardSignIn from '../../components/card-signin/card-signin.component';
 import CardSignUp from '../../components/card-signup/card-signup.component';
+import CardAdmin from '../../components/card-admin/card-admin.component';
 
 import ReactCardFlip from 'react-card-flip';
 
@@ -108,6 +109,7 @@ const HomePage = ({ profile, checkUserSession }) => {
         profileExpanded={profileExpanded}
         setProfileExpanded={setProfileExpanded}
       />
+      <CardAdmin />
       <NotificationContainer />
     </div>
   );
