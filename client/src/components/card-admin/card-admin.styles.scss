@@ -1,0 +1,53 @@
+@mixin animation($type, $sec) {
+  -webkit-transition: $type $sec ease;
+  -moz-transition: $type $sec ease;
+  -o-transition: $type $sec ease;
+  -ms-transition: $type $sec ease;
+  transition: $type $sec ease;
+}
+
+@mixin flexeddiv($flexdirection, $justifycontent) {
+  display: flex;
+  flex-direction: $flexdirection;
+  justify-content: $justifycontent;
+}
+
+@mixin setwidthandheight($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin setborderwithradius($border, $radius) {
+  border: $border;
+  border-radius: $radius;
+}
+
+.card-admin {
+  @include setwidthandheight(70vw, 75vh);
+  @include setborderwithradius(2px solid black, 52px);
+  @include flexeddiv(column, center);
+  @include animation(left, 2s);
+  background-color: rgb(106, 245, 215);
+  position: absolute;
+  top: 20%;
+  left: -100%;
+
+  .card-admin-main {
+    @include setwidthandheight(100%, 90%);
+    @include flexeddiv(row, space-between);
+
+    .forminput {
+      margin: 16px 0;
+    }
+
+    .custombutton {
+      height: 30px;
+      line-height: 30px;
+    }
+  }
+
+  &.expanded {
+    @include animation(left, 1s);
+    left: 5%;
+  }
+}

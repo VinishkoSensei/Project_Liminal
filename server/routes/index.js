@@ -14,6 +14,9 @@ const {
   getTracksByNameAndAuthor,
   getTracksByName,
   getTracksByAuthor,
+  addTrackToRadioQueue,
+  getRadioQueueFromFront,
+  deleteTrackFromRadioQueue,
 } = require('../functions/db/track.db');
 
 const plugin = {
@@ -139,6 +142,42 @@ const plugin = {
     });
 
     server.route({
+      method: 'POST',
+      path: '/addtracktoradioqueue',
+      handler: addTrackToRadioQueue,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'POST',
+      path: '/deletetrackfromradioqueue',
+      handler: deleteTrackFromRadioQueue,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'GET',
+      path: '/getradioqueue',
+      handler: getRadioQueueFromFront,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
       method: 'GET',
       path: '/gettracksbynameandauthor/{name}',
       handler: getTracksByNameAndAuthor,
@@ -149,6 +188,7 @@ const plugin = {
         },
       },
     });
+
     server.route({
       method: 'GET',
       path: '/gettracksbyname/{name}',
