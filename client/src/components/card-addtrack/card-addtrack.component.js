@@ -5,6 +5,7 @@ import FormFileInput from '../forminputs/formfileinput/formfileinput.component';
 import CustomButton from '../custombutton/custombutton.component';
 import CreatableSelect from 'react-select/creatable';
 import { Trans } from '@lingui/macro';
+import * as mm from 'music-metadata-browser';
 
 const CardAddTrack = () => {
   const [isLoading, setIsLoading] = useState({
@@ -32,10 +33,12 @@ const CardAddTrack = () => {
     name: '',
     genre: '',
     author: '',
+    genrehint: '',
+    authorhint: '',
     file: null,
   };
   const [newTrack, setNewTrack] = useState(newTrackInitialState);
-  const { name, genre, author, file } = newTrack;
+  const { name, genre, author, file, authorhint, genrehint } = newTrack;
 
   useEffect(() => {
     const getOptions = async () => {
@@ -85,17 +88,34 @@ const CardAddTrack = () => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setNewTrack({
-        ...newTrack,
-        file: {
-          content: '.mp3',
-          contentPreviewUrl: reader.result,
-        },
+      mm.parseBlob(file).then((metadata) => {
+        console.log(`Completed parsing of ${file.name}:`, metadata);
+        setNewTrack({
+          ...newTrack,
+          name: metadata.common.title && !name ? metadata.common.title : name,
+          authorhint:
+            metadata.common.artist && !author ? metadata.common.artist : author,
+          genrehint:
+            metadata.common.genre[0] && !genre
+              ? metadata.common.genre[0]
+              : genre,
+          file: {
+            content: '.mp3',
+            contentPreviewUrl: reader.result,
+          },
+        });
       });
     };
   };
 
   const Inputs = [
+    {
+      name: 'file',
+      label: 'file',
+      handleChange: fileSelectHandler,
+      type: 'file',
+      key: 'file',
+    },
     {
       name: 'name',
       value: name,
@@ -105,6 +125,14 @@ const CardAddTrack = () => {
       key: 'name',
     },
     {
+      name: 'genrehint',
+      value: genrehint,
+      label: 'Hint from track',
+      handleChange: handleChange,
+      type: 'hint',
+      key: 'genrehint',
+    },
+    {
       name: 'genre',
       value: genre,
       label: 'genre',
@@ -112,6 +140,16 @@ const CardAddTrack = () => {
       type: 'option',
       key: 'genre',
       options: options.genre,
+      placeholder: 'Select Genre...',
+    },
+
+    {
+      name: 'authorhint',
+      value: authorhint,
+      label: 'Hint from track',
+      handleChange: handleChange,
+      type: 'hint',
+      key: 'authorhint',
     },
     {
       name: 'author',
@@ -121,13 +159,7 @@ const CardAddTrack = () => {
       type: 'option',
       key: 'author',
       options: options.author,
-    },
-    {
-      name: 'file',
-      label: 'file',
-      handleChange: fileSelectHandler,
-      type: 'file',
-      key: 'file',
+      placeholder: 'Select Author...',
     },
   ];
 
@@ -149,7 +181,7 @@ const CardAddTrack = () => {
                   options={input.options}
                   key={input.key}
                   className="forminput-select"
-                  placeholder="select option..."
+                  placeholder={input.placeholder}
                 />
               );
             case 'file':
@@ -161,7 +193,7 @@ const CardAddTrack = () => {
                 />
               );
             default:
-              return (
+              return input.type !== 'hint' || input.value ? (
                 <FormInput
                   name={input.name}
                   value={input.value}
@@ -171,7 +203,7 @@ const CardAddTrack = () => {
                   key={input.key}
                   required
                 />
-              );
+              ) : null;
           }
         })}
 
