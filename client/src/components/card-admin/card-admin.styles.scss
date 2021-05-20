@@ -38,11 +38,31 @@
 
     .forminput {
       margin: 16px 0;
+      @include setborderwithradius(1px solid black, 4px);
+      border-color: hsl(0, 0%, 80%);
+      padding: 10px 0;
     }
 
-    .custombutton {
-      height: 30px;
-      line-height: 30px;
+    .card-admin-main-addtrack {
+      @include setwidthandheight(100%, 100%);
+      background-color: lightsalmon;
+      @include setborderwithradius(2px solid black, 52px);
+      @include flexeddiv(unset, center);
+      align-items: center;
+
+      .forminputlabel {
+        left: 12px;
+        top: 10px;
+      }
+
+      .forminput-select {
+        margin: 16px 0;
+      }
+
+      .custombutton {
+        height: 30px;
+        line-height: 30px;
+      }
     }
   }
 
