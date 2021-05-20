@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './card-admin.styles.scss';
 import CardSearch from '../card-search/card-search.component';
-import Track from '../track/track.component';
 import CardAddTrack from '../card-addtrack/card-addtrack.component';
+import CardRadioPlaylist from '../card-radio-playlist/card-radio-playlist.component';
 
 const CardAdmin = () => {
   const [radioQueue, setRadioQueue] = useState([]);
@@ -34,20 +34,6 @@ const CardAdmin = () => {
     const newRadioQueue = await response.json();
     setRadioQueue(newRadioQueue);
   };
-  const deleteFromRadioQueue = async (index) => {
-    const response = await fetch(
-      `http://localhost:3001/deletetrackfromradioqueue`,
-      {
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          index: index,
-        }),
-      }
-    );
-    const newRadioQueue = await response.json();
-    setRadioQueue(newRadioQueue);
-  };
 
   return (
     <div className={`card-admin expanded`}>
@@ -56,19 +42,11 @@ const CardAdmin = () => {
           addToRadioQueueStart={addToRadioQueueStart}
           addToRadioQueueEnd={addToRadioQueueEnd}
         />
-        {/*<div className="card-radio-playlist">
-          <div className="card-big-table">
-            {radioQueue?.map((track, index) => (
-              <Track
-                track={track}
-                index={index}
-                key={index}
-                deleteFromRadioQueue={() => deleteFromRadioQueue(track.id)}
-              />
-            ))}
-          </div>
-            </div>*/}
-        <CardAddTrack />
+        <CardRadioPlaylist
+          radioQueue={radioQueue}
+          setRadioQueue={setRadioQueue}
+        />
+        {/*<CardAddTrack />*/}
       </div>
     </div>
   );
