@@ -72,6 +72,18 @@ const clearCycle = async (db) => {
   return;
 };
 
+const getGenres = async (req, h) => {
+  const db = req.getDb();
+  const genres = await db.func('liminal.getgenres');
+  return genres;
+};
+
+const getAuthors = async (req, h) => {
+  const db = req.getDb();
+  const authors = await db.func('liminal.getauthors');
+  return authors;
+};
+
 const createTrack = async (req, h) => {
   try {
     const db = req.getDb();
@@ -107,6 +119,8 @@ module.exports = {
   getNextTrackFromRadioQueue,
   addTrackToRadioQueue,
   clearCycle,
+  getGenres,
+  getAuthors,
   getRadioQueue,
   getRadioQueueFromFront,
   deleteTrackFromRadioQueue,
