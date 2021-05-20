@@ -1,4 +1,7 @@
 const { createMusicWithRandomId, deleteFile } = require('../file');
+const mm = require('music-metadata');
+const Fs = require('fs');
+const Boom = require('boom');
 
 const getTrackList = async (req, h) => {
   const db = req.getDb();
@@ -70,23 +73,29 @@ const clearCycle = async (db) => {
 };
 
 const createTrack = async (req, h) => {
-  const db = req.getDb();
-  const { name, genre, author, file } = req.payload;
-  console.log(name, genre, author);
-  const base64Data = file.contentPreviewUrl.split(',')[1];
-  const trackpath =
-    './files/music/' +
-    createMusicWithRandomId('music/', file.content, 'base64', base64Data);
+  try {
+    const db = req.getDb();
+    const { name, genre, author, file } = req.payload;
+    const base64Data = file.contentPreviewUrl.split(',')[1];
+    const trackPath =
+      './files/music/' +
+      createMusicWithRandomId('music/', file.content, 'base64', base64Data);
+    const metadata = await mm.parseFile(trackPath);
+    const duration = new Date(1000 * metadata.format.duration)
+      .toISOString()
+      .substr(11, 8);
 
-  console.log(trackpath);
-
-  const tracks = await db.proc('liminal.createtrack', [
-    name,
-    genre,
-    author,
-    trackpath,
-  ]);
-  return { response: 'ok' };
+    await db.proc('liminal.createtrack', [
+      name,
+      genre,
+      author,
+      trackPath,
+      duration,
+    ]);
+    return { response: 'ok' };
+  } catch (err) {
+    throw Boom.badData(err);
+  }
 };
 
 module.exports = {
