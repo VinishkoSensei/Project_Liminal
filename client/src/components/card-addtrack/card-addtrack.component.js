@@ -151,6 +151,7 @@ const CardAddTrack = () => {
                   onChange={handleChangeOption}
                   onCreateOption={handleCreateOption(input.name)}
                   options={input.options}
+                  key={input.key}
                   className="forminput-select"
                   placeholder="select option..."
                 />
