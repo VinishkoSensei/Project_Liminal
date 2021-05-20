@@ -35,7 +35,7 @@ const CardAddTrack = () => {
     file: null,
   };
   const [newTrack, setNewTrack] = useState(newTrackInitialState);
-  const { name, genre, author } = newTrack;
+  const { name, genre, author, file } = newTrack;
 
   useEffect(() => {
     const getOptions = async () => {
@@ -67,6 +67,17 @@ const CardAddTrack = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(newTrack);
+    const response = await fetch(`http://localhost:3001/createtrack`, {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        genre: genre.value,
+        author: author.value,
+        file,
+      }),
+    });
+    console.log(response);
   };
 
   const fileSelectHandler = (e) => {
@@ -77,7 +88,7 @@ const CardAddTrack = () => {
       setNewTrack({
         ...newTrack,
         file: {
-          content: getFileType(file.type),
+          content: '.mp3',
           contentPreviewUrl: reader.result,
         },
       });
@@ -119,21 +130,6 @@ const CardAddTrack = () => {
       key: 'file',
     },
   ];
-
-  const getFileType = (filetype) => {
-    switch (filetype) {
-      case 'image/jpeg':
-        return '.jpg';
-      case 'image/svg+xml':
-        return '.svg';
-      case 'vnd.microsoft.icon':
-        return '.ico';
-      case 'png':
-        return '.png';
-      default:
-        return '.dat';
-    }
-  };
 
   return (
     <div className="card-admin-main-addtrack">

@@ -1,3 +1,5 @@
+const { createMusicWithRandomId, deleteFile } = require('../file');
+
 const getTrackList = async (req, h) => {
   const db = req.getDb();
   const trackData = await db.func(`liminal.gettracklist`);
@@ -67,6 +69,26 @@ const clearCycle = async (db) => {
   return;
 };
 
+const createTrack = async (req, h) => {
+  const db = req.getDb();
+  const { name, genre, author, file } = req.payload;
+  console.log(name, genre, author);
+  const base64Data = file.contentPreviewUrl.split(',')[1];
+  const trackpath =
+    './files/music/' +
+    createMusicWithRandomId('music/', file.content, 'base64', base64Data);
+
+  console.log(trackpath);
+
+  const tracks = await db.proc('liminal.createtrack', [
+    name,
+    genre,
+    author,
+    trackpath,
+  ]);
+  return { response: 'ok' };
+};
+
 module.exports = {
   getTrackList,
   getTracksByNameAndAuthor,
@@ -79,4 +101,5 @@ module.exports = {
   getRadioQueue,
   getRadioQueueFromFront,
   deleteTrackFromRadioQueue,
+  createTrack,
 };

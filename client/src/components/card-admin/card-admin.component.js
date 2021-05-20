@@ -42,11 +42,11 @@ const CardAdmin = () => {
           addToRadioQueueStart={addToRadioQueueStart}
           addToRadioQueueEnd={addToRadioQueueEnd}
         />
-        <CardRadioPlaylist
+        {/*<CardRadioPlaylist
           radioQueue={radioQueue}
           setRadioQueue={setRadioQueue}
-        />
-        {/*<CardAddTrack />*/}
+        />*/}
+        <CardAddTrack />
       </div>
     </div>
   );
