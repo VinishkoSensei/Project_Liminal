@@ -18,6 +18,8 @@ const {
   getRadioQueueFromFront,
   deleteTrackFromRadioQueue,
   createTrack,
+  getGenres,
+  getAuthors,
 } = require('../functions/db/track.db');
 
 const plugin = {
@@ -216,6 +218,31 @@ const plugin = {
         },
       },
     });
+
+    server.route({
+      method: 'GET',
+      path: '/getauthors',
+      handler: getAuthors,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'GET',
+      path: '/getgenres',
+      handler: getGenres,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
     server.route({
       method: 'GET',
       path: '/gettracksbyauthor/{name}',
