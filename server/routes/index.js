@@ -17,6 +17,7 @@ const {
   addTrackToRadioQueue,
   getRadioQueueFromFront,
   deleteTrackFromRadioQueue,
+  createTrack,
 } = require('../functions/db/track.db');
 
 const plugin = {
@@ -170,6 +171,21 @@ const plugin = {
       path: '/getradioqueue',
       handler: getRadioQueueFromFront,
       config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'POST',
+      path: '/createtrack',
+      handler: createTrack,
+      config: {
+        payload: {
+          maxBytes: 52428800,
+        },
         cors: {
           origin: ['*'],
           additionalHeaders: ['cache-control', 'x-requested-with'],
