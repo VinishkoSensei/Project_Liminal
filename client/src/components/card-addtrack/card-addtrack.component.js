@@ -17,16 +17,8 @@ const CardAddTrack = () => {
     value: label,
   });
   const initialOptions = {
-    author: [
-      createOption('TestAuthor1'),
-      createOption('TestAuthor2'),
-      createOption('TestAuthor3'),
-    ],
-    genre: [
-      createOption('TestGenre1'),
-      createOption('TestGenre2'),
-      createOption('TestGenre3'),
-    ],
+    author: [],
+    genre: [],
   };
   const [options, setOptions] = useState(initialOptions);
   const newTrackInitialState = {
@@ -42,7 +34,27 @@ const CardAddTrack = () => {
 
   useEffect(() => {
     const getOptions = async () => {
-      //
+      const genresresponse = await fetch(`http://localhost:3001/getgenres`, {
+        method: 'get',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const genres = await genresresponse.json();
+      const authorsresponse = await fetch(`http://localhost:3001/getauthors`, {
+        method: 'get',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const authors = await authorsresponse.json();
+
+      setOptions({
+        genre: genres.map((genre) => {
+          const gen = { label: genre.name, value: genre.name };
+          return gen;
+        }),
+        author: authors.map((author) => {
+          const au = { label: author.nickname, value: author.nickname };
+          return au;
+        }),
+      });
     };
 
     getOptions();
