@@ -6,7 +6,6 @@ import FormInput from '../forminputs/forminput/forminput.component';
 import FormFileInput from '../forminputs/formfileinput/formfileinput.component';
 import CustomButton from '../custombutton/custombutton.component';
 import CreatableSelect from 'react-select/creatable';
-import Select from 'react-select';
 import { Trans } from '@lingui/macro';
 
 const CardAdmin = () => {
