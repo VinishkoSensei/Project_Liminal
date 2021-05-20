@@ -36,32 +36,31 @@
     @include setwidthandheight(100%, 90%);
     @include flexeddiv(row, space-between);
 
-    .forminput {
-      margin: 16px 0;
-      @include setborderwithradius(1px solid black, 4px);
-      border-color: hsl(0, 0%, 80%);
-      padding: 10px 0;
-    }
-
-    .card-admin-main-addtrack {
+    .card-radio-playlist {
       @include setwidthandheight(100%, 100%);
       background-color: lightsalmon;
       @include setborderwithradius(2px solid black, 52px);
       @include flexeddiv(unset, center);
       align-items: center;
 
-      .forminputlabel {
-        left: 12px;
-        top: 10px;
-      }
+      .card-big-table {
+        @include setwidthandheight(90%, 90%);
+        @include setborderwithradius(unset, 3%);
+        overflow-y: scroll;
 
-      .forminput-select {
-        margin: 16px 0;
-      }
+        &::-webkit-scrollbar {
+          @include setwidthandheight(12px, unset);
+        }
 
-      .custombutton {
-        height: 30px;
-        line-height: 30px;
+        &::-webkit-scrollbar-track {
+          -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+          @include setborderwithradius(unset, 10px);
+        }
+
+        &::-webkit-scrollbar-thumb {
+          @include setborderwithradius(unset, 10px);
+          -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+        }
       }
     }
   }
