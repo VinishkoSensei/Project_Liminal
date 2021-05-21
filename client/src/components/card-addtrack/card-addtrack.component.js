@@ -123,7 +123,7 @@ const CardAddTrack = () => {
   const Inputs = [
     {
       name: 'file',
-      label: 'file',
+      label: '',
       handleChange: fileSelectHandler,
       type: 'file',
       key: 'file',
@@ -131,7 +131,7 @@ const CardAddTrack = () => {
     {
       name: 'name',
       value: name,
-      label: 'name',
+      label: <Trans>Track name</Trans>,
       handleChange: handleChange,
       type: '',
       key: 'name',
@@ -139,7 +139,7 @@ const CardAddTrack = () => {
     {
       name: 'genrehint',
       value: genrehint,
-      label: 'Hint from track',
+      label: <Trans>Hint from track file</Trans>,
       handleChange: handleChange,
       type: 'hint',
       key: 'genrehint',
@@ -147,18 +147,18 @@ const CardAddTrack = () => {
     {
       name: 'genre',
       value: genre,
-      label: 'genre',
+      label: <Trans>Genre</Trans>,
       isLoading: isLoading.genre,
       type: 'option',
       key: 'genre',
       options: options.genre,
-      placeholder: 'Select Genre...',
+      placeholder: <Trans>Select Genre...</Trans>,
     },
 
     {
       name: 'authorhint',
       value: authorhint,
-      label: 'Hint from track',
+      label: <Trans>Hint from track file</Trans>,
       handleChange: handleChange,
       type: 'hint',
       key: 'authorhint',
@@ -166,12 +166,12 @@ const CardAddTrack = () => {
     {
       name: 'author',
       value: author,
-      label: 'author',
+      label: <Trans>Author</Trans>,
       isLoading: isLoading.author,
       type: 'option',
       key: 'author',
       options: options.author,
-      placeholder: 'Select Author...',
+      placeholder: <Trans>Select Author...</Trans>,
     },
   ];
 
@@ -219,7 +219,9 @@ const CardAddTrack = () => {
           }
         })}
 
-        <CustomButton type="submit">Add</CustomButton>
+        <CustomButton type="submit">
+          <Trans>Add track</Trans>
+        </CustomButton>
       </form>
     </div>
   );
