@@ -23,12 +23,12 @@
 }
 
 .card-radio-playlist {
-  @include setwidthandheight(100%, 100%);
+  @include setwidthandheight(100%, 97%);
   background-color: lightsalmon;
   @include setborderwithradius(2px solid black, 52px);
   @include flexeddiv(unset, center);
   align-items: center;
-  margin: 0 5px 0 2.5px;
+  margin: 28px 5px 0 2.5px;
 
   .card-big-table {
     @include setwidthandheight(90%, 90%);
