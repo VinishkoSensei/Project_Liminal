@@ -26,6 +26,7 @@ const HomePage = ({ profile, checkUserSession }) => {
   const [chosenCard, setChosenCard] = useState(null);
   const playerRef = useRef(null);
   const [profileExpanded, setProfileExpanded] = useState(false);
+  const [selectedAdminItem, setSelectedAdminItem] = useState(null);
 
   const FlipCard = (e) => {
     if (e.target.id) setChosenCard(e.target.id);
@@ -72,7 +73,12 @@ const HomePage = ({ profile, checkUserSession }) => {
                   }}
                   containerStyle={{ width: '100%', height: '100%' }}
                 >
-                  <MainMenu FlipCard={FlipCard} />
+                  <MainMenu
+                    FlipCard={FlipCard}
+                    setSelectedAdminItem={
+                      profile.isadmin ? setSelectedAdminItem : null
+                    }
+                  />
                   {chosenCard === 'broadcast' ? (
                     <CardMusic isNotRadio={false} playerRef={playerRef} />
                   ) : (
@@ -109,7 +115,10 @@ const HomePage = ({ profile, checkUserSession }) => {
         profileExpanded={profileExpanded}
         setProfileExpanded={setProfileExpanded}
       />
-      <CardAdmin />
+      <CardAdmin
+        selectedAdminItem={selectedAdminItem}
+        setSelectedAdminItem={setSelectedAdminItem}
+      />
       <NotificationContainer />
     </div>
   );

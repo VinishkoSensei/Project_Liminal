@@ -21,13 +21,15 @@
   background-color: salmon;
   @include setborderwithradius(2px solid black, 12px);
   position: absolute;
-  top: 10px;
+  margin-top: 10px;
   right: 10px;
   cursor: pointer;
   background-size: 70% 80%;
   background-position: center;
   background-repeat: no-repeat;
   @include animation(background-color, 0.5s);
+  background-image: url('http://localhost:3000/images/gear.svg');
+  z-index: 999;
 
   &:hover {
     background-color: rgb(247, 198, 178);
