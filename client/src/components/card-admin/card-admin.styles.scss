@@ -23,11 +23,11 @@
 }
 
 .card-admin {
-  @include setwidthandheight(70vw, 75vh);
+  @include setwidthandheight(76vw, 75vh);
   @include setborderwithradius(2px solid black, 52px);
   @include flexeddiv(column, center);
   @include animation(left, 2s);
-  background-color: rgb(106, 245, 215);
+  background-color: linen;
   position: absolute;
   top: 20%;
   left: -100%;
@@ -35,10 +35,15 @@
   .card-admin-main {
     @include setwidthandheight(100%, 90%);
     @include flexeddiv(row, space-between);
+
+    .card-search {
+      @include setborderwithradius(2px solid black, 30px);
+      margin: 0 2.5px 0 5px;
+    }
   }
 
   &.expanded {
     @include animation(left, 1s);
-    left: 5%;
+    left: 2%;
   }
 }
