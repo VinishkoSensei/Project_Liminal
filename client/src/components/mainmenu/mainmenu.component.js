@@ -2,7 +2,12 @@ import React from 'react';
 import './mainmenu.styles.scss';
 import SmallButton from '../shared/small-button/small-button.component';
 
-const MainMenu = ({ FlipCard, setSelectedAdminItem }) => {
+const MainMenu = ({ FlipCard, setSelectedAdminItem, setIsOpened }) => {
+  const openAdminCard = (item) => {
+    setSelectedAdminItem(item);
+    setIsOpened(true);
+  };
+
   return (
     <div className="mainmenu-cards-container">
       <div className="cards top">
@@ -19,7 +24,7 @@ const MainMenu = ({ FlipCard, setSelectedAdminItem }) => {
           style={{ backgroundImage: `url('/images/broadcast.svg')` }}
         ></div>
         {setSelectedAdminItem ? (
-          <SmallButton onClick={() => setSelectedAdminItem('playlist')} />
+          <SmallButton onClick={() => openAdminCard('playlist')} />
         ) : null}
       </div>
       <div className="card-center">
@@ -39,7 +44,7 @@ const MainMenu = ({ FlipCard, setSelectedAdminItem }) => {
           style={{ backgroundImage: `url('/images/music.svg')` }}
         ></div>
         {setSelectedAdminItem ? (
-          <SmallButton onClick={() => setSelectedAdminItem('track')} />
+          <SmallButton onClick={() => openAdminCard('track')} />
         ) : null}
       </div>
     </div>
