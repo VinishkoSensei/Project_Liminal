@@ -4,7 +4,12 @@ import CardSearch from '../card-search/card-search.component';
 import CardAddTrack from '../card-addtrack/card-addtrack.component';
 import CardRadioPlaylist from '../card-radio-playlist/card-radio-playlist.component';
 
-const CardAdmin = ({ selectedAdminItem, setSelectedAdminItem }) => {
+const CardAdmin = ({
+  selectedAdminItem,
+  setSelectedAdminItem,
+  isOpened,
+  setIsOpened,
+}) => {
   const [radioQueue, setRadioQueue] = useState([]);
 
   useEffect(() => {
@@ -35,35 +40,46 @@ const CardAdmin = ({ selectedAdminItem, setSelectedAdminItem }) => {
     setRadioQueue(newRadioQueue);
   };
 
+  const closeAdminCard = () => {
+    setIsOpened(false);
+    setTimeout(() => setSelectedAdminItem(null), 2000);
+  };
+
   const BtnBack = () => {
-    return (
-      <div
-        className="admin-btn-back"
-        onClick={() => setSelectedAdminItem(null)}
-      />
-    );
+    return <div className="admin-btn-back" onClick={closeAdminCard} />;
+  };
+
+  const chooseCards = (item) => {
+    switch (item) {
+      case 'track':
+        return (
+          <div className="card-admin-main">
+            <CardSearch noMenu />
+            <CardAddTrack />
+          </div>
+        );
+      case 'playlist':
+        return (
+          <div className="card-admin-main">
+            <CardSearch
+              addToRadioQueueStart={addToRadioQueueStart}
+              addToRadioQueueEnd={addToRadioQueueEnd}
+            />
+            <CardRadioPlaylist
+              radioQueue={radioQueue}
+              setRadioQueue={setRadioQueue}
+            />
+          </div>
+        );
+      default:
+        return <div className="card-admin-main"></div>;
+    }
   };
 
   return (
-    <div className={`card-admin${selectedAdminItem ? ' expanded' : ''}`}>
+    <div className={`card-admin${isOpened ? ' expanded' : ''}`}>
       <BtnBack />
-      {selectedAdminItem === 'track' ? (
-        <div className="card-admin-main">
-          <CardSearch noMenu />
-          <CardAddTrack />
-        </div>
-      ) : (
-        <div className="card-admin-main">
-          <CardSearch
-            addToRadioQueueStart={addToRadioQueueStart}
-            addToRadioQueueEnd={addToRadioQueueEnd}
-          />
-          <CardRadioPlaylist
-            radioQueue={radioQueue}
-            setRadioQueue={setRadioQueue}
-          />
-        </div>
-      )}
+      {chooseCards(selectedAdminItem)}
     </div>
   );
 };
