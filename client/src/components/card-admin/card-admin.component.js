@@ -42,7 +42,9 @@ const CardAdmin = ({
 
   const closeAdminCard = () => {
     setIsOpened(false);
-    setTimeout(() => setSelectedAdminItem(null), 2000);
+    setTimeout(() => {
+      if (!isOpened) setSelectedAdminItem(null);
+    }, 2000);
   };
 
   const BtnBack = () => {
