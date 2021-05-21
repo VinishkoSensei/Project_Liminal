@@ -25,9 +25,10 @@
 .card-admin-main-addtrack {
   @include setwidthandheight(100%, 100%);
   background-color: lightsalmon;
-  @include setborderwithradius(2px solid black, 52px);
+  @include setborderwithradius(2px solid black, 30px);
   @include flexeddiv(unset, center);
   align-items: center;
+  margin: 0 5px 0 2.5px;
 
   .forminput {
     margin: 16px 0;
