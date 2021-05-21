@@ -4,7 +4,7 @@ import CardSearch from '../card-search/card-search.component';
 import CardAddTrack from '../card-addtrack/card-addtrack.component';
 import CardRadioPlaylist from '../card-radio-playlist/card-radio-playlist.component';
 
-const CardAdmin = () => {
+const CardAdmin = ({ selectedAdminItem, setSelectedAdminItem }) => {
   const [radioQueue, setRadioQueue] = useState([]);
 
   useEffect(() => {
@@ -35,19 +35,35 @@ const CardAdmin = () => {
     setRadioQueue(newRadioQueue);
   };
 
+  const BtnBack = () => {
+    return (
+      <div
+        className="admin-btn-back"
+        onClick={() => setSelectedAdminItem(null)}
+      />
+    );
+  };
+
   return (
-    <div className={`card-admin expanded`}>
-      <div className="card-admin-main">
-        <CardSearch
-          addToRadioQueueStart={addToRadioQueueStart}
-          addToRadioQueueEnd={addToRadioQueueEnd}
-        />
-        {/*<CardRadioPlaylist
-          radioQueue={radioQueue}
-          setRadioQueue={setRadioQueue}
-        />*/}
-        <CardAddTrack />
-      </div>
+    <div className={`card-admin${selectedAdminItem ? ' expanded' : ''}`}>
+      <BtnBack />
+      {selectedAdminItem === 'track' ? (
+        <div className="card-admin-main">
+          <CardSearch noMenu />
+          <CardAddTrack />
+        </div>
+      ) : (
+        <div className="card-admin-main">
+          <CardSearch
+            addToRadioQueueStart={addToRadioQueueStart}
+            addToRadioQueueEnd={addToRadioQueueEnd}
+          />
+          <CardRadioPlaylist
+            radioQueue={radioQueue}
+            setRadioQueue={setRadioQueue}
+          />
+        </div>
+      )}
     </div>
   );
 };

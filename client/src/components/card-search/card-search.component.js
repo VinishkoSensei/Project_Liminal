@@ -6,6 +6,7 @@ const CardSearch = ({
   changedCards,
   addToRadioQueueStart,
   addToRadioQueueEnd,
+  noMenu,
 }) => {
   const [tracks, setTracks] = useState();
   const [query, setQuery] = useState('');
@@ -97,6 +98,8 @@ const CardSearch = ({
                   addToRadioQueueStart={addToRadioQueueStart}
                   addToRadioQueueEnd={addToRadioQueueEnd}
                 />
+              ) : noMenu ? (
+                <Track key={index} track={track} index={index} />
               ) : (
                 <Track
                   key={index}

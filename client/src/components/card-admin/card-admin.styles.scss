@@ -23,13 +23,13 @@
 }
 
 .card-admin {
-  @include setwidthandheight(76vw, 75vh);
+  @include setwidthandheight(76vw, 80vh);
   @include setborderwithradius(2px solid black, 52px);
   @include flexeddiv(column, center);
   @include animation(left, 2s);
   background-color: linen;
   position: absolute;
-  top: 20%;
+  top: 18%;
   left: -100%;
 
   .card-admin-main {
@@ -38,12 +38,33 @@
 
     .card-search {
       @include setborderwithradius(2px solid black, 30px);
-      margin: 0 2.5px 0 5px;
+      height: 97%;
+      margin: 28px 2.5px 0 5px;
     }
   }
 
   &.expanded {
     @include animation(left, 1s);
     left: 2%;
+  }
+}
+
+.admin-btn-back {
+  @include setwidthandheight(40px, 40px);
+  background-color: lightskyblue;
+  @include setborderwithradius(1px solid black, 12px);
+  position: absolute;
+  left: 20px;
+  top: 15px;
+  cursor: pointer;
+  background-size: 70% 80%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('http://localhost:3000/images/play.svg');
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+
+  &:hover {
+    background-color: lightsalmon;
   }
 }
