@@ -3,6 +3,7 @@ import './card-admin.styles.scss';
 import CardSearch from '../card-search/card-search.component';
 import CardAddTrack from '../card-addtrack/card-addtrack.component';
 import CardRadioPlaylist from '../card-radio-playlist/card-radio-playlist.component';
+import CardUserList from '../card-userlist/card-userlist.component';
 
 const CardAdmin = ({
   selectedAdminItem,
@@ -58,6 +59,12 @@ const CardAdmin = ({
           <div className="card-admin-main">
             <CardSearch noMenu />
             <CardAddTrack />
+          </div>
+        );
+      case 'users':
+        return (
+          <div className="card-admin-main">
+            <CardUserList />
           </div>
         );
       case 'playlist':
