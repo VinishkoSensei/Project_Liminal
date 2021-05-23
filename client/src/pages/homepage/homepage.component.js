@@ -52,6 +52,11 @@ const HomePage = ({ profile, checkUserSession }) => {
     checkUserSession();
   }, [checkUserSession]);
 
+  const openAdminCard = (item) => {
+    setSelectedAdminItem(item);
+    setIsOpened(true);
+  };
+
   return (
     <div className="main">
       <div className="toppart">
@@ -76,10 +81,8 @@ const HomePage = ({ profile, checkUserSession }) => {
                 >
                   <MainMenu
                     FlipCard={FlipCard}
-                    setSelectedAdminItem={
-                      profile.isadmin ? setSelectedAdminItem : null
-                    }
-                    setIsOpened={setIsOpened}
+                    openAdminCard={openAdminCard}
+                    isOpened={isOpened}
                   />
                   {chosenCard === 'broadcast' ? (
                     <CardMusic isNotRadio={false} playerRef={playerRef} />
@@ -109,6 +112,8 @@ const HomePage = ({ profile, checkUserSession }) => {
           <Profile
             setProfileExpanded={setProfileExpanded}
             profileExpanded={profileExpanded}
+            openAdminCard={openAdminCard}
+            isOpened={isOpened}
           />
           <div className="news"></div>
         </div>

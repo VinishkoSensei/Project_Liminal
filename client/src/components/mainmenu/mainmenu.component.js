@@ -1,13 +1,9 @@
 import React from 'react';
 import './mainmenu.styles.scss';
 import SmallButton from '../shared/small-button/small-button.component';
+import { connect } from 'react-redux';
 
-const MainMenu = ({ FlipCard, setSelectedAdminItem, setIsOpened }) => {
-  const openAdminCard = (item) => {
-    setSelectedAdminItem(item);
-    setIsOpened(true);
-  };
-
+const MainMenu = ({ profile, FlipCard, openAdminCard, isOpened }) => {
   return (
     <div className="mainmenu-cards-container">
       <div className="cards top">
@@ -23,8 +19,11 @@ const MainMenu = ({ FlipCard, setSelectedAdminItem, setIsOpened }) => {
           onClick={FlipCard}
           style={{ backgroundImage: `url('/images/broadcast.svg')` }}
         ></div>
-        {setSelectedAdminItem ? (
-          <SmallButton onClick={() => openAdminCard('playlist')} />
+        {profile.isadmin ? (
+          <SmallButton
+            onClick={() => openAdminCard('playlist')}
+            isHidden={isOpened}
+          />
         ) : null}
       </div>
       <div className="card-center">
@@ -43,12 +42,19 @@ const MainMenu = ({ FlipCard, setSelectedAdminItem, setIsOpened }) => {
           onClick={FlipCard}
           style={{ backgroundImage: `url('/images/music.svg')` }}
         ></div>
-        {setSelectedAdminItem ? (
-          <SmallButton onClick={() => openAdminCard('track')} />
+        {profile.isadmin ? (
+          <SmallButton
+            onClick={() => openAdminCard('track')}
+            isHidden={isOpened}
+          />
         ) : null}
       </div>
     </div>
   );
 };
 
-export default MainMenu;
+const mapStateToProps = (state) => ({
+  profile: state.user.profile,
+});
+
+export default connect(mapStateToProps)(MainMenu);
