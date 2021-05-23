@@ -19,39 +19,19 @@ const CardUserList = ({}) => {
       const newUserList = await response.json();
       setUserList(newUserList);
     };
+
     getUserList();
   }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setSearchbarOnTop(query.length);
-    /*try {
-      switch (searchType) {
-        case 'authors':
-          const res = await fetch(
-            `http://localhost:3001/gettracksbyauthor/${query}`
-          );
-          const data = await res.json();
-          setTracks(data);
-          break;
-        case 'tracks':
-          const res1 = await fetch(
-            `http://localhost:3001/gettracksbyname/${query}`
-          );
-          const data1 = await res1.json();
-          setTracks(data1);
-          break;
-        default:
-          const res2 = await fetch(
-            `http://localhost:3001/gettracksbynameandauthor/${query}`
-          );
-          const data2 = await res2.json();
-          setTracks(data2);
-          break;
-      }
-    } catch (error) {
-      console.log(error);
-    }*/
+  };
+
+  const getNameColor = (isAdmin, subscribed) => {
+    if (isAdmin) return 'user admin';
+    if (subscribed) return 'user subscribed';
+    return 'user';
   };
 
   return (
@@ -96,7 +76,44 @@ const CardUserList = ({}) => {
         <div className="searchlist-list">
           <div className="searchlist-tracks">
             {userList?.map((user, index) => (
-              <div>{user}</div>
+              <div className="track" key={index}>
+                <div className="track-cover-container">
+                  {user.cover ? (
+                    <img
+                      src={`http://localhost:3001/gettrackcover/${user.cover}`}
+                      alt="cover"
+                      width="60px"
+                      height="60px"
+                    />
+                  ) : null}
+                </div>
+                <div className="track-info">
+                  <div className={getNameColor(user.isadmin, user.subscribed)}>
+                    {user.first_name} {user.last_name}
+                  </div>
+                  <div>
+                    <i>{user.email}</i>
+                  </div>
+                </div>
+                <div className="track-duration">
+                  <div>{user.phone}</div>
+                  <div>{user.birth_date}</div>
+                </div>
+                <div className="track-menu">
+                  <div
+                    className="track-menu-item"
+                    style={
+                      !user.isadmin
+                        ? { backgroundImage: `url('/images/play.svg')` }
+                        : {
+                            backgroundImage: `url('/images/play.svg')`,
+                            webkitTransform: 'scaleX(-1)',
+                            transform: 'scaleX(-1)',
+                          }
+                    }
+                  />
+                </div>
+              </div>
             ))}
           </div>
         </div>

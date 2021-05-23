@@ -8,6 +8,7 @@ const {
   handleGetProfile,
   handleChangeProfile,
   checkAuth,
+  getUserList,
 } = require('../functions/db/profile.db');
 const {
   getTrackList,
@@ -259,6 +260,18 @@ const plugin = {
       method: 'GET',
       path: '/tracks/{trackId}',
       handler: streamTrack,
+    });
+
+    server.route({
+      method: 'GET',
+      path: '/getuserlist',
+      handler: getUserList,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
     });
   },
 };

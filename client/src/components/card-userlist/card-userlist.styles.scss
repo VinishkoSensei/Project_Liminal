@@ -225,3 +225,11 @@
     }
   }
 }
+.user {
+  &.admin {
+    color: blue;
+  }
+  &.subscribed {
+    color: green;
+  }
+}
