@@ -10,18 +10,29 @@ const CardUserList = ({}) => {
     setQuery(event.target.value);
   };
 
-  useEffect(() => {
-    const getUserList = async () => {
-      const response = await fetch(`http://localhost:3001/getuserlist`, {
-        method: 'get',
-        headers: { 'Content-Type': 'application/json' },
-      });
-      const newUserList = await response.json();
-      setUserList(newUserList);
-    };
+  const getUserList = async () => {
+    const response = await fetch(`http://localhost:3001/getuserlist`, {
+      method: 'get',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    const newUserList = await response.json();
+    setUserList(newUserList);
+  };
 
+  useEffect(() => {
     getUserList();
   }, []);
+
+  const changeRole = async (id) => {
+    await fetch(`http://localhost:3001/changerole`, {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id,
+      }),
+    });
+    getUserList();
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -100,18 +111,23 @@ const CardUserList = ({}) => {
                   <div>{user.birth_date}</div>
                 </div>
                 <div className="track-menu">
-                  <div
-                    className="track-menu-item"
-                    style={
-                      !user.isadmin
-                        ? { backgroundImage: `url('/images/play.svg')` }
-                        : {
-                            backgroundImage: `url('/images/play.svg')`,
-                            webkitTransform: 'scaleX(-1)',
-                            transform: 'scaleX(-1)',
-                          }
-                    }
-                  />
+                  {user.isadmin ? (
+                    <div
+                      className="track-menu-item"
+                      style={{ backgroundImage: `url('/images/ordinary.svg')` }}
+                      onClick={() => changeRole(user.id)}
+                    >
+                      Make User
+                    </div>
+                  ) : (
+                    <div
+                      className="track-menu-item"
+                      style={{ backgroundImage: `url('/images/admin.svg')` }}
+                      onClick={() => changeRole(user.id)}
+                    >
+                      Make Admin
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
