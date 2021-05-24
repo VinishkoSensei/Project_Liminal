@@ -35,6 +35,8 @@
   .card-admin-main {
     @include setwidthandheight(100%, 90%);
     @include flexeddiv(row, space-between);
+    bottom: 0;
+    position: absolute;
 
     .card-search {
       @include setborderwithradius(2px solid black, 30px);
@@ -50,7 +52,7 @@
 }
 
 .admin-btn-back {
-  @include setwidthandheight(40px, 40px);
+  @include setwidthandheight(45px, 45px);
   background-color: lightskyblue;
   @include setborderwithradius(1px solid black, 12px);
   position: absolute;

@@ -10,25 +10,28 @@ const CardUserList = () => {
     setQuery(event.target.value);
   };
 
-  const getUserList = async (type, query) => {
-    const response = await fetch(
-      `http://localhost:3001/getuserlist?` +
-        new URLSearchParams({ type, query }),
-      {
-        method: 'get',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-    const newUserList = await response.json();
-    setUserList(newUserList);
-  };
-
-  /*
   useEffect(() => {
+    const getUserList = async () => {
+      const response = await fetch(
+        `http://localhost:3001/getuserlist?` +
+          new URLSearchParams({ type: searchType, query }),
+        {
+          method: 'get',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      const newUserList = await response.json();
+      setUserList(newUserList);
+    };
+
     getUserList();
-  }, []);*/
+  }, [searchType, query]);
+
+  useEffect(() => {
+    setSearchbarOnTop(query.length);
+  }, [query]);
 
   const changeRole = async (id) => {
     await fetch(`http://localhost:3001/changerole`, {
@@ -38,14 +41,12 @@ const CardUserList = () => {
         id,
       }),
     });
-    getUserList();
   };
 
-  const handleSubmit = async (event) => {
+  /*const handleSubmit = async (event) => {
     event.preventDefault();
     setSearchbarOnTop(query.length);
-    getUserList(searchType, query);
-  };
+  };*/
 
   const getNameColor = (isAdmin, subscribed) => {
     if (isAdmin) return 'user admin';
@@ -54,9 +55,9 @@ const CardUserList = () => {
   };
 
   return (
-    <div className={`card-search${searchbarOnTop ? ' searched' : ''}`}>
+    <div className={`card-userlist${searchbarOnTop ? ' searched' : ''}`}>
       <div className="placeholder" />
-      <form className="searchbar" onSubmit={handleSubmit}>
+      <div className="searchbar">
         <div className="searchbar-image">
           <button type="submit" className="searchbar-image-button">
             <img
@@ -70,7 +71,7 @@ const CardUserList = () => {
         <div className="searchbar-query">
           <input type="text" onChange={handleChange} />
         </div>
-      </form>
+      </div>
       <div className={`searchlist${searchbarOnTop ? ' searched' : ''}`}>
         <div className="searchlist-buttons">
           <div
@@ -93,7 +94,7 @@ const CardUserList = () => {
           </div>
         </div>
         <div className="searchlist-list">
-          <div className="searchlist-tracks">
+          <div className="searchlist-users">
             {userList?.map((user, index) => (
               <div className="user-item" key={index}>
                 <div>
