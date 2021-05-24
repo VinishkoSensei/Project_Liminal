@@ -28,6 +28,14 @@ const createFileWithRandomId = (path, ext, type, file) => {
   return filename;
 };
 
+const createMusicWithRandomId = (path, ext, type, file) => {
+  const filename = `${uuidv4()}${ext}`;
+  Fs.writeFileSync(`files/${path}${filename}`, file, type, function (err) {
+    return err;
+  });
+  return filename;
+};
+
 const deleteFile = async (path, filename) => {
   Fs.unlink(`public/files/${path}${filename}`, (err) => {
     if (err)
@@ -40,5 +48,6 @@ module.exports = {
   getTrackCover,
   getProfileImage,
   createFileWithRandomId,
+  createMusicWithRandomId,
   deleteFile,
 };

@@ -12,6 +12,7 @@ import CardSearch from '../../components/card-search/card-search.component';
 import CardProfile from '../../components/card-profile/card-profile.component';
 import CardSignIn from '../../components/card-signin/card-signin.component';
 import CardSignUp from '../../components/card-signup/card-signup.component';
+import CardAdmin from '../../components/card-admin/card-admin.component';
 
 import ReactCardFlip from 'react-card-flip';
 
@@ -25,6 +26,8 @@ const HomePage = ({ profile, checkUserSession }) => {
   const [chosenCard, setChosenCard] = useState(null);
   const playerRef = useRef(null);
   const [profileExpanded, setProfileExpanded] = useState(false);
+  const [selectedAdminItem, setSelectedAdminItem] = useState(null);
+  const [isOpened, setIsOpened] = useState(false);
 
   const FlipCard = (e) => {
     if (e.target.id) setChosenCard(e.target.id);
@@ -49,6 +52,11 @@ const HomePage = ({ profile, checkUserSession }) => {
     checkUserSession();
   }, [checkUserSession]);
 
+  const openAdminCard = (item) => {
+    setSelectedAdminItem(item);
+    setIsOpened(true);
+  };
+
   return (
     <div className="main">
       <div className="toppart">
@@ -71,7 +79,11 @@ const HomePage = ({ profile, checkUserSession }) => {
                   }}
                   containerStyle={{ width: '100%', height: '100%' }}
                 >
-                  <MainMenu FlipCard={FlipCard} />
+                  <MainMenu
+                    FlipCard={FlipCard}
+                    openAdminCard={openAdminCard}
+                    isOpened={isOpened}
+                  />
                   {chosenCard === 'broadcast' ? (
                     <CardMusic isNotRadio={false} playerRef={playerRef} />
                   ) : (
@@ -100,6 +112,8 @@ const HomePage = ({ profile, checkUserSession }) => {
           <Profile
             setProfileExpanded={setProfileExpanded}
             profileExpanded={profileExpanded}
+            openAdminCard={openAdminCard}
+            isOpened={isOpened}
           />
           <div className="news"></div>
         </div>
@@ -107,6 +121,12 @@ const HomePage = ({ profile, checkUserSession }) => {
       <CardProfile
         profileExpanded={profileExpanded}
         setProfileExpanded={setProfileExpanded}
+      />
+      <CardAdmin
+        selectedAdminItem={selectedAdminItem}
+        setSelectedAdminItem={setSelectedAdminItem}
+        isOpened={isOpened}
+        setIsOpened={setIsOpened}
       />
       <NotificationContainer />
     </div>
