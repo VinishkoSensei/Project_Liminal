@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './card-userlist.styles.scss';
 
-const CardUserList = ({}) => {
+const CardUserList = () => {
   const [query, setQuery] = useState('');
   const [searchbarOnTop, setSearchbarOnTop] = useState(false);
   const [userList, setUserList] = useState([]);
@@ -10,18 +10,25 @@ const CardUserList = ({}) => {
     setQuery(event.target.value);
   };
 
-  const getUserList = async () => {
-    const response = await fetch(`http://localhost:3001/getuserlist`, {
-      method: 'get',
-      headers: { 'Content-Type': 'application/json' },
-    });
+  const getUserList = async (type, query) => {
+    const response = await fetch(
+      `http://localhost:3001/getuserlist?` +
+        new URLSearchParams({ type, query }),
+      {
+        method: 'get',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
     const newUserList = await response.json();
     setUserList(newUserList);
   };
 
+  /*
   useEffect(() => {
     getUserList();
-  }, []);
+  }, []);*/
 
   const changeRole = async (id) => {
     await fetch(`http://localhost:3001/changerole`, {
@@ -37,6 +44,7 @@ const CardUserList = ({}) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setSearchbarOnTop(query.length);
+    getUserList(searchType, query);
   };
 
   const getNameColor = (isAdmin, subscribed) => {
@@ -72,8 +80,8 @@ const CardUserList = ({}) => {
             All
           </div>
           <div
-            className={`button${searchType === 'admins' ? ' selected' : ''}`}
-            onClick={() => setSearchType('admins')}
+            className={`button${searchType === 'admin' ? ' selected' : ''}`}
+            onClick={() => setSearchType('admin')}
           >
             Admins
           </div>
@@ -87,8 +95,8 @@ const CardUserList = ({}) => {
         <div className="searchlist-list">
           <div className="searchlist-tracks">
             {userList?.map((user, index) => (
-              <div className="track" key={index}>
-                <div className="track-cover-container">
+              <div className="user-item" key={index}>
+                <div>
                   {user.cover ? (
                     <img
                       src={`http://localhost:3001/gettrackcover/${user.cover}`}
@@ -98,7 +106,7 @@ const CardUserList = ({}) => {
                     />
                   ) : null}
                 </div>
-                <div className="track-info">
+                <div className="user-info">
                   <div className={getNameColor(user.isadmin, user.subscribed)}>
                     {user.first_name} {user.last_name}
                   </div>
@@ -106,14 +114,14 @@ const CardUserList = ({}) => {
                     <i>{user.email}</i>
                   </div>
                 </div>
-                <div className="track-duration">
+                <div className="user-duration">
                   <div>{user.phone}</div>
                   <div>{user.birth_date}</div>
                 </div>
-                <div className="track-menu">
+                <div className="user-menu">
                   {user.isadmin ? (
                     <div
-                      className="track-menu-item"
+                      className="user-menu-item"
                       style={{ backgroundImage: `url('/images/ordinary.svg')` }}
                       onClick={() => changeRole(user.id)}
                     >
@@ -121,7 +129,7 @@ const CardUserList = ({}) => {
                     </div>
                   ) : (
                     <div
-                      className="track-menu-item"
+                      className="user-menu-item"
                       style={{ backgroundImage: `url('/images/admin.svg')` }}
                       onClick={() => changeRole(user.id)}
                     >
