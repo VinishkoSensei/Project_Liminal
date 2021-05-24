@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import './profile.styles.scss';
+import SmallButton from '../shared/small-button/small-button.component';
 import { signInStart } from '../../redux/user/user.actions';
 import { Trans } from '@lingui/macro';
 
 const Profile = ({
-  signInStart,
   profile,
   setProfileExpanded,
   profileExpanded,
+  openAdminCard,
+  isOpened,
 }) => {
   const [minifiedProfile, setMinifiedProfile] = useState(true);
 
@@ -20,7 +22,13 @@ const Profile = ({
   return (
     <div>
       {profile ? (
-        <div>
+        <div className="profile-panel">
+          {profile.isadmin ? (
+            <SmallButton
+              onClick={() => openAdminCard('users')}
+              isHidden={isOpened}
+            />
+          ) : null}
           <div
             className={`profile-main`}
             onClick={() => setMinifiedProfile(!minifiedProfile)}

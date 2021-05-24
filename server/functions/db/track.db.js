@@ -1,3 +1,8 @@
+const { createMusicWithRandomId, deleteFile } = require('../file');
+const mm = require('music-metadata');
+const Fs = require('fs');
+const Boom = require('boom');
+
 const getTrackList = async (req, h) => {
   const db = req.getDb();
   const trackData = await db.func(`liminal.gettracklist`);
@@ -32,10 +37,92 @@ const getTrack = async (req, h) => {
   return track[0];
 };
 
+const getRadioQueue = async (db) => {
+  const radioQueue = await db.func('liminal.gettrackqueue');
+  return radioQueue;
+};
+
+const getRadioQueueFromFront = async (req, h) => {
+  const db = req.getDb();
+  const radioQueue = await db.func('liminal.getradioqueue');
+  return radioQueue;
+};
+
+const getNextTrackFromRadioQueue = async (db) => {
+  const nextTrack = await db.func('liminal.getnexttrackfromradioqueue');
+  return nextTrack[0].getnexttrackfromradioqueue;
+};
+
+const addTrackToRadioQueue = async (req, h) => {
+  const db = req.getDb();
+  const { trackid } = req.payload;
+  const radioQueue = await db.func('liminal.addtoradioqueue', trackid);
+  return radioQueue;
+};
+
+const deleteTrackFromRadioQueue = async (req, h) => {
+  const db = req.getDb();
+  const { index } = req.payload;
+  const radioQueue = await db.func('liminal.deletefromradioqueue', index);
+  return radioQueue;
+};
+
+const clearCycle = async (db) => {
+  await db.proc('liminal.clearcycle');
+  return;
+};
+
+const getGenres = async (req, h) => {
+  const db = req.getDb();
+  const genres = await db.func('liminal.getgenres');
+  return genres;
+};
+
+const getAuthors = async (req, h) => {
+  const db = req.getDb();
+  const authors = await db.func('liminal.getauthors');
+  return authors;
+};
+
+const createTrack = async (req, h) => {
+  try {
+    const db = req.getDb();
+    const { name, genre, author, file } = req.payload;
+    const base64Data = file.contentPreviewUrl.split(',')[1];
+    const trackPath =
+      './files/music/' +
+      createMusicWithRandomId('music/', file.content, 'base64', base64Data);
+    const metadata = await mm.parseFile(trackPath);
+    const duration = new Date(1000 * metadata.format.duration)
+      .toISOString()
+      .substr(11, 8);
+
+    await db.proc('liminal.createtrack', [
+      name,
+      genre,
+      author,
+      trackPath,
+      duration,
+    ]);
+    return { response: 'ok' };
+  } catch (err) {
+    throw Boom.badData(err);
+  }
+};
+
 module.exports = {
   getTrackList,
   getTracksByNameAndAuthor,
   getTracksByName,
   getTracksByAuthor,
   getTrack,
+  getNextTrackFromRadioQueue,
+  addTrackToRadioQueue,
+  clearCycle,
+  getGenres,
+  getAuthors,
+  getRadioQueue,
+  getRadioQueueFromFront,
+  deleteTrackFromRadioQueue,
+  createTrack,
 };
