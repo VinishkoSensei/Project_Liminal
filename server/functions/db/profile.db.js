@@ -225,7 +225,8 @@ const checkAuth = async (req, h) => {
 
 const getUserList = async (req, h) => {
   const db = req.getDb();
-  const userList = await db.func(`liminal.getuserlist`);
+  const { type, query } = req.query;
+  const userList = await db.func(`liminal.getuserlist`, [type, query]);
   return h.response(userList);
 };
 
