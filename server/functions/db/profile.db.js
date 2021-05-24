@@ -229,6 +229,14 @@ const getUserList = async (req, h) => {
   return h.response(userList);
 };
 
+const changeRole = async (req, h) => {
+  const db = req.getDb();
+  const { id } = req.payload;
+  const user = await db.func(`liminal.getuser`, id);
+  await db.proc(`liminal.changerole`, [user[0].id, !user[0].isadmin]);
+  return h.response('Done.');
+};
+
 module.exports = {
   getProfile,
   createProfile,
@@ -237,4 +245,5 @@ module.exports = {
   handleChangeProfile,
   checkAuth,
   getUserList,
+  changeRole,
 };

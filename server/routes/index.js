@@ -9,6 +9,7 @@ const {
   handleChangeProfile,
   checkAuth,
   getUserList,
+  changeRole,
 } = require('../functions/db/profile.db');
 const {
   getTrackList,
@@ -266,6 +267,18 @@ const plugin = {
       method: 'GET',
       path: '/getuserlist',
       handler: getUserList,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'POST',
+      path: '/changerole',
+      handler: changeRole,
       config: {
         cors: {
           origin: ['*'],
