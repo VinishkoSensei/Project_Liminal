@@ -78,15 +78,8 @@ const signinAuth = async (req, h) => {
 
 const createProfile = async (req, h) => {
   try {
-    const {
-      email,
-      firstname,
-      lastname,
-      date,
-      phone,
-      file,
-      password,
-    } = req.payload;
+    const { email, firstname, lastname, date, phone, file, password } =
+      req.payload;
     if (
       !email ||
       !firstname ||
@@ -230,6 +223,21 @@ const checkAuth = async (req, h) => {
   }
 };
 
+const getUserList = async (req, h) => {
+  const db = req.getDb();
+  const { type, query } = req.query;
+  const userList = await db.func(`liminal.getuserlist`, [type, query]);
+  return h.response(userList);
+};
+
+const changeRole = async (req, h) => {
+  const db = req.getDb();
+  const { id } = req.payload;
+  const user = await db.func(`liminal.getuser`, id);
+  await db.proc(`liminal.changerole`, [user[0].id, !user[0].isadmin]);
+  return h.response('Done.');
+};
+
 module.exports = {
   getProfile,
   createProfile,
@@ -237,4 +245,6 @@ module.exports = {
   handleGetProfile,
   handleChangeProfile,
   checkAuth,
+  getUserList,
+  changeRole,
 };
