@@ -2,21 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './card-profile.styles.scss';
 import { connect } from 'react-redux';
 import CustomButton from '../custombutton/custombutton.component';
-import {
-  signOutStart,
-  changeProfileStart,
-} from '../../redux/user/user.actions';
+import { changeProfileStart } from '../../redux/user/user.actions';
 import FormInput from '../forminputs/forminput/forminput.component';
 import FormFileInput from '../forminputs/formfileinput/formfileinput.component';
 import { Trans } from '@lingui/macro';
 
-const CardProfile = ({
-  profile,
-  profileExpanded,
-  setProfileExpanded,
-  signOutStart,
-  changeProfileStart,
-}) => {
+const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
   const [changedProfile, setChangedProfile] = useState(null);
   const [changingItemType, setChangingItemType] = useState(null);
   const [doPasswordsMatch, setDoPasswordsMatch] = useState(true);
@@ -24,11 +15,6 @@ const CardProfile = ({
   useEffect(() => {
     setChangedProfile({ ...profile, password: '', passwordconf: '' });
   }, [profile]);
-
-  const handleSignOut = () => {
-    setProfileExpanded(false);
-    signOutStart();
-  };
 
   const handleChangingItemType = (event) => {
     setChangingItemType(event.target.name);
@@ -176,19 +162,15 @@ const CardProfile = ({
                   handleChange={handleChange}
                   key="passwordconf"
                 />
-              </div>
-            ) : null}
-
-            {!doPasswordsMatch ? (
-              <div className="error">
-                <Trans>Passwords do not match</Trans>
+                {!doPasswordsMatch ? (
+                  <div className="error">
+                    <Trans>Passwords do not match</Trans>
+                  </div>
+                ) : null}
               </div>
             ) : null}
             <CustomButton type="button" onClick={handlePasswordChange}>
               <Trans>Change password</Trans>
-            </CustomButton>
-            <CustomButton type="button" onClick={handleSignOut}>
-              <Trans>Sign Out</Trans>
             </CustomButton>
           </div>
         </div>
@@ -202,7 +184,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  signOutStart: () => dispatch(signOutStart()),
   changeProfileStart: (changedProfile, changingItemType) =>
     dispatch(changeProfileStart(changedProfile, changingItemType)),
 });
