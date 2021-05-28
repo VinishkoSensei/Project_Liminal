@@ -4,13 +4,13 @@ import * as mm from 'music-metadata-browser';
 //import { AudioContext } from 'standardized-audio-context';
 
 const CardTrackAnalysis = ({ changedCards }) => {
-  const average = (list) =>
-    list.reduce((prev, curr) => prev + curr) / list.length;
+  const average = (list) => {
+    return list ? list.reduce((prev, curr) => prev + curr, 0) / list.length : 0;
+  };
 
   const handleTrackAnalysis = async (e) => {
     const res = [];
     const resv = [];
-    const resvol = [];
     var type = '';
     const fr = new FileReader();
     fr.readAsDataURL(document.getElementById('audio_file').files[0]);
@@ -18,9 +18,11 @@ const CardTrackAnalysis = ({ changedCards }) => {
       mm.parseBlob(document.getElementById('audio_file').files[0]).then(
         (metadata) => {
           var duration = metadata.format.duration;
+          console.log(duration);
           var audio = document.createElement('audio');
           audio.src = e.target.result;
           audio.currentTime = 0;
+          audio.playbackRate = 4.0;
           audio.play();
           var widthp = 0;
           audio.ontimeupdate = (e) => {
@@ -38,17 +40,24 @@ const CardTrackAnalysis = ({ changedCards }) => {
         if (e.target.currentTime >= 44.241417) {
           audio.volume = 1.0;
         }
-
-        if (e.target.currentTime > 50) {
-          e.target.pause();
-          //console.log(res);
-        }*/
+*/
+            if (
+              e.target.currentTime >= duration ||
+              e.target.currentTime > 300
+            ) {
+              e.target.pause();
+              console.log(resv);
+            }
 
             var canvas = document.getElementById('canvas');
 
             if (e.target.currentTime < duration) {
               widthp = (canvas.width * e.target.currentTime) / duration;
             }
+          };
+
+          audio.onended = (e) => {
+            console.log(resv);
           };
 
           var audioCtx = new (window.AudioContext ||
@@ -66,6 +75,7 @@ const CardTrackAnalysis = ({ changedCards }) => {
           gainNode.connect(audioCtx.destination);
           source.connect(analyser);
           analyser.fftSize = 1024;
+          analyser.smoothingTimeConstant = 0.9;
 
           var bufferLength = analyser.frequencyBinCount;
           console.log(bufferLength);
@@ -94,15 +104,17 @@ const CardTrackAnalysis = ({ changedCards }) => {
             var x = 0;
             var sum = 0;
 
+            for (var j = 416; j < 420; j++) {
+              sum += dataArray[j];
+            }
+
             for (var i = 0; i < dataArray.length; i++) {
-              if (i > 415 && i < 420) sum += dataArray[i];
               if (i === 0) {
                 if (dataArray[0] < 120) {
                   type = 'low';
                   num = 0;
                   nummin++;
                   summin.push(sum);
-                  console.log('summin', sum);
                   maybePeak = null;
                 }
 
@@ -113,16 +125,23 @@ const CardTrackAnalysis = ({ changedCards }) => {
                 ) {
                   num++;
                   summax.push(sum);
-                  console.log('summax', sum);
                   type = 'high';
                   maybePeak = audio.currentTime;
-                  resv.push(audio.currentTime);
-                  console.log(audio.currentTime);
                 } else {
                   if (audio.currentTime > maybePeak && maybePeak) {
                     if (dataArray[0] > 240) num++;
                     if (num === 200) {
-                      if (nummin > 200) resv.push(maybePeak);
+                      console.log(average(summax));
+                      console.log(average(summin));
+                      console.log(nummin);
+                      console.log(average(summax) / average(summin) > 15);
+                      if (
+                        nummin >= 200 &&
+                        average(summax) / average(summin) > 20
+                      ) {
+                        console.log('Pushing', maybePeak);
+                        resv.push(maybePeak);
+                      }
                       console.log(
                         'true maybePeak',
                         maybePeak,
@@ -137,14 +156,10 @@ const CardTrackAnalysis = ({ changedCards }) => {
                       );
                       summin = [];
                       summax = [];
-                      //resvol.push(sum);
-                      console.log(resvol);
-
                       nummin = 0;
                     }
                   }
                 }
-
                 res.push(dataArray[i]);
               }
               barHeight = dataArray[i] * 2;
@@ -163,16 +178,8 @@ const CardTrackAnalysis = ({ changedCards }) => {
             canvasCtx.fillRect(0, 0, widthp, 20);
 
             canvasCtx.fillStyle = 'rgb(100,200,200)';
-            //resvol.push(sum);
 
             canvasCtx.fillRect(0, 20, WIDTH, (HEIGHT * sum) / 5 / 255);
-
-            /* try {
-              if (Math.round(audio.currentTime) % 2 === 0) {
-                // resvol.push(sum / dataArray.length);
-                console.log(sum / 5);
-              }
-            } catch (e) {}*/
             return false;
           };
 
