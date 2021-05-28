@@ -6,6 +6,7 @@ import * as mm from 'music-metadata-browser';
 const CardTrackAnalysis = () => {
   const [suggestedPoints, setSuggestedPoints] = useState([]);
   const canvasRef = useRef(null);
+  const audioRef = useRef(null);
 
   const getAverage = (list) => {
     return list ? list.reduce((prev, curr) => prev + curr, 0) / list.length : 0;
@@ -26,7 +27,7 @@ const CardTrackAnalysis = () => {
   };
 
   const createAudio = (src, currentTime, playbackRate) => {
-    const audio = document.createElement('audio');
+    const audio = audioRef.current;
     audio.src = src;
     audio.currentTime = currentTime;
     audio.playbackRate = playbackRate;
@@ -188,6 +189,7 @@ const CardTrackAnalysis = () => {
   return (
     <div className="card-track-analysis">
       {/*<input type="file" name="audio_file" id="audio_file"></input>*/}
+      <audio ref={audioRef} />
       <FormFileInput handleChange={fileSelectAndAnalyseHandler} />
       <canvas id="canvas" ref={canvasRef} width="1200" height="600"></canvas>
       {suggestedPoints.map((point, index) => (
