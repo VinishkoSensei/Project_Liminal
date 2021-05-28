@@ -1,15 +1,45 @@
 import React from 'react';
 import './card-track-analysis.styles.scss';
 import * as mm from 'music-metadata-browser';
-//import { AudioContext } from 'standardized-audio-context';
 
 const CardTrackAnalysis = ({ changedCards }) => {
-  const average = (list) => {
+  const getAverage = (list) => {
     return list ? list.reduce((prev, curr) => prev + curr, 0) / list.length : 0;
   };
 
+  const fillCanvas = ({
+    canvasCtx,
+    color: { red, green, blue },
+    rectangle: { x, y, width, height },
+  }) => {
+    canvasCtx.fillStyle = `rgb(${red},${green},${blue})`;
+    canvasCtx.fillRect(x, y, width, height);
+  };
+
+  const clearCanvas = (canvasCtx, canvas) => {
+    canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+    canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+  };
+
+  const createAudio = (src, currentTime, playbackRate) => {
+    const audio = document.createElement('audio');
+    audio.src = src;
+    audio.currentTime = currentTime;
+    audio.playbackRate = playbackRate;
+    return audio;
+  };
+
+  const createAudioContextAndGetAnalyser = (audio) => {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const source = audioCtx.createMediaElementSource(audio);
+    const analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 1024;
+    analyser.smoothingTimeConstant = 0.9;
+    source.connect(analyser);
+    return analyser;
+  };
+
   const handleTrackAnalysis = async (e) => {
-    const res = [];
     const resv = [];
     var type = '';
     const fr = new FileReader();
@@ -17,14 +47,8 @@ const CardTrackAnalysis = ({ changedCards }) => {
     fr.onloadend = (e) => {
       mm.parseBlob(document.getElementById('audio_file').files[0]).then(
         (metadata) => {
-          var duration = metadata.format.duration;
-          console.log(duration);
-          var audio = document.createElement('audio');
-          audio.src = e.target.result;
-          audio.currentTime = 0;
-          audio.playbackRate = 4.0;
+          const audio = createAudio(e.target.result, 0, 4.0);
           audio.play();
-          var widthp = 0;
           audio.ontimeupdate = (e) => {
             /*if (e.target.currentTime > 44.416417 - 10 && !alreadyWorking) {
           alreadyWorking = true;
@@ -39,78 +63,39 @@ const CardTrackAnalysis = ({ changedCards }) => {
 
         if (e.target.currentTime >= 44.241417) {
           audio.volume = 1.0;
-        }
-*/
-            if (
-              e.target.currentTime >= duration ||
-              e.target.currentTime > 300
-            ) {
-              e.target.pause();
-              console.log(resv);
-            }
-
-            var canvas = document.getElementById('canvas');
-
-            if (e.target.currentTime < duration) {
-              widthp = (canvas.width * e.target.currentTime) / duration;
-            }
+        }*/
           };
-
           audio.onended = (e) => {
             console.log(resv);
           };
 
-          var audioCtx = new (window.AudioContext ||
-            window.webkitAudioContext)();
-          var analyser = audioCtx.createAnalyser();
-          var gainNode = audioCtx.createGain();
-          var filter = audioCtx.createBiquadFilter();
-          filter.type = 'allpass';
-          //filter.frequency.value = 20000;
+          const canvas = document.getElementById('canvas');
+          const canvasCtx = canvas.getContext('2d');
+          const analyser = createAudioContextAndGetAnalyser(audio);
+          const bufferLength = analyser.frequencyBinCount;
+          const barWidth = canvas.width / 255;
 
-          const source = audioCtx.createMediaElementSource(audio);
-
-          source.connect(filter);
-          filter.connect(gainNode);
-          gainNode.connect(audioCtx.destination);
-          source.connect(analyser);
-          analyser.fftSize = 1024;
-          analyser.smoothingTimeConstant = 0.9;
-
-          var bufferLength = analyser.frequencyBinCount;
-          console.log(bufferLength);
-          var dataArray = new Uint8Array(bufferLength);
-          var canvas = document.getElementById('canvas');
-          var canvasCtx = canvas.getContext('2d');
-          console.log(canvasCtx);
-          var WIDTH = canvas.width;
-          var HEIGHT = canvas.height;
-          canvasCtx.fillStyle = 'rgb(0, 0, 0)';
-          canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
-          var maybePeak = null;
-          var num = 0;
-          var nummin = 0;
-          var summin = [];
-          var summax = [];
+          let dataArray = new Uint8Array(bufferLength);
+          let maybePeak = null;
+          let num = 0;
+          let nummin = 0;
+          let summin = [];
+          let summax = [];
 
           const draw = () => {
+            clearCanvas(canvasCtx, canvas);
             if (!audio.paused) requestAnimationFrame(draw, canvas);
 
+            let x = 0;
+
             analyser.getByteFrequencyData(dataArray);
-            canvasCtx.fillStyle = 'rgb(0, 0, 0)';
-            canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
-            var barWidth = WIDTH / 255;
-            var barHeight;
-            var x = 0;
-            var sum = 0;
+            const sum = dataArray
+              .slice(416, 419)
+              .reduce((acc, elem) => acc + elem, 0);
 
-            for (var j = 416; j < 420; j++) {
-              sum += dataArray[j];
-            }
-
-            for (var i = 0; i < dataArray.length; i++) {
-              if (i === 0) {
-                if (dataArray[0] < 120) {
+            dataArray.forEach((elem, index) => {
+              if (index === 0) {
+                if (elem < 120) {
                   type = 'low';
                   num = 0;
                   nummin++;
@@ -118,68 +103,77 @@ const CardTrackAnalysis = ({ changedCards }) => {
                   maybePeak = null;
                 }
 
-                if (
-                  dataArray[0] > 240 &&
-                  type === 'low' &&
-                  audio.currentTime > 15
-                ) {
+                if (elem > 240 && type === 'low' && audio.currentTime > 15) {
                   num++;
                   summax.push(sum);
                   type = 'high';
                   maybePeak = audio.currentTime;
                 } else {
                   if (audio.currentTime > maybePeak && maybePeak) {
-                    if (dataArray[0] > 240) num++;
+                    if (elem > 240) num++;
                     if (num === 200) {
-                      console.log(average(summax));
-                      console.log(average(summin));
-                      console.log(nummin);
-                      console.log(average(summax) / average(summin) > 15);
                       if (
                         nummin >= 200 &&
-                        average(summax) / average(summin) > 20
+                        getAverage(summax) / getAverage(summin) > 20
                       ) {
                         console.log('Pushing', maybePeak);
                         resv.push(maybePeak);
                       }
-                      console.log(
-                        'true maybePeak',
-                        maybePeak,
-                        'before=',
-                        nummin,
-                        'long=',
-                        num,
-                        'beforeavg=',
-                        average(summin),
-                        'nowavg=',
-                        average(summax)
-                      );
                       summin = [];
                       summax = [];
                       nummin = 0;
                     }
                   }
                 }
-                res.push(dataArray[i]);
               }
-              barHeight = dataArray[i] * 2;
-              canvasCtx.fillStyle =
-                'rgb(' +
-                (barHeight / 3 + 100) +
-                ',50,' +
-                (255 - barHeight) +
-                ')';
-              canvasCtx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
-
+              const barHeight = elem * 2;
+              fillCanvas({
+                canvasCtx: canvasCtx,
+                color: {
+                  red: barHeight / 3 + 100,
+                  green: 50,
+                  blue: 255 - barHeight,
+                },
+                rectangle: {
+                  x: x,
+                  y: canvas.height - barHeight,
+                  width: barWidth,
+                  height: barHeight,
+                },
+              });
               x += barWidth + 1;
-            }
+            });
 
-            canvasCtx.fillStyle = 'rgb(0,0,255)';
-            canvasCtx.fillRect(0, 0, widthp, 20);
+            fillCanvas({
+              canvasCtx: canvasCtx,
+              color: {
+                red: 0,
+                green: 0,
+                blue: 255,
+              },
+              rectangle: {
+                x: 0,
+                y: 0,
+                width:
+                  (canvas.width * audio.currentTime) / metadata.format.duration,
+                height: 20,
+              },
+            });
 
-            canvasCtx.fillStyle = 'rgb(100,200,200)';
-
-            canvasCtx.fillRect(0, 20, WIDTH, (HEIGHT * sum) / 5 / 255);
+            fillCanvas({
+              canvasCtx: canvasCtx,
+              color: {
+                red: 100,
+                green: 200,
+                blue: 200,
+              },
+              rectangle: {
+                x: 0,
+                y: 20,
+                width: canvas.width,
+                height: (canvas.height * sum) / 5 / 255,
+              },
+            });
             return false;
           };
 
