@@ -62,7 +62,7 @@ const CardTrackAnalysis = () => {
     console.log(suggestedPoints);
     setSuggestedPoints(
       suggestedPoints.map((item, ind) =>
-        ind === Number(id) ? (item = { ...item, [name]: value }) : item
+        ind === Number(id) ? (item = { ...item, [name]: Number(value) }) : item
       )
     );
   };
@@ -86,7 +86,9 @@ const CardTrackAnalysis = () => {
         author: 'dummy',
         file: {
           track: 'dummy',
-          suggestedPoints: suggestedPoints.filter((point) => point.checked),
+          suggestedPoints: suggestedPoints
+            .filter((point) => point.checked)
+            .map((point) => point.newPeak),
         },
       }),
     });
