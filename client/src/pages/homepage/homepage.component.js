@@ -13,6 +13,8 @@ import CardProfile from '../../components/card-profile/card-profile.component';
 import CardSignIn from '../../components/card-signin/card-signin.component';
 import CardSignUp from '../../components/card-signup/card-signup.component';
 import CardAdmin from '../../components/card-admin/card-admin.component';
+import CardTrackAnalysis from '../../components/card-track-analysis/card-track-analysis.component';
+
 
 import ReactCardFlip from 'react-card-flip';
 
