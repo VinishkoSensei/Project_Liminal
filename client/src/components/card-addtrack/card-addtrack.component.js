@@ -4,6 +4,7 @@ import FormInput from '../forminputs/forminput/forminput.component';
 import FormFileInput from '../forminputs/formfileinput/formfileinput.component';
 import CustomButton from '../custombutton/custombutton.component';
 import CreatableSelect from 'react-select/creatable';
+import TrackAnalysis from '../track-analysis/track-analysis.component';
 import { Trans } from '@lingui/macro';
 import * as mm from 'music-metadata-browser';
 
@@ -30,6 +31,10 @@ const CardAddTrack = () => {
     file: null,
   };
   const [newTrack, setNewTrack] = useState(newTrackInitialState);
+  const [suggestedPoints, setSuggestedPoints] = useState([]);
+  const [target, setTarget] = useState(null);
+  const [finishedAnalysing, setFinishedAnalysing] = useState(false);
+
   const { name, genre, author, file, authorhint, genrehint } = newTrack;
 
   useEffect(() => {
@@ -90,18 +95,21 @@ const CardAddTrack = () => {
         genre: genre.value,
         author: author.value,
         file,
+        suggestedPoints: suggestedPoints
+          .filter((point) => point.checked)
+          .map((point) => point.newPeak),
       }),
     });
     console.log(response);
   };
 
+  //
   const fileSelectHandler = (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
+    const fr = new FileReader();
+    fr.readAsDataURL(file);
+    fr.onloadend = (e) => {
       mm.parseBlob(file).then((metadata) => {
-        console.log(`Completed parsing of ${file.name}:`, metadata);
         setNewTrack({
           ...newTrack,
           name: metadata.common.title && !name ? metadata.common.title : name,
@@ -113,11 +121,12 @@ const CardAddTrack = () => {
               : genre,
           file: {
             content: '.mp3',
-            contentPreviewUrl: reader.result,
+            contentPreviewUrl: fr.result,
           },
         });
       });
     };
+    setTarget(e.target);
   };
 
   const Inputs = [
@@ -219,7 +228,17 @@ const CardAddTrack = () => {
           }
         })}
 
-        <CustomButton type="submit">
+        <TrackAnalysis
+          suggestedPoints={suggestedPoints}
+          setSuggestedPoints={setSuggestedPoints}
+          target={target}
+          setFinishedAnalysing={setFinishedAnalysing}
+        />
+
+        <CustomButton
+          type="submit"
+          disabled={!finishedAnalysing || !genre || !author}
+        >
           <Trans>Add track</Trans>
         </CustomButton>
       </form>
