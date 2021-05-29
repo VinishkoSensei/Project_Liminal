@@ -1,0 +1,255 @@
+@mixin animation($type, $sec) {
+  -webkit-transition: $type $sec ease;
+  -moz-transition: $type $sec ease;
+  -o-transition: $type $sec ease;
+  -ms-transition: $type $sec ease;
+  transition: $type $sec ease;
+}
+
+@mixin animationwithdelay($type, $sec, $cd) {
+  -webkit-transition: $type $sec ease $cd;
+  -moz-transition: $type $sec ease $cd;
+  -o-transition: $type $sec ease $cd;
+  -ms-transition: $type $sec ease $cd;
+  transition: $type $sec ease $cd;
+}
+
+@mixin flexeddiv($flexdirection, $justifycontent) {
+  display: flex;
+  flex-direction: $flexdirection;
+  justify-content: $justifycontent;
+}
+
+@mixin setwidthandheight($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin setborderwithradius($border, $radius) {
+  border: $border;
+  border-radius: $radius;
+}
+
+.card-userlist {
+  @include setwidthandheight(100%, 100%);
+  background-color: lightsalmon;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  border-radius: 52px;
+  @include flexeddiv(column, flex-start);
+  align-items: center;
+  @include animation(all, 5s);
+
+  .placeholder {
+    width: 100%;
+    height: 46%;
+    @include animation(all, 5s);
+  }
+
+  &.searched {
+    @include flexeddiv(column, flex-start);
+    overflow-y: hidden;
+
+    .placeholder {
+      height: 0;
+    }
+
+    .searchbar {
+      @include setwidthandheight(100%, 8%);
+      @include animation(all, 2.5s);
+      border-radius: 0;
+      border-top: 0px solid black;
+      border-left: 0px solid black;
+      border-right: 0px solid black;
+      border-bottom: 2px solid black;
+
+      .searchbar-image {
+        margin-left: 3%;
+      }
+
+      .searchbar-query {
+        width: 75%;
+
+        input {
+          width: 90%;
+        }
+      }
+    }
+  }
+
+  .searchbar {
+    width: 90%;
+    height: 50px;
+    border: 2px black solid;
+    border-radius: 15px;
+    text-align: center;
+    display: flex;
+    @include animationwithdelay(all, 2.5s, 0.5s);
+
+    .searchbar-image {
+      height: 100%;
+      width: 20%;
+      border-right: 1px solid black;
+      @include animation(all, 5s);
+      -webkit-appearance: div;
+      -moz-appearance: div;
+      appearance: div;
+
+      .searchbar-image-button {
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        border: 0;
+        outline: none;
+        cursor: pointer;
+      }
+    }
+
+    .searchbar-query {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      @include animation(all, 5s);
+
+      input {
+        width: 90%;
+        height: 65%;
+        border: 0;
+        font-size: x-large;
+        outline: none;
+        background-color: transparent;
+      }
+    }
+  }
+
+  .searchlist {
+    width: 100%;
+    height: 0;
+    @include animation(all, 2s);
+
+    &.searched {
+      height: 100%;
+      @include animation(all, 2s);
+
+      .searchlist-buttons {
+        display: flex;
+      }
+    }
+
+    .searchlist-buttons {
+      width: 100%;
+      height: 10%;
+      border-bottom: black solid 2px;
+      display: none;
+      justify-content: space-around;
+
+      .button {
+        background-color: cadetblue;
+        width: 80px;
+        cursor: pointer;
+        margin: 5px 0px;
+        border: black solid 2px;
+        border-radius: 8px;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        &:hover {
+          background-color: lightblue;
+        }
+
+        &.selected {
+          background-color: blue;
+        }
+      }
+    }
+    .searchlist-list {
+      width: 100%;
+      height: 90%;
+
+      .searchlist-users {
+        overflow-y: scroll;
+        margin: 10px 0px;
+        height: 80%;
+
+        &::-webkit-scrollbar {
+          @include setwidthandheight(12px, unset);
+        }
+
+        &::-webkit-scrollbar-track {
+          -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+          @include setborderwithradius(unset, 10px);
+        }
+
+        &::-webkit-scrollbar-thumb {
+          @include setborderwithradius(unset, 10px);
+          -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .user-item {
+          @include flexeddiv(row, space-between);
+          padding: 10px 20px;
+          border-bottom: 1px solid;
+          cursor: pointer;
+          height: 60px;
+
+          &:hover {
+            background-color: rgb(248, 196, 176);
+          }
+
+          .user-info {
+            @include flexeddiv(column, space-around);
+            .user {
+              &.admin {
+                color: blue;
+              }
+              &.subscribed {
+                color: green;
+              }
+            }
+          }
+
+          .user-duration {
+            width: 25%;
+            text-align: right;
+            vertical-align: middle;
+            border-radius: 100%;
+          }
+
+          &:hover {
+            .user-menu {
+              display: flex;
+            }
+            .user-duration {
+              display: none;
+            }
+          }
+
+          .user-menu {
+            width: 40%;
+            height: 60px;
+            display: none;
+            justify-content: flex-end;
+            flex-direction: row;
+          }
+          .user-menu-item {
+            background-color: lightskyblue;
+            opacity: 0.8;
+            border: 1px black solid;
+            border-radius: 5px;
+            width: 41%;
+            background-repeat: no-repeat;
+            background-position: right;
+            background-size: 38% 55%;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+          }
+        }
+      }
+    }
+  }
+}

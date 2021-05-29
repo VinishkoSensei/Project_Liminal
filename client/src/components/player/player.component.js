@@ -8,27 +8,35 @@ import {
   changePlayingState,
 } from '../../redux/music/music.actions';
 
-const Player = ({ src, playNextTrack, changePlayingState, playerRef }) => {
+const Player = ({
+  src,
+  playNextTrack,
+  changePlayingState,
+  playerRef,
+  profile,
+}) => {
   return (
-    <div className="player-container">
-      <div className="player">
-        <AudioPlayer
-          id="audio"
-          ref={playerRef}
-          src={src}
-          loop={false}
-          preload="none"
-          autoplay="false"
-          customVolumeControls={[]}
-          customAdditionalControls={[]}
-          showJumpControls={false}
-          defaultCurrentTime=""
-          defaultDuration=""
-          onEnded={playNextTrack}
-          onPlay={() => changePlayingState(true)}
-          onPause={() => changePlayingState(false)}
-        ></AudioPlayer>
-      </div>
+    <div className={`player-container${profile ? ' opened' : ''}`}>
+      {profile ? (
+        <div className="player">
+          <AudioPlayer
+            id="audio"
+            ref={playerRef}
+            src={src}
+            loop={false}
+            preload="none"
+            autoplay="false"
+            customVolumeControls={[]}
+            customAdditionalControls={[]}
+            showJumpControls={false}
+            defaultCurrentTime=""
+            defaultDuration=""
+            onEnded={playNextTrack}
+            onPlay={() => changePlayingState(true)}
+            onPause={() => changePlayingState(false)}
+          ></AudioPlayer>
+        </div>
+      ) : null}
     </div>
   );
 };
@@ -36,6 +44,7 @@ const Player = ({ src, playNextTrack, changePlayingState, playerRef }) => {
 const mapStateToProps = (state) => ({
   src: state.music.src,
   isPlaying: state.music.isPlaying,
+  profile: state.user.profile,
 });
 
 const mapDispatchToProps = (dispatch) => ({
