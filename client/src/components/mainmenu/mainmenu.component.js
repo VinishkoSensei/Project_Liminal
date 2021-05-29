@@ -1,7 +1,9 @@
 import React from 'react';
 import './mainmenu.styles.scss';
+import SmallButton from '../shared/small-button/small-button.component';
+import { connect } from 'react-redux';
 
-const MainMenu = ({ FlipCard }) => {
+const MainMenu = ({ profile, FlipCard, openAdminCard, isOpened }) => {
   return (
     <div className="mainmenu-cards-container">
       <div className="cards top">
@@ -17,6 +19,12 @@ const MainMenu = ({ FlipCard }) => {
           onClick={FlipCard}
           style={{ backgroundImage: `url('/images/broadcast.svg')` }}
         ></div>
+        {profile.isadmin ? (
+          <SmallButton
+            onClick={() => openAdminCard('playlist')}
+            isHidden={isOpened}
+          />
+        ) : null}
       </div>
       <div className="card-center">
         <div className="card-center-icon" />
@@ -34,9 +42,19 @@ const MainMenu = ({ FlipCard }) => {
           onClick={FlipCard}
           style={{ backgroundImage: `url('/images/music.svg')` }}
         ></div>
+        {profile.isadmin ? (
+          <SmallButton
+            onClick={() => openAdminCard('track')}
+            isHidden={isOpened}
+          />
+        ) : null}
       </div>
     </div>
   );
 };
 
-export default MainMenu;
+const mapStateToProps = (state) => ({
+  profile: state.user.profile,
+});
+
+export default connect(mapStateToProps)(MainMenu);
