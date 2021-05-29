@@ -4,7 +4,7 @@ import CustomButton from '../custombutton/custombutton.component';
 import './card-track-analysis.styles.scss';
 import * as mm from 'music-metadata-browser';
 
-const CardTrackAnalysis = () => {
+const TrackAnalysis = () => {
   const [suggestedPoints, setSuggestedPoints] = useState([]);
   const canvasRef = useRef(null);
   const audioRef = useRef(null);
@@ -284,4 +284,4 @@ const CardTrackAnalysis = () => {
   );
 };
 
-export default CardTrackAnalysis;
+export default TrackAnalysis;
