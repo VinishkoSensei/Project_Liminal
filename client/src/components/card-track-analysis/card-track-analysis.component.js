@@ -163,16 +163,6 @@ const CardTrackAnalysis = () => {
                 summax.push(sum);
                 type = 'high';
                 maybePeak = audio.currentTime;
-                //
-                setSuggestedPoints((prevState) => [
-                  ...prevState,
-                  {
-                    peak: maybePeak,
-                    checked: false,
-                    newPeak: maybePeak,
-                  },
-                ]);
-                //
               } else {
                 if (audio.currentTime > maybePeak && maybePeak) {
                   if (elem > 240) num++;
@@ -182,7 +172,14 @@ const CardTrackAnalysis = () => {
                       getAverage(summax) / getAverage(summin) > 20
                     ) {
                       console.log('Pushing', maybePeak);
-                      //setSuggestedPoints([...suggestedPoints, maybePeak]);
+                      setSuggestedPoints((prevState) => [
+                        ...prevState,
+                        {
+                          peak: maybePeak,
+                          checked: false,
+                          newPeak: maybePeak,
+                        },
+                      ]);
                     }
                     summin = [];
                     summax = [];
