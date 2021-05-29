@@ -1,11 +1,13 @@
-import React, { useState, useRef } from 'react';
-import FormFileInput from '../forminputs/formfileinput/formfileinput.component';
-import CustomButton from '../custombutton/custombutton.component';
-import './card-track-analysis.styles.scss';
+import React, { useEffect, useRef } from 'react';
+import './track-analysis.styles.scss';
 import * as mm from 'music-metadata-browser';
 
-const TrackAnalysis = () => {
-  const [suggestedPoints, setSuggestedPoints] = useState([]);
+const TrackAnalysis = ({
+  suggestedPoints,
+  setSuggestedPoints,
+  target,
+  setFinishedAnalysing,
+}) => {
   const canvasRef = useRef(null);
   const audioRef = useRef(null);
   const hiddenAudioRef = useRef(null);
@@ -52,11 +54,6 @@ const TrackAnalysis = () => {
     return analyser;
   };
 
-  const previewAudio = (point) => {
-    audioRef.current.currentTime = point;
-    audioRef.current.play();
-  };
-
   const handleInputChange = (event) => {
     const { name, value, id } = event.target;
     console.log(suggestedPoints);
@@ -76,179 +73,170 @@ const TrackAnalysis = () => {
     );
   };
 
-  const handlePostData = async () => {
-    await fetch(`http://localhost:3001/testcreatetrack`, {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: 'dummy',
-        genre: 'dummy',
-        author: 'dummy',
-        file: {
-          track: 'dummy',
-          suggestedPoints: suggestedPoints
-            .filter((point) => point.checked)
-            .map((point) => point.newPeak),
-        },
-      }),
-    });
+  const previewAudio = (point) => {
+    audioRef.current.currentTime = point;
+    audioRef.current.play();
   };
 
-  const fileSelectAndAnalyseHandler = (e) => {
-    const file = e.target.files[0];
-    var type = '';
-    const fr = new FileReader();
-    fr.readAsDataURL(file);
-    fr.onloadend = (e) => {
-      mm.parseBlob(file).then((metadata) => {
-        const audio = createHiddenAudio(e.target.result, 0, 4.0);
-        createAudio(e.target.result);
-        audio.play();
-        audio.ontimeupdate = (e) => {
-          /*if (e.target.currentTime > 44.416417 - 10 && !alreadyWorking) {
-          alreadyWorking = true;
-          var fadeout = setInterval(function () {
-            if (audio.volume > 0.35) {
-              audio.volume -= 0.05;
-            } else {
-              clearInterval(fadeout);
-            }
-          }, interval);
-        }
-
-        if (e.target.currentTime >= 44.241417) {
-          audio.volume = 1.0;
-        }*/
-        };
-        /*audio.onended = (e) => {
-          console.log(suggestedPoints);
-        };*/
-
-        const canvas = canvasRef.current;
-        const canvasCtx = canvas.getContext('2d');
-        const analyser = createAudioContextAndGetAnalyser(audio);
-        const bufferLength = analyser.frequencyBinCount;
-        const barWidth = canvas.width / 255;
-
-        let dataArray = new Uint8Array(bufferLength);
-        let maybePeak = null;
-        let num = 0;
-        let nummin = 0;
-        let summin = [];
-        let summax = [];
-
-        const draw = () => {
-          clearCanvas(canvasCtx, canvas);
-          if (!audio.paused) requestAnimationFrame(draw, canvas);
-
-          let x = 0;
-
-          analyser.getByteFrequencyData(dataArray);
-          const sum = dataArray
-            .slice(416, 419)
-            .reduce((acc, elem) => acc + elem, 0);
-
-          dataArray.forEach((elem, index) => {
-            if (index === 0) {
-              if (elem < 120) {
-                type = 'low';
-                num = 0;
-                nummin++;
-                summin.push(sum);
-                maybePeak = null;
-              }
-
-              if (elem > 240 && type === 'low' && audio.currentTime > 15) {
-                num++;
-                summax.push(sum);
-                type = 'high';
-                maybePeak = audio.currentTime;
+  useEffect(() => {
+    if (target) {
+      const file = target.files[0];
+      var type = '';
+      const fr = new FileReader();
+      fr.readAsDataURL(file);
+      fr.onloadend = (e) => {
+        mm.parseBlob(file).then((metadata) => {
+          //
+          const audio = createHiddenAudio(e.target.result, 0, 4.0);
+          createAudio(e.target.result);
+          audio.play();
+          audio.ontimeupdate = (e) => {
+            /*if (e.target.currentTime > 44.416417 - 10 && !alreadyWorking) {
+            alreadyWorking = true;
+            var fadeout = setInterval(function () {
+              if (audio.volume > 0.35) {
+                audio.volume -= 0.05;
               } else {
-                if (audio.currentTime > maybePeak && maybePeak) {
-                  if (elem > 240) num++;
-                  if (num === 200) {
-                    if (
-                      nummin >= 200 &&
-                      getAverage(summax) / getAverage(summin) > 20
-                    ) {
-                      console.log('Pushing', maybePeak);
-                      setSuggestedPoints((prevState) => [
-                        ...prevState,
-                        {
-                          peak: maybePeak,
-                          checked: false,
-                          newPeak: maybePeak,
-                        },
-                      ]);
+                clearInterval(fadeout);
+              }
+            }, interval);
+          }
+  
+          if (e.target.currentTime >= 44.241417) {
+            audio.volume = 1.0;
+          }*/
+          };
+
+          audio.onended = (e) => {
+            //console.log(suggestedPoints);
+            setFinishedAnalysing(true);
+          };
+
+          const canvas = canvasRef.current;
+          const canvasCtx = canvas.getContext('2d');
+          const analyser = createAudioContextAndGetAnalyser(audio);
+          const bufferLength = analyser.frequencyBinCount;
+          const barWidth = canvas.width / 255;
+
+          let dataArray = new Uint8Array(bufferLength);
+          let maybePeak = null;
+          let num = 0;
+          let nummin = 0;
+          let summin = [];
+          let summax = [];
+
+          const draw = () => {
+            clearCanvas(canvasCtx, canvas);
+            if (!audio.paused) requestAnimationFrame(draw, canvas);
+
+            let x = 0;
+
+            analyser.getByteFrequencyData(dataArray);
+            const sum = dataArray
+              .slice(416, 419)
+              .reduce((acc, elem) => acc + elem, 0);
+
+            dataArray.forEach((elem, index) => {
+              if (index === 0) {
+                if (elem < 120) {
+                  type = 'low';
+                  num = 0;
+                  nummin++;
+                  summin.push(sum);
+                  maybePeak = null;
+                }
+
+                if (elem > 240 && type === 'low' && audio.currentTime > 15) {
+                  num++;
+                  summax.push(sum);
+                  type = 'high';
+                  maybePeak = audio.currentTime;
+                } else {
+                  if (audio.currentTime > maybePeak && maybePeak) {
+                    if (elem > 240) num++;
+                    if (num === 200) {
+                      if (
+                        nummin >= 200 &&
+                        getAverage(summax) / getAverage(summin) > 20
+                      ) {
+                        console.log('Pushing', maybePeak);
+                        setSuggestedPoints((prevState) => [
+                          ...prevState,
+                          {
+                            peak: maybePeak,
+                            checked: false,
+                            newPeak: maybePeak,
+                          },
+                        ]);
+                      }
+                      summin = [];
+                      summax = [];
+                      nummin = 0;
                     }
-                    summin = [];
-                    summax = [];
-                    nummin = 0;
                   }
                 }
               }
-            }
-            const barHeight = elem * 2;
+              const barHeight = elem * 2;
+              fillCanvas({
+                canvasCtx: canvasCtx,
+                color: {
+                  red: barHeight / 3 + 100,
+                  green: 50,
+                  blue: 255 - barHeight,
+                },
+                rectangle: {
+                  x: x,
+                  y: canvas.height - barHeight,
+                  width: barWidth,
+                  height: barHeight,
+                },
+              });
+              x += barWidth + 1;
+            });
+
             fillCanvas({
               canvasCtx: canvasCtx,
               color: {
-                red: barHeight / 3 + 100,
-                green: 50,
-                blue: 255 - barHeight,
+                red: 0,
+                green: 0,
+                blue: 255,
               },
               rectangle: {
-                x: x,
-                y: canvas.height - barHeight,
-                width: barWidth,
-                height: barHeight,
+                x: 0,
+                y: 0,
+                width:
+                  (canvas.width * audio.currentTime) / metadata.format.duration,
+                height: 20,
               },
             });
-            x += barWidth + 1;
-          });
 
-          fillCanvas({
-            canvasCtx: canvasCtx,
-            color: {
-              red: 0,
-              green: 0,
-              blue: 255,
-            },
-            rectangle: {
-              x: 0,
-              y: 0,
-              width:
-                (canvas.width * audio.currentTime) / metadata.format.duration,
-              height: 20,
-            },
-          });
+            fillCanvas({
+              canvasCtx: canvasCtx,
+              color: {
+                red: 100,
+                green: 200,
+                blue: 200,
+              },
+              rectangle: {
+                x: 0,
+                y: 20,
+                width: canvas.width,
+                height: (canvas.height * sum) / 5 / 255,
+              },
+            });
+            return false;
+          };
 
-          fillCanvas({
-            canvasCtx: canvasCtx,
-            color: {
-              red: 100,
-              green: 200,
-              blue: 200,
-            },
-            rectangle: {
-              x: 0,
-              y: 20,
-              width: canvas.width,
-              height: (canvas.height * sum) / 5 / 255,
-            },
-          });
-          return false;
-        };
-
-        draw();
-      });
-    };
-  };
+          draw();
+        });
+      };
+    }
+  }, [target, setSuggestedPoints, setFinishedAnalysing]);
 
   return (
-    <div className="card-track-analysis">
+    <div>
       <audio ref={hiddenAudioRef} />
-      <FormFileInput handleChange={fileSelectAndAnalyseHandler} />
-      <canvas id="canvas" ref={canvasRef} width="1200" height="600"></canvas>
+      <canvas id="canvas" ref={canvasRef}></canvas>
       <audio className="preview-audio" ref={audioRef} controls />
 
       <div className="suggested-points-container">
@@ -279,7 +267,6 @@ const TrackAnalysis = () => {
           </div>
         ))}
       </div>
-      <CustomButton onClick={handlePostData}>Post</CustomButton>
     </div>
   );
 };
