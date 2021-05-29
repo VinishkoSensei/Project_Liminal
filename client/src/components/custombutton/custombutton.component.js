@@ -9,10 +9,9 @@ const CustomButton = ({
   ...otherProps
 }) => (
   <button
-    className={`${inverted ? 'inverted ' : ''}
-    ${abort ? 'abort ' : ''}
-    ${transparent ? 'transparent ' : ''}
-    custombutton`}
+    className={`custombutton${inverted ? ' inverted' : ''}${
+      abort ? ' abort' : ''
+    }${transparent ? ' transparent' : ''}`}
     {...otherProps}
   >
     {children}

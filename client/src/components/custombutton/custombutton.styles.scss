@@ -31,6 +31,12 @@
     outline: none;
   }
 
+  &:disabled {
+    background-color: rgb(78, 78, 78);
+    color: rgb(158, 158, 158);
+    cursor: not-allowed;
+  }
+
   &.abort {
     background-color: red;
     color: white;
