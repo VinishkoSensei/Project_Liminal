@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import FormFileInput from '../forminputs/formfileinput/formfileinput.component';
+import CustomButton from '../custombutton/custombutton.component';
 import './card-track-analysis.styles.scss';
 import * as mm from 'music-metadata-browser';
 
@@ -49,6 +50,46 @@ const CardTrackAnalysis = () => {
     analyser.smoothingTimeConstant = 0.9;
     source.connect(analyser);
     return analyser;
+  };
+
+  const previewAudio = (point) => {
+    audioRef.current.currentTime = point;
+    audioRef.current.play();
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value, id } = event.target;
+    console.log(suggestedPoints);
+    setSuggestedPoints(
+      suggestedPoints.map((item, ind) =>
+        ind === Number(id) ? (item = { ...item, [name]: value }) : item
+      )
+    );
+  };
+
+  const handleCheckboxChange = (event) => {
+    const { name, id } = event.target;
+    setSuggestedPoints(
+      suggestedPoints.map((item, ind) =>
+        ind === Number(id) ? (item = { ...item, [name]: !item[name] }) : item
+      )
+    );
+  };
+
+  const handlePostData = async () => {
+    await fetch(`http://localhost:3001/testcreatetrack`, {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: 'dummy',
+        genre: 'dummy',
+        author: 'dummy',
+        file: {
+          track: 'dummy',
+          suggestedPoints: suggestedPoints.filter((point) => point.checked),
+        },
+      }),
+    });
   };
 
   const fileSelectAndAnalyseHandler = (e) => {
@@ -120,6 +161,16 @@ const CardTrackAnalysis = () => {
                 summax.push(sum);
                 type = 'high';
                 maybePeak = audio.currentTime;
+                //
+                setSuggestedPoints((prevState) => [
+                  ...prevState,
+                  {
+                    peak: maybePeak,
+                    checked: false,
+                    newPeak: maybePeak,
+                  },
+                ]);
+                //
               } else {
                 if (audio.currentTime > maybePeak && maybePeak) {
                   if (elem > 240) num++;
@@ -129,7 +180,7 @@ const CardTrackAnalysis = () => {
                       getAverage(summax) / getAverage(summin) > 20
                     ) {
                       console.log('Pushing', maybePeak);
-                      setSuggestedPoints([...suggestedPoints, maybePeak]);
+                      //setSuggestedPoints([...suggestedPoints, maybePeak]);
                     }
                     summin = [];
                     summax = [];
@@ -204,45 +255,32 @@ const CardTrackAnalysis = () => {
       <div className="suggested-points-container">
         {suggestedPoints.map((point, index) => (
           <div className="suggested-point" key={index}>
-            {point}
+            <input
+              placeholder={point.peak}
+              name="newPeak"
+              value={point.newPeak}
+              id={index}
+              onChange={handleInputChange}
+            />
             <button
               className="switch-button"
               style={{ backgroundImage: `url('/images/play.svg')` }}
-              onClick={() => (audioRef.current.currentTime = point)}
+              onClick={() => previewAudio(point.newPeak)}
             />
             <label className="switch">
-              <input type="checkbox" />
-              <span className="slider" />
-            </label>
-          </div>
-        ))}
-        {suggestedPoints.map((point, index) => (
-          <div className="suggested-point" key={index}>
-            {point}
-            <button
-              className="switch-button"
-              style={{ backgroundImage: `url('/images/play.svg')` }}
-            />
-            <label className="switch">
-              <input type="checkbox" />
-              <span className="slider" />
-            </label>
-          </div>
-        ))}
-        {suggestedPoints.map((point, index) => (
-          <div className="suggested-point" key={index}>
-            {point}
-            <button
-              className="switch-button"
-              style={{ backgroundImage: `url('/images/play.svg')` }}
-            />
-            <label className="switch">
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                value={point.checked}
+                name="checked"
+                id={index}
+                onChange={handleCheckboxChange}
+              />
               <span className="slider" />
             </label>
           </div>
         ))}
       </div>
+      <CustomButton onClick={handlePostData}>Post</CustomButton>
     </div>
   );
 };
