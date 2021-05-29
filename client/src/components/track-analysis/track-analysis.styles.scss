@@ -14,22 +14,20 @@
   border-radius: $radius;
 }
 
-.card-track-analysis {
-  @include setwidthandheight(100%, 100%);
-  background-color: lightsalmon;
-  @include setborderwithradius(2px solid black, 52px);
-  @include flexeddiv(column, space-around);
+canvas {
+  border: 1px black solid;
+  @include setwidthandheight(100%, 100px);
 }
 
 .preview-audio {
-  width: 100%;
+  @include setwidthandheight(100%, 30px);
 }
 
 .suggested-points-container {
   display: flex;
   flex-direction: column;
-  height: 30%;
-  overflow-y: scroll;
+  max-height: 100px;
+  overflow-y: auto;
   overflow-x: hidden;
 
   .suggested-point {
@@ -40,6 +38,10 @@
     margin-bottom: 5px;
     background-color: rgb(245, 141, 100);
     border: 1px solid black;
+
+    input {
+      width: 40%;
+    }
 
     .switch-button {
       background-color: #2196f3;
@@ -60,15 +62,13 @@
 .switch {
   position: relative;
   display: inline-block;
-  width: 35px;
-  height: 100%;
+  @include setwidthandheight(35px, 100%);
 }
 
 /* Hide default HTML checkbox */
 .switch input {
   opacity: 0;
-  width: 0;
-  height: 0;
+  @include setwidthandheight(0, 0);
 }
 
 /* The slider */
@@ -88,8 +88,7 @@
 .slider:before {
   position: absolute;
   content: '';
-  height: 55%;
-  width: 10px;
+  @include setwidthandheight(10px, 55%);
   left: 4px;
   bottom: 4px;
   background-color: white;
