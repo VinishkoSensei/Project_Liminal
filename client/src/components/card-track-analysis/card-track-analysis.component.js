@@ -7,6 +7,7 @@ const CardTrackAnalysis = () => {
   const [suggestedPoints, setSuggestedPoints] = useState([]);
   const canvasRef = useRef(null);
   const audioRef = useRef(null);
+  const hiddenAudioRef = useRef(null);
 
   const getAverage = (list) => {
     return list ? list.reduce((prev, curr) => prev + curr, 0) / list.length : 0;
@@ -26,11 +27,17 @@ const CardTrackAnalysis = () => {
     canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
   };
 
-  const createAudio = (src, currentTime, playbackRate) => {
-    const audio = audioRef.current;
+  const createHiddenAudio = (src, currentTime, playbackRate) => {
+    const audio = hiddenAudioRef.current;
     audio.src = src;
     audio.currentTime = currentTime;
     audio.playbackRate = playbackRate;
+    return audio;
+  };
+
+  const createAudio = (src) => {
+    const audio = audioRef.current;
+    audio.src = src;
     return audio;
   };
 
@@ -51,7 +58,8 @@ const CardTrackAnalysis = () => {
     fr.readAsDataURL(file);
     fr.onloadend = (e) => {
       mm.parseBlob(file).then((metadata) => {
-        const audio = createAudio(e.target.result, 0, 4.0);
+        const audio = createHiddenAudio(e.target.result, 0, 4.0);
+        createAudio(e.target.result);
         audio.play();
         audio.ontimeupdate = (e) => {
           /*if (e.target.currentTime > 44.416417 - 10 && !alreadyWorking) {
@@ -188,13 +196,53 @@ const CardTrackAnalysis = () => {
 
   return (
     <div className="card-track-analysis">
-      {/*<input type="file" name="audio_file" id="audio_file"></input>*/}
-      <audio ref={audioRef} />
+      <audio ref={hiddenAudioRef} />
       <FormFileInput handleChange={fileSelectAndAnalyseHandler} />
       <canvas id="canvas" ref={canvasRef} width="1200" height="600"></canvas>
-      {suggestedPoints.map((point, index) => (
-        <div key={index}>{point}</div>
-      ))}
+      <audio className="preview-audio" ref={audioRef} controls />
+
+      <div className="suggested-points-container">
+        {suggestedPoints.map((point, index) => (
+          <div className="suggested-point" key={index}>
+            {point}
+            <button
+              className="switch-button"
+              style={{ backgroundImage: `url('/images/play.svg')` }}
+              onClick={() => (audioRef.current.currentTime = point)}
+            />
+            <label className="switch">
+              <input type="checkbox" />
+              <span className="slider" />
+            </label>
+          </div>
+        ))}
+        {suggestedPoints.map((point, index) => (
+          <div className="suggested-point" key={index}>
+            {point}
+            <button
+              className="switch-button"
+              style={{ backgroundImage: `url('/images/play.svg')` }}
+            />
+            <label className="switch">
+              <input type="checkbox" />
+              <span className="slider" />
+            </label>
+          </div>
+        ))}
+        {suggestedPoints.map((point, index) => (
+          <div className="suggested-point" key={index}>
+            {point}
+            <button
+              className="switch-button"
+              style={{ backgroundImage: `url('/images/play.svg')` }}
+            />
+            <label className="switch">
+              <input type="checkbox" />
+              <span className="slider" />
+            </label>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
