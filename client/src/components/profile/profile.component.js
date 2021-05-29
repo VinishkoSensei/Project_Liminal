@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import './profile.styles.scss';
-import { signInStart } from '../../redux/user/user.actions';
+import CustomButton from '../custombutton/custombutton.component';
+import SmallButton from '../shared/small-button/small-button.component';
+import { signInStart, signOutStart } from '../../redux/user/user.actions';
 import { Trans } from '@lingui/macro';
 
 const Profile = ({
-  signInStart,
   profile,
   setProfileExpanded,
   profileExpanded,
+  openAdminCard,
+  isOpened,
+  signOutStart,
 }) => {
   const [minifiedProfile, setMinifiedProfile] = useState(true);
 
@@ -17,10 +21,21 @@ const Profile = ({
     e.target.src = 'images/emptyprofile.svg';
   };
 
+  const handleSignOut = () => {
+    setProfileExpanded(false);
+    signOutStart();
+  };
+
   return (
     <div>
       {profile ? (
-        <div>
+        <div className="profile-panel">
+          {profile.isadmin ? (
+            <SmallButton
+              onClick={() => openAdminCard('users')}
+              isHidden={isOpened}
+            />
+          ) : null}
           <div
             className={`profile-main`}
             onClick={() => setMinifiedProfile(!minifiedProfile)}
@@ -51,6 +66,9 @@ const Profile = ({
                 <Trans>Not subscribed</Trans>
               )}
             </div>
+            <CustomButton type="button" onClick={handleSignOut}>
+              <Trans>Sign Out</Trans>
+            </CustomButton>
           </div>
         </div>
       ) : null}
@@ -64,6 +82,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   signInStart: (email, password) => dispatch(signInStart(email, password)),
+  signOutStart: () => dispatch(signOutStart()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

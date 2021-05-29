@@ -8,12 +8,20 @@ const {
   handleGetProfile,
   handleChangeProfile,
   checkAuth,
+  getUserList,
+  changeRole,
 } = require('../functions/db/profile.db');
 const {
   getTrackList,
   getTracksByNameAndAuthor,
   getTracksByName,
   getTracksByAuthor,
+  addTrackToRadioQueue,
+  getRadioQueueFromFront,
+  deleteTrackFromRadioQueue,
+  createTrack,
+  getGenres,
+  getAuthors,
 } = require('../functions/db/track.db');
 
 const plugin = {
@@ -139,6 +147,57 @@ const plugin = {
     });
 
     server.route({
+      method: 'POST',
+      path: '/addtracktoradioqueue',
+      handler: addTrackToRadioQueue,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'POST',
+      path: '/deletetrackfromradioqueue',
+      handler: deleteTrackFromRadioQueue,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'GET',
+      path: '/getradioqueue',
+      handler: getRadioQueueFromFront,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'POST',
+      path: '/createtrack',
+      handler: createTrack,
+      config: {
+        payload: {
+          maxBytes: 52428800,
+        },
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
       method: 'GET',
       path: '/gettracksbynameandauthor/{name}',
       handler: getTracksByNameAndAuthor,
@@ -149,6 +208,7 @@ const plugin = {
         },
       },
     });
+
     server.route({
       method: 'GET',
       path: '/gettracksbyname/{name}',
@@ -160,6 +220,31 @@ const plugin = {
         },
       },
     });
+
+    server.route({
+      method: 'GET',
+      path: '/getauthors',
+      handler: getAuthors,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'GET',
+      path: '/getgenres',
+      handler: getGenres,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
     server.route({
       method: 'GET',
       path: '/gettracksbyauthor/{name}',
@@ -176,6 +261,30 @@ const plugin = {
       method: 'GET',
       path: '/tracks/{trackId}',
       handler: streamTrack,
+    });
+
+    server.route({
+      method: 'GET',
+      path: '/getuserlist',
+      handler: getUserList,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'POST',
+      path: '/changerole',
+      handler: changeRole,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
     });
   },
 };

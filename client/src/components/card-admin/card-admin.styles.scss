@@ -1,0 +1,72 @@
+@mixin animation($type, $sec) {
+  -webkit-transition: $type $sec ease;
+  -moz-transition: $type $sec ease;
+  -o-transition: $type $sec ease;
+  -ms-transition: $type $sec ease;
+  transition: $type $sec ease;
+}
+
+@mixin flexeddiv($flexdirection, $justifycontent) {
+  display: flex;
+  flex-direction: $flexdirection;
+  justify-content: $justifycontent;
+}
+
+@mixin setwidthandheight($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin setborderwithradius($border, $radius) {
+  border: $border;
+  border-radius: $radius;
+}
+
+.card-admin {
+  @include setwidthandheight(76vw, 80vh);
+  @include setborderwithradius(2px solid black, 52px);
+  @include flexeddiv(column, center);
+  @include animation(left, 2s);
+  background-color: linen;
+  position: absolute;
+  top: 18%;
+  left: -100%;
+
+  .card-admin-main {
+    @include setwidthandheight(100%, 90%);
+    @include flexeddiv(row, space-between);
+    bottom: 0;
+    position: absolute;
+
+    .card-search {
+      @include setborderwithradius(2px solid black, 30px);
+      height: 97%;
+      margin: 28px 2.5px 0 5px;
+    }
+  }
+
+  &.expanded {
+    @include animation(left, 1s);
+    left: 2%;
+  }
+}
+
+.admin-btn-back {
+  @include setwidthandheight(45px, 45px);
+  background-color: lightskyblue;
+  @include setborderwithradius(1px solid black, 12px);
+  position: absolute;
+  left: 20px;
+  top: 15px;
+  cursor: pointer;
+  background-size: 70% 80%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('http://localhost:3000/images/play.svg');
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+
+  &:hover {
+    background-color: lightsalmon;
+  }
+}
