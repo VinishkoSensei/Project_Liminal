@@ -7,8 +7,10 @@ import CreatableSelect from 'react-select/creatable';
 import TrackAnalysis from '../track-analysis/track-analysis.component';
 import { Trans } from '@lingui/macro';
 import * as mm from 'music-metadata-browser';
+import _ from 'lodash';
 
 const CardAddTrack = () => {
+  const [uniqueKey, setUniqueKey] = useState(_.uniqueId());
   const [isLoading, setIsLoading] = useState({
     author: false,
     genre: false,
@@ -100,7 +102,12 @@ const CardAddTrack = () => {
           .map((point) => point.newPeak),
       }),
     });
-    console.log(response);
+    if (response.ok) {
+      setFinishedAnalysing(false);
+      setNewTrack(newTrackInitialState);
+      setSuggestedPoints([]);
+      setUniqueKey(_.uniqueId());
+    }
   };
 
   //
@@ -233,6 +240,7 @@ const CardAddTrack = () => {
           setSuggestedPoints={setSuggestedPoints}
           target={target}
           setFinishedAnalysing={setFinishedAnalysing}
+          uniqueKey={uniqueKey}
         />
 
         <CustomButton
