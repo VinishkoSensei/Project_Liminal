@@ -87,7 +87,7 @@ const getAuthors = async (req, h) => {
 const createTrack = async (req, h) => {
   try {
     const db = req.getDb();
-    const { name, genre, author, file } = req.payload;
+    const { name, genre, author, file, suggestedPoints } = req.payload;
     const base64Data = file.contentPreviewUrl.split(',')[1];
     const trackPath =
       './files/music/' +
@@ -97,13 +97,22 @@ const createTrack = async (req, h) => {
       .toISOString()
       .substr(11, 8);
 
-    await db.proc('liminal.createtrack', [
+    const trackResponse = await db.func('liminal.createtrack', [
       name,
       genre,
       author,
       trackPath,
       duration,
     ]);
+
+    const trackId = trackResponse[0].createtrack;
+
+    console.log(trackId);
+    console.log(suggestedPoints);
+    suggestedPoints.map(async (point) => {
+      await db.proc('liminal.addpointtotrack', [trackId, point]);
+    });
+
     return { response: 'ok' };
   } catch (err) {
     throw Boom.badData(err);
