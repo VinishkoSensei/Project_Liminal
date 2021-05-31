@@ -7,6 +7,7 @@ const TrackAnalysis = ({
   setSuggestedPoints,
   target,
   setFinishedAnalysing,
+  uniqueKey,
 }) => {
   const canvasRef = useRef(null);
   const audioRef = useRef(null);
@@ -234,7 +235,7 @@ const TrackAnalysis = ({
   }, [target, setSuggestedPoints, setFinishedAnalysing]);
 
   return (
-    <div>
+    <div key={uniqueKey}>
       <audio ref={hiddenAudioRef} />
       <canvas id="canvas" ref={canvasRef}></canvas>
       <audio className="preview-audio" ref={audioRef} controls />
