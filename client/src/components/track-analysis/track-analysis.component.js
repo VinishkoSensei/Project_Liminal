@@ -87,29 +87,10 @@ const TrackAnalysis = ({
       fr.readAsDataURL(file);
       fr.onloadend = (e) => {
         mm.parseBlob(file).then((metadata) => {
-          //
           const audio = createHiddenAudio(e.target.result, 0, 4.0);
           createAudio(e.target.result);
           audio.play();
-          audio.ontimeupdate = (e) => {
-            /*if (e.target.currentTime > 44.416417 - 10 && !alreadyWorking) {
-            alreadyWorking = true;
-            var fadeout = setInterval(function () {
-              if (audio.volume > 0.35) {
-                audio.volume -= 0.05;
-              } else {
-                clearInterval(fadeout);
-              }
-            }, interval);
-          }
-  
-          if (e.target.currentTime >= 44.241417) {
-            audio.volume = 1.0;
-          }*/
-          };
-
           audio.onended = (e) => {
-            //console.log(suggestedPoints);
             setFinishedAnalysing(true);
           };
 
