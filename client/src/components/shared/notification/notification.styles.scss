@@ -17,6 +17,7 @@
     opacity: 0.87;
     transition: 0.5s;
     position: relative;
+    min-width: 130px;
 
     &:hover {
       opacity: 1;
