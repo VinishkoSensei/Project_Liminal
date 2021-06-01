@@ -14,7 +14,23 @@ const Player = ({
   changePlayingState,
   playerRef,
   profile,
+  suggestedPoints,
 }) => {
+  if (playerRef && playerRef.current && suggestedPoints) {
+    const audio = playerRef.current.audio.current;
+    audio.ontimeupdate = (e) => {
+      const volume = suggestedPoints.reduce((acc, point) => {
+        if (
+          e.target.currentTime >= point.start &&
+          e.target.currentTime < point.end
+        )
+          return ((point.end - e.target.currentTime) * 0.07 + 0.3).toFixed(2);
+        return acc;
+      }, 0);
+      audio.volume = volume ? volume : 1;
+    };
+  }
+
   return (
     <div className={`player-container${profile ? ' opened' : ''}`}>
       {profile ? (
@@ -43,6 +59,7 @@ const Player = ({
 
 const mapStateToProps = (state) => ({
   src: state.music.src,
+  suggestedPoints: state.music.currentTrack.suggestedPoints,
   isPlaying: state.music.isPlaying,
   profile: state.user.profile,
 });
@@ -53,3 +70,36 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);
+
+/*
+const [alreadyWorking, setAlreadyWorking] = useState(false);
+if (!alreadyWorking) {
+        //e.target.currentTime > suggestedPoints[0] - 10 &&!alreadyWorking) {
+        //setAlreadyWorking(true);
+        // const fadeout = setInterval(() => {
+        if (
+          e.target.currentTime >= suggestedPoints[0].start &&
+          e.target.currentTime < suggestedPoints[0].end
+        ) {
+          const currentPercent =
+            (suggestedPoints[0].end - e.target.currentTime) * 0.07 + 0.3;
+          audio.volume = currentPercent.toFixed(2);
+          //  console.log('CP', currentPercent.toFixed(2));
+        } else if (e.target.currentTime >= suggestedPoints[0].end) {
+          audio.volume = 1;
+          //  setAlreadyWorking(false);
+          // clearInterval(fadeout);
+        }
+        // console.log(Math.trunc(e.target.currentTime));
+        // console.log(audio.volume);
+        if (
+            audio.volume > 0.35 &&
+            e.target.currentTime < suggestedPoints[0]
+          ) {
+            audio.volume -= 0.05;
+          } else {
+            clearInterval(fadeout);
+          }
+        // }, 1000);
+      }
+*/
