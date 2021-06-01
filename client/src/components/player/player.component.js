@@ -16,9 +16,8 @@ const Player = ({
   profile,
   suggestedPoints,
 }) => {
-  if (playerRef && playerRef.current && suggestedPoints) {
-    const audio = playerRef.current.audio.current;
-    audio.ontimeupdate = (e) => {
+  const volumeControl = (e) => {
+    if (suggestedPoints) {
       const volume = suggestedPoints.reduce((acc, point) => {
         if (
           e.target.currentTime >= point.start &&
@@ -27,9 +26,9 @@ const Player = ({
           return ((point.end - e.target.currentTime) * 0.07 + 0.3).toFixed(2);
         return acc;
       }, 0);
-      audio.volume = volume ? volume : 1;
-    };
-  }
+      e.target.volume = volume ? volume : 1;
+    }
+  };
 
   return (
     <div className={`player-container${profile ? ' opened' : ''}`}>
@@ -50,6 +49,8 @@ const Player = ({
             onEnded={playNextTrack}
             onPlay={() => changePlayingState(true)}
             onPause={() => changePlayingState(false)}
+            onListen={volumeControl}
+            listenInterval={200}
           ></AudioPlayer>
         </div>
       ) : null}
