@@ -13,7 +13,19 @@ const getTracksByNameAndAuthor = async (req, h) => {
   const db = req.getDb();
   const nm = req.params.name;
   const trackData = await db.func(`liminal.gettracklist`, [nm, nm]);
-  return h.response(trackData);
+
+  const trackList = await Promise.all(
+    trackData.map(async (track) => {
+      const trackpoints = await db.func('liminal.gettrackpoints', track.id);
+      const suggestedPoints = await trackpoints.map((p) => ({
+        start: p.point - 10,
+        end: p.point,
+      }));
+      return { ...track, suggestedPoints };
+    })
+  );
+
+  return h.response(trackList);
 };
 
 const getTracksByName = async (req, h) => {
@@ -34,7 +46,9 @@ const getTrack = async (req, h) => {
   const trackId = req.params.trackId;
   const db = req.getDb();
   const track = await db.func('liminal.gettrack', trackId);
-  return track[0];
+  const trackpoints = await db.func('liminal.gettrackpoints', trackId);
+  const suggestedPoints = trackpoints.map((p) => p.point);
+  return { ...track[0], suggestedPoints };
 };
 
 const getRadioQueue = async (db) => {

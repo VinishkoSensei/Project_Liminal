@@ -14,7 +14,22 @@ const Player = ({
   changePlayingState,
   playerRef,
   profile,
+  suggestedPoints,
 }) => {
+  const volumeControl = (e) => {
+    if (suggestedPoints) {
+      const volume = suggestedPoints.reduce((acc, point) => {
+        if (
+          e.target.currentTime >= point.start &&
+          e.target.currentTime < point.end
+        )
+          return ((point.end - e.target.currentTime) * 0.07 + 0.3).toFixed(2);
+        return acc;
+      }, 0);
+      e.target.volume = volume ? volume : 1;
+    }
+  };
+
   return (
     <div className={`player-container${profile ? ' opened' : ''}`}>
       {profile ? (
@@ -34,6 +49,8 @@ const Player = ({
             onEnded={playNextTrack}
             onPlay={() => changePlayingState(true)}
             onPause={() => changePlayingState(false)}
+            onListen={volumeControl}
+            listenInterval={200}
           ></AudioPlayer>
         </div>
       ) : null}
@@ -43,6 +60,7 @@ const Player = ({
 
 const mapStateToProps = (state) => ({
   src: state.music.src,
+  suggestedPoints: state.music.currentTrack.suggestedPoints,
   isPlaying: state.music.isPlaying,
   profile: state.user.profile,
 });
