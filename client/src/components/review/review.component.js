@@ -3,6 +3,7 @@ import './review.styles.scss';
 import { connect } from 'react-redux';
 import { addNotificationStart } from '../../redux/notification/notification.actions';
 import CustomButton from '../custombutton/custombutton.component';
+import FormInput from '../forminputs/forminput/forminput.component';
 import { Trans } from '@lingui/macro';
 
 const Review = ({ profileid, addNotificationStart }) => {
@@ -43,11 +44,12 @@ const Review = ({ profileid, addNotificationStart }) => {
           <div className="review-container-main">Leave a reply</div>
         </div>
         <form className={`review-info${minifiedProfile ? ' minified' : ''}`}>
-          <input
-            placeholder="Theme of the review..."
+          <FormInput
             name="theme"
             value={review.theme}
-            onChange={handleChange}
+            label="Review theme..."
+            handleChange={handleChange}
+            required
           />
           <textarea
             placeholder="Review text..."
