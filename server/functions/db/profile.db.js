@@ -238,6 +238,13 @@ const changeRole = async (req, h) => {
   return h.response('Done.');
 };
 
+const createReview = async (req, h) => {
+  const db = req.getDb();
+  const { theme, reviewtext, userid } = req.payload;
+  await db.proc(`liminal.createreview`, [theme, reviewtext, userid]);
+  return h.response('Done.');
+};
+
 module.exports = {
   getProfile,
   createProfile,
@@ -247,4 +254,5 @@ module.exports = {
   checkAuth,
   getUserList,
   changeRole,
+  createReview,
 };
