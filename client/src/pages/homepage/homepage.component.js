@@ -116,7 +116,7 @@ const HomePage = ({ profile, checkUserSession }) => {
             openAdminCard={openAdminCard}
             isOpened={isOpened}
           />
-          <Review />
+          {profile ? <Review /> : null}
         </div>
       </div>
       <CardProfile
