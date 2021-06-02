@@ -100,7 +100,6 @@
       font-size: 11pt;
 
       .news {
-        display: none;
         background-color: lightsteelblue;
         @include setwidthandheight(unset, 50%);
         @include setborderwithradius(1px solid black, 8px);
