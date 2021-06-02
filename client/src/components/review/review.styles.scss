@@ -52,7 +52,7 @@
   margin-bottom: 10px;
   @include animation(all, 1.4s);
   overflow: hidden;
-  height: 12vh;
+  height: 18vh;
 
   &.minified {
     height: 0;
@@ -67,5 +67,10 @@
     overflow-y: auto;
     resize: none;
     margin-bottom: 10px;
+  }
+
+  .group {
+    margin: 10px 0 10px 0;
+    text-align: left;
   }
 }
