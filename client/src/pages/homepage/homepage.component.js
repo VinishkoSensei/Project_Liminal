@@ -20,6 +20,7 @@ import NotificationContainer from '../../components/shared/notification/notifica
 
 import { connect } from 'react-redux';
 import { checkUserSession } from '../../redux/user/user.actions';
+import Review from '../../components/review/review.component';
 
 const HomePage = ({ profile, checkUserSession }) => {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -115,7 +116,7 @@ const HomePage = ({ profile, checkUserSession }) => {
             openAdminCard={openAdminCard}
             isOpened={isOpened}
           />
-          <div className="news"></div>
+          {profile ? <Review /> : null}
         </div>
       </div>
       <CardProfile
