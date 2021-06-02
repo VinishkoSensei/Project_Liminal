@@ -10,6 +10,7 @@ const {
   checkAuth,
   getUserList,
   changeRole,
+  createReview,
 } = require('../functions/db/profile.db');
 const {
   getTrackList,
@@ -279,6 +280,18 @@ const plugin = {
       method: 'POST',
       path: '/changerole',
       handler: changeRole,
+      config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with'],
+        },
+      },
+    });
+
+    server.route({
+      method: 'POST',
+      path: '/createreview',
+      handler: createReview,
       config: {
         cors: {
           origin: ['*'],
