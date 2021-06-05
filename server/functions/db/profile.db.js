@@ -123,9 +123,9 @@ const createProfile = async (req, h) => {
 const handleGetProfile = async (req, h) => {
   const { id } = req.params;
   const db = req.getDb();
-
   try {
     const user = await db.func(`liminal.getuser`, id);
+    if (!user[0]) throw Boom.unauthorized('Wrong credentials');
     return h.response(user[0]);
   } catch (err) {
     throw Boom.badRequest(err);
