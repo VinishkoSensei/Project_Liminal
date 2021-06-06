@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import './track-analysis.styles.scss';
+import Switch from '../shared/switch/switch.component';
 import * as mm from 'music-metadata-browser';
 
 const TrackAnalysis = ({
@@ -236,16 +237,11 @@ const TrackAnalysis = ({
               style={{ backgroundImage: `url('/images/play.svg')` }}
               onClick={() => previewAudio(point.newPeak)}
             />
-            <label className="switch">
-              <input
-                type="checkbox"
-                value={point.checked}
-                name="checked"
-                id={index}
-                onChange={handleCheckboxChange}
-              />
-              <span className="slider" />
-            </label>
+            <Switch
+              index={index}
+              checked={point.checked}
+              handleCheckboxChange={handleCheckboxChange}
+            />
           </div>
         ))}
       </div>
