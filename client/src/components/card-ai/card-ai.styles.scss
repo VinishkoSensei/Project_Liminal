@@ -1,0 +1,26 @@
+@mixin flexeddiv($flexdirection, $justifycontent) {
+  display: flex;
+  flex-direction: $flexdirection;
+  justify-content: $justifycontent;
+}
+
+@mixin setwidthandheight($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin setborderwithradius($border, $radius) {
+  border: $border;
+  border-radius: $radius;
+}
+
+.card-ai {
+  @include setwidthandheight(100%, 100%);
+  background-color: lightskyblue;
+  @include setborderwithradius(2px solid black, 52px);
+  @include flexeddiv(column, space-around);
+
+  .card-ai-switch {
+    @include flexeddiv(row, space-evenly);
+  }
+}
