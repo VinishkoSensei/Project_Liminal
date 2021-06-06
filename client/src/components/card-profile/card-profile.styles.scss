@@ -69,3 +69,8 @@
     left: 5%;
   }
 }
+
+.buttons {
+  height: 80px;
+  @include flexeddiv(column, space-evenly);
+}
