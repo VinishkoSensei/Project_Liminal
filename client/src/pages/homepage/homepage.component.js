@@ -7,6 +7,7 @@ import ChangingCards from '../../components/changingcards/changingcards.componen
 import MainMenu from '../../components/mainmenu/mainmenu.component';
 import Profile from '../../components/profile/profile.component';
 import CardMusic from '../../components/card-music/card-music.component';
+import CardAi from '../../components/card-ai/card-ai.component';
 import CardPlaylist from '../../components/card-playlist/card-playlist.component';
 import CardSearch from '../../components/card-search/card-search.component';
 import CardProfile from '../../components/card-profile/card-profile.component';
@@ -85,12 +86,26 @@ const HomePage = ({ profile, checkUserSession }) => {
                     openAdminCard={openAdminCard}
                     isOpened={isOpened}
                   />
-                  {chosenCard === 'broadcast' ? (
+                  {/*chosenCard === 'broadcast' ? (
                     <CardMusic isNotRadio={false} playerRef={playerRef} />
                   ) : (
                     <ChangingCards>
                       <CardMusic isNotRadio={true} playerRef={playerRef} />
                       {chosenCard === 'ai' || chosenCard === 'playlist' ? (
+                        <CardPlaylist />
+                      ) : (
+                        <CardSearch />
+                      )}
+                    </ChangingCards>
+                      )*/}
+                  {chosenCard === 'broadcast' ? (
+                    <CardMusic isNotRadio={false} playerRef={playerRef} />
+                  ) : chosenCard === 'ai' ? (
+                    <CardAi />
+                  ) : (
+                    <ChangingCards>
+                      <CardMusic isNotRadio={true} playerRef={playerRef} />
+                      {chosenCard === 'playlist' ? (
                         <CardPlaylist />
                       ) : (
                         <CardSearch />
