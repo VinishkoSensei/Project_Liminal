@@ -62,15 +62,9 @@ const CardSignIn = ({ changedCards, signInStart }) => {
     </div>
   );
 };
-/*
-const mapStateToProps = (state) => ({
-  isPlaying: state.music.isPlaying,
-  currentTrack: state.music.currentTrack,
-});
-*/
+
 const mapDispatchToProps = (dispatch) => ({
   signInStart: (email, password) => dispatch(signInStart(email, password)),
 });
 
-//export default connect(mapStateToProps, mapDispatchToProps)(CardMusic);
 export default connect(null, mapDispatchToProps)(CardSignIn);

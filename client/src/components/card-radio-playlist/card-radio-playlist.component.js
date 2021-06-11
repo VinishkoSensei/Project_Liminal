@@ -3,7 +3,7 @@ import './card-radio-playlist.styles.scss';
 import Track from '../track/track.component';
 
 const CardRadioPlaylist = ({ radioQueue, setRadioQueue }) => {
-  const deleteFromRadioQueue = async (index) => {
+  const deleteFromRadioQueue = (index) => async () => {
     const response = await fetch(
       `http://localhost:3001/deletetrackfromradioqueue`,
       {
@@ -26,7 +26,7 @@ const CardRadioPlaylist = ({ radioQueue, setRadioQueue }) => {
             track={track}
             index={index}
             key={index}
-            deleteFromRadioQueue={() => deleteFromRadioQueue(track.id)}
+            deleteFromRadioQueue={deleteFromRadioQueue(track.id)}
           />
         ))}
       </div>
