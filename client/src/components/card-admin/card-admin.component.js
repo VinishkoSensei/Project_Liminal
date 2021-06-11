@@ -48,10 +48,6 @@ const CardAdmin = ({
     }, 2000);
   };
 
-  const BtnBack = () => {
-    return <div className="admin-btn-back" onClick={closeAdminCard} />;
-  };
-
   const chooseCards = (item) => {
     switch (item) {
       case 'track':
@@ -87,7 +83,7 @@ const CardAdmin = ({
 
   return (
     <div className={`card-admin${isOpened ? ' expanded' : ''}`}>
-      <BtnBack />
+      <div className="admin-btn-back" onClick={closeAdminCard} />
       {chooseCards(selectedAdminItem)}
     </div>
   );

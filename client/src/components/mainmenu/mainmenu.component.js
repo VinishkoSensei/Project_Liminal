@@ -3,20 +3,20 @@ import './mainmenu.styles.scss';
 import SmallButton from '../shared/small-button/small-button.component';
 import { connect } from 'react-redux';
 
-const MainMenu = ({ profile, FlipCard, openAdminCard, isOpened }) => {
+const MainMenu = ({ profile, flipCard, openAdminCard, isOpened }) => {
   return (
     <div className="mainmenu-cards-container">
       <div className="cards top">
         <div
           className="card lt"
           id="ai"
-          onClick={FlipCard}
+          onClick={flipCard}
           style={{ backgroundImage: `url('/images/ai.svg')` }}
         ></div>
         <div
           className="card rt"
           id="broadcast"
-          onClick={FlipCard}
+          onClick={flipCard}
           style={{ backgroundImage: `url('/images/broadcast.svg')` }}
         ></div>
         {profile.isadmin ? (
@@ -33,13 +33,13 @@ const MainMenu = ({ profile, FlipCard, openAdminCard, isOpened }) => {
         <div
           className="card lb"
           id="playlist"
-          onClick={FlipCard}
+          onClick={flipCard}
           style={{ backgroundImage: `url('/images/playlist.svg')` }}
         ></div>
         <div
           className="card rb"
           id="music"
-          onClick={FlipCard}
+          onClick={flipCard}
           style={{ backgroundImage: `url('/images/music.svg')` }}
         ></div>
         {profile.isadmin ? (
