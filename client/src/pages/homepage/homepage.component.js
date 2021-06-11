@@ -14,6 +14,7 @@ import CardProfile from '../../components/card-profile/card-profile.component';
 import CardSignIn from '../../components/card-signin/card-signin.component';
 import CardSignUp from '../../components/card-signup/card-signup.component';
 import CardAdmin from '../../components/card-admin/card-admin.component';
+import BackButton from '../../components/shared/back-button/back-button.component';
 
 import ReactCardFlip from 'react-card-flip';
 
@@ -31,23 +32,9 @@ const HomePage = ({ profile, checkUserSession }) => {
   const [selectedAdminItem, setSelectedAdminItem] = useState(null);
   const [isOpened, setIsOpened] = useState(false);
 
-  const FlipCard = (e) => {
+  const flipCard = (e) => {
     if (e.target.id) setChosenCard(e.target.id);
     setIsFlipped(!isFlipped);
-  };
-
-  const BtnBack = () => {
-    return (
-      <div
-        className="btn-back"
-        style={
-          !isFlipped
-            ? { display: 'none' }
-            : { backgroundImage: `url('/images/${chosenCard}.svg')` }
-        }
-        onClick={FlipCard}
-      />
-    );
   };
 
   useEffect(() => {
@@ -66,7 +53,12 @@ const HomePage = ({ profile, checkUserSession }) => {
         <Player playerRef={playerRef} />
       </div>
       <div className="main-part">
-        <BtnBack />
+        {isFlipped ? (
+          <BackButton
+            imageUrl={`/images/${chosenCard}.svg`}
+            handleClick={flipCard}
+          />
+        ) : null}
         <div className="main-space">
           <div className="main-container">
             <div className="cards-container">
@@ -82,22 +74,10 @@ const HomePage = ({ profile, checkUserSession }) => {
                   containerStyle={{ width: '100%', height: '100%' }}
                 >
                   <MainMenu
-                    FlipCard={FlipCard}
+                    flipCard={flipCard}
                     openAdminCard={openAdminCard}
                     isOpened={isOpened}
                   />
-                  {/*chosenCard === 'broadcast' ? (
-                    <CardMusic isNotRadio={false} playerRef={playerRef} />
-                  ) : (
-                    <ChangingCards>
-                      <CardMusic isNotRadio={true} playerRef={playerRef} />
-                      {chosenCard === 'ai' || chosenCard === 'playlist' ? (
-                        <CardPlaylist />
-                      ) : (
-                        <CardSearch />
-                      )}
-                    </ChangingCards>
-                      )*/}
                   {chosenCard === 'broadcast' ? (
                     <CardMusic isNotRadio={false} playerRef={playerRef} />
                   ) : chosenCard === 'ai' ? (
