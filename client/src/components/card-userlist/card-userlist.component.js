@@ -33,7 +33,7 @@ const CardUserList = () => {
     setSearchbarOnTop(query.length);
   }, [query]);
 
-  const changeRole = async (id) => {
+  const changeRole = (id) => async () => {
     await fetch(`http://localhost:3001/changerole`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
@@ -41,12 +41,12 @@ const CardUserList = () => {
         id,
       }),
     });
+    setUserList((prevUserList) =>
+      prevUserList.map((user) =>
+        user.id === id ? { ...user, isadmin: !user.isadmin } : user
+      )
+    );
   };
-
-  /*const handleSubmit = async (event) => {
-    event.preventDefault();
-    setSearchbarOnTop(query.length);
-  };*/
 
   const getNameColor = (isAdmin, subscribed) => {
     if (isAdmin) return 'user admin';
@@ -124,7 +124,7 @@ const CardUserList = () => {
                     <div
                       className="user-menu-item"
                       style={{ backgroundImage: `url('/images/ordinary.svg')` }}
-                      onClick={() => changeRole(user.id)}
+                      onClick={changeRole(user.id, index)}
                     >
                       Make User
                     </div>
@@ -132,7 +132,7 @@ const CardUserList = () => {
                     <div
                       className="user-menu-item"
                       style={{ backgroundImage: `url('/images/admin.svg')` }}
-                      onClick={() => changeRole(user.id)}
+                      onClick={changeRole(user.id, index)}
                     >
                       Make Admin
                     </div>
