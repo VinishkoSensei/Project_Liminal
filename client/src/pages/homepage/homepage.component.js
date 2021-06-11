@@ -41,7 +41,7 @@ const HomePage = ({ profile, checkUserSession }) => {
     checkUserSession();
   }, [checkUserSession]);
 
-  const openAdminCard = (item) => {
+  const openAdminCard = (item) => () => {
     setSelectedAdminItem(item);
     setIsOpened(true);
   };

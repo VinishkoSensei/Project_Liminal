@@ -31,10 +31,7 @@ const Profile = ({
       {profile ? (
         <div className="profile-panel">
           {profile.isadmin ? (
-            <SmallButton
-              onClick={() => openAdminCard('users')}
-              isHidden={isOpened}
-            />
+            <SmallButton onClick={openAdminCard('users')} isHidden={isOpened} />
           ) : null}
           <div
             className={`profile-main`}
