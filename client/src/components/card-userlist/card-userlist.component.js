@@ -124,7 +124,7 @@ const CardUserList = () => {
                     <div
                       className="user-menu-item"
                       style={{ backgroundImage: `url('/images/ordinary.svg')` }}
-                      onClick={changeRole(user.id, index)}
+                      onClick={changeRole(user.id)}
                     >
                       Make User
                     </div>
@@ -132,7 +132,7 @@ const CardUserList = () => {
                     <div
                       className="user-menu-item"
                       style={{ backgroundImage: `url('/images/admin.svg')` }}
-                      onClick={changeRole(user.id, index)}
+                      onClick={changeRole(user.id)}
                     >
                       Make Admin
                     </div>
