@@ -35,25 +35,6 @@
     flex-grow: 2;
     @include flexeddiv(row, space-between);
 
-    .btn-back {
-      @include setwidthandheight(50px, 50px);
-      background-color: lightskyblue;
-      @include setborderwithradius(1px solid black, 12px);
-      position: absolute;
-      margin-left: 20px;
-      cursor: pointer;
-      background-size: 70% 80%;
-      background-position: center;
-      background-repeat: no-repeat;
-
-      &:hover {
-        background-color: lightsalmon;
-        background-image: url('http://localhost:3000/images/play.svg') !important;
-        -webkit-transform: scaleX(-1);
-        transform: scaleX(-1);
-      }
-    }
-
     .main-space {
       @include setwidthandheight(80vw, unset);
       padding: 10% 0;
