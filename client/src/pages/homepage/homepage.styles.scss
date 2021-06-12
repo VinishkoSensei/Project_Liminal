@@ -34,13 +34,16 @@
     @include setwidthandheight(100%, unset);
     flex-grow: 2;
     @include flexeddiv(row, space-between);
+    background-image: url('http://localhost:3000/images/background.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
 
     .main-space {
-      @include setwidthandheight(80vw, unset);
-      padding: 10% 0;
+      @include setwidthandheight(55vw, unset);
+      padding: 4% 0;
 
       .main-container {
-        @include setwidthandheight(80%, 100%);
+        @include setwidthandheight(595px, 100%);
         margin: 0 auto;
 
         .cards-container {
@@ -66,16 +69,12 @@
               z-index: 3;
             }
           }
-
-          .react-card-back {
-            transform-style: flat !important;
-          }
         }
       }
     }
 
     .rightpanel {
-      @include setwidthandheight(20vw, 50vh);
+      @include setwidthandheight(12%, 50vh);
       @include flexeddiv(column, unset);
       margin-right: 5px;
       font-size: 11pt;
