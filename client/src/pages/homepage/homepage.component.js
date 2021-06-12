@@ -114,6 +114,7 @@ const HomePage = ({ profile, checkUserSession }) => {
           {profile ? <Review /> : null}
         </div>
       </div>
+
       <CardProfile
         profileExpanded={profileExpanded}
         setProfileExpanded={setProfileExpanded}
