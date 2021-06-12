@@ -245,6 +245,8 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
                       )}
                       handleChangingItemType={handleChangingItemType}
                       handleEditingFinish={handleEditingFinish}
+                      bordered={changingItemType !== input.name}
+                      disabled={changingItemType !== input.name}
                       key={input.key}
                     />
                   )
