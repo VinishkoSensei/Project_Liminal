@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Track from '../track/track.component';
+import { handleChangeSingle } from '../../utils/utils';
 import './card-search.styles.scss';
 
 const CardSearch = ({
@@ -12,9 +13,6 @@ const CardSearch = ({
   const [query, setQuery] = useState('');
   const [searchbarOnTop, setSearchbarOnTop] = useState(false);
   const [searchType, setSearchType] = useState('all');
-  const handleChange = (event) => {
-    setQuery(event.target.value);
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -63,7 +61,7 @@ const CardSearch = ({
           </button>
         </div>
         <div className="searchbar-query">
-          <input type="text" onChange={handleChange} />
+          <input type="text" onChange={handleChangeSingle(setQuery)} />
         </div>
       </form>
       <div className={`searchlist${searchbarOnTop ? ' searched' : ''}`}>

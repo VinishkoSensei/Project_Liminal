@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { handleChangeSingle } from '../../utils/utils';
 import './card-userlist.styles.scss';
 
 const CardUserList = () => {
@@ -6,9 +7,6 @@ const CardUserList = () => {
   const [searchbarOnTop, setSearchbarOnTop] = useState(false);
   const [userList, setUserList] = useState([]);
   const [searchType, setSearchType] = useState('all');
-  const handleChange = (event) => {
-    setQuery(event.target.value);
-  };
 
   useEffect(() => {
     const getUserList = async () => {
@@ -69,7 +67,7 @@ const CardUserList = () => {
           </button>
         </div>
         <div className="searchbar-query">
-          <input type="text" onChange={handleChange} />
+          <input type="text" onChange={handleChangeSingle(setQuery)} />
         </div>
       </div>
       <div className={`searchlist${searchbarOnTop ? ' searched' : ''}`}>
