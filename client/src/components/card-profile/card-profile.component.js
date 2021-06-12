@@ -218,7 +218,11 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
                       key={input.key}
                     />
                   ) : input.type === 'button' ? (
-                    <CustomButton type="button" onClick={input.handleClick}>
+                    <CustomButton
+                      type="button"
+                      onClick={input.handleClick}
+                      key={input.key}
+                    >
                       {input.label}
                     </CustomButton>
                   ) : input.type === 'password' ? (
