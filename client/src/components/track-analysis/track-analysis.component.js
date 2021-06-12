@@ -56,8 +56,8 @@ const TrackAnalysis = ({
     return analyser;
   };
 
-  const handleInputChange = (event) => {
-    const { name, value, id } = event.target;
+  const handleInputChange = (id) => (event) => {
+    const { name, value } = event.target;
     console.log(suggestedPoints);
     setSuggestedPoints(
       suggestedPoints.map((item, ind) =>
@@ -66,8 +66,8 @@ const TrackAnalysis = ({
     );
   };
 
-  const handleCheckboxChange = (event) => {
-    const { name, id } = event.target;
+  const handleCheckboxChange = (id) => (event) => {
+    const { name } = event.target;
     setSuggestedPoints(
       suggestedPoints.map((item, ind) =>
         ind === Number(id) ? (item = { ...item, [name]: !item[name] }) : item
@@ -229,8 +229,7 @@ const TrackAnalysis = ({
               placeholder={point.peak}
               name="newPeak"
               value={point.newPeak}
-              id={index}
-              onChange={handleInputChange}
+              onChange={handleInputChange(index)}
             />
             <button
               className="switch-button"
@@ -240,7 +239,7 @@ const TrackAnalysis = ({
             <Switch
               index={index}
               checked={point.checked}
-              handleCheckboxChange={handleCheckboxChange}
+              handleCheckboxChange={handleCheckboxChange(index)}
             />
           </div>
         ))}
