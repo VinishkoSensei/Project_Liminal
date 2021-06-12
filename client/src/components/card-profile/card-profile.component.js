@@ -5,6 +5,7 @@ import CustomButton from '../custombutton/custombutton.component';
 import { changeProfileStart } from '../../redux/user/user.actions';
 import FormInput from '../forminputs/forminput/forminput.component';
 import FormFileInput from '../forminputs/formfileinput/formfileinput.component';
+import { handleChange, handleChangeWithFunction } from '../../utils/utils';
 import { Trans } from '@lingui/macro';
 import ReactCardFlip from 'react-card-flip';
 
@@ -39,12 +40,6 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
   const handleCardChange = (event) => {
     const { value, name } = event.target;
     setCardData({ ...cardData, [name]: value });
-  };
-
-  const handleChange = (event) => {
-    const { value, name } = event.target;
-    setChangedProfile({ ...changedProfile, [name]: value });
-    checkDoPasswordsMatch(name, value);
   };
 
   const handlePasswordChange = () => {
@@ -90,6 +85,101 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
     };
   };
 
+  const Inputs = [
+    {
+      name: 'email',
+      value: changedProfile?.email,
+      label: '',
+      key: 'email',
+      type: 'disabled',
+    },
+    {
+      name: 'date',
+      value: changedProfile?.birth_date,
+      label: '',
+      key: 'date',
+      type: 'disabled',
+    },
+    {
+      name: 'file',
+      label: '',
+      handleChange: fileSelectHandler,
+      type: 'file',
+      key: 'file',
+    },
+    {
+      type: 'button',
+      handleClick: handleFileChange,
+      label: <Trans>Change photo</Trans>,
+      key: 'button',
+    },
+    {
+      name: 'first_name',
+      value: changedProfile?.first_name,
+      label: <Trans>First name</Trans>,
+      key: 'first_name',
+      bordered: changingItemType !== 'first_name',
+      disabled: changingItemType !== 'first_name',
+      type: 'input',
+    },
+    {
+      name: 'last_name',
+      value: changedProfile?.last_name,
+      label: <Trans>Last name</Trans>,
+      key: 'last_name',
+      bordered: changingItemType !== 'last_name',
+      disabled: changingItemType !== 'last_name',
+      type: 'input',
+    },
+    {
+      name: 'phone',
+      value: changedProfile?.phone,
+      label: <Trans>Phone</Trans>,
+      key: 'phone',
+      bordered: changingItemType !== 'phone',
+      disabled: changingItemType !== 'phone',
+      type: 'input',
+    },
+    {
+      name: 'password',
+      type: 'password',
+      value: changedProfile?.password,
+      label: <Trans>Password</Trans>,
+      key: 'password',
+    },
+    {
+      name: 'passwordconf',
+      type: 'password',
+      value: changedProfile?.passwordconf,
+      label: <Trans>Password confirmation</Trans>,
+      key: 'passwordconf',
+    },
+  ];
+
+  const CardInputs = [
+    {
+      name: 'number',
+      value: cardData.number,
+      label: 'Card Number',
+      key: 'number',
+      type: 'password',
+    },
+    {
+      name: 'owner',
+      value: cardData.owner,
+      label: 'Card Owner',
+      key: 'owner',
+      type: 'input',
+    },
+    {
+      name: 'code',
+      value: cardData.code,
+      label: 'CVV/CVC',
+      key: 'code',
+      type: 'password',
+    },
+  ];
+
   return (
     <div className={`card-profile${profileExpanded ? ' expanded' : ''}`}>
       {profile ? (
@@ -112,115 +202,89 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
             containerStyle={{ width: '100%', height: '100%' }}
           >
             <div className="profile-info-main">
-              {changedProfile?.email ? (
-                <div>
-                  <FormInput
-                    name="email"
-                    value={changedProfile.email}
-                    label=""
-                    key="email"
-                    disabled
-                  />
-                  <FormInput
-                    name="date"
-                    value={changedProfile.birth_date}
-                    label=""
-                    key="date"
-                    disabled
-                  />
-                  <FormFileInput handleChange={fileSelectHandler} key="file" />
-                  <CustomButton type="button" onClick={handleFileChange}>
-                    <Trans>Change photo</Trans>
-                  </CustomButton>
-                  <FormInput
-                    name="first_name"
-                    value={changedProfile.first_name}
-                    label={<Trans>First name</Trans>}
-                    handleChange={handleChange}
-                    handleChangingItemType={handleChangingItemType}
-                    handleEditingFinish={handleEditingFinish}
-                    key="first_name"
-                    bordered={changingItemType !== 'first_name'}
-                    disabled={changingItemType !== 'first_name'}
-                  />
-                  <FormInput
-                    name="last_name"
-                    value={changedProfile.last_name}
-                    label={<Trans>Last name</Trans>}
-                    handleChange={handleChange}
-                    handleChangingItemType={handleChangingItemType}
-                    handleEditingFinish={handleEditingFinish}
-                    key="last_name"
-                    bordered={changingItemType !== 'last_name'}
-                    disabled={changingItemType !== 'last_name'}
-                  />
-                  <FormInput
-                    name="phone"
-                    value={changedProfile.phone}
-                    label={<Trans>Phone</Trans>}
-                    handleChange={handleChange}
-                    handleChangingItemType={handleChangingItemType}
-                    handleEditingFinish={handleEditingFinish}
-                    key="phone"
-                    bordered={changingItemType !== 'phone'}
-                    disabled={changingItemType !== 'phone'}
-                  />
-                  <FormInput
-                    name="password"
-                    type="password"
-                    value={changedProfile.password}
-                    label={<Trans>Password</Trans>}
-                    handleChange={handleChange}
-                    key="password"
-                  />
-                  <FormInput
-                    name="passwordconf"
-                    value={changedProfile.passwordconf}
-                    label={<Trans>Password confirmation</Trans>}
-                    type="password"
-                    handleChange={handleChange}
-                    key="passwordconf"
-                  />
-                  {!doPasswordsMatch ? (
-                    <div className="error">
-                      <Trans>Passwords do not match</Trans>
-                    </div>
-                  ) : null}
-                </div>
-              ) : null}
+              <div>
+                {Inputs.map((input) =>
+                  input.type === 'disabled' ? (
+                    <FormInput
+                      name={input.name}
+                      value={input.value}
+                      label={input.label}
+                      key={input.key}
+                      disabled
+                    />
+                  ) : input.type === 'file' ? (
+                    <FormFileInput
+                      handleChange={input.handleChange}
+                      key={input.key}
+                    />
+                  ) : input.type === 'button' ? (
+                    <CustomButton type="button" onClick={input.handleClick}>
+                      {input.label}
+                    </CustomButton>
+                  ) : input.type === 'password' ? (
+                    <FormInput
+                      name={input.name}
+                      value={input.value}
+                      label={input.label}
+                      type="password"
+                      handleChange={handleChangeWithFunction(
+                        changedProfile,
+                        setChangedProfile,
+                        checkDoPasswordsMatch
+                      )}
+                      key={input.key}
+                    />
+                  ) : (
+                    <FormInput
+                      name={input.name}
+                      value={input.value || ''}
+                      label={input.label}
+                      handleChange={handleChange(
+                        changedProfile,
+                        setChangedProfile
+                      )}
+                      handleChangingItemType={handleChangingItemType}
+                      handleEditingFinish={handleEditingFinish}
+                      key={input.key}
+                    />
+                  )
+                )}
+                {!doPasswordsMatch ? (
+                  <div className="error">
+                    <Trans>Passwords do not match</Trans>
+                  </div>
+                ) : null}
+              </div>
+
               <CustomButton type="button" onClick={handlePasswordChange}>
                 <Trans>Change password</Trans>
+              </CustomButton>
+              <CustomButton type="button" onClick={() => setIsFlipped(true)}>
+                <Trans>Subscription</Trans>
               </CustomButton>
             </div>
             <div className="profile-info-main">
               <div>
-                <FormInput
-                  name="number"
-                  value={cardData.number}
-                  label="Card Number"
-                  key="number"
-                  handleChange={handleCardChange}
-                />
-                <FormInput
-                  name="owner"
-                  value={cardData.owner}
-                  label="Card Owner"
-                  key="owner"
-                  handleChange={handleCardChange}
-                />
-                <FormInput
-                  name="code"
-                  type="password"
-                  value={cardData.code}
-                  label="CVV/CVC"
-                  key="code"
-                  handleChange={handleCardChange}
-                />
+                {CardInputs.map((cardInput) => (
+                  <FormInput
+                    name={cardInput.name}
+                    type={cardInput.type}
+                    value={cardInput.value || ''}
+                    label={cardInput.label}
+                    key={cardInput.key}
+                    handleChange={handleCardChange}
+                  />
+                ))}
+
                 <div className="buttons">
                   <CustomButton type="button">
                     <Trans>Pay</Trans>
                   </CustomButton>
-                  <CustomButton type="button" abort>
+                  <CustomButton
+                    type="button"
+                    onClick={() => setIsFlipped(false)}
+                    abort
+                  >
                     <Trans>Cancel</Trans>
                   </CustomButton>
                 </div>
