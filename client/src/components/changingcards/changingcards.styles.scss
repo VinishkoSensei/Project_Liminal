@@ -50,6 +50,7 @@
     position: absolute;
     z-index: 6;
     @include animation(all, 2s);
+    background-color: transparent;
 
     &.disabled {
       z-index: 5;
