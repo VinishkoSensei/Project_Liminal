@@ -50,7 +50,9 @@ const Profile = ({
           </div>
           <div
             className={`profile-info${minifiedProfile ? ' minified' : ''}`}
-            onClick={() => setProfileExpanded(!profileExpanded)}
+            onClick={(prevProfileExpanded) =>
+              setProfileExpanded(!prevProfileExpanded)
+            }
           >
             <div>
               <i>{profile.email}</i>
