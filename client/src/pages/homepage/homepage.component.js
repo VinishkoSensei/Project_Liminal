@@ -78,6 +78,7 @@ const HomePage = ({ profile, checkUserSession }) => {
                     openAdminCard={openAdminCard}
                     isOpened={isOpened}
                   />
+
                   {chosenCard === 'broadcast' ? (
                     <CardMusic isNotRadio={false} playerRef={playerRef} />
                   ) : chosenCard === 'ai' ? (
