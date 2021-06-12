@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import './profile.styles.scss';
 import CustomButton from '../custombutton/custombutton.component';
@@ -15,6 +15,10 @@ const Profile = ({
   signOutStart,
 }) => {
   const [minifiedProfile, setMinifiedProfile] = useState(true);
+
+  useEffect(() => {
+    if (!profile) setProfileExpanded(false);
+  }, [profile, setProfileExpanded]);
 
   const handleImgError = (e) => {
     e.target.onError = null;
@@ -50,8 +54,8 @@ const Profile = ({
           </div>
           <div
             className={`profile-info${minifiedProfile ? ' minified' : ''}`}
-            onClick={(prevProfileExpanded) =>
-              setProfileExpanded(!prevProfileExpanded)
+            onClick={() =>
+              setProfileExpanded((prevProfileExpanded) => !prevProfileExpanded)
             }
           >
             <div>
