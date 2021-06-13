@@ -89,6 +89,10 @@
     @include animation(left, 1s);
     left: 5%;
   }
+
+  @media screen and (orientation: portrait) {
+    width: 90%;
+  }
 }
 
 .buttons {

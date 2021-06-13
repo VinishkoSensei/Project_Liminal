@@ -60,5 +60,9 @@
     &.success {
       background-color: #04aa6d;
     }
+
+    @media screen and (orientation: portrait) {
+      min-width: 80px;
+    }
   }
 }

@@ -44,11 +44,23 @@
       height: 90%;
       margin: 28px 2.5px 0 5px;
     }
+
+    @media screen and (orientation: portrait) {
+      width: 55%;
+    }
   }
 
   &.expanded {
     @include animation(left, 1s);
     left: 2%;
+
+    @media screen and (orientation: portrait) {
+      left: 0%;
+    }
+  }
+
+  @media screen and (orientation: portrait) {
+    left: -200%;
   }
 }
 
