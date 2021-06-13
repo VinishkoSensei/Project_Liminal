@@ -13,7 +13,7 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
   const [changedProfile, setChangedProfile] = useState(null);
   const [changingItemType, setChangingItemType] = useState(null);
   const [doPasswordsMatch, setDoPasswordsMatch] = useState(true);
-  const [isFlipped, setIsFlipped] = useState(true);
+  const [isFlipped, setIsFlipped] = useState(false);
   const [cardData, setCardData] = useState({ owner: '', number: '', code: '' });
 
   useEffect(() => {
@@ -85,7 +85,7 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
     };
   };
 
-  const Inputs = [
+  const InputsLeft = [
     {
       name: 'email',
       value: changedProfile?.email,
@@ -99,19 +99,6 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
       label: '',
       key: 'date',
       type: 'disabled',
-    },
-    {
-      name: 'file',
-      label: '',
-      handleChange: fileSelectHandler,
-      type: 'file',
-      key: 'file',
-    },
-    {
-      type: 'button',
-      handleClick: handleFileChange,
-      label: <Trans>Change photo</Trans>,
-      key: 'button',
     },
     {
       name: 'first_name',
@@ -139,6 +126,22 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
       bordered: changingItemType !== 'phone',
       disabled: changingItemType !== 'phone',
       type: 'input',
+    },
+  ];
+
+  const InputsRight = [
+    {
+      name: 'file',
+      label: '',
+      handleChange: fileSelectHandler,
+      type: 'file',
+      key: 'file',
+    },
+    {
+      type: 'button',
+      handleClick: handleFileChange,
+      label: <Trans>Change photo</Trans>,
+      key: 'button',
     },
     {
       name: 'password',
@@ -194,105 +197,119 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
             isFlipped={isFlipped}
             flipSpeedBackToFront={2}
             flipSpeedFrontToBack={2}
-            style={{
-              width: '100%',
-              height: '70%',
-              marginTop: '20px',
-            }}
-            containerStyle={{ width: '100%', height: '100%' }}
+            containerStyle={{ width: '100%', height: '60%' }}
           >
             <div className="profile-info-main">
-              <div>
-                {Inputs.map((input) =>
-                  input.type === 'disabled' ? (
-                    <FormInput
-                      name={input.name}
-                      value={input.value}
-                      label={input.label}
-                      key={input.key}
-                      disabled
-                    />
-                  ) : input.type === 'file' ? (
-                    <FormFileInput
-                      handleChange={input.handleChange}
-                      key={input.key}
-                    />
-                  ) : input.type === 'button' ? (
-                    <CustomButton
-                      type="button"
-                      onClick={input.handleClick}
-                      key={input.key}
-                    >
-                      {input.label}
-                    </CustomButton>
-                  ) : input.type === 'password' ? (
-                    <FormInput
-                      name={input.name}
-                      value={input.value}
-                      label={input.label}
-                      type="password"
-                      handleChange={handleChangeWithFunction(
-                        changedProfile,
-                        setChangedProfile,
-                        checkDoPasswordsMatch
-                      )}
-                      key={input.key}
-                    />
-                  ) : (
-                    <FormInput
-                      name={input.name}
-                      value={input.value || ''}
-                      label={input.label}
-                      handleChange={handleChange(
-                        changedProfile,
-                        setChangedProfile
-                      )}
-                      handleChangingItemType={handleChangingItemType}
-                      handleEditingFinish={handleEditingFinish}
-                      bordered={changingItemType !== input.name}
-                      disabled={changingItemType !== input.name}
-                      key={input.key}
-                    />
-                  )
-                )}
-                {!doPasswordsMatch ? (
-                  <div className="error">
-                    <Trans>Passwords do not match</Trans>
-                  </div>
-                ) : null}
-              </div>
-
-              <CustomButton type="button" onClick={handlePasswordChange}>
-                <Trans>Change password</Trans>
-              </CustomButton>
-              <CustomButton type="button" onClick={() => setIsFlipped(true)}>
-                <Trans>Subscription</Trans>
-              </CustomButton>
-            </div>
-            <div className="profile-info-main">
-              <div>
-                {CardInputs.map((cardInput) => (
-                  <FormInput
-                    name={cardInput.name}
-                    type={cardInput.type}
-                    value={cardInput.value || ''}
-                    label={cardInput.label}
-                    key={cardInput.key}
-                    handleChange={handleCardChange}
-                  />
-                ))}
-
-                <div className="buttons">
-                  <CustomButton type="button">
-                    <Trans>Pay</Trans>
-                  </CustomButton>
+              <div className="profile-info-main-columns">
+                <div>
+                  {InputsLeft.map((input) =>
+                    input.type === 'disabled' ? (
+                      <FormInput
+                        name={input.name}
+                        value={input.value}
+                        label={input.label}
+                        key={input.key}
+                        disabled
+                      />
+                    ) : input.type === 'button' ? (
+                      <CustomButton
+                        type="button"
+                        onClick={input.handleClick}
+                        key={input.key}
+                      >
+                        {input.label}
+                      </CustomButton>
+                    ) : (
+                      <FormInput
+                        name={input.name}
+                        value={input.value || ''}
+                        label={input.label}
+                        handleChange={handleChange(
+                          changedProfile,
+                          setChangedProfile
+                        )}
+                        handleChangingItemType={handleChangingItemType}
+                        handleEditingFinish={handleEditingFinish}
+                        bordered={changingItemType !== input.name}
+                        disabled={changingItemType !== input.name}
+                        key={input.key}
+                      />
+                    )
+                  )}
                   <CustomButton
                     type="button"
-                    onClick={() => setIsFlipped(false)}
-                    abort
+                    onClick={() => setIsFlipped(true)}
                   >
-                    <Trans>Cancel</Trans>
+                    <Trans>Subscription</Trans>
                   </CustomButton>
+                </div>
+                <div>
+                  {InputsRight.map((input) =>
+                    input.type === 'file' ? (
+                      <FormFileInput
+                        handleChange={input.handleChange}
+                        key={input.key}
+                      />
+                    ) : input.type === 'button' ? (
+                      <CustomButton
+                        type="button"
+                        onClick={input.handleClick}
+                        key={input.key}
+                      >
+                        {input.label}
+                      </CustomButton>
+                    ) : (
+                      <FormInput
+                        name={input.name}
+                        value={input.value}
+                        label={input.label}
+                        type="password"
+                        handleChange={handleChangeWithFunction(
+                          changedProfile,
+                          setChangedProfile,
+                          checkDoPasswordsMatch
+                        )}
+                        key={input.key}
+                      />
+                    )
+                  )}
+                  {!doPasswordsMatch ? (
+                    <div className="error">
+                      <Trans>Passwords do not match</Trans>
+                    </div>
+                  ) : null}
+                  <CustomButton type="button" onClick={handlePasswordChange}>
+                    <Trans>Change password</Trans>
+                  </CustomButton>
+                </div>
+              </div>
+            </div>
+            <div className="profile-info-main">
+              <div className="subscription-container">
+                <div className="subscription">
+                  {CardInputs.map((cardInput) => (
+                    <FormInput
+                      name={cardInput.name}
+                      type={cardInput.type}
+                      value={cardInput.value || ''}
+                      label={cardInput.label}
+                      key={cardInput.key}
+                      handleChange={handleCardChange}
+                    />
+                  ))}
+
+                  <div className="buttons">
+                    <CustomButton type="button">
+                      <Trans>Pay</Trans>
+                    </CustomButton>
+                    <CustomButton
+                      type="button"
+                      onClick={() => setIsFlipped(false)}
+                      abort
+                    >
+                      <Trans>Cancel</Trans>
+                    </CustomButton>
+                  </div>
                 </div>
               </div>
             </div>

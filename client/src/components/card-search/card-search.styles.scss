@@ -183,13 +183,15 @@
         }
 
         &::-webkit-scrollbar-track {
+          box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
           -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
           @include setborderwithradius(unset, 10px);
         }
 
         &::-webkit-scrollbar-thumb {
-          @include setborderwithradius(unset, 10px);
+          box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.5);
           -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.5);
+          @include setborderwithradius(unset, 10px);
         }
       }
     }

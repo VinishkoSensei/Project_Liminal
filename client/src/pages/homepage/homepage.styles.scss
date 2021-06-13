@@ -56,7 +56,7 @@
           .auth {
             .card-big-primary,
             .card-big-secondary {
-              @include setwidthandheight(55%, 55%);
+              @include setwidthandheight(30%, 55%);
             }
           }
 

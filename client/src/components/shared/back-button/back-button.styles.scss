@@ -6,13 +6,21 @@
   transition: $type $sec ease;
 }
 
+@mixin setwidthandheight($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin setborderwithradius($border, $radius) {
+  border: $border;
+  border-radius: $radius;
+}
+
 .btn-back {
   @include animation(box-shadow, 0.3s);
   box-shadow: 0 0 5px #609ae4, 0 0 25px #609ae4;
-  width: 55px;
-  height: 55px;
-  border: 1px solid #609ae4;
-  border-radius: 12px;
+  @include setwidthandheight(55px, 55px);
+  @include setborderwithradius(1px solid #609ae4, 12px);
   position: absolute;
   margin-left: 3%;
   cursor: pointer;

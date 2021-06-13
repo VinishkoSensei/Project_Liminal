@@ -24,8 +24,8 @@
 
 .card-signin {
   @include setwidthandheight(100%, 100%);
-  background-color: lightskyblue;
-  @include setborderwithradius(2px solid black, 52px);
+  background-color: #151527;
+  @include setborderwithradius(2px solid #94dadc, 52px);
   @include flexeddiv(column, space-around);
 
   form {
