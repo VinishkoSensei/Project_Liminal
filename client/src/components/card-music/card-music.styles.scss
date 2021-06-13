@@ -42,6 +42,10 @@
     img {
       @include setwidthandheight(100%, 100%);
     }
+
+    @media screen and (orientation: portrait) {
+      @include setwidthandheight(140px, 140px);
+    }
   }
 
   .card-big-controls {
