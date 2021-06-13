@@ -43,12 +43,12 @@ const Review = ({ profileid, addNotificationStart }) => {
           <FormInput
             name="theme"
             value={review.theme}
-            label="Review theme..."
+            label="Theme..."
             handleChange={handleChange(review, setReview)}
             required
           />
           <textarea
-            placeholder="Review text..."
+            placeholder="Text..."
             value={review.text}
             name="text"
             onChange={handleChange(review, setReview)}

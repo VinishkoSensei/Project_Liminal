@@ -30,6 +30,10 @@
   border-radius: $radius;
 }
 
+.react-card-back {
+  transform-style: flat !important;
+}
+
 .card-big-container {
   @include setwidthandheight(100%, 100%);
 

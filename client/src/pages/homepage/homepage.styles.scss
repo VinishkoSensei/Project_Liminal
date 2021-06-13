@@ -25,18 +25,21 @@
 .main {
   @include setwidthandheight(100vw, 100vh);
   @include flexeddiv(column, unset);
+  background-color: #151527;
 
   .toppart {
     margin-bottom: 20px;
+    background: linear-gradient(to bottom, #575473, #6f5669, #151527);
   }
 
   .main-part {
     @include setwidthandheight(100%, unset);
     flex-grow: 2;
     @include flexeddiv(row, space-between);
-    background-image: url('http://localhost:3000/images/background.png');
-    background-size: 100% 100%;
+    background-image: url('http://localhost:3000/images/back.png');
+    background-size: 45% 45%;
     background-repeat: no-repeat;
+    background-position: 95% 90%;
 
     .main-space {
       @include setwidthandheight(55vw, unset);
@@ -62,10 +65,9 @@
             z-index: 3;
 
             .card-center-icon {
-              @include setwidthandheight(6%, 85%);
-              background-color: lightskyblue;
+              @include setwidthandheight(30px, 30px);
               margin: 0 auto;
-              @include setborderwithradius(2px solid black, 100%);
+              @include setborderwithradius(2px solid white, 100%);
               z-index: 3;
             }
           }
@@ -76,7 +78,7 @@
     .rightpanel {
       @include setwidthandheight(12%, 50vh);
       @include flexeddiv(column, unset);
-      margin-right: 5px;
+      margin-right: 3%;
       font-size: 11pt;
 
       .news {
