@@ -23,9 +23,11 @@
 }
 
 .profile-main {
-  background-color: limegreen;
-  @include setborderwithradius(1px solid black, 8px);
+  //background-color: #94dadc;
+  @include setborderwithradius(1px solid #94dadc, 8px);
   @include flexeddiv(row, unset);
+  @include animation(all, 0.8s);
+  color: white;
   text-align: center;
   margin-bottom: 10px;
   cursor: default;
@@ -54,17 +56,23 @@
       @include setborderwithradius(unset, 50%);
     }
   }
+
+  &:hover {
+    box-shadow: 0 0 5px #94dadc, 0 0 25px #94dadc, 0 0 50px #94dadc,
+      0 0 100px #94dadc;
+  }
 }
 
 .profile-info {
-  background-color: limegreen;
-  @include setborderwithradius(1px solid black, 8px);
+  //background-color: #94dadc;
+  @include setborderwithradius(1px solid #94dadc, 8px);
   @include flexeddiv(column, space-around);
   text-align: center;
+  color: white;
   padding: 10px 2px;
   margin-bottom: 10px;
   cursor: default;
-  @include animation(all, 1.4s);
+  @include animation(all, 0.8s);
   overflow: hidden;
   //height: 85px;
   height: 12vh;
@@ -74,6 +82,11 @@
     height: 0;
     padding: 0;
     @include setborderwithradius(0px solid black, 8px);
+  }
+
+  &:hover {
+    box-shadow: 0 0 5px #94dadc, 0 0 25px #94dadc, 0 0 50px #94dadc,
+      0 0 100px #94dadc;
   }
 }
 

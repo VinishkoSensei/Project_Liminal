@@ -32,16 +32,17 @@
 
 .card-search {
   @include setwidthandheight(100%, 100%);
-  background-color: lightsalmon;
-  @include setborderwithradius(2px solid black, 52px);
+  background-color: #151527;
+  @include setborderwithradius(2px solid #609ae4, 52px);
   @include flexeddiv(column, flex-start);
   align-items: center;
-  @include animation(all, 5s);
+  @include animation(all, 2s);
+  overflow: hidden;
 
   .placeholder {
     width: 100%;
     height: 46%;
-    @include animation(all, 5s);
+    @include animation(all, 2s);
   }
 
   &.searched {
@@ -54,12 +55,12 @@
 
     .searchbar {
       @include setwidthandheight(100%, 8%);
-      @include animation(all, 2.5s);
+      @include animation(all, 1s);
       border-radius: 0;
-      border-top: 0px solid black;
-      border-left: 0px solid black;
-      border-right: 0px solid black;
-      border-bottom: 2px solid black;
+      border-top: 0px solid #609ae4;
+      border-left: 0px solid #609ae4;
+      border-right: 0px solid #609ae4;
+      border-bottom: 2px solid #609ae4;
 
       .searchbar-image {
         margin-left: 3%;
@@ -70,6 +71,7 @@
 
         input {
           width: 90%;
+          color: #609ae4;
         }
       }
     }
@@ -78,17 +80,17 @@
   .searchbar {
     width: 90%;
     height: 50px;
-    border: 2px black solid;
+    border: 2px #609ae4 solid;
     border-radius: 15px;
     text-align: center;
     display: flex;
-    @include animationwithdelay(all, 2.5s, 0.5s);
+    @include animationwithdelay(all, 1s, 0.5s);
 
     .searchbar-image {
       height: 100%;
       width: 20%;
-      border-right: 1px solid black;
-      @include animation(all, 5s);
+      border-right: 1px solid #609ae4;
+      @include animation(all, 2s);
       -webkit-appearance: div;
       -moz-appearance: div;
       appearance: div;
@@ -109,9 +111,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      @include animation(all, 5s);
+      @include animation(all, 2s);
 
       input {
+        color: #609ae4;
         width: 90%;
         height: 65%;
         border: 0;
@@ -125,11 +128,11 @@
   .searchlist {
     width: 100%;
     height: 0;
-    @include animation(all, 2s);
+    @include animation(all, 1s);
 
     &.searched {
       height: 100%;
-      @include animation(all, 2s);
+      @include animation(all, 1s);
 
       .searchlist-buttons {
         display: flex;
@@ -139,16 +142,15 @@
     .searchlist-buttons {
       width: 100%;
       height: 10%;
-      border-bottom: black solid 2px;
+      border-bottom: #609ae4 solid 2px;
       display: none;
       justify-content: space-around;
+      color: white;
 
       .button {
-        background-color: cadetblue;
         width: 80px;
         cursor: pointer;
         margin: 5px 0px;
-        border: black solid 2px;
         border-radius: 8px;
         align-items: center;
         display: flex;
@@ -156,20 +158,23 @@
         justify-content: center;
 
         &:hover {
-          background-color: lightblue;
+          color: pink;
         }
 
         &.selected {
-          background-color: blue;
+          color: pink;
+          font-weight: bold;
         }
       }
     }
     .searchlist-list {
       width: 100%;
       height: 90%;
+      color: white;
 
       .searchlist-tracks {
         overflow-y: scroll;
+        overflow-x: hidden;
         margin: 10px 0px;
         height: 80%;
 
@@ -178,13 +183,13 @@
         }
 
         &::-webkit-scrollbar-track {
-          -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+          -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
           @include setborderwithradius(unset, 10px);
         }
 
         &::-webkit-scrollbar-thumb {
           @include setborderwithradius(unset, 10px);
-          -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+          -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.5);
         }
       }
     }

@@ -69,7 +69,7 @@ const Profile = ({
                 <Trans>Not subscribed</Trans>
               )}
             </div>
-            <CustomButton type="button" onClick={handleSignOut}>
+            <CustomButton type="button" onClick={handleSignOut} abort>
               <Trans>Sign Out</Trans>
             </CustomButton>
           </div>
