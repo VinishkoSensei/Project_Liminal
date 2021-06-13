@@ -37,10 +37,9 @@ const CardMusic = ({
       {isNotRadio ? (
         <div className="card-big-controls">
           <div className="card-big-control">
-            <img
-              src="/images/forward.svg"
-              alt="backward"
+            <div
               style={{
+                backgroundImage: `url('/images/forward.svg')`,
                 WebkitTransform: 'scaleX(-1)',
                 transform: 'scaleX(-1)',
               }}
@@ -51,30 +50,50 @@ const CardMusic = ({
               className="card-big-control"
               onClick={() => playerRef.current.audio.current.pause()}
             >
-              <img src="/images/pause.svg" alt="pause" />
+              <div
+                style={{
+                  backgroundImage: `url('/images/pause.svg')`,
+                }}
+              />
             </div>
           ) : (
             <div
               className="card-big-control"
               onClick={() => playerRef.current.audio.current.play()}
             >
-              <img src="/images/play.svg" alt="play" />
+              <div
+                style={{
+                  backgroundImage: `url('/images/play.svg')`,
+                }}
+              />
             </div>
           )}
 
           <div className="card-big-control" onClick={() => playNextTrack()}>
-            <img src="/images/forward.svg" alt="forward" />
+            <div
+              style={{
+                backgroundImage: `url('/images/forward.svg')`,
+              }}
+            />
           </div>
         </div>
       ) : (
         <div className="card-big-controls">
           {isPlaying ? (
             <div className="card-big-control" onClick={() => emptySrc()}>
-              <img src="/images/pause.svg" alt="pause" />
+              <div
+                style={{
+                  backgroundImage: `url('/images/pause.svg')`,
+                }}
+              />
             </div>
           ) : (
             <div className="card-big-control" onClick={() => playRadio()}>
-              <img src="/images/play.svg" alt="play" />
+              <div
+                style={{
+                  backgroundImage: `url('/images/play.svg')`,
+                }}
+              />
             </div>
           )}
         </div>

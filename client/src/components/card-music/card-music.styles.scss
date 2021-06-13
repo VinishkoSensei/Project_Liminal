@@ -24,16 +24,17 @@
 
 .card-music {
   @include setwidthandheight(100%, 100%);
-  background-color: lightskyblue;
-  @include setborderwithradius(2px solid black, 52px);
-  @include flexeddiv(column, space-around);
+  background-color: #151527;
+  @include setborderwithradius(2px solid #94dadc, 52px);
+  @include flexeddiv(column, space-evenly);
 
   .card-big-cover-container {
-    @include setwidthandheight(60%, 50%);
-    @include setborderwithradius(2px solid black, 20px);
+    //@include setwidthandheight(60%, 50%);
+    @include setwidthandheight(230px, 230px);
+    @include setborderwithradius(2px solid #94dadc, 20px);
     overflow: hidden;
     margin: 0 auto;
-    background-color: rgb(212, 247, 248);
+    //background-color: rgb(212, 247, 248);
     background-repeat: no-repeat;
     background-size: 50% 50%;
     background-position: center;
@@ -50,12 +51,21 @@
     border-radius: 20%;
 
     .card-big-control {
-      @include setwidthandheight(30%, 100%);
+      @include setwidthandheight(30%, 60px);
       vertical-align: middle;
+      @include flexeddiv(row, center);
 
-      img {
-        @include setwidthandheight(100%, 40%);
+      div {
+        width: 50%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: 90% 90%;
+        background-position: center;
         cursor: pointer;
+
+        &:hover {
+          background-size: 100% 100%;
+        }
       }
     }
   }
