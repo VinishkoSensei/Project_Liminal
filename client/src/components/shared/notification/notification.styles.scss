@@ -46,19 +46,19 @@
     }
 
     &.error {
-      background-color: #f44336;
+      background-color: pink;
     }
 
     &.warning {
-      background-color: #ff9800;
+      background-color: rgb(255, 212, 172);
     }
 
     &.information {
-      background-color: #2196f3;
+      background-color: #609ae4;
     }
 
     &.success {
-      background-color: #04aa6d;
+      background-color: #94dadc;
     }
 
     @media screen and (orientation: portrait) {
