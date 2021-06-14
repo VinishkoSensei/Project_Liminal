@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { handleChangeSingle } from '../../utils/utils';
 import './card-userlist.styles.scss';
 
 const CardUserList = () => {
@@ -6,9 +7,6 @@ const CardUserList = () => {
   const [searchbarOnTop, setSearchbarOnTop] = useState(false);
   const [userList, setUserList] = useState([]);
   const [searchType, setSearchType] = useState('all');
-  const handleChange = (event) => {
-    setQuery(event.target.value);
-  };
 
   useEffect(() => {
     const getUserList = async () => {
@@ -33,7 +31,7 @@ const CardUserList = () => {
     setSearchbarOnTop(query.length);
   }, [query]);
 
-  const changeRole = async (id) => {
+  const changeRole = (id) => async () => {
     await fetch(`http://localhost:3001/changerole`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
@@ -41,12 +39,12 @@ const CardUserList = () => {
         id,
       }),
     });
+    setUserList((prevUserList) =>
+      prevUserList.map((user) =>
+        user.id === id ? { ...user, isadmin: !user.isadmin } : user
+      )
+    );
   };
-
-  /*const handleSubmit = async (event) => {
-    event.preventDefault();
-    setSearchbarOnTop(query.length);
-  };*/
 
   const getNameColor = (isAdmin, subscribed) => {
     if (isAdmin) return 'user admin';
@@ -69,7 +67,7 @@ const CardUserList = () => {
           </button>
         </div>
         <div className="searchbar-query">
-          <input type="text" onChange={handleChange} />
+          <input type="text" onChange={handleChangeSingle(setQuery)} />
         </div>
       </div>
       <div className={`searchlist${searchbarOnTop ? ' searched' : ''}`}>
@@ -124,7 +122,7 @@ const CardUserList = () => {
                     <div
                       className="user-menu-item"
                       style={{ backgroundImage: `url('/images/ordinary.svg')` }}
-                      onClick={() => changeRole(user.id)}
+                      onClick={changeRole(user.id)}
                     >
                       Make User
                     </div>
@@ -132,7 +130,7 @@ const CardUserList = () => {
                     <div
                       className="user-menu-item"
                       style={{ backgroundImage: `url('/images/admin.svg')` }}
-                      onClick={() => changeRole(user.id)}
+                      onClick={changeRole(user.id)}
                     >
                       Make Admin
                     </div>

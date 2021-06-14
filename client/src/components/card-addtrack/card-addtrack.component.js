@@ -5,6 +5,7 @@ import FormFileInput from '../forminputs/formfileinput/formfileinput.component';
 import CustomButton from '../custombutton/custombutton.component';
 import CreatableSelect from 'react-select/creatable';
 import TrackAnalysis from '../track-analysis/track-analysis.component';
+import { handleChange } from '../../utils/utils';
 import { Trans } from '@lingui/macro';
 import * as mm from 'music-metadata-browser';
 import _ from 'lodash';
@@ -66,11 +67,6 @@ const CardAddTrack = () => {
 
     getOptions();
   }, []);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setNewTrack({ ...newTrack, [name]: value });
-  };
 
   const handleChangeOption = (value, action) => {
     setNewTrack({ ...newTrack, [action.name]: value });
@@ -148,7 +144,7 @@ const CardAddTrack = () => {
       name: 'name',
       value: name,
       label: <Trans>Track name</Trans>,
-      handleChange: handleChange,
+      handleChange: handleChange(newTrack, setNewTrack),
       type: '',
       key: 'name',
     },
@@ -156,7 +152,7 @@ const CardAddTrack = () => {
       name: 'genrehint',
       value: genrehint,
       label: <Trans>Hint from track file</Trans>,
-      handleChange: handleChange,
+      handleChange: handleChange(newTrack, setNewTrack),
       type: 'hint',
       key: 'genrehint',
     },
@@ -175,7 +171,7 @@ const CardAddTrack = () => {
       name: 'authorhint',
       value: authorhint,
       label: <Trans>Hint from track file</Trans>,
-      handleChange: handleChange,
+      handleChange: handleChange(newTrack, setNewTrack),
       type: 'hint',
       key: 'authorhint',
     },

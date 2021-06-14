@@ -21,7 +21,7 @@ const MainMenu = ({ profile, flipCard, openAdminCard, isOpened }) => {
         ></div>
         {profile.isadmin ? (
           <SmallButton
-            onClick={() => openAdminCard('playlist')}
+            onClick={openAdminCard('playlist')}
             isHidden={isOpened}
           />
         ) : null}
@@ -43,10 +43,7 @@ const MainMenu = ({ profile, flipCard, openAdminCard, isOpened }) => {
           style={{ backgroundImage: `url('/images/music.svg')` }}
         ></div>
         {profile.isadmin ? (
-          <SmallButton
-            onClick={() => openAdminCard('track')}
-            isHidden={isOpened}
-          />
+          <SmallButton onClick={openAdminCard('track')} isHidden={isOpened} />
         ) : null}
       </div>
     </div>
