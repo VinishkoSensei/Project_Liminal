@@ -23,9 +23,11 @@
 }
 
 .review-main {
-  background-color: rgb(50, 143, 205);
-  @include setborderwithradius(1px solid black, 8px);
+  //background-color: #609ae4;
+  @include setborderwithradius(1px solid #609ae4, 8px);
   @include flexeddiv(row, unset);
+  @include animation(all, 0.8s);
+  color: white;
   text-align: center;
   margin-bottom: 10px;
   border-radius: 8px;
@@ -41,12 +43,18 @@
     opacity: 100%;
     @include animation(opacity, 2s);
   }
+
+  &:hover {
+    box-shadow: 0 0 5px #609ae4, 0 0 25px #609ae4, 0 0 50px #609ae4,
+      0 0 100px #609ae4;
+  }
 }
 
 .review-info {
-  background-color: rgb(50, 143, 205);
-  @include setborderwithradius(1px solid black, 8px);
+  //background-color: #609ae4;
+  @include setborderwithradius(1px solid #609ae4, 8px);
   @include flexeddiv(column, space-around);
+  color: white;
   text-align: center;
   padding: 10px 2px;
   margin-bottom: 10px;
@@ -62,7 +70,7 @@
 
   textarea {
     @include setborderwithradius(1px solid black, 4px);
-    background-color: rgba(255, 255, 255, 0.3);
+    //background-color: rgba(255, 255, 255, 0.3);
     height: 100px;
     overflow-y: auto;
     resize: none;
