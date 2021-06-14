@@ -96,10 +96,10 @@ const CardUserList = () => {
             {userList?.map((user, index) => (
               <div className="user-item" key={index}>
                 <div>
-                  {user.cover ? (
+                  {user.avatar ? (
                     <img
-                      src={`http://localhost:3001/gettrackcover/${user.cover}`}
-                      alt="cover"
+                      src={`http://localhost:3001/getprofileimage/${user.avatar}`}
+                      alt="profileimage"
                       width="60px"
                       height="60px"
                     />

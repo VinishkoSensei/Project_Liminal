@@ -18,8 +18,8 @@
 
 .small-btn {
   @include setwidthandheight(50px, 50px);
-  background-color: salmon;
-  @include setborderwithradius(2px solid black, 12px);
+  //background-color: salmon;
+  @include setborderwithradius(0px solid black, 12px);
   position: absolute;
   margin-top: 10px;
   right: 10px;
@@ -32,7 +32,8 @@
   z-index: 999;
 
   &:hover {
-    background-color: rgb(247, 198, 178);
+    //background-color: rgb(247, 198, 178);
+    background-size: 80% 90%;
   }
 
   &.hidden {

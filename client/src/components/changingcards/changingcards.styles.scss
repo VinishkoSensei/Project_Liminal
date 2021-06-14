@@ -30,6 +30,10 @@
   border-radius: $radius;
 }
 
+.react-card-back {
+  transform-style: flat !important;
+}
+
 .card-big-container {
   @include setwidthandheight(100%, 100%);
 
@@ -50,6 +54,7 @@
     position: absolute;
     z-index: 6;
     @include animation(all, 2s);
+    background-color: transparent;
 
     &.disabled {
       z-index: 5;

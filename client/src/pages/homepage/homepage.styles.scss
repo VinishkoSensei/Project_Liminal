@@ -25,22 +25,28 @@
 .main {
   @include setwidthandheight(100vw, 100vh);
   @include flexeddiv(column, unset);
+  background-color: #151527;
 
   .toppart {
     margin-bottom: 20px;
+    background: linear-gradient(to bottom, #575473, #6f5669, #151527);
   }
 
   .main-part {
     @include setwidthandheight(100%, unset);
     flex-grow: 2;
     @include flexeddiv(row, space-between);
+    background-image: url('http://localhost:3000/images/back.png');
+    background-size: 45% 45%;
+    background-repeat: no-repeat;
+    background-position: 95% 90%;
 
     .main-space {
-      @include setwidthandheight(80vw, unset);
-      padding: 10% 0;
+      @include setwidthandheight(55vw, unset);
+      padding: 4% 0;
 
       .main-container {
-        @include setwidthandheight(80%, 100%);
+        @include setwidthandheight(595px, 100%);
         margin: 0 auto;
 
         .cards-container {
@@ -50,7 +56,11 @@
           .auth {
             .card-big-primary,
             .card-big-secondary {
-              @include setwidthandheight(55%, 55%);
+              @include setwidthandheight(30%, 55%);
+
+              @media screen and (orientation: portrait) {
+                width: 70%;
+              }
             }
           }
 
@@ -59,31 +69,38 @@
             z-index: 3;
 
             .card-center-icon {
-              @include setwidthandheight(6%, 85%);
-              background-color: lightskyblue;
+              @include setwidthandheight(30px, 30px);
               margin: 0 auto;
-              @include setborderwithradius(2px solid black, 100%);
+              @include setborderwithradius(2px solid white, 100%);
               z-index: 3;
             }
           }
-
-          .react-card-back {
-            transform-style: flat !important;
-          }
         }
+
+        @media screen and (orientation: portrait) {
+          @include setwidthandheight(100%, 100%);
+        }
+      }
+
+      @media screen and (orientation: portrait) {
+        padding: 15% 0;
       }
     }
 
     .rightpanel {
-      @include setwidthandheight(20vw, 50vh);
+      @include setwidthandheight(12%, 50vh);
       @include flexeddiv(column, unset);
-      margin-right: 5px;
+      margin-right: 3%;
       font-size: 11pt;
 
       .news {
         background-color: lightsteelblue;
         @include setwidthandheight(unset, 50%);
         @include setborderwithradius(1px solid black, 8px);
+      }
+
+      @media screen and (orientation: portrait) {
+        width: 30%;
       }
     }
   }
