@@ -5,6 +5,7 @@ import FormFileInput from '../forminputs/formfileinput/formfileinput.component';
 import './card-signup.styles.scss';
 import { connect } from 'react-redux';
 import { signUpStart } from '../../redux/user/user.actions';
+import { handleChange, handleChangeWithFunction } from '../../utils/utils';
 import { Trans } from '@lingui/macro';
 
 const CardSignUp = ({ changedCards, signUpStart, error }) => {
@@ -46,12 +47,6 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
     }
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setSelectedItem({ ...selectedItem, [name]: value });
-    checkDoPasswordsMatch(name, value);
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (doPasswordsMatch)
@@ -78,7 +73,7 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
       name: 'email',
       value: email,
       label: <Trans>Email</Trans>,
-      handleChange: handleChange,
+      handleChange: handleChange(selectedItem, setSelectedItem),
       type: 'email',
       key: 'email',
     },
@@ -86,7 +81,7 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
       name: 'firstname',
       value: firstname,
       label: <Trans>First name</Trans>,
-      handleChange: handleChange,
+      handleChange: handleChange(selectedItem, setSelectedItem),
       type: 'text',
       key: 'firstname',
     },
@@ -94,7 +89,7 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
       name: 'lastname',
       value: lastname,
       label: <Trans>Last name</Trans>,
-      handleChange: handleChange,
+      handleChange: handleChange(selectedItem, setSelectedItem),
       type: 'text',
       key: 'lastname',
     },
@@ -102,7 +97,7 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
       name: 'date',
       value: date,
       label: '',
-      handleChange: handleChange,
+      handleChange: handleChange(selectedItem, setSelectedItem),
       type: 'date',
       key: 'date',
     },
@@ -110,7 +105,7 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
       name: 'phone',
       value: phone,
       label: <Trans>Phone</Trans>,
-      handleChange: handleChange,
+      handleChange: handleChange(selectedItem, setSelectedItem),
       type: 'tel',
       key: 'phone',
     },
@@ -125,14 +120,22 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
       name: 'password',
       value: password,
       label: <Trans>Password</Trans>,
-      handleChange: handleChange,
+      handleChange: handleChangeWithFunction(
+        selectedItem,
+        setSelectedItem,
+        checkDoPasswordsMatch
+      ),
       type: 'password',
       key: 'password',
     },
     {
       name: 'passwordconf',
       value: passwordconf,
-      handleChange: handleChange,
+      handleChange: handleChangeWithFunction(
+        selectedItem,
+        setSelectedItem,
+        checkDoPasswordsMatch
+      ),
       label: <Trans>Password confirmation</Trans>,
       type: 'password',
       key: 'passwordconf',

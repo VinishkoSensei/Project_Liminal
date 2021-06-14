@@ -41,7 +41,7 @@ const HomePage = ({ profile, checkUserSession }) => {
     checkUserSession();
   }, [checkUserSession]);
 
-  const openAdminCard = (item) => {
+  const openAdminCard = (item) => () => {
     setSelectedAdminItem(item);
     setIsOpened(true);
   };
@@ -78,6 +78,7 @@ const HomePage = ({ profile, checkUserSession }) => {
                     openAdminCard={openAdminCard}
                     isOpened={isOpened}
                   />
+
                   {chosenCard === 'broadcast' ? (
                     <CardMusic isNotRadio={false} playerRef={playerRef} />
                   ) : chosenCard === 'ai' ? (
@@ -114,6 +115,7 @@ const HomePage = ({ profile, checkUserSession }) => {
           {profile ? <Review /> : null}
         </div>
       </div>
+
       <CardProfile
         profileExpanded={profileExpanded}
         setProfileExpanded={setProfileExpanded}

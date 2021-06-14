@@ -4,17 +4,13 @@ import { connect } from 'react-redux';
 import { addNotificationStart } from '../../redux/notification/notification.actions';
 import CustomButton from '../custombutton/custombutton.component';
 import FormInput from '../forminputs/forminput/forminput.component';
+import { handleChange } from '../../utils/utils';
 import { Trans } from '@lingui/macro';
 
 const Review = ({ profileid, addNotificationStart }) => {
   const [minifiedProfile, setMinifiedProfile] = useState(true);
   const reviewInitialState = { theme: '', text: '' };
   const [review, setReview] = useState(reviewInitialState);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setReview({ ...review, [name]: value });
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -48,14 +44,14 @@ const Review = ({ profileid, addNotificationStart }) => {
             name="theme"
             value={review.theme}
             label="Review theme..."
-            handleChange={handleChange}
+            handleChange={handleChange(review, setReview)}
             required
           />
           <textarea
             placeholder="Review text..."
             value={review.text}
             name="text"
-            onChange={handleChange}
+            onChange={handleChange(review, setReview)}
           />
           <CustomButton type="submit" onClick={handleSubmit}>
             <Trans>Send</Trans>
