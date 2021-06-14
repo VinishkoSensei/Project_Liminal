@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import './profile.styles.scss';
 import CustomButton from '../custombutton/custombutton.component';
@@ -16,6 +16,10 @@ const Profile = ({
 }) => {
   const [minifiedProfile, setMinifiedProfile] = useState(true);
 
+  useEffect(() => {
+    if (!profile) setProfileExpanded(false);
+  }, [profile, setProfileExpanded]);
+
   const handleImgError = (e) => {
     e.target.onError = null;
     e.target.src = 'images/emptyprofile.svg';
@@ -31,10 +35,7 @@ const Profile = ({
       {profile ? (
         <div className="profile-panel">
           {profile.isadmin ? (
-            <SmallButton
-              onClick={() => openAdminCard('users')}
-              isHidden={isOpened}
-            />
+            <SmallButton onClick={openAdminCard('users')} isHidden={isOpened} />
           ) : null}
           <div
             className={`profile-main`}
@@ -53,7 +54,9 @@ const Profile = ({
           </div>
           <div
             className={`profile-info${minifiedProfile ? ' minified' : ''}`}
-            onClick={() => setProfileExpanded(!profileExpanded)}
+            onClick={() =>
+              setProfileExpanded((prevProfileExpanded) => !prevProfileExpanded)
+            }
           >
             <div>
               <i>{profile.email}</i>

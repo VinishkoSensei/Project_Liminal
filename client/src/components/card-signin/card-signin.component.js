@@ -4,6 +4,7 @@ import FormInput from '../forminputs/forminput/forminput.component';
 import './card-signin.styles.scss';
 import { connect } from 'react-redux';
 import { signInStart } from '../../redux/user/user.actions';
+import { handleChange } from '../../utils/utils';
 import { Trans } from '@lingui/macro';
 
 const CardSignIn = ({ changedCards, signInStart }) => {
@@ -13,10 +14,6 @@ const CardSignIn = ({ changedCards, signInStart }) => {
   };
 
   const [selectedItem, setSelectedItem] = useState(selectedItemInitialState);
-  const handleChange = (event) => {
-    const { value, name } = event.target;
-    setSelectedItem({ ...selectedItem, [name]: value });
-  };
   const { email, password } = selectedItem;
   const Inputs = [
     {
@@ -48,7 +45,7 @@ const CardSignIn = ({ changedCards, signInStart }) => {
             name={input.name}
             value={input.value}
             label={input.label}
-            handleChange={handleChange}
+            handleChange={handleChange(selectedItem, setSelectedItem)}
             type={input.type}
             key={input.key}
             required
@@ -62,15 +59,9 @@ const CardSignIn = ({ changedCards, signInStart }) => {
     </div>
   );
 };
-/*
-const mapStateToProps = (state) => ({
-  isPlaying: state.music.isPlaying,
-  currentTrack: state.music.currentTrack,
-});
-*/
+
 const mapDispatchToProps = (dispatch) => ({
   signInStart: (email, password) => dispatch(signInStart(email, password)),
 });
 
-//export default connect(mapStateToProps, mapDispatchToProps)(CardMusic);
 export default connect(null, mapDispatchToProps)(CardSignIn);
