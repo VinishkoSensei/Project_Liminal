@@ -1,19 +1,8 @@
 import React from 'react';
 import './custombutton.styles.scss';
 
-const CustomButton = ({
-  children,
-  inverted,
-  abort,
-  transparent,
-  ...otherProps
-}) => (
-  <button
-    className={`custombutton${inverted ? ' inverted' : ''}${
-      abort ? ' abort' : ''
-    }${transparent ? ' transparent' : ''}`}
-    {...otherProps}
-  >
+const CustomButton = ({ children, abort, ...otherProps }) => (
+  <button className={`custombutton${abort ? ' abort' : ''}`} {...otherProps}>
     {children}
   </button>
 );

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import './track-analysis.styles.scss';
 import Switch from '../shared/switch/switch.component';
 import * as mm from 'music-metadata-browser';
@@ -46,7 +46,7 @@ const TrackAnalysis = ({
     return audio;
   };
 
-  const createAudioContextAndGetAnalyser = (audio) => {
+  const createAudioContextAndGetAnalyser = useCallback((audio) => {
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const source = audioCtx.createMediaElementSource(audio);
     const analyser = audioCtx.createAnalyser();
@@ -54,7 +54,7 @@ const TrackAnalysis = ({
     analyser.smoothingTimeConstant = 0.9;
     source.connect(analyser);
     return analyser;
-  };
+  }, []);
 
   const handleInputChange = (id) => (event) => {
     const { name, value } = event.target;
@@ -91,7 +91,7 @@ const TrackAnalysis = ({
           const audio = createHiddenAudio(e.target.result, 0, 4.0);
           createAudio(e.target.result);
           audio.play();
-          audio.onended = (e) => {
+          audio.onended = () => {
             setFinishedAnalysing(true);
           };
 
@@ -159,13 +159,13 @@ const TrackAnalysis = ({
                   }
                 }
               }
-              const barHeight = elem * 2;
+              const barHeight = elem / 2;
               fillCanvas({
                 canvasCtx: canvasCtx,
                 color: {
-                  red: barHeight / 3 + 100,
+                  red: (elem * 2) / 3 + 100,
                   green: 50,
-                  blue: 255 - barHeight,
+                  blue: 255 - elem,
                 },
                 rectangle: {
                   x: x,
@@ -180,31 +180,31 @@ const TrackAnalysis = ({
             fillCanvas({
               canvasCtx: canvasCtx,
               color: {
-                red: 0,
-                green: 0,
-                blue: 255,
+                red: 255,
+                green: 20,
+                blue: 147,
               },
               rectangle: {
                 x: 0,
                 y: 0,
                 width:
                   (canvas.width * audio.currentTime) / metadata.format.duration,
-                height: 20,
+                height: 5,
               },
             });
 
             fillCanvas({
               canvasCtx: canvasCtx,
               color: {
-                red: 100,
-                green: 200,
-                blue: 200,
+                red: 138,
+                green: 43,
+                blue: 226,
               },
               rectangle: {
                 x: 0,
-                y: 20,
+                y: canvas.height - (canvas.height * sum) / 255,
                 width: canvas.width,
-                height: (canvas.height * sum) / 5 / 255,
+                height: canvas.height,
               },
             });
             return false;
@@ -214,7 +214,12 @@ const TrackAnalysis = ({
         });
       };
     }
-  }, [target, setSuggestedPoints, setFinishedAnalysing]);
+  }, [
+    target,
+    setSuggestedPoints,
+    setFinishedAnalysing,
+    createAudioContextAndGetAnalyser,
+  ]);
 
   return (
     <div key={uniqueKey}>

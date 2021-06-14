@@ -1,20 +1,39 @@
+@mixin animation($type, $sec) {
+  -webkit-transition: $type $sec ease;
+  -moz-transition: $type $sec ease;
+  -o-transition: $type $sec ease;
+  -ms-transition: $type $sec ease;
+  transition: $type $sec ease;
+}
+
+@mixin setwidthandheight($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin setborderwithradius($border, $radius) {
+  border: $border;
+  border-radius: $radius;
+}
+
 .btn-back {
-  width: 50px;
-  height: 50px;
-  background-color: lightskyblue;
-  border: 1px solid black;
-  border-radius: 12px;
+  @include animation(box-shadow, 0.3s);
+  box-shadow: 0 0 5px #609ae4, 0 0 25px #609ae4;
+  @include setwidthandheight(55px, 55px);
+  @include setborderwithradius(1px solid #609ae4, 12px);
   position: absolute;
-  margin-left: 20px;
+  margin-left: 3%;
   cursor: pointer;
   background-size: 70% 80%;
   background-position: center;
   background-repeat: no-repeat;
 
   &:hover {
-    background-color: lightsalmon;
+    background-color: pink;
+    border: 1px solid pink;
     background-image: url('http://localhost:3000/images/play.svg') !important;
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
+    box-shadow: 0 0 5px pink, 0 0 25px pink, 0 0 50px pink;
   }
 }

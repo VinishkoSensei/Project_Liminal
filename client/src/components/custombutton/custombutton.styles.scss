@@ -1,29 +1,25 @@
 .custombutton {
-  //min-width: 165px;
   width: 100%;
-  //height: 50px;
   letter-spacing: 0.5px;
-  //line-height: 50px;
-  height: 30px;
-  line-height: 30px;
-  padding: 0 35px 0 35px;
-  font-size: 11px;
-  background-color: orange;
-  color: white;
+  height: auto;
+  line-height: 26px;
+  padding: 0 10%;
+  background-color: #94dadc;
+  color: black;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   display: flex;
   justify-content: center;
-  //font-family: Roboto;
+  border: 2px solid #94dadc;
   font-size: 11pt;
   transition: all 0.5s;
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
 
   &:hover {
-    background-color: black;
-    color: white;
+    background-color: transparent;
+    color: #94dadc;
   }
 
   &:focus,
@@ -34,42 +30,17 @@
   &:disabled {
     background-color: rgb(78, 78, 78);
     color: rgb(158, 158, 158);
+    border: 2px solid rgb(78, 78, 78);
     cursor: not-allowed;
   }
 
   &.abort {
-    background-color: red;
-    color: white;
-    border: 2px solid red;
+    background-color: pink;
+    border: 2px solid pink;
 
     &:hover {
-      background-color: black;
-      border: 2px solid black;
-      color: white;
-    }
-  }
-
-  &.inverted {
-    background-color: transparent;
-    color: white;
-    border: 2px solid white;
-
-    &:hover {
-      background-color: orange;
-      border: 2px solid orange;
-      color: white;
-    }
-  }
-
-  &.transparent {
-    background-color: transparent;
-    color: black;
-    border: 2px solid black;
-
-    &:hover {
-      background-color: black;
-      border: 2px solid black;
-      color: white;
+      background-color: transparent;
+      color: pink;
     }
   }
 }
