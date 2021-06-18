@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Switch from '../shared/switch/switch.component';
 import './card-ai.styles.scss';
+import { Trans } from '@lingui/macro';
 
-const CardAi = ({ changedCards }) => {
+const CardAi = () => {
   const [checked, setChecked] = useState(false);
   const handleCheckboxChange = () => {
     setChecked(!checked);
@@ -11,7 +12,9 @@ const CardAi = ({ changedCards }) => {
   return (
     <div className="card-ai">
       <div className="card-ai-switch">
-        <span>Smart Volume Contol:</span>
+        <span>
+          <Trans>Smart Volume Contol:</Trans>
+        </span>
         <Switch
           index="swich-ai"
           checked={checked}
