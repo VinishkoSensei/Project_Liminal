@@ -30,8 +30,6 @@ const Review = ({ profileid, addNotificationStart }) => {
     }
   };
 
-  const placeholder = <Trans>Text...</Trans>;
-
   return (
     <div>
       <div className="review-container">
