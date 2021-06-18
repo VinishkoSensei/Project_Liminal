@@ -94,51 +94,63 @@ const CardUserList = () => {
         </div>
         <div className="searchlist-list">
           <div className="searchlist-users">
-            {userList?.map((user, index) => (
-              <div className="user-item" key={index}>
-                <div>
-                  {user.avatar ? (
-                    <img
-                      src={`http://localhost:3001/getprofileimage/${user.avatar}`}
-                      alt="profileimage"
-                      width="60px"
-                      height="60px"
-                    />
-                  ) : null}
-                </div>
-                <div className="user-info">
-                  <div className={getNameColor(user.isadmin, user.subscribed)}>
-                    {user.first_name} {user.last_name}
-                  </div>
+            {userList?.map((user, index) => {
+              const {
+                id,
+                first_name,
+                last_name,
+                subscribed,
+                email,
+                phone,
+                birth_date,
+                isadmin,
+                avatar,
+              } = user;
+              return (
+                <div className="user-item" key={index}>
                   <div>
-                    <i>{user.email}</i>
+                    {avatar ? (
+                      <img
+                        src={`http://localhost:3001/getprofileimage/${user.avatar}`}
+                        alt="profileimage"
+                        width="60px"
+                        height="60px"
+                      />
+                    ) : null}
+                  </div>
+                  <div className="user-info">
+                    <div className={getNameColor(isadmin, subscribed)}>
+                      {first_name} {last_name}
+                    </div>
+                    <div>
+                      <i>{email}</i>
+                    </div>
+                  </div>
+                  <div className="user-duration">
+                    <div>{phone}</div>
+                    <div>{birth_date}</div>
+                  </div>
+                  <div className="user-menu">
+                    <div className="user-menu-text">
+                      {isadmin ? (
+                        <Trans>Make User</Trans>
+                      ) : (
+                        <Trans>Make Admin</Trans>
+                      )}
+                    </div>
+                    <div
+                      className="user-menu-item"
+                      style={{
+                        backgroundImage: `url(${
+                          isadmin ? '/images/ordinary.svg' : '/images/admin.svg'
+                        })`,
+                      }}
+                      onClick={changeRole(id)}
+                    ></div>
                   </div>
                 </div>
-                <div className="user-duration">
-                  <div>{user.phone}</div>
-                  <div>{user.birth_date}</div>
-                </div>
-                <div className="user-menu">
-                  {user.isadmin ? (
-                    <div
-                      className="user-menu-item"
-                      style={{ backgroundImage: `url('/images/ordinary.svg')` }}
-                      onClick={changeRole(user.id)}
-                    >
-                      <Trans>Make User</Trans>
-                    </div>
-                  ) : (
-                    <div
-                      className="user-menu-item"
-                      style={{ backgroundImage: `url('/images/admin.svg')` }}
-                      onClick={changeRole(user.id)}
-                    >
-                      <Trans>Make Admin</Trans>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
