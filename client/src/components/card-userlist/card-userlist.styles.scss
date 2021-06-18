@@ -32,15 +32,14 @@
 
 .card-userlist {
   @include setwidthandheight(100%, 100%);
-  background-color: #151527;
   @include setborderwithradius(2px solid #609ae4, 52px);
   @include flexeddiv(column, flex-start);
-  align-items: center;
   @include animation(all, 2s);
+  align-items: center;
+  background-color: #151527;
 
   .placeholder {
-    width: 100%;
-    height: 46%;
+    @include setwidthandheight(100%, 46%);
     @include animation(all, 2s);
   }
 
@@ -77,26 +76,22 @@
   }
 
   .searchbar {
-    width: 90%;
-    height: 50px;
-    border: 2px #609ae4 solid;
-    border-radius: 15px;
+    @include setwidthandheight(90%, 50px);
+    @include setborderwithradius(2px #609ae4 solid, 15px);
+    @include animationwithdelay(all, 1s, 0.5s);
     text-align: center;
     display: flex;
-    @include animationwithdelay(all, 1s, 0.5s);
 
     .searchbar-image {
-      height: 100%;
-      width: 20%;
-      border-right: 1px solid #609ae4;
+      @include setwidthandheight(20%, 100%);
       @include animation(all, 2s);
+      border-right: 1px solid #609ae4;
       -webkit-appearance: div;
       -moz-appearance: div;
       appearance: div;
 
       .searchbar-image-button {
-        width: 100%;
-        height: 100%;
+        @include setwidthandheight(100%, 100%);
         background-color: transparent;
         border: 0;
         outline: none;
@@ -105,17 +100,15 @@
     }
 
     .searchbar-query {
-      height: 100%;
-      width: 100%;
+      @include setwidthandheight(100%, 100%);
+      @include animation(all, 2s);
       display: flex;
       justify-content: center;
       align-items: center;
-      @include animation(all, 2s);
 
       input {
+        @include setwidthandheight(90%, 65%);
         color: #609ae4;
-        width: 90%;
-        height: 65%;
         border: 0;
         font-size: x-large;
         outline: none;
@@ -125,13 +118,12 @@
   }
 
   .searchlist {
-    width: 100%;
-    height: 0;
+    @include setwidthandheight(100%, 0);
     @include animation(all, 1s);
 
     &.searched {
-      height: 100%;
       @include animation(all, 1s);
+      height: 100%;
 
       .searchlist-buttons {
         display: flex;
@@ -139,22 +131,19 @@
     }
 
     .searchlist-buttons {
-      width: 100%;
-      height: 10%;
+      @include setwidthandheight(100%, 10%);
       border-bottom: #609ae4 solid 2px;
       display: none;
       justify-content: space-around;
       color: white;
 
       .button {
+        @include flexeddiv(column, center);
         width: 80px;
         cursor: pointer;
         margin: 5px 0px;
         border-radius: 8px;
         align-items: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
 
         &:hover {
           color: pink;
@@ -167,8 +156,7 @@
       }
     }
     .searchlist-list {
-      width: 100%;
-      height: 90%;
+      @include setwidthandheight(100%, 90%);
       color: white;
 
       .searchlist-users {
@@ -234,25 +222,29 @@
           }
 
           .user-menu {
-            width: 40%;
-            height: 60px;
+            @include setwidthandheight(fit-content, 60px);
+            @include setborderwithradius(1px #94dadc solid, 5px);
             display: none;
             justify-content: flex-end;
             flex-direction: row;
-          }
-          .user-menu-item {
             background-color: #94dadc;
             opacity: 0.8;
-            border: 1px #94dadc solid;
-            border-radius: 5px;
-            width: 75px;
-            background-repeat: no-repeat;
-            background-position: right;
-            background-size: 38% 55%;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            color: white;
+            padding-left: 2px;
+
+            .user-menu-text {
+              @include flexeddiv(column, center);
+              height: 100%;
+              max-width: 130px;
+            }
+
+            .user-menu-item {
+              @include flexeddiv(column, center);
+              width: 40px;
+              background-repeat: no-repeat;
+              background-position: center;
+              background-size: 80% 80%;
+              color: white;
+            }
 
             &:hover {
               background-color: pink;
