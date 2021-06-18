@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Track from '../track/track.component';
 import { handleChangeSingle } from '../../utils/utils';
 import './card-search.styles.scss';
+import { Trans } from '@lingui/macro';
 
 const CardSearch = ({
   changedCards,
@@ -70,19 +71,19 @@ const CardSearch = ({
             className={`button${searchType === 'all' ? ' selected' : ''}`}
             onClick={() => setSearchType('all')}
           >
-            All
+            <Trans>All</Trans>
           </div>
           <div
             className={`button${searchType === 'authors' ? ' selected' : ''}`}
             onClick={() => setSearchType('authors')}
           >
-            Authors
+            <Trans>Authors</Trans>
           </div>
           <div
             className={`button${searchType === 'tracks' ? ' selected' : ''}`}
             onClick={() => setSearchType('tracks')}
           >
-            Tracks
+            <Trans>Tracks</Trans>
           </div>
         </div>
         <div className="searchlist-list">

@@ -30,6 +30,8 @@ const Review = ({ profileid, addNotificationStart }) => {
     }
   };
 
+  const placeholder = <Trans>Text...</Trans>;
+
   return (
     <div>
       <div className="review-container">
@@ -37,13 +39,15 @@ const Review = ({ profileid, addNotificationStart }) => {
           className={`review-main`}
           onClick={() => setMinifiedProfile(!minifiedProfile)}
         >
-          <div className="review-container-main">Leave a reply</div>
+          <div className="review-container-main">
+            <Trans>Leave a reply</Trans>
+          </div>
         </div>
         <form className={`review-info${minifiedProfile ? ' minified' : ''}`}>
           <FormInput
             name="theme"
             value={review.theme}
-            label="Theme..."
+            label={<Trans>Theme...</Trans>}
             handleChange={handleChange(review, setReview)}
             required
           />
