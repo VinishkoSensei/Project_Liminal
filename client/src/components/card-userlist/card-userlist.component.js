@@ -130,7 +130,7 @@ const CardUserList = () => {
                     <div>{phone}</div>
                     <div>{birth_date}</div>
                   </div>
-                  <div className="user-menu">
+                  <div className="user-menu" onClick={changeRole(id)}>
                     <div className="user-menu-text">
                       {isadmin ? (
                         <Trans>Make User</Trans>
@@ -145,7 +145,6 @@ const CardUserList = () => {
                           isadmin ? '/images/ordinary.svg' : '/images/admin.svg'
                         })`,
                       }}
-                      onClick={changeRole(id)}
                     ></div>
                   </div>
                 </div>
