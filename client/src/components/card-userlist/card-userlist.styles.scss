@@ -239,12 +239,11 @@
             display: none;
             justify-content: flex-end;
             flex-direction: row;
-            color: black;
           }
           .user-menu-item {
-            background-color: lightskyblue;
+            background-color: #94dadc;
             opacity: 0.8;
-            border: 1px black solid;
+            border: 1px #94dadc solid;
             border-radius: 5px;
             width: 75px;
             background-repeat: no-repeat;
@@ -253,6 +252,12 @@
             display: flex;
             justify-content: center;
             flex-direction: column;
+            color: white;
+
+            &:hover {
+              background-color: pink;
+              border: 1px pink solid;
+            }
           }
         }
       }
