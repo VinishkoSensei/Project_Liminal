@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { handleChangeSingle } from '../../utils/utils';
 import './card-userlist.styles.scss';
+import { Trans } from '@lingui/macro';
 
 const CardUserList = () => {
   const [query, setQuery] = useState('');
@@ -76,19 +77,19 @@ const CardUserList = () => {
             className={`button${searchType === 'all' ? ' selected' : ''}`}
             onClick={() => setSearchType('all')}
           >
-            All
+            <Trans>All</Trans>
           </div>
           <div
             className={`button${searchType === 'admin' ? ' selected' : ''}`}
             onClick={() => setSearchType('admin')}
           >
-            Admins
+            <Trans>Admins</Trans>
           </div>
           <div
             className={`button${searchType === 'regular' ? ' selected' : ''}`}
             onClick={() => setSearchType('regular')}
           >
-            Regular
+            <Trans>Regular</Trans>
           </div>
         </div>
         <div className="searchlist-list">
@@ -124,7 +125,7 @@ const CardUserList = () => {
                       style={{ backgroundImage: `url('/images/ordinary.svg')` }}
                       onClick={changeRole(user.id)}
                     >
-                      Make User
+                      <Trans>Make User</Trans>
                     </div>
                   ) : (
                     <div
@@ -132,7 +133,7 @@ const CardUserList = () => {
                       style={{ backgroundImage: `url('/images/admin.svg')` }}
                       onClick={changeRole(user.id)}
                     >
-                      Make Admin
+                      <Trans>Make Admin</Trans>
                     </div>
                   )}
                 </div>
