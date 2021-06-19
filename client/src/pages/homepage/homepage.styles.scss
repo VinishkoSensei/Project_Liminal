@@ -1,41 +1,19 @@
-@mixin animation($type, $sec) {
-  -webkit-transition: $type $sec ease;
-  -moz-transition: $type $sec ease;
-  -o-transition: $type $sec ease;
-  -ms-transition: $type $sec ease;
-  transition: $type $sec ease;
-}
-
-@mixin flexeddiv($flexdirection, $justifycontent) {
-  display: flex;
-  flex-direction: $flexdirection;
-  justify-content: $justifycontent;
-}
-
-@mixin setwidthandheight($width, $height) {
-  width: $width;
-  height: $height;
-}
-
-@mixin setborderwithradius($border, $radius) {
-  border: $border;
-  border-radius: $radius;
-}
+@use '../../styles/base';
 
 .main {
   @include setwidthandheight(100vw, 100vh);
   @include flexeddiv(column, unset);
-  background-color: #151527;
+  background-color: $cardbackcolor;
 
   .toppart {
     margin-bottom: 20px;
-    background: linear-gradient(to bottom, #575473, #6f5669, #151527);
+    background: linear-gradient(to bottom, #575473, #6f5669, $cardbackcolor);
   }
 
   .main-part {
     @include setwidthandheight(100%, unset);
-    flex-grow: 2;
     @include flexeddiv(row, space-between);
+    flex-grow: 2;
     background-image: url('http://localhost:3000/images/back.png');
     background-size: 45% 45%;
     background-repeat: no-repeat;
@@ -70,9 +48,9 @@
 
             .card-center-icon {
               @include setwidthandheight(30px, 30px);
-              margin: 0 auto;
               @include setborderwithradius(2px solid white, 100%);
               z-index: 3;
+              margin: 0 auto;
             }
           }
         }
@@ -94,9 +72,9 @@
       font-size: 11pt;
 
       .news {
-        background-color: lightsteelblue;
         @include setwidthandheight(unset, 50%);
         @include setborderwithradius(1px solid black, 8px);
+        background-color: lightsteelblue;
       }
 
       @media screen and (orientation: portrait) {

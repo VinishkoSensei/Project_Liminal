@@ -4,14 +4,14 @@
   height: auto;
   line-height: 26px;
   padding: 0 10%;
-  background-color: #94dadc;
+  background-color: $primcardcolor;
   color: black;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   display: flex;
   justify-content: center;
-  border: 2px solid #94dadc;
+  border: 2px solid $primcardcolor;
   font-size: 11pt;
   transition: all 0.5s;
   -webkit-transition: all 0.5s;
@@ -19,7 +19,7 @@
 
   &:hover {
     background-color: transparent;
-    color: #94dadc;
+    color: $primcardcolor;
   }
 
   &:focus,

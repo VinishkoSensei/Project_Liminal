@@ -1,40 +1,16 @@
-@mixin animation($type, $sec) {
-  -webkit-transition: $type $sec ease;
-  -moz-transition: $type $sec ease;
-  -o-transition: $type $sec ease;
-  -ms-transition: $type $sec ease;
-  transition: $type $sec ease;
-}
-
-@mixin flexeddiv($flexdirection, $justifycontent) {
-  display: flex;
-  flex-direction: $flexdirection;
-  justify-content: $justifycontent;
-}
-
-@mixin setwidthandheight($width, $height) {
-  width: $width;
-  height: $height;
-}
-
-@mixin setborderwithradius($border, $radius) {
-  border: $border;
-  border-radius: $radius;
-}
+@use '../../styles/base';
 
 .card-music {
   @include setwidthandheight(100%, 100%);
-  background-color: #151527;
-  @include setborderwithradius(2px solid #94dadc, 52px);
+  @include setborderwithradius(2px solid $primcardcolor, 52px);
   @include flexeddiv(column, space-evenly);
+  background-color: $cardbackcolor;
 
   .card-big-cover-container {
-    //@include setwidthandheight(60%, 50%);
     @include setwidthandheight(230px, 230px);
-    @include setborderwithradius(2px solid #94dadc, 20px);
+    @include setborderwithradius(2px solid $primcardcolor, 20px);
     overflow: hidden;
     margin: 0 auto;
-    //background-color: rgb(212, 247, 248);
     background-repeat: no-repeat;
     background-size: 50% 50%;
     background-position: center;
@@ -56,8 +32,8 @@
 
     .card-big-control {
       @include setwidthandheight(30%, 60px);
-      vertical-align: middle;
       @include flexeddiv(row, center);
+      vertical-align: middle;
 
       div {
         width: 50%;

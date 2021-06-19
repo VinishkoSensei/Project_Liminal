@@ -1,26 +1,10 @@
-@mixin animation($type, $sec) {
-  -webkit-transition: $type $sec ease;
-  -moz-transition: $type $sec ease;
-  -o-transition: $type $sec ease;
-  -ms-transition: $type $sec ease;
-  transition: $type $sec ease;
-}
-
-@mixin setwidthandheight($width, $height) {
-  width: $width;
-  height: $height;
-}
-
-@mixin setborderwithradius($border, $radius) {
-  border: $border;
-  border-radius: $radius;
-}
+@use '../../../styles/base';
 
 .btn-back {
   @include animation(box-shadow, 0.3s);
-  box-shadow: 0 0 5px #609ae4, 0 0 25px #609ae4;
   @include setwidthandheight(55px, 55px);
-  @include setborderwithradius(1px solid #609ae4, 12px);
+  @include setborderwithradius(1px solid $seccardcolor, 12px);
+  box-shadow: 0 0 5px $seccardcolor, 0 0 25px $seccardcolor;
   position: absolute;
   margin-left: 3%;
   cursor: pointer;

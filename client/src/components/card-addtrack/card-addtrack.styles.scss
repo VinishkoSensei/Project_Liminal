@@ -1,38 +1,16 @@
-@mixin animation($type, $sec) {
-  -webkit-transition: $type $sec ease;
-  -moz-transition: $type $sec ease;
-  -o-transition: $type $sec ease;
-  -ms-transition: $type $sec ease;
-  transition: $type $sec ease;
-}
-
-@mixin flexeddiv($flexdirection, $justifycontent) {
-  display: flex;
-  flex-direction: $flexdirection;
-  justify-content: $justifycontent;
-}
-
-@mixin setwidthandheight($width, $height) {
-  width: $width;
-  height: $height;
-}
-
-@mixin setborderwithradius($border, $radius) {
-  border: $border;
-  border-radius: $radius;
-}
+@use '../../styles/base';
 
 .card-admin-main-addtrack {
   @include setwidthandheight(100%, 90%);
-  background-color: #151527;
-  @include setborderwithradius(2px solid #94dadc, 30px);
+  @include setborderwithradius(2px solid $primcardcolor, 30px);
   @include flexeddiv(unset, center);
+  background-color: $cardbackcolor;
   align-items: center;
   margin: 28px 5px 0 2.5px;
 
   .forminput {
+    @include setborderwithradius(1px solid $primcardcolor, 4px);
     margin: 16px 0;
-    @include setborderwithradius(1px solid #94dadc, 4px);
     border-color: hsl(0, 0%, 80%);
     padding: 10px 0;
   }
