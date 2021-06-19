@@ -1,32 +1,10 @@
-@mixin animation($type, $sec) {
-  -webkit-transition: $type $sec ease;
-  -moz-transition: $type $sec ease;
-  -o-transition: $type $sec ease;
-  -ms-transition: $type $sec ease;
-  transition: $type $sec ease;
-}
-
-@mixin flexeddiv($flexdirection, $justifycontent) {
-  display: flex;
-  flex-direction: $flexdirection;
-  justify-content: $justifycontent;
-}
-
-@mixin setwidthandheight($width, $height) {
-  width: $width;
-  height: $height;
-}
-
-@mixin setborderwithradius($border, $radius) {
-  border: $border;
-  border-radius: $radius;
-}
+@use '../../styles/base';
 
 .card-playlist {
   @include setwidthandheight(100%, 100%);
-  background-color: #151527;
-  @include setborderwithradius(2px solid #609ae4, 52px);
+  @include setborderwithradius(2px solid $seccardcolor, 52px);
   @include flexeddiv(unset, center);
+  background-color: $cardbackcolor;
   align-items: center;
 
   .card-big-table {
@@ -40,15 +18,15 @@
     }
 
     &::-webkit-scrollbar-track {
+      @include setborderwithradius(unset, 10px);
       box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
       -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
-      @include setborderwithradius(unset, 10px);
     }
 
     &::-webkit-scrollbar-thumb {
+      @include setborderwithradius(unset, 10px);
       box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.5);
       -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.5);
-      @include setborderwithradius(unset, 10px);
     }
   }
 }

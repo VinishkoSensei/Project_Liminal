@@ -1,8 +1,4 @@
-@mixin flexeddiv($flexdirection, $justifycontent) {
-  display: flex;
-  flex-direction: $flexdirection;
-  justify-content: $justifycontent;
-}
+@use '../../styles/base';
 
 .track {
   @include flexeddiv(row, space-between);
@@ -12,7 +8,7 @@
   height: 60px;
 
   &:hover {
-    background-color: #609ae4;
+    background-color: $seccardcolor;
   }
 
   .track-info {

@@ -54,11 +54,11 @@
     }
 
     &.information {
-      background-color: #609ae4;
+      background-color: $seccardcolor;
     }
 
     &.success {
-      background-color: #94dadc;
+      background-color: $primcardcolor;
     }
 
     @media screen and (orientation: portrait) {
