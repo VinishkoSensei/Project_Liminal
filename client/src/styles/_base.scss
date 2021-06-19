@@ -1,0 +1,35 @@
+@mixin animation($type, $sec) {
+  -webkit-transition: $type $sec ease;
+  -moz-transition: $type $sec ease;
+  -o-transition: $type $sec ease;
+  -ms-transition: $type $sec ease;
+  transition: $type $sec ease;
+}
+
+@mixin animationwithdelay($type, $sec, $cd) {
+  -webkit-transition: $type $sec ease $cd;
+  -moz-transition: $type $sec ease $cd;
+  -o-transition: $type $sec ease $cd;
+  -ms-transition: $type $sec ease $cd;
+  transition: $type $sec ease $cd;
+}
+
+@mixin flexeddiv($flexdirection, $justifycontent) {
+  display: flex;
+  flex-direction: $flexdirection;
+  justify-content: $justifycontent;
+}
+
+@mixin setwidthandheight($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin setborderwithradius($border, $radius) {
+  border: $border;
+  border-radius: $radius;
+}
+
+$primcardcolor: #94dadc;
+$seccardcolor: #609ae4;
+$cardbackcolor: #151527;

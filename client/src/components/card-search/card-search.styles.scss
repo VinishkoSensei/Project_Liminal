@@ -1,48 +1,18 @@
-@mixin animation($type, $sec) {
-  -webkit-transition: $type $sec ease;
-  -moz-transition: $type $sec ease;
-  -o-transition: $type $sec ease;
-  -ms-transition: $type $sec ease;
-  transition: $type $sec ease;
-}
-
-@mixin animationwithdelay($type, $sec, $cd) {
-  -webkit-transition: $type $sec ease $cd;
-  -moz-transition: $type $sec ease $cd;
-  -o-transition: $type $sec ease $cd;
-  -ms-transition: $type $sec ease $cd;
-  transition: $type $sec ease $cd;
-}
-
-@mixin flexeddiv($flexdirection, $justifycontent) {
-  display: flex;
-  flex-direction: $flexdirection;
-  justify-content: $justifycontent;
-}
-
-@mixin setwidthandheight($width, $height) {
-  width: $width;
-  height: $height;
-}
-
-@mixin setborderwithradius($border, $radius) {
-  border: $border;
-  border-radius: $radius;
-}
+@use '../../styles/base';
 
 .card-search {
   @include setwidthandheight(100%, 100%);
-  background-color: #151527;
-  @include setborderwithradius(2px solid #609ae4, 52px);
-  @include flexeddiv(column, flex-start);
-  align-items: center;
   @include animation(all, 2s);
+  @include setborderwithradius(2px solid $seccardcolor, 52px);
+  @include flexeddiv(column, flex-start);
+  background-color: $cardbackcolor;
+  align-items: center;
   overflow: hidden;
 
   .placeholder {
+    @include animation(all, 2s);
     width: 100%;
     height: 46%;
-    @include animation(all, 2s);
   }
 
   &.searched {
@@ -57,10 +27,10 @@
       @include setwidthandheight(100%, 8%);
       @include animation(all, 1s);
       border-radius: 0;
-      border-top: 0px solid #609ae4;
-      border-left: 0px solid #609ae4;
-      border-right: 0px solid #609ae4;
-      border-bottom: 2px solid #609ae4;
+      border-top: 0px solid $seccardcolor;
+      border-left: 0px solid $seccardcolor;
+      border-right: 0px solid $seccardcolor;
+      border-bottom: 2px solid $seccardcolor;
 
       .searchbar-image {
         margin-left: 3%;
@@ -71,26 +41,26 @@
 
         input {
           width: 90%;
-          color: #609ae4;
+          color: $seccardcolor;
         }
       }
     }
   }
 
   .searchbar {
+    @include animationwithdelay(all, 1s, 0.5s);
     width: 90%;
     height: 50px;
-    border: 2px #609ae4 solid;
+    border: 2px $seccardcolor solid;
     border-radius: 15px;
     text-align: center;
     display: flex;
-    @include animationwithdelay(all, 1s, 0.5s);
 
     .searchbar-image {
+      @include animation(all, 2s);
       height: 100%;
       width: 20%;
-      border-right: 1px solid #609ae4;
-      @include animation(all, 2s);
+      border-right: 1px solid $seccardcolor;
       -webkit-appearance: div;
       -moz-appearance: div;
       appearance: div;
@@ -106,15 +76,15 @@
     }
 
     .searchbar-query {
+      @include animation(all, 2s);
       height: 100%;
       width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      @include animation(all, 2s);
 
       input {
-        color: #609ae4;
+        color: $seccardcolor;
         width: 90%;
         height: 65%;
         border: 0;
@@ -126,13 +96,13 @@
   }
 
   .searchlist {
+    @include animation(all, 1s);
     width: 100%;
     height: 0;
-    @include animation(all, 1s);
 
     &.searched {
-      height: 100%;
       @include animation(all, 1s);
+      height: 100%;
 
       .searchlist-buttons {
         display: flex;
@@ -142,7 +112,7 @@
     .searchlist-buttons {
       width: 100%;
       height: 10%;
-      border-bottom: #609ae4 solid 2px;
+      border-bottom: $seccardcolor solid 2px;
       display: none;
       justify-content: space-around;
       color: white;
@@ -183,15 +153,15 @@
         }
 
         &::-webkit-scrollbar-track {
+          @include setborderwithradius(unset, 10px);
           box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
           -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
-          @include setborderwithradius(unset, 10px);
         }
 
         &::-webkit-scrollbar-thumb {
+          @include setborderwithradius(unset, 10px);
           box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.5);
           -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.5);
-          @include setborderwithradius(unset, 10px);
         }
       }
     }
@@ -207,8 +177,8 @@
     }
 
     &::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
       @include setborderwithradius(unset, 10px);
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     }
 
     &::-webkit-scrollbar-thumb {

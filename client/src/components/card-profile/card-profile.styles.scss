@@ -1,33 +1,11 @@
-@mixin animation($type, $sec) {
-  -webkit-transition: $type $sec ease;
-  -moz-transition: $type $sec ease;
-  -o-transition: $type $sec ease;
-  -ms-transition: $type $sec ease;
-  transition: $type $sec ease;
-}
-
-@mixin flexeddiv($flexdirection, $justifycontent) {
-  display: flex;
-  flex-direction: $flexdirection;
-  justify-content: $justifycontent;
-}
-
-@mixin setwidthandheight($width, $height) {
-  width: $width;
-  height: $height;
-}
-
-@mixin setborderwithradius($border, $radius) {
-  border: $border;
-  border-radius: $radius;
-}
+@use '../../styles/base';
 
 .card-profile {
   @include setwidthandheight(45vw, 75vh);
-  @include setborderwithradius(2px solid #609ae4, 52px);
+  @include setborderwithradius(2px solid $seccardcolor, 52px);
   @include flexeddiv(row, center);
   @include animation(left, 2s);
-  background-color: #151527;
+  background-color: $cardbackcolor;
   position: absolute;
   top: 20%;
   left: -100%;
@@ -63,8 +41,8 @@
       }
 
       .subscription-container {
-        height: 100%;
         @include flexeddiv(row, center);
+        height: 100%;
 
         .subscription {
           width: 60%;
@@ -96,6 +74,6 @@
 }
 
 .buttons {
-  height: 80px;
   @include flexeddiv(column, space-evenly);
+  height: 80px;
 }

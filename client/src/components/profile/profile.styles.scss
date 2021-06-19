@@ -1,30 +1,7 @@
-@mixin animation($type, $sec) {
-  -webkit-transition: $type $sec ease;
-  -moz-transition: $type $sec ease;
-  -o-transition: $type $sec ease;
-  -ms-transition: $type $sec ease;
-  transition: $type $sec ease;
-}
-
-@mixin flexeddiv($flexdirection, $justifycontent) {
-  display: flex;
-  flex-direction: $flexdirection;
-  justify-content: $justifycontent;
-}
-
-@mixin setwidthandheight($width, $height) {
-  width: $width;
-  height: $height;
-}
-
-@mixin setborderwithradius($border, $radius) {
-  border: $border;
-  border-radius: $radius;
-}
+@use '../../styles/base';
 
 .profile-main {
-  //background-color: #94dadc;
-  @include setborderwithradius(1px solid #94dadc, 8px);
+  @include setborderwithradius(1px solid $primcardcolor, 8px);
   @include flexeddiv(row, unset);
   @include animation(all, 0.8s);
   color: white;
@@ -58,35 +35,33 @@
   }
 
   &:hover {
-    box-shadow: 0 0 5px #94dadc, 0 0 25px #94dadc, 0 0 50px #94dadc,
-      0 0 100px #94dadc;
+    box-shadow: 0 0 5px $primcardcolor, 0 0 25px $primcardcolor,
+      0 0 50px $primcardcolor, 0 0 100px $primcardcolor;
   }
 }
 
 .profile-info {
-  //background-color: #94dadc;
-  @include setborderwithradius(1px solid #94dadc, 8px);
+  @include setborderwithradius(1px solid $primcardcolor, 8px);
   @include flexeddiv(column, space-around);
+  @include animation(all, 0.8s);
   text-align: center;
   color: white;
   padding: 10px 2px;
   margin-bottom: 10px;
   cursor: default;
-  @include animation(all, 0.8s);
   overflow: hidden;
-  //height: 85px;
   height: 12vh;
   cursor: pointer;
 
   &.minified {
+    @include setborderwithradius(0px solid black, 8px);
     height: 0;
     padding: 0;
-    @include setborderwithradius(0px solid black, 8px);
   }
 
   &:hover {
-    box-shadow: 0 0 5px #94dadc, 0 0 25px #94dadc, 0 0 50px #94dadc,
-      0 0 100px #94dadc;
+    box-shadow: 0 0 5px $primcardcolor, 0 0 25px $primcardcolor,
+      0 0 50px $primcardcolor, 0 0 100px $primcardcolor;
   }
 }
 

@@ -1,25 +1,9 @@
-@mixin animation($type, $sec) {
-  -webkit-transition: $type $sec ease;
-  -moz-transition: $type $sec ease;
-  -o-transition: $type $sec ease;
-  -ms-transition: $type $sec ease;
-  transition: $type $sec ease;
-}
-
-@mixin setwidthandheight($width, $height) {
-  width: $width;
-  height: $height;
-}
-
-@mixin setborderwithradius($border, $radius) {
-  border: $border;
-  border-radius: $radius;
-}
+@use '../../../styles/base';
 
 .small-btn {
   @include setwidthandheight(50px, 50px);
-  //background-color: salmon;
   @include setborderwithradius(0px solid black, 12px);
+  @include animation(all, 0.5s);
   position: absolute;
   margin-top: 10px;
   right: 10px;
@@ -27,17 +11,14 @@
   background-size: 70% 80%;
   background-position: center;
   background-repeat: no-repeat;
-  @include animation(all, 0.5s);
   background-image: url('http://localhost:3000/images/gear.svg');
   z-index: 999;
 
   &:hover {
-    //background-color: rgb(247, 198, 178);
     background-size: 80% 90%;
   }
 
   &.hidden {
-    //opacity: 0;
     width: 0 !important;
     border-width: 0;
   }

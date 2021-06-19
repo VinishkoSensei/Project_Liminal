@@ -1,11 +1,12 @@
+@use '../../styles/base';
+
 $sub-color: black;
 $main-color: black;
-$shrink-color: #94dadc;
 
-@mixin shrinkLabel {
+%shrinkLabel {
   top: -14px;
   font-size: 12px;
-  color: $shrink-color;
+  color: $primcardcolor;
 }
 
 .group {
@@ -29,13 +30,13 @@ $shrink-color: #94dadc;
       }
 
       &:focus ~ .forminputlabel {
-        @include shrinkLabel();
+        @extend %shrinkLabel;
       }
 
       &:disabled {
         background-color: transparent;
         border: none;
-        color: #609ae4;
+        color: $seccardcolor;
       }
     }
 
@@ -77,7 +78,7 @@ $shrink-color: #94dadc;
     transition: 300ms ease all;
 
     &.shrink {
-      @include shrinkLabel();
+      @extend %shrinkLabel;
     }
   }
 }

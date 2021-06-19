@@ -1,26 +1,4 @@
-@mixin animation($type, $sec) {
-  -webkit-transition: $type $sec ease;
-  -moz-transition: $type $sec ease;
-  -o-transition: $type $sec ease;
-  -ms-transition: $type $sec ease;
-  transition: $type $sec ease;
-}
-
-@mixin flexeddiv($flexdirection, $justifycontent) {
-  display: flex;
-  flex-direction: $flexdirection;
-  justify-content: $justifycontent;
-}
-
-@mixin setwidthandheight($width, $height) {
-  width: $width;
-  height: $height;
-}
-
-@mixin setborderwithradius($border, $radius) {
-  border: $border;
-  border-radius: $radius;
-}
+@use '../../styles/base';
 
 .card-admin {
   @include setwidthandheight(45vw, 80vh);
@@ -28,7 +6,7 @@
   @include animation(left, 2s);
   border-radius: 30px;
   min-width: 717px;
-  background-color: #151527;
+  background-color: $cardbackcolor;
   position: absolute;
   top: 18%;
   left: -100%;
@@ -40,7 +18,7 @@
     position: absolute;
 
     .card-search {
-      @include setborderwithradius(2px solid #609ae4, 30px);
+      @include setborderwithradius(2px solid $seccardcolor, 30px);
       height: 90%;
       margin: 28px 2.5px 0 5px;
     }
@@ -66,10 +44,10 @@
 
 .admin-btn-back {
   @include animation(box-shadow, 0.3s);
-  box-shadow: 0 0 5px #609ae4, 0 0 25px #609ae4;
   @include setwidthandheight(55px, 55px);
-  background-color: #609ae4;
-  @include setborderwithradius(1px solid #609ae4, 12px);
+  @include setborderwithradius(1px solid $seccardcolor, 12px);
+  box-shadow: 0 0 5px $seccardcolor, 0 0 25px $seccardcolor;
+  background-color: $seccardcolor;
   position: absolute;
   left: 20px;
   top: 1px;
