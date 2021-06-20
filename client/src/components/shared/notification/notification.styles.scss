@@ -1,3 +1,5 @@
+@use '../../../styles/variables' as vars;
+
 .notification-container {
   margin: 20px;
   color: white;
@@ -46,7 +48,7 @@
     }
 
     &.error {
-      background-color: pink;
+      background-color: vars.$tercardcolor;
     }
 
     &.warning {
@@ -54,11 +56,11 @@
     }
 
     &.information {
-      background-color: #609ae4;
+      background-color: vars.$seccardcolor;
     }
 
     &.success {
-      background-color: #94dadc;
+      background-color: vars.$primcardcolor;
     }
 
     @media screen and (orientation: portrait) {

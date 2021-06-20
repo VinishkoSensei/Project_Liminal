@@ -1,22 +1,19 @@
-@mixin setwidthandheight($width, $height) {
-  width: $width;
-  height: $height;
-}
+@use '../../../styles/mixins' as mixins;
 
-/* The switch - the box around the slider */
+// The switch - the box around the slider
 .switch {
+  @include mixins.setwidthandheight(35px, 100%);
   position: relative;
   display: inline-block;
-  @include setwidthandheight(35px, 100%);
 }
 
-/* Hide default HTML checkbox */
+// Hide default HTML checkbox
 .switch input {
+  @include mixins.setwidthandheight(0, 0);
   opacity: 0;
-  @include setwidthandheight(0, 0);
 }
 
-/* The slider */
+// The slider
 .slider {
   position: absolute;
   cursor: pointer;
@@ -31,9 +28,9 @@
 }
 
 .slider:before {
+  @include mixins.setwidthandheight(10px, 55%);
   position: absolute;
   content: '';
-  @include setwidthandheight(10px, 55%);
   left: 4px;
   bottom: 4px;
   background-color: white;

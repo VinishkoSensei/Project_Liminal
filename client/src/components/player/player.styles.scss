@@ -1,21 +1,14 @@
-@mixin animation($type, $sec) {
-  -webkit-transition: $type $sec ease-out;
-  -moz-transition: $type $sec ease-out;
-  -o-transition: $type $sec ease-out;
-  -ms-transition: $type $sec ease-out;
-  transition: $type $sec ease-out;
-}
+@use '../../styles/mixins' as mixins;
 
 .player-container {
+  @include mixins.animation(all, 1s);
   width: 0;
   height: 58%;
-  //border-bottom: 0px solid black;
-  @include animation(all, 1s);
 
   .rhap_container {
+    @include mixins.animation(all, 1s);
     width: 0;
     padding: 0;
-    @include animation(all, 1s);
   }
 
   .player {
