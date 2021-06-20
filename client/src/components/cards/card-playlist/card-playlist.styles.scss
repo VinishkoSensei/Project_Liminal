@@ -1,0 +1,33 @@
+@use 'styles/mixins' as mixins;
+@use 'styles/variables' as vars;
+
+.card-playlist {
+  @include mixins.setwidthandheight(100%, 100%);
+  @include mixins.setborderwithradius(2px solid vars.$seccardcolor, 52px);
+  @include mixins.flexeddiv(unset, center);
+  background-color: vars.$cardbackcolor;
+  align-items: center;
+
+  .card-big-table {
+    @include mixins.setwidthandheight(90%, 90%);
+    @include mixins.setborderwithradius(unset, 3%);
+    overflow-y: auto;
+    color: white;
+
+    &::-webkit-scrollbar {
+      @include mixins.setwidthandheight(12px, unset);
+    }
+
+    &::-webkit-scrollbar-track {
+      @include mixins.setborderwithradius(unset, 10px);
+      box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+      -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      @include mixins.setborderwithradius(unset, 10px);
+      box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.5);
+      -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.5);
+    }
+  }
+}

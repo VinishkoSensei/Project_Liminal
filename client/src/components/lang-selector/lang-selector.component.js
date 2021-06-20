@@ -1,6 +1,6 @@
 import React from 'react';
 import './lang-selector.styles.scss';
-import { locales, dynamicActivate } from '../../i18n';
+import { locales, dynamicActivate } from 'i18n';
 
 const LangSelector = () => {
   return (
