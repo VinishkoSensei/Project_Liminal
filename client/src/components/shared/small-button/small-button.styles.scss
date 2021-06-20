@@ -1,4 +1,4 @@
-@use '../../../styles/mixins' as mixins;
+@use 'styles/mixins' as mixins;
 
 .small-btn {
   @include mixins.setwidthandheight(50px, 50px);

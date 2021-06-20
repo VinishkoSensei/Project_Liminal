@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import './notification.styles.scss';
-import { hideNotificationStart } from '../../../redux/notification/notification.actions';
+import { hideNotificationStart } from 'redux/notification/notification.actions';
 
 const Notification = ({ notification, hideNotificationStart }) => {
   return (

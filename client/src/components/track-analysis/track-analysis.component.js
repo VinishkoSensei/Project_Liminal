@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 import './track-analysis.styles.scss';
-import Switch from '../shared/switch/switch.component';
+import Switch from 'components/shared/switch/switch.component';
 import * as mm from 'music-metadata-browser';
 
 const TrackAnalysis = ({

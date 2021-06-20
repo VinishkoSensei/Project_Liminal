@@ -6,7 +6,7 @@ import {
   addTrackToPlaylistEnd,
   playTrack,
   deleteFromPlaylist,
-} from '../../redux/music/music.actions';
+} from 'redux/music/music.actions';
 
 const Track = ({
   track,
