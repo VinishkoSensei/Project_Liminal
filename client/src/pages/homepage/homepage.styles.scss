@@ -1,5 +1,5 @@
-@use '../../styles/mixins' as mixins;
-@use '../../styles/variables' as vars;
+@use 'styles/mixins' as mixins;
+@use 'styles/variables' as vars;
 
 .main {
   @include mixins.setwidthandheight(100vw, 100vh);

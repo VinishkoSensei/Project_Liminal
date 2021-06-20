@@ -3,10 +3,7 @@ import './player.styles.scss';
 import { connect } from 'react-redux';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import {
-  playNextTrack,
-  changePlayingState,
-} from '../../redux/music/music.actions';
+import { playNextTrack, changePlayingState } from 'redux/music/music.actions';
 
 const Player = ({
   src,

@@ -1,6 +1,6 @@
 import React from 'react';
 import './mainmenu.styles.scss';
-import SmallButton from '../shared/small-button/small-button.component';
+import SmallButton from 'components/shared/small-button/small-button.component';
 import { connect } from 'react-redux';
 
 const MainMenu = ({ profile, flipCard, openAdminCard, isOpened }) => {
