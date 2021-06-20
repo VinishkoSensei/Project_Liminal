@@ -1,13 +1,14 @@
-@use '../../styles/base';
+@use '../../styles/mixins' as mixins;
+@use '../../styles/variables' as vars;
 
 .card-ai {
-  @include setwidthandheight(100%, 100%);
-  @include setborderwithradius(2px solid $seccardcolor, 52px);
-  @include flexeddiv(column, space-around);
-  background-color: $cardbackcolor;
+  @include mixins.setwidthandheight(100%, 100%);
+  @include mixins.setborderwithradius(2px solid vars.$seccardcolor, 52px);
+  @include mixins.flexeddiv(column, space-around);
+  background-color: vars.$cardbackcolor;
 
   .card-ai-switch {
-    @include flexeddiv(row, space-evenly);
-    color: $primcardcolor;
+    @include mixins.flexeddiv(row, space-evenly);
+    color: vars.$primcardcolor;
   }
 }

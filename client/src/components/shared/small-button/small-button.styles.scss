@@ -1,9 +1,9 @@
-@use '../../../styles/base';
+@use '../../../styles/mixins' as mixins;
 
 .small-btn {
-  @include setwidthandheight(50px, 50px);
-  @include setborderwithradius(0px solid black, 12px);
-  @include animation(all, 0.5s);
+  @include mixins.setwidthandheight(50px, 50px);
+  @include mixins.setborderwithradius(0px solid black, 12px);
+  @include mixins.animation(all, 0.5s);
   position: absolute;
   margin-top: 10px;
   right: 10px;

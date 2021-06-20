@@ -1,15 +1,16 @@
-@use '../../styles/base';
+@use '../../styles/mixins' as mixins;
+@use '../../styles/variables' as vars;
 
 .card-admin-main-addtrack {
-  @include setwidthandheight(100%, 90%);
-  @include setborderwithradius(2px solid $primcardcolor, 30px);
-  @include flexeddiv(unset, center);
-  background-color: $cardbackcolor;
+  @include mixins.setwidthandheight(100%, 90%);
+  @include mixins.setborderwithradius(2px solid vars.$primcardcolor, 30px);
+  @include mixins.flexeddiv(unset, center);
+  background-color: vars.$cardbackcolor;
   align-items: center;
   margin: 28px 5px 0 2.5px;
 
   .forminput {
-    @include setborderwithradius(1px solid $primcardcolor, 4px);
+    @include mixins.setborderwithradius(1px solid vars.$primcardcolor, 4px);
     margin: 16px 0;
     border-color: hsl(0, 0%, 80%);
     padding: 10px 0;

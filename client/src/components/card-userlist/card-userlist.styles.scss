@@ -1,20 +1,21 @@
-@use '../../styles/base';
+@use '../../styles/mixins' as mixins;
+@use '../../styles/variables' as vars;
 
 .card-userlist {
-  @include setwidthandheight(100%, 100%);
-  @include setborderwithradius(2px solid $seccardcolor, 52px);
-  @include flexeddiv(column, flex-start);
-  @include animation(all, 2s);
+  @include mixins.setwidthandheight(100%, 100%);
+  @include mixins.setborderwithradius(2px solid vars.$seccardcolor, 52px);
+  @include mixins.flexeddiv(column, flex-start);
+  @include mixins.animation(all, 2s);
   align-items: center;
-  background-color: $cardbackcolor;
+  background-color: vars.$cardbackcolor;
 
   .placeholder {
-    @include setwidthandheight(100%, 46%);
-    @include animation(all, 2s);
+    @include mixins.setwidthandheight(100%, 46%);
+    @include mixins.animation(all, 2s);
   }
 
   &.searched {
-    @include flexeddiv(column, flex-start);
+    @include mixins.flexeddiv(column, flex-start);
     overflow-y: hidden;
 
     .placeholder {
@@ -22,13 +23,13 @@
     }
 
     .searchbar {
-      @include setwidthandheight(100%, 8%);
-      @include animation(all, 1s);
+      @include mixins.setwidthandheight(100%, 8%);
+      @include mixins.animation(all, 1s);
       border-radius: 0;
-      border-top: 0px solid $seccardcolor;
-      border-left: 0px solid $seccardcolor;
-      border-right: 0px solid $seccardcolor;
-      border-bottom: 2px solid $seccardcolor;
+      border-top: 0px solid vars.$seccardcolor;
+      border-left: 0px solid vars.$seccardcolor;
+      border-right: 0px solid vars.$seccardcolor;
+      border-bottom: 2px solid vars.$seccardcolor;
 
       .searchbar-image {
         margin-left: 3%;
@@ -39,29 +40,29 @@
 
         input {
           width: 90%;
-          color: $seccardcolor;
+          color: vars.$seccardcolor;
         }
       }
     }
   }
 
   .searchbar {
-    @include setwidthandheight(90%, 50px);
-    @include setborderwithradius(2px $seccardcolor solid, 15px);
-    @include animationwithdelay(all, 1s, 0.5s);
+    @include mixins.setwidthandheight(90%, 50px);
+    @include mixins.setborderwithradius(2px vars.$seccardcolor solid, 15px);
+    @include mixins.animationwithdelay(all, 1s, 0.5s);
     text-align: center;
     display: flex;
 
     .searchbar-image {
-      @include setwidthandheight(20%, 100%);
-      @include animation(all, 2s);
-      border-right: 1px solid $seccardcolor;
+      @include mixins.setwidthandheight(20%, 100%);
+      @include mixins.animation(all, 2s);
+      border-right: 1px solid vars.$seccardcolor;
       -webkit-appearance: div;
       -moz-appearance: div;
       appearance: div;
 
       .searchbar-image-button {
-        @include setwidthandheight(100%, 100%);
+        @include mixins.setwidthandheight(100%, 100%);
         background-color: transparent;
         border: 0;
         outline: none;
@@ -70,15 +71,15 @@
     }
 
     .searchbar-query {
-      @include setwidthandheight(100%, 100%);
-      @include animation(all, 2s);
+      @include mixins.setwidthandheight(100%, 100%);
+      @include mixins.animation(all, 2s);
       display: flex;
       justify-content: center;
       align-items: center;
 
       input {
-        @include setwidthandheight(90%, 65%);
-        color: $seccardcolor;
+        @include mixins.setwidthandheight(90%, 65%);
+        color: vars.$seccardcolor;
         border: 0;
         font-size: x-large;
         outline: none;
@@ -88,11 +89,11 @@
   }
 
   .searchlist {
-    @include setwidthandheight(100%, 0);
-    @include animation(all, 1s);
+    @include mixins.setwidthandheight(100%, 0);
+    @include mixins.animation(all, 1s);
 
     &.searched {
-      @include animation(all, 1s);
+      @include mixins.animation(all, 1s);
       height: 100%;
 
       .searchlist-buttons {
@@ -101,14 +102,14 @@
     }
 
     .searchlist-buttons {
-      @include setwidthandheight(100%, 10%);
-      border-bottom: $seccardcolor solid 2px;
+      @include mixins.setwidthandheight(100%, 10%);
+      border-bottom: vars.$seccardcolor solid 2px;
       display: none;
       justify-content: space-around;
       color: white;
 
       .button {
-        @include flexeddiv(column, center);
+        @include mixins.flexeddiv(column, center);
         width: 80px;
         cursor: pointer;
         margin: 5px 0px;
@@ -116,17 +117,17 @@
         align-items: center;
 
         &:hover {
-          color: pink;
+          color: vars.$tercardcolor;
         }
 
         &.selected {
-          color: pink;
+          color: vars.$tercardcolor;
           font-weight: bold;
         }
       }
     }
     .searchlist-list {
-      @include setwidthandheight(100%, 90%);
+      @include mixins.setwidthandheight(100%, 90%);
       color: white;
 
       .searchlist-users {
@@ -136,41 +137,41 @@
         height: 80%;
 
         &::-webkit-scrollbar {
-          @include setwidthandheight(12px, unset);
+          @include mixins.setwidthandheight(12px, unset);
         }
 
         &::-webkit-scrollbar-track {
-          @include setborderwithradius(unset, 10px);
+          @include mixins.setborderwithradius(unset, 10px);
           box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
           -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
         }
 
         &::-webkit-scrollbar-thumb {
-          @include setborderwithradius(unset, 10px);
+          @include mixins.setborderwithradius(unset, 10px);
           box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.5);
           -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.5);
         }
 
         .user-item {
-          @include flexeddiv(row, space-between);
+          @include mixins.flexeddiv(row, space-between);
           padding: 10px 20px;
           border-bottom: 1px solid;
           cursor: pointer;
           height: 60px;
 
           &:hover {
-            background-color: $seccardcolor;
+            background-color: vars.$seccardcolor;
           }
 
           .user-info {
-            @include flexeddiv(column, space-around);
+            @include mixins.flexeddiv(column, space-around);
             width: 40%;
             .user {
               &.admin {
-                color: pink;
+                color: vars.$tercardcolor;
               }
               &.subscribed {
-                color: $primcardcolor;
+                color: vars.$primcardcolor;
               }
             }
           }
@@ -192,23 +193,26 @@
           }
 
           .user-menu {
-            @include setwidthandheight(fit-content, 60px);
-            @include setborderwithradius(1px $primcardcolor solid, 5px);
+            @include mixins.setwidthandheight(fit-content, 60px);
+            @include mixins.setborderwithradius(
+              1px vars.$primcardcolor solid,
+              5px
+            );
             display: none;
             justify-content: flex-end;
             flex-direction: row;
-            background-color: $primcardcolor;
+            background-color: vars.$primcardcolor;
             opacity: 0.8;
             padding-left: 2px;
 
             .user-menu-text {
-              @include flexeddiv(column, center);
+              @include mixins.flexeddiv(column, center);
               height: 100%;
               max-width: 130px;
             }
 
             .user-menu-item {
-              @include flexeddiv(column, center);
+              @include mixins.flexeddiv(column, center);
               width: 40px;
               background-repeat: no-repeat;
               background-position: center;
@@ -217,8 +221,8 @@
             }
 
             &:hover {
-              background-color: pink;
-              border: 1px pink solid;
+              background-color: vars.$tercardcolor;
+              border: 1px vars.$tercardcolor solid;
             }
           }
         }

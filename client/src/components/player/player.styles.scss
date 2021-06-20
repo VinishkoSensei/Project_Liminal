@@ -1,12 +1,12 @@
-@use '../../styles/base';
+@use '../../styles/mixins' as mixins;
 
 .player-container {
-  @include animation(all, 1s);
+  @include mixins.animation(all, 1s);
   width: 0;
   height: 58%;
 
   .rhap_container {
-    @include animation(all, 1s);
+    @include mixins.animation(all, 1s);
     width: 0;
     padding: 0;
   }
