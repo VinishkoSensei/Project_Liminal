@@ -1,26 +1,13 @@
-@mixin flexeddiv($flexdirection, $justifycontent) {
-  display: flex;
-  flex-direction: $flexdirection;
-  justify-content: $justifycontent;
-}
-
-@mixin setwidthandheight($width, $height) {
-  width: $width;
-  height: $height;
-}
-
-@mixin setborderwithradius($border, $radius) {
-  border: $border;
-  border-radius: $radius;
-}
+@use '../../styles/mixins' as mixins;
+@use '../../styles/variables' as vars;
 
 canvas {
+  @include mixins.setwidthandheight(100%, 100px);
   border: 1px black solid;
-  @include setwidthandheight(100%, 100px);
 }
 
 .preview-audio {
-  @include setwidthandheight(100%, 30px);
+  @include mixins.setwidthandheight(100%, 30px);
 }
 
 .suggested-points-container {
@@ -36,7 +23,7 @@ canvas {
     width: 100%;
     padding: 7px 0 3px 0;
     margin-bottom: 5px;
-    border-top: 1px solid #94dadc;
+    border-top: 1px solid vars.$primcardcolor;
 
     input {
       width: 40%;

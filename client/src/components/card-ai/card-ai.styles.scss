@@ -1,27 +1,14 @@
-@mixin flexeddiv($flexdirection, $justifycontent) {
-  display: flex;
-  flex-direction: $flexdirection;
-  justify-content: $justifycontent;
-}
-
-@mixin setwidthandheight($width, $height) {
-  width: $width;
-  height: $height;
-}
-
-@mixin setborderwithradius($border, $radius) {
-  border: $border;
-  border-radius: $radius;
-}
+@use '../../styles/mixins' as mixins;
+@use '../../styles/variables' as vars;
 
 .card-ai {
-  @include setwidthandheight(100%, 100%);
-  @include setborderwithradius(2px solid #609ae4, 52px);
-  background-color: #151527;
-  @include flexeddiv(column, space-around);
+  @include mixins.setwidthandheight(100%, 100%);
+  @include mixins.setborderwithradius(2px solid vars.$seccardcolor, 52px);
+  @include mixins.flexeddiv(column, space-around);
+  background-color: vars.$cardbackcolor;
 
   .card-ai-switch {
-    @include flexeddiv(row, space-evenly);
-    color: #94dadc;
+    @include mixins.flexeddiv(row, space-evenly);
+    color: vars.$primcardcolor;
   }
 }

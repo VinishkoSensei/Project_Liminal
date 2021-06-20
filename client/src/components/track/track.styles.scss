@@ -1,22 +1,19 @@
-@mixin flexeddiv($flexdirection, $justifycontent) {
-  display: flex;
-  flex-direction: $flexdirection;
-  justify-content: $justifycontent;
-}
+@use '../../styles/mixins' as mixins;
+@use '../../styles/variables' as vars;
 
 .track {
-  @include flexeddiv(row, space-between);
+  @include mixins.flexeddiv(row, space-between);
   padding: 10px 20px;
   border-bottom: 1px solid;
   cursor: pointer;
   height: 60px;
 
   &:hover {
-    background-color: #609ae4;
+    background-color: vars.$seccardcolor;
   }
 
   .track-info {
-    @include flexeddiv(column, space-around);
+    @include mixins.flexeddiv(column, space-around);
   }
 
   .track-duration {

@@ -1,26 +1,6 @@
-@mixin animation($type, $sec) {
-  -webkit-transition: $type $sec ease;
-  -moz-transition: $type $sec ease;
-  -o-transition: $type $sec ease;
-  -ms-transition: $type $sec ease;
-  transition: $type $sec ease;
-}
+@use '../../styles/mixins' as mixins;
+@use '../../styles/variables' as vars;
 
-@mixin flexeddiv($flexdirection, $justifycontent) {
-  display: flex;
-  flex-direction: $flexdirection;
-  justify-content: $justifycontent;
-}
-
-@mixin setwidthandheight($width, $height) {
-  width: $width;
-  height: $height;
-}
-
-@mixin setborderwithradius($border, $radius) {
-  border: $border;
-  border-radius: $radius;
-}
 .mainmenu-cards-container {
   display: flex;
   flex-direction: column;
@@ -29,27 +9,25 @@
   height: 100%;
 
   .cards {
-    @include setwidthandheight(100%, unset);
+    @include mixins.setwidthandheight(100%, unset);
+    @include mixins.flexeddiv(row, space-between);
     flex-grow: 1;
-    @include flexeddiv(row, space-between);
 
     .card {
-      @include setwidthandheight(40%, 100%);
-      @include animation(all, 0.8s);
-      //background-color: #9b3f9b;
+      @include mixins.setwidthandheight(40%, 100%);
+      @include mixins.animation(all, 0.8s);
+      @include mixins.setborderwithradius(2px solid white, 30px);
       z-index: 3;
       vertical-align: middle;
-      @include setborderwithradius(2px solid white, 30px);
-
       background-repeat: no-repeat;
       background-position: center;
       background-size: 55%;
       cursor: pointer;
 
       &:hover {
-        //background-color: rgb(212, 237, 253);
-        @include setborderwithradius(2px solid pink, 30px);
-        box-shadow: 0 0 5px pink, 0 0 25px pink, 0 0 50px pink, 0 0 100px pink;
+        @include mixins.setborderwithradius(2px solid vars.$tercardcolor, 30px);
+        box-shadow: 0 0 5px vars.$tercardcolor, 0 0 25px vars.$tercardcolor,
+          0 0 50px vars.$tercardcolor, 0 0 100px vars.$tercardcolor;
       }
     }
   }

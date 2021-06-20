@@ -1,32 +1,10 @@
-@mixin animation($type, $sec) {
-  -webkit-transition: $type $sec ease;
-  -moz-transition: $type $sec ease;
-  -o-transition: $type $sec ease;
-  -ms-transition: $type $sec ease;
-  transition: $type $sec ease;
-}
-
-@mixin flexeddiv($flexdirection, $justifycontent) {
-  display: flex;
-  flex-direction: $flexdirection;
-  justify-content: $justifycontent;
-}
-
-@mixin setwidthandheight($width, $height) {
-  width: $width;
-  height: $height;
-}
-
-@mixin setborderwithradius($border, $radius) {
-  border: $border;
-  border-radius: $radius;
-}
+@use '../../styles/mixins' as mixins;
+@use '../../styles/variables' as vars;
 
 .profile-main {
-  //background-color: #94dadc;
-  @include setborderwithradius(1px solid #94dadc, 8px);
-  @include flexeddiv(row, unset);
-  @include animation(all, 0.8s);
+  @include mixins.setborderwithradius(1px solid vars.$primcardcolor, 8px);
+  @include mixins.flexeddiv(row, unset);
+  @include mixins.animation(all, 0.8s);
   color: white;
   text-align: center;
   margin-bottom: 10px;
@@ -36,63 +14,61 @@
   cursor: pointer;
 
   .profile-info-main {
-    @include flexeddiv(column, space-around);
+    @include mixins.flexeddiv(column, space-around);
     border-radius: 100%;
     line-height: 200%;
     margin: 0;
-    @include setwidthandheight(100%, 100%);
+    @include mixins.setwidthandheight(100%, 100%);
     opacity: 100%;
-    @include animation(opacity, 2s);
+    @include mixins.animation(opacity, 2s);
     word-break: break-word;
   }
 
   .profile-icon-container {
     margin: 0 0 0 0;
-    @include flexeddiv(column, center);
+    @include mixins.flexeddiv(column, center);
 
     img {
-      @include animation(all, 2s);
-      @include setwidthandheight(30px, 30px);
-      @include setborderwithradius(unset, 50%);
+      @include mixins.animation(all, 2s);
+      @include mixins.setwidthandheight(30px, 30px);
+      @include mixins.setborderwithradius(unset, 50%);
     }
   }
 
   &:hover {
-    box-shadow: 0 0 5px #94dadc, 0 0 25px #94dadc, 0 0 50px #94dadc,
-      0 0 100px #94dadc;
+    box-shadow: 0 0 5px vars.$primcardcolor, 0 0 25px vars.$primcardcolor,
+      0 0 50px vars.$primcardcolor, 0 0 100px vars.$primcardcolor;
   }
 }
 
 .profile-info {
-  //background-color: #94dadc;
-  @include setborderwithradius(1px solid #94dadc, 8px);
-  @include flexeddiv(column, space-around);
+  @include mixins.setborderwithradius(1px solid vars.$primcardcolor, 8px);
+  @include mixins.flexeddiv(column, space-around);
+  @include mixins.animation(all, 0.8s);
   text-align: center;
   color: white;
   padding: 10px 2px;
   margin-bottom: 10px;
   cursor: default;
-  @include animation(all, 0.8s);
   overflow: hidden;
-  //height: 85px;
   height: 12vh;
   cursor: pointer;
 
   &.minified {
+    @include mixins.setborderwithradius(0px solid black, 8px);
     height: 0;
     padding: 0;
-    @include setborderwithradius(0px solid black, 8px);
   }
 
   &:hover {
-    box-shadow: 0 0 5px #94dadc, 0 0 25px #94dadc, 0 0 50px #94dadc,
-      0 0 100px #94dadc;
+    box-shadow: 0 0 5px vars.$primcardcolor, 0 0 25px vars.$primcardcolor,
+      0 0 50px vars.$primcardcolor, 0 0 100px vars.$primcardcolor;
   }
 }
 
 .profile-panel {
   .small-btn {
-    @include setwidthandheight(32px, 32px);
+    @include mixins.setwidthandheight(32px, 32px);
     margin-top: 0;
     right: 10px;
     margin-right: 15%;
