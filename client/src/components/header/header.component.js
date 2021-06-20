@@ -1,6 +1,6 @@
 import React from 'react';
 import './header.styles.scss';
-import LangSelector from '../../components/lang-selector/lang-selector.component';
+import LangSelector from 'components/lang-selector/lang-selector.component';
 
 const Header = () => {
   return (
