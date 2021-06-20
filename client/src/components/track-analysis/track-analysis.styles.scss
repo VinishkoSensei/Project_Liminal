@@ -1,12 +1,13 @@
-@use '../../styles/base';
+@use '../../styles/mixins' as mixins;
+@use '../../styles/variables' as vars;
 
 canvas {
-  @include setwidthandheight(100%, 100px);
+  @include mixins.setwidthandheight(100%, 100px);
   border: 1px black solid;
 }
 
 .preview-audio {
-  @include setwidthandheight(100%, 30px);
+  @include mixins.setwidthandheight(100%, 30px);
 }
 
 .suggested-points-container {
@@ -22,7 +23,7 @@ canvas {
     width: 100%;
     padding: 7px 0 3px 0;
     margin-bottom: 5px;
-    border-top: 1px solid $primcardcolor;
+    border-top: 1px solid vars.$primcardcolor;
 
     input {
       width: 40%;

@@ -1,17 +1,19 @@
+@use '../../styles/variables' as vars;
+
 .custombutton {
   width: 100%;
   letter-spacing: 0.5px;
   height: auto;
   line-height: 26px;
   padding: 0 10%;
-  background-color: $primcardcolor;
+  background-color: vars.$primcardcolor;
   color: black;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   display: flex;
   justify-content: center;
-  border: 2px solid $primcardcolor;
+  border: 2px solid vars.$primcardcolor;
   font-size: 11pt;
   transition: all 0.5s;
   -webkit-transition: all 0.5s;
@@ -19,7 +21,7 @@
 
   &:hover {
     background-color: transparent;
-    color: $primcardcolor;
+    color: vars.$primcardcolor;
   }
 
   &:focus,
@@ -35,12 +37,12 @@
   }
 
   &.abort {
-    background-color: pink;
-    border: 2px solid pink;
+    background-color: vars.$tercardcolor;
+    border: 2px solid vars.$tercardcolor;
 
     &:hover {
       background-color: transparent;
-      color: pink;
+      color: vars.$tercardcolor;
     }
   }
 }
