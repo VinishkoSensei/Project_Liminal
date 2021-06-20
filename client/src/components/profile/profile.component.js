@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import './profile.styles.scss';
-import CustomButton from '../custombutton/custombutton.component';
-import SmallButton from '../shared/small-button/small-button.component';
-import { signInStart, signOutStart } from '../../redux/user/user.actions';
+import CustomButton from 'components/custombutton/custombutton.component';
+import SmallButton from 'components/shared/small-button/small-button.component';
+import { signInStart, signOutStart } from 'redux/user/user.actions';
 import { Trans } from '@lingui/macro';
 
 const Profile = ({

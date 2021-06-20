@@ -1,0 +1,232 @@
+@use 'styles/mixins' as mixins;
+@use 'styles/variables' as vars;
+
+.card-userlist {
+  @include mixins.setwidthandheight(100%, 100%);
+  @include mixins.setborderwithradius(2px solid vars.$seccardcolor, 52px);
+  @include mixins.flexeddiv(column, flex-start);
+  @include mixins.animation(all, 2s);
+  align-items: center;
+  background-color: vars.$cardbackcolor;
+
+  .placeholder {
+    @include mixins.setwidthandheight(100%, 46%);
+    @include mixins.animation(all, 2s);
+  }
+
+  &.searched {
+    @include mixins.flexeddiv(column, flex-start);
+    overflow-y: hidden;
+
+    .placeholder {
+      height: 0;
+    }
+
+    .searchbar {
+      @include mixins.setwidthandheight(100%, 8%);
+      @include mixins.animation(all, 1s);
+      border-radius: 0;
+      border-top: 0px solid vars.$seccardcolor;
+      border-left: 0px solid vars.$seccardcolor;
+      border-right: 0px solid vars.$seccardcolor;
+      border-bottom: 2px solid vars.$seccardcolor;
+
+      .searchbar-image {
+        margin-left: 3%;
+      }
+
+      .searchbar-query {
+        width: 75%;
+
+        input {
+          width: 90%;
+          color: vars.$seccardcolor;
+        }
+      }
+    }
+  }
+
+  .searchbar {
+    @include mixins.setwidthandheight(90%, 50px);
+    @include mixins.setborderwithradius(2px vars.$seccardcolor solid, 15px);
+    @include mixins.animationwithdelay(all, 1s, 0.5s);
+    text-align: center;
+    display: flex;
+
+    .searchbar-image {
+      @include mixins.setwidthandheight(20%, 100%);
+      @include mixins.animation(all, 2s);
+      border-right: 1px solid vars.$seccardcolor;
+      -webkit-appearance: div;
+      -moz-appearance: div;
+      appearance: div;
+
+      .searchbar-image-button {
+        @include mixins.setwidthandheight(100%, 100%);
+        background-color: transparent;
+        border: 0;
+        outline: none;
+        cursor: pointer;
+      }
+    }
+
+    .searchbar-query {
+      @include mixins.setwidthandheight(100%, 100%);
+      @include mixins.animation(all, 2s);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      input {
+        @include mixins.setwidthandheight(90%, 65%);
+        color: vars.$seccardcolor;
+        border: 0;
+        font-size: x-large;
+        outline: none;
+        background-color: transparent;
+      }
+    }
+  }
+
+  .searchlist {
+    @include mixins.setwidthandheight(100%, 0);
+    @include mixins.animation(all, 1s);
+
+    &.searched {
+      @include mixins.animation(all, 1s);
+      height: 100%;
+
+      .searchlist-buttons {
+        display: flex;
+      }
+    }
+
+    .searchlist-buttons {
+      @include mixins.setwidthandheight(100%, 10%);
+      border-bottom: vars.$seccardcolor solid 2px;
+      display: none;
+      justify-content: space-around;
+      color: white;
+
+      .button {
+        @include mixins.flexeddiv(column, center);
+        width: 80px;
+        cursor: pointer;
+        margin: 5px 0px;
+        border-radius: 8px;
+        align-items: center;
+
+        &:hover {
+          color: vars.$tercardcolor;
+        }
+
+        &.selected {
+          color: vars.$tercardcolor;
+          font-weight: bold;
+        }
+      }
+    }
+    .searchlist-list {
+      @include mixins.setwidthandheight(100%, 90%);
+      color: white;
+
+      .searchlist-users {
+        overflow-y: auto;
+        overflow-x: hidden;
+        margin: 10px 0px;
+        height: 80%;
+
+        &::-webkit-scrollbar {
+          @include mixins.setwidthandheight(12px, unset);
+        }
+
+        &::-webkit-scrollbar-track {
+          @include mixins.setborderwithradius(unset, 10px);
+          box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+          -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+        }
+
+        &::-webkit-scrollbar-thumb {
+          @include mixins.setborderwithradius(unset, 10px);
+          box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.5);
+          -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.5);
+        }
+
+        .user-item {
+          @include mixins.flexeddiv(row, space-between);
+          padding: 10px 20px;
+          border-bottom: 1px solid;
+          cursor: pointer;
+          height: 60px;
+
+          &:hover {
+            background-color: vars.$seccardcolor;
+          }
+
+          .user-info {
+            @include mixins.flexeddiv(column, space-around);
+            width: 40%;
+            .user {
+              &.admin {
+                color: vars.$tercardcolor;
+              }
+              &.subscribed {
+                color: vars.$primcardcolor;
+              }
+            }
+          }
+
+          .user-duration {
+            width: 25%;
+            text-align: right;
+            vertical-align: middle;
+            border-radius: 100%;
+          }
+
+          &:hover {
+            .user-menu {
+              display: flex;
+            }
+            .user-duration {
+              display: none;
+            }
+          }
+
+          .user-menu {
+            @include mixins.setwidthandheight(fit-content, 60px);
+            @include mixins.setborderwithradius(
+              1px vars.$primcardcolor solid,
+              5px
+            );
+            display: none;
+            justify-content: flex-end;
+            flex-direction: row;
+            background-color: vars.$primcardcolor;
+            opacity: 0.8;
+            padding-left: 2px;
+
+            .user-menu-text {
+              @include mixins.flexeddiv(column, center);
+              height: 100%;
+              max-width: 130px;
+            }
+
+            .user-menu-item {
+              @include mixins.flexeddiv(column, center);
+              width: 40px;
+              background-repeat: no-repeat;
+              background-position: center;
+              background-size: 80% 80%;
+              color: white;
+            }
+
+            &:hover {
+              background-color: vars.$tercardcolor;
+              border: 1px vars.$tercardcolor solid;
+            }
+          }
+        }
+      }
+    }
+  }
+}

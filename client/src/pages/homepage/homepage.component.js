@@ -1,28 +1,28 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './homepage.styles.scss';
 
-import Header from '../../components/header/header.component';
-import Player from '../../components/player/player.component';
-import ChangingCards from '../../components/changingcards/changingcards.component';
-import MainMenu from '../../components/mainmenu/mainmenu.component';
-import Profile from '../../components/profile/profile.component';
-import CardMusic from '../../components/card-music/card-music.component';
-import CardAi from '../../components/card-ai/card-ai.component';
-import CardPlaylist from '../../components/card-playlist/card-playlist.component';
-import CardSearch from '../../components/card-search/card-search.component';
-import CardProfile from '../../components/card-profile/card-profile.component';
-import CardSignIn from '../../components/card-signin/card-signin.component';
-import CardSignUp from '../../components/card-signup/card-signup.component';
-import CardAdmin from '../../components/card-admin/card-admin.component';
-import BackButton from '../../components/shared/back-button/back-button.component';
+import Header from 'components/header/header.component';
+import Player from 'components/player/player.component';
+import ChangingCards from 'components/changingcards/changingcards.component';
+import MainMenu from 'components/mainmenu/mainmenu.component';
+import Profile from 'components/profile/profile.component';
+import CardMusic from 'components/cards/card-music/card-music.component';
+import CardAi from 'components/cards/card-ai/card-ai.component';
+import CardPlaylist from 'components/cards/card-playlist/card-playlist.component';
+import CardSearch from 'components/cards/card-search/card-search.component';
+import CardProfile from 'components/cards/card-profile/card-profile.component';
+import CardSignIn from 'components/cards/card-signin/card-signin.component';
+import CardSignUp from 'components/cards/card-signup/card-signup.component';
+import CardAdmin from 'components/cards/card-admin/card-admin.component';
+import BackButton from 'components/shared/back-button/back-button.component';
 
 import ReactCardFlip from 'react-card-flip';
 
-import NotificationContainer from '../../components/shared/notification/notification.container';
+import NotificationContainer from 'components/shared/notification/notification.container';
 
 import { connect } from 'react-redux';
-import { checkUserSession } from '../../redux/user/user.actions';
-import Review from '../../components/review/review.component';
+import { checkUserSession } from 'redux/user/user.actions';
+import Review from 'components/review/review.component';
 
 const HomePage = ({ profile, checkUserSession }) => {
   const [isFlipped, setIsFlipped] = useState(false);
