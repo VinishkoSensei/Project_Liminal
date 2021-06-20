@@ -1,18 +1,19 @@
-@use '../../styles/base';
+@use '../../styles/mixins' as mixins;
+@use '../../styles/variables' as vars;
 
 .card-profile {
-  @include setwidthandheight(45vw, 75vh);
-  @include setborderwithradius(2px solid $seccardcolor, 52px);
-  @include flexeddiv(row, center);
-  @include animation(left, 2s);
-  background-color: $cardbackcolor;
+  @include mixins.setwidthandheight(45vw, 75vh);
+  @include mixins.setborderwithradius(2px solid vars.$seccardcolor, 52px);
+  @include mixins.flexeddiv(row, center);
+  @include mixins.animation(left, 2s);
+  background-color: vars.$cardbackcolor;
   position: absolute;
   top: 20%;
   left: -100%;
 
   .card-profile-main {
-    @include flexeddiv(column, space-evenly);
-    @include setwidthandheight(90%, 100%);
+    @include mixins.flexeddiv(column, space-evenly);
+    @include mixins.setwidthandheight(90%, 100%);
 
     .card-profile-image {
       width: 130px;
@@ -22,17 +23,17 @@
       border: 3px solid black;
       overflow: hidden;
       img {
-        @include setwidthandheight(100%, 100%);
+        @include mixins.setwidthandheight(100%, 100%);
       }
     }
 
     .profile-info-main {
-      @include flexeddiv(column, space-around);
+      @include mixins.flexeddiv(column, space-around);
       height: 100%;
       text-align: center;
 
       .profile-info-main-columns {
-        @include flexeddiv(row, space-evenly);
+        @include mixins.flexeddiv(row, space-evenly);
         height: 100%;
 
         .forminput.file {
@@ -41,7 +42,7 @@
       }
 
       .subscription-container {
-        @include flexeddiv(row, center);
+        @include mixins.flexeddiv(row, center);
         height: 100%;
 
         .subscription {
@@ -64,7 +65,7 @@
   }
 
   &.expanded {
-    @include animation(left, 1s);
+    @include mixins.animation(left, 1s);
     left: 5%;
   }
 
@@ -74,6 +75,6 @@
 }
 
 .buttons {
-  @include flexeddiv(column, space-evenly);
+  @include mixins.flexeddiv(column, space-evenly);
   height: 80px;
 }

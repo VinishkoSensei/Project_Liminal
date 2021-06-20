@@ -1,18 +1,24 @@
-@use '../../styles/base';
+@use '../../styles/mixins' as mixins;
+@use '../../styles/variables' as vars;
 
 .main {
-  @include setwidthandheight(100vw, 100vh);
-  @include flexeddiv(column, unset);
-  background-color: $cardbackcolor;
+  @include mixins.setwidthandheight(100vw, 100vh);
+  @include mixins.flexeddiv(column, unset);
+  background-color: vars.$cardbackcolor;
 
   .toppart {
     margin-bottom: 20px;
-    background: linear-gradient(to bottom, #575473, #6f5669, $cardbackcolor);
+    background: linear-gradient(
+      to bottom,
+      #575473,
+      #6f5669,
+      vars.$cardbackcolor
+    );
   }
 
   .main-part {
-    @include setwidthandheight(100%, unset);
-    @include flexeddiv(row, space-between);
+    @include mixins.setwidthandheight(100%, unset);
+    @include mixins.flexeddiv(row, space-between);
     flex-grow: 2;
     background-image: url('http://localhost:3000/images/back.png');
     background-size: 45% 45%;
@@ -20,21 +26,21 @@
     background-position: 95% 90%;
 
     .main-space {
-      @include setwidthandheight(55vw, unset);
+      @include mixins.setwidthandheight(55vw, unset);
       padding: 4% 0;
 
       .main-container {
-        @include setwidthandheight(595px, 100%);
+        @include mixins.setwidthandheight(595px, 100%);
         margin: 0 auto;
 
         .cards-container {
-          @include flexeddiv(column, space-between);
-          @include setwidthandheight(100%, 100%);
+          @include mixins.flexeddiv(column, space-between);
+          @include mixins.setwidthandheight(100%, 100%);
 
           .auth {
             .card-big-primary,
             .card-big-secondary {
-              @include setwidthandheight(30%, 55%);
+              @include mixins.setwidthandheight(30%, 55%);
 
               @media screen and (orientation: portrait) {
                 width: 70%;
@@ -43,12 +49,12 @@
           }
 
           .card-center {
-            @include setwidthandheight(100%, 5%);
+            @include mixins.setwidthandheight(100%, 5%);
             z-index: 3;
 
             .card-center-icon {
-              @include setwidthandheight(30px, 30px);
-              @include setborderwithradius(2px solid white, 100%);
+              @include mixins.setwidthandheight(30px, 30px);
+              @include mixins.setborderwithradius(2px solid white, 100%);
               z-index: 3;
               margin: 0 auto;
             }
@@ -56,7 +62,7 @@
         }
 
         @media screen and (orientation: portrait) {
-          @include setwidthandheight(100%, 100%);
+          @include mixins.setwidthandheight(100%, 100%);
         }
       }
 
@@ -66,14 +72,14 @@
     }
 
     .rightpanel {
-      @include setwidthandheight(12%, 50vh);
-      @include flexeddiv(column, unset);
+      @include mixins.setwidthandheight(12%, 50vh);
+      @include mixins.flexeddiv(column, unset);
       margin-right: 3%;
       font-size: 11pt;
 
       .news {
-        @include setwidthandheight(unset, 50%);
-        @include setborderwithradius(1px solid black, 8px);
+        @include mixins.setwidthandheight(unset, 50%);
+        @include mixins.setborderwithradius(1px solid black, 8px);
         background-color: lightsteelblue;
       }
 
@@ -84,7 +90,7 @@
   }
 
   .footer {
-    @include setwidthandheight(100%, 20px);
+    @include mixins.setwidthandheight(100%, 20px);
     border-top: 1px solid black;
     background-color: lightgray;
   }

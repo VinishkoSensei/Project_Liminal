@@ -1,15 +1,15 @@
-@use '../../styles/base';
+@use '../../styles/mixins' as mixins;
 
 .react-card-back {
   transform-style: flat !important;
 }
 
 .card-big-container {
-  @include setwidthandheight(100%, 100%);
+  @include mixins.setwidthandheight(100%, 100%);
 
   .card-big-primary {
-    @include setwidthandheight(90%, 80%);
-    @include animation(all, 2s);
+    @include mixins.setwidthandheight(90%, 80%);
+    @include mixins.animation(all, 2s);
     position: absolute;
     z-index: 6;
 
@@ -20,8 +20,8 @@
   }
 
   .card-big-secondary {
-    @include setwidthandheight(90%, 80%);
-    @include animation(all, 2s);
+    @include mixins.setwidthandheight(90%, 80%);
+    @include mixins.animation(all, 2s);
     position: absolute;
     z-index: 6;
     background-color: transparent;
@@ -33,15 +33,15 @@
   }
 
   .card-big-blur {
-    @include setwidthandheight(100%, 100%);
-    @include setborderwithradius(unset, 52px);
-    @include animation(backdrop-filter, 2s);
+    @include mixins.setwidthandheight(100%, 100%);
+    @include mixins.setborderwithradius(unset, 52px);
+    @include mixins.animation(backdrop-filter, 2s);
     position: absolute;
     backdrop-filter: blur(10px);
     cursor: pointer;
 
     &.disabled {
-      @include animationwithdelay(all, 0.1s, 0.5s);
+      @include mixins.animationwithdelay(all, 0.1s, 0.5s);
       backdrop-filter: unset;
       width: 0;
     }

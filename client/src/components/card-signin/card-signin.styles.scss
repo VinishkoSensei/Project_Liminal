@@ -1,10 +1,11 @@
-@use '../../styles/base';
+@use '../../styles/mixins' as mixins;
+@use '../../styles/variables' as vars;
 
 .card-signin {
-  @include setwidthandheight(100%, 100%);
-  @include setborderwithradius(2px solid $primcardcolor, 52px);
-  @include flexeddiv(column, space-around);
-  background-color: $cardbackcolor;
+  @include mixins.setwidthandheight(100%, 100%);
+  @include mixins.setborderwithradius(2px solid vars.$primcardcolor, 52px);
+  @include mixins.flexeddiv(column, space-around);
+  background-color: vars.$cardbackcolor;
 
   form {
     margin: auto 15%;
