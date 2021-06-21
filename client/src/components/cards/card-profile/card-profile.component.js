@@ -10,11 +10,7 @@ import { Trans } from '@lingui/macro';
 import ReactCardFlip from 'react-card-flip';
 
 const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
-  const [changedProfile, setChangedProfile] = useState({
-    ...profile,
-    password: '',
-    passwordconf: '',
-  });
+  const [changedProfile, setChangedProfile] = useState(null);
   const [changingItemType, setChangingItemType] = useState(null);
   const [doPasswordsMatch, setDoPasswordsMatch] = useState(true);
   const [isFlipped, setIsFlipped] = useState(false);
@@ -210,7 +206,7 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
                     input.type === 'disabled' ? (
                       <FormInput
                         name={input.name}
-                        value={input.value}
+                        value={input.value || ''}
                         label={input.label}
                         key={input.key}
                         disabled
