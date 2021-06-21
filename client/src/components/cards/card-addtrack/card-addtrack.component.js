@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './card-addtrack.styles.scss';
-import FormInput from 'components/forminputs/forminput/forminput.component';
-import FormFileInput from 'components/forminputs/formfileinput/formfileinput.component';
-import CustomButton from 'components/custombutton/custombutton.component';
+import FormInput from 'components/shared/forminputs/forminput/forminput.component';
+import FormFileInput from 'components/shared/forminputs/formfileinput/formfileinput.component';
+import CustomButton from 'components/shared/custombutton/custombutton.component';
 import CreatableSelect from 'react-select/creatable';
 import TrackAnalysis from 'components/track-analysis/track-analysis.component';
 import { handleChange } from 'utils/utils';
