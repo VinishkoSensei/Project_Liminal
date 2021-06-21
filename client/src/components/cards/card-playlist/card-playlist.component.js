@@ -3,7 +3,7 @@ import Track from 'components/track/track.component';
 import { connect } from 'react-redux';
 import './card-playlist.styles.scss';
 
-const CardPlaylist = ({ changedCards, playlist, prevPlaylist }) => {
+const CardPlaylist = ({ changedCards, playlist, prevPlaylist, CardBlur }) => {
   const hrRef = useRef(null);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const CardPlaylist = ({ changedCards, playlist, prevPlaylist }) => {
           />
         ))}
       </div>
-      <div className={`card-big-blur${changedCards ? ' disabled' : ''}`} />
+      {CardBlur ? CardBlur : null}
     </div>
   );
 };

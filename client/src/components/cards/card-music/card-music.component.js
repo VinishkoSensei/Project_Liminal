@@ -12,6 +12,7 @@ const CardMusic = ({
   playNextTrack,
   emptySrc,
   currentTrack,
+  CardBlur,
 }) => {
   return (
     <div className="card-music">
@@ -94,7 +95,7 @@ const CardMusic = ({
           )}
         </div>
       )}
-      <div className={`card-big-blur${changedCards ? '' : ' disabled'}`}></div>
+      {CardBlur ? CardBlur : null}
     </div>
   );
 };
