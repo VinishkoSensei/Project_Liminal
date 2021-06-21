@@ -1,0 +1,27 @@
+@use 'styles/mixins' as mixins;
+@use 'styles/variables' as vars;
+
+%card {
+  @include mixins.setwidthandheight(100%, 100%);
+  background-color: vars.$cardbackcolor;
+}
+
+%card-primary-base {
+  @extend %card;
+  @include mixins.setborderwithradius(2px solid vars.$primcardcolor, 52px);
+}
+
+%card-secondary-base {
+  @extend %card;
+  @include mixins.setborderwithradius(2px solid vars.$seccardcolor, 52px);
+}
+
+%card-primary {
+  @extend %card-primary-base;
+  @include mixins.flexeddiv(column, space-around);
+}
+
+%card-secondary {
+  @extend %card-secondary-base;
+  @include mixins.flexeddiv(column, space-around);
+}
