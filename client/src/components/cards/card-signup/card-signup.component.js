@@ -8,7 +8,7 @@ import { signUpStart } from 'redux/user/user.actions';
 import { handleChange, handleChangeWithFunction } from 'utils/utils';
 import { Trans } from '@lingui/macro';
 
-const CardSignUp = ({ changedCards, signUpStart, error }) => {
+const CardSignUp = ({ changedCards, signUpStart, error, CardBlur }) => {
   const selectedItemInitialState = {
     email: '',
     firstname: '',
@@ -189,8 +189,7 @@ const CardSignUp = ({ changedCards, signUpStart, error }) => {
           <Trans>Sign Up</Trans>
         </CustomButton>
       </form>
-
-      <div className={`card-big-blur${changedCards ? ' disabled' : ''}`} />
+      {CardBlur ? CardBlur : null}
     </div>
   );
 };
