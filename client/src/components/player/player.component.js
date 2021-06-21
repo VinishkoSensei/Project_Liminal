@@ -27,6 +27,10 @@ const Player = ({
     }
   };
 
+  const handlePlayingState = (playingState) => () => {
+    changePlayingState(playingState);
+  };
+
   return (
     <div className={`player-container${profile ? ' opened' : ''}`}>
       {profile ? (
@@ -44,8 +48,8 @@ const Player = ({
             defaultCurrentTime=""
             defaultDuration=""
             onEnded={playNextTrack}
-            onPlay={() => changePlayingState(true)}
-            onPause={() => changePlayingState(false)}
+            onPlay={handlePlayingState(true)}
+            onPause={handlePlayingState(false)}
             onListen={volumeControl}
             listenInterval={200}
           ></AudioPlayer>

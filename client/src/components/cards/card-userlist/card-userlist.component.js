@@ -53,6 +53,12 @@ const CardUserList = () => {
     return 'user';
   };
 
+  const SearchList = [
+    { name: 'all', label: <Trans>All</Trans> },
+    { name: 'admin', label: <Trans>Admins</Trans> },
+    { name: 'regular', label: <Trans>Regular</Trans> },
+  ];
+
   return (
     <div className={`card-userlist${searchbarOnTop ? ' searched' : ''}`}>
       <div className="placeholder" />
@@ -73,24 +79,17 @@ const CardUserList = () => {
       </div>
       <div className={`searchlist${searchbarOnTop ? ' searched' : ''}`}>
         <div className="searchlist-buttons">
-          <div
-            className={`button${searchType === 'all' ? ' selected' : ''}`}
-            onClick={() => setSearchType('all')}
-          >
-            <Trans>All</Trans>
-          </div>
-          <div
-            className={`button${searchType === 'admin' ? ' selected' : ''}`}
-            onClick={() => setSearchType('admin')}
-          >
-            <Trans>Admins</Trans>
-          </div>
-          <div
-            className={`button${searchType === 'regular' ? ' selected' : ''}`}
-            onClick={() => setSearchType('regular')}
-          >
-            <Trans>Regular</Trans>
-          </div>
+          {SearchList.map((searchItem) => (
+            <div
+              key={searchItem.name}
+              className={`button${
+                searchType === searchItem.name ? ' selected' : ''
+              }`}
+              onClick={() => setSearchType(searchItem.name)}
+            >
+              {searchItem.label}
+            </div>
+          ))}
         </div>
         <div className="searchlist-list">
           <div className="searchlist-users">
