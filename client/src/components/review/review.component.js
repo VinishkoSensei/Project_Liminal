@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import './review.styles.scss';
 import { connect } from 'react-redux';
 import { addNotificationStart } from 'redux/notification/notification.actions';
-import CustomButton from 'components/custombutton/custombutton.component';
-import FormInput from 'components/forminputs/forminput/forminput.component';
+import CustomButton from 'components/shared/custombutton/custombutton.component';
+import FormInput from 'components/shared/forminputs/forminput/forminput.component';
 import { handleChange } from 'utils/utils';
 import { Trans } from '@lingui/macro';
 

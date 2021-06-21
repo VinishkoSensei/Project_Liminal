@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './card-profile.styles.scss';
 import { connect } from 'react-redux';
-import CustomButton from 'components/custombutton/custombutton.component';
+import CustomButton from 'components/shared/custombutton/custombutton.component';
 import { changeProfileStart } from 'redux/user/user.actions';
-import FormInput from 'components/forminputs/forminput/forminput.component';
-import FormFileInput from 'components/forminputs/formfileinput/formfileinput.component';
+import FormInput from 'components/shared/forminputs/forminput/forminput.component';
+import FormFileInput from 'components/shared/forminputs/formfileinput/formfileinput.component';
 import { handleChange, handleChangeWithFunction } from 'utils/utils';
 import { Trans } from '@lingui/macro';
 import ReactCardFlip from 'react-card-flip';
