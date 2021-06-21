@@ -1,17 +1,22 @@
+@use 'components/cards/card-styles.scss';
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
 
+%appearance {
+  -webkit-appearance: div;
+  -moz-appearance: div;
+  appearance: div;
+}
+
 .card-userlist {
-  @include mixins.setwidthandheight(100%, 100%);
-  @include mixins.setborderwithradius(2px solid vars.$seccardcolor, 52px);
-  @include mixins.flexeddiv(column, flex-start);
+  @extend %card-primary-base;
+  @include mixins.flexeddiv(column, flex-start, center);
   @include mixins.animation(all, 2s);
-  align-items: center;
-  background-color: vars.$cardbackcolor;
+  overflow: hidden;
 
   .placeholder {
-    @include mixins.setwidthandheight(100%, 46%);
     @include mixins.animation(all, 2s);
+    @include mixins.setwidthandheight(100%, 46%);
   }
 
   &.searched {
@@ -25,10 +30,7 @@
     .searchbar {
       @include mixins.setwidthandheight(100%, 8%);
       @include mixins.animation(all, 1s);
-      border-radius: 0;
-      border-top: 0px solid vars.$seccardcolor;
-      border-left: 0px solid vars.$seccardcolor;
-      border-right: 0px solid vars.$seccardcolor;
+      @include mixins.setborderwithradius(0px solid vars.$seccardcolor, 0);
       border-bottom: 2px solid vars.$seccardcolor;
 
       .searchbar-image {
@@ -48,18 +50,16 @@
 
   .searchbar {
     @include mixins.setwidthandheight(90%, 50px);
-    @include mixins.setborderwithradius(2px vars.$seccardcolor solid, 15px);
-    @include mixins.animationwithdelay(all, 1s, 0.5s);
+    @include mixins.animation(all, 1s, 0.5s);
+    @include mixins.setborderwithradius(2px solid vars.$seccardcolor, 15px);
     text-align: center;
     display: flex;
 
     .searchbar-image {
       @include mixins.setwidthandheight(20%, 100%);
       @include mixins.animation(all, 2s);
+      @extend %appearance;
       border-right: 1px solid vars.$seccardcolor;
-      -webkit-appearance: div;
-      -moz-appearance: div;
-      appearance: div;
 
       .searchbar-image-button {
         @include mixins.setwidthandheight(100%, 100%);
@@ -71,11 +71,9 @@
     }
 
     .searchbar-query {
-      @include mixins.setwidthandheight(100%, 100%);
       @include mixins.animation(all, 2s);
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      @include mixins.flexeddiv(row, center, center);
+      @include mixins.setwidthandheight(100%, 100%);
 
       input {
         @include mixins.setwidthandheight(90%, 65%);
@@ -89,15 +87,15 @@
   }
 
   .searchlist {
-    @include mixins.setwidthandheight(100%, 0);
     @include mixins.animation(all, 1s);
+    @include mixins.setwidthandheight(100%, 0);
 
     &.searched {
       @include mixins.animation(all, 1s);
       height: 100%;
 
       .searchlist-buttons {
-        display: flex;
+        @include mixins.flexeddiv(row, space-around);
       }
     }
 
@@ -105,16 +103,14 @@
       @include mixins.setwidthandheight(100%, 10%);
       border-bottom: vars.$seccardcolor solid 2px;
       display: none;
-      justify-content: space-around;
       color: white;
 
       .button {
-        @include mixins.flexeddiv(column, center);
+        @include mixins.flexeddiv(column, center, center);
         width: 80px;
         cursor: pointer;
         margin: 5px 0px;
         border-radius: 8px;
-        align-items: center;
 
         &:hover {
           color: vars.$tercardcolor;
@@ -135,22 +131,6 @@
         overflow-x: hidden;
         margin: 10px 0px;
         height: 80%;
-
-        &::-webkit-scrollbar {
-          @include mixins.setwidthandheight(12px, unset);
-        }
-
-        &::-webkit-scrollbar-track {
-          @include mixins.setborderwithradius(unset, 10px);
-          box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
-          -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
-        }
-
-        &::-webkit-scrollbar-thumb {
-          @include mixins.setborderwithradius(unset, 10px);
-          box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.5);
-          -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.5);
-        }
 
         .user-item {
           @include mixins.flexeddiv(row, space-between);
@@ -185,7 +165,7 @@
 
           &:hover {
             .user-menu {
-              display: flex;
+              @include mixins.flexeddiv(row, flex-end);
             }
             .user-duration {
               display: none;
@@ -199,8 +179,6 @@
               5px
             );
             display: none;
-            justify-content: flex-end;
-            flex-direction: row;
             background-color: vars.$primcardcolor;
             opacity: 0.8;
             padding-left: 2px;
