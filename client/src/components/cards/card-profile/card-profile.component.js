@@ -20,6 +20,8 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
     setChangedProfile({ ...profile, password: '', passwordconf: '' });
   }, [profile]);
 
+  const flipCards = () => setIsFlipped((prevIsFlipped) => !prevIsFlipped);
+
   const handleChangingItemType = (event) => {
     setChangingItemType(event.target.name);
   };
@@ -236,10 +238,7 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
                       />
                     )
                   )}
-                  <CustomButton
-                    type="button"
-                    onClick={() => setIsFlipped(true)}
-                  >
+                  <CustomButton type="button" onClick={flipCards}>
                     <Trans>Subscription</Trans>
                   </CustomButton>
                 </div>
@@ -302,11 +301,7 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
                     <CustomButton type="button">
                       <Trans>Pay</Trans>
                     </CustomButton>
-                    <CustomButton
-                      type="button"
-                      onClick={() => setIsFlipped(false)}
-                      abort
-                    >
+                    <CustomButton type="button" onClick={flipCards} abort>
                       <Trans>Cancel</Trans>
                     </CustomButton>
                   </div>
