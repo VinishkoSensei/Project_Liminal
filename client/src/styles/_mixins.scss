@@ -1,23 +1,28 @@
-@mixin animation($type, $sec) {
-  -webkit-transition: $type $sec ease;
-  -moz-transition: $type $sec ease;
-  -o-transition: $type $sec ease;
-  -ms-transition: $type $sec ease;
-  transition: $type $sec ease;
+@mixin animation($type, $sec, $delay: 0) {
+  @if $delay == 0 {
+    -webkit-transition: $type $sec;
+    -moz-transition: $type $sec;
+    -o-transition: $type $sec;
+    -ms-transition: $type $sec;
+    transition: $type $sec;
+  } @else {
+    -webkit-transition: $type $sec $delay;
+    -moz-transition: $type $sec $delay;
+    -o-transition: $type $sec $delay;
+    -ms-transition: $type $sec $delay;
+    transition: $type $sec $delay;
+  }
 }
 
-@mixin animationwithdelay($type, $sec, $cd) {
-  -webkit-transition: $type $sec ease $cd;
-  -moz-transition: $type $sec ease $cd;
-  -o-transition: $type $sec ease $cd;
-  -ms-transition: $type $sec ease $cd;
-  transition: $type $sec ease $cd;
-}
-
-@mixin flexeddiv($flexdirection, $justifycontent) {
+@mixin flexeddiv($flexdirection, $justifycontent, $alignitems: unset) {
   display: flex;
-  flex-direction: $flexdirection;
   justify-content: $justifycontent;
+  @if $flexdirection != row {
+    flex-direction: $flexdirection;
+  }
+  @if $alignitems != unset {
+    align-items: $alignitems;
+  }
 }
 
 @mixin setwidthandheight($width, $height) {
