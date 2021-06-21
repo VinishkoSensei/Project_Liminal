@@ -1,11 +1,7 @@
-@use 'styles/mixins' as mixins;
-@use 'styles/variables' as vars;
+@use 'components/cards/card-styles.scss';
 
 .card-signup {
-  @include mixins.setwidthandheight(100%, 100%);
-  @include mixins.setborderwithradius(2px solid vars.$seccardcolor, 52px);
-  @include mixins.flexeddiv(column, space-around);
-  background-color: vars.$cardbackcolor;
+  @extend %card-secondary;
 
   form {
     margin: auto 15%;

@@ -1,11 +1,9 @@
-@use 'styles/mixins' as mixins;
+@use 'components/cards/card-styles.scss';
+@use 'styles/mixins';
 @use 'styles/variables' as vars;
 
 .card-ai {
-  @include mixins.setwidthandheight(100%, 100%);
-  @include mixins.setborderwithradius(2px solid vars.$seccardcolor, 52px);
-  @include mixins.flexeddiv(column, space-around);
-  background-color: vars.$cardbackcolor;
+  @extend %card-secondary;
 
   .card-ai-switch {
     @include mixins.flexeddiv(row, space-evenly);
