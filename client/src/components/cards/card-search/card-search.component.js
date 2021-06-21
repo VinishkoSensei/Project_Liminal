@@ -48,6 +48,12 @@ const CardSearch = ({
     }
   };
 
+  const SearchList = [
+    { name: 'all', label: <Trans>All</Trans> },
+    { name: 'authors', label: <Trans>Authors</Trans> },
+    { name: 'tracks', label: <Trans>Tracks</Trans> },
+  ];
+
   return (
     <div className={`card-search${searchbarOnTop ? ' searched' : ''}`}>
       <div className="placeholder" />
@@ -68,24 +74,17 @@ const CardSearch = ({
       </form>
       <div className={`searchlist${searchbarOnTop ? ' searched' : ''}`}>
         <div className="searchlist-buttons">
-          <div
-            className={`button${searchType === 'all' ? ' selected' : ''}`}
-            onClick={() => setSearchType('all')}
-          >
-            <Trans>All</Trans>
-          </div>
-          <div
-            className={`button${searchType === 'authors' ? ' selected' : ''}`}
-            onClick={() => setSearchType('authors')}
-          >
-            <Trans>Authors</Trans>
-          </div>
-          <div
-            className={`button${searchType === 'tracks' ? ' selected' : ''}`}
-            onClick={() => setSearchType('tracks')}
-          >
-            <Trans>Tracks</Trans>
-          </div>
+          {SearchList.map((searchItem) => (
+            <div
+              key={searchItem.name}
+              className={`button${
+                searchType === searchItem.name ? ' selected' : ''
+              }`}
+              onClick={() => setSearchType(searchItem.name)}
+            >
+              {searchItem.label}
+            </div>
+          ))}
         </div>
         <div className="searchlist-list">
           <div className="searchlist-tracks">
