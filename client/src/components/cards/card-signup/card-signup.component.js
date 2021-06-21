@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import CustomButton from 'components/custombutton/custombutton.component';
-import FormInput from 'components/forminputs/forminput/forminput.component';
-import FormFileInput from 'components/forminputs/formfileinput/formfileinput.component';
+import CustomButton from 'components/shared/custombutton/custombutton.component';
+import FormInput from 'components/shared/forminputs/forminput/forminput.component';
+import FormFileInput from 'components/shared/forminputs/formfileinput/formfileinput.component';
 import './card-signup.styles.scss';
 import { connect } from 'react-redux';
 import { signUpStart } from 'redux/user/user.actions';
