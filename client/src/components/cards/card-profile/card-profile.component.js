@@ -206,7 +206,7 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
                     input.type === 'disabled' ? (
                       <FormInput
                         name={input.name}
-                        value={input.value}
+                        value={input.value || ''}
                         label={input.label}
                         key={input.key}
                         disabled
