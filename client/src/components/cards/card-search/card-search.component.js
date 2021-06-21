@@ -9,6 +9,7 @@ const CardSearch = ({
   addToRadioQueueStart,
   addToRadioQueueEnd,
   noMenu,
+  CardBlur,
 }) => {
   const [tracks, setTracks] = useState();
   const [query, setQuery] = useState('');
@@ -112,7 +113,7 @@ const CardSearch = ({
           </div>
         </div>
       </div>
-      <div className={`card-big-blur${changedCards ? ' disabled' : ''}`}></div>
+      {CardBlur ? CardBlur : null}
     </div>
   );
 };
