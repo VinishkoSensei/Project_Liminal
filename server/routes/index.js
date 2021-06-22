@@ -14,9 +14,7 @@ const {
 } = require('../functions/db/profile.db');
 const {
   getTrackList,
-  getTracksByNameAndAuthor,
-  getTracksByName,
-  getTracksByAuthor,
+  getTracks,
   addTrackToRadioQueue,
   getRadioQueueFromFront,
   deleteTrackFromRadioQueue,
@@ -200,20 +198,8 @@ const plugin = {
 
     server.route({
       method: 'GET',
-      path: '/gettracksbynameandauthor/{name}',
-      handler: getTracksByNameAndAuthor,
-      config: {
-        cors: {
-          origin: ['*'],
-          additionalHeaders: ['cache-control', 'x-requested-with'],
-        },
-      },
-    });
-
-    server.route({
-      method: 'GET',
-      path: '/gettracksbyname/{name}',
-      handler: getTracksByName,
+      path: '/gettracks',
+      handler: getTracks,
       config: {
         cors: {
           origin: ['*'],
@@ -238,18 +224,6 @@ const plugin = {
       method: 'GET',
       path: '/getgenres',
       handler: getGenres,
-      config: {
-        cors: {
-          origin: ['*'],
-          additionalHeaders: ['cache-control', 'x-requested-with'],
-        },
-      },
-    });
-
-    server.route({
-      method: 'GET',
-      path: '/gettracksbyauthor/{name}',
-      handler: getTracksByAuthor,
       config: {
         cors: {
           origin: ['*'],

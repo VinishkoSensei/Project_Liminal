@@ -1,52 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Track from 'components/track/track.component';
 import { handleChangeSingle } from 'utils/utils';
 import './card-search.styles.scss';
 import { Trans } from '@lingui/macro';
 
 const CardSearch = ({
-  changedCards,
   addToRadioQueueStart,
   addToRadioQueueEnd,
   noMenu,
   CardBlur,
 }) => {
-  const [tracks, setTracks] = useState();
   const [query, setQuery] = useState('');
   const [searchbarOnTop, setSearchbarOnTop] = useState(false);
+  const [tracks, setTracks] = useState([]);
   const [searchType, setSearchType] = useState('all');
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  useEffect(() => {
+    const getTrackList = async () => {
+      const response = await fetch(
+        `http://localhost:3001/gettracks?` +
+          new URLSearchParams({ type: searchType, query }),
+        {
+          method: 'get',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      const newTrackList = await response.json();
+      setTracks(newTrackList);
+    };
+
+    getTrackList();
+  }, [searchType, query]);
+
+  useEffect(() => {
     setSearchbarOnTop(query.length);
-    try {
-      switch (searchType) {
-        case 'authors':
-          const res = await fetch(
-            `http://localhost:3001/gettracksbyauthor/${query}`
-          );
-          const data = await res.json();
-          setTracks(data);
-          break;
-        case 'tracks':
-          const res1 = await fetch(
-            `http://localhost:3001/gettracksbyname/${query}`
-          );
-          const data1 = await res1.json();
-          setTracks(data1);
-          break;
-        default:
-          const res2 = await fetch(
-            `http://localhost:3001/gettracksbynameandauthor/${query}`
-          );
-          const data2 = await res2.json();
-          setTracks(data2);
-          break;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }, [query]);
 
   const SearchList = [
     { name: 'all', label: <Trans>All</Trans> },
@@ -57,7 +47,7 @@ const CardSearch = ({
   return (
     <div className={`card-search${searchbarOnTop ? ' searched' : ''}`}>
       <div className="placeholder" />
-      <form className="searchbar" onSubmit={handleSubmit}>
+      <form className="searchbar">
         <div className="searchbar-image">
           <button type="submit" className="searchbar-image-button">
             <img
