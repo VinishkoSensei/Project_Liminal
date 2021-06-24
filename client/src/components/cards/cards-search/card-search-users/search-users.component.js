@@ -44,8 +44,8 @@ const SearchUsers = () => {
             <div>
               {avatar ? (
                 <img
-                  src={`http://localhost:3001/getprofileimage/${avatar}`}
-                  alt="profileimage"
+                  src={`http://localhost:3001/getavatar/${avatar}`}
+                  alt="avatar"
                   width="60px"
                   height="60px"
                 />

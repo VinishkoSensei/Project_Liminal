@@ -22,8 +22,8 @@ export const handleSignIn = async ({ userCredentials, token }) => {
   }
 };
 
-export const handleGetProfile = async (userId, token) => {
-  const userdata = await fetch(`http://localhost:3001/profile/${userId}`, {
+export const handleGetUser = async (userId, token) => {
+  const userdata = await fetch(`http://localhost:3001/user/${userId}`, {
     method: 'get',
     headers: {
       'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export const handleSignUp = async (
   file,
   password
 ) => {
-  const response = await fetch(`http://localhost:3001/createprofile`, {
+  const response = await fetch(`http://localhost:3001/createuser`, {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -59,13 +59,8 @@ export const handleSignUp = async (
   return response;
 };
 
-export const handleChangeProfile = async (
-  id,
-  value,
-  changingItemType,
-  token
-) => {
-  const response = await fetch(`http://localhost:3001/profile/${id}`, {
+export const handleChangeUser = async (id, value, changingItemType, token) => {
+  const response = await fetch(`http://localhost:3001/user/${id}`, {
     method: 'post',
     headers: { 'Content-Type': 'application/json', authorization: token },
     body: JSON.stringify({

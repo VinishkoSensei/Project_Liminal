@@ -5,12 +5,12 @@ import Header from 'components/header/header.component';
 import Player from 'components/player/player.component';
 import ChangingCards from 'components/changingcards/changingcards.component';
 import MainMenu from 'components/mainmenu/mainmenu.component';
-import Profile from 'components/profile/profile.component';
+import User from 'components/user/user.component';
 import CardMusic from 'components/cards/card-music/card-music.component';
 import CardAi from 'components/cards/card-ai/card-ai.component';
 import CardPlaylistOrd from 'components/cards/cards-playlist/card-playlist-ord/card-playlist-ord.component';
 import SearchTracks from 'components/cards/cards-search/card-search-tracks/search-tracks.component';
-import CardProfile from 'components/cards/card-profile/card-profile.component';
+import CardUser from 'components/cards/card-user/card-user.component';
 import CardSignIn from 'components/cards/card-signin/card-signin.component';
 import CardSignUp from 'components/cards/card-signup/card-signup.component';
 import CardAdmin from 'components/cards/card-admin/card-admin.component';
@@ -24,11 +24,11 @@ import { connect } from 'react-redux';
 import { checkUserSession } from 'redux/user/user.actions';
 import Review from 'components/review/review.component';
 
-const HomePage = ({ profile, checkUserSession }) => {
+const HomePage = ({ user, checkUserSession }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [chosenCard, setChosenCard] = useState(null);
   const playerRef = useRef(null);
-  const [profileExpanded, setProfileExpanded] = useState(false);
+  const [userExpanded, setUserExpanded] = useState(false);
   const [selectedAdminItem, setSelectedAdminItem] = useState(null);
   const [isOpened, setIsOpened] = useState(false);
 
@@ -62,7 +62,7 @@ const HomePage = ({ profile, checkUserSession }) => {
         <div className="main-space">
           <div className="main-container">
             <div className="cards-container">
-              {profile ? (
+              {user ? (
                 <ReactCardFlip
                   isFlipped={isFlipped}
                   flipSpeedBackToFront={2}
@@ -106,20 +106,17 @@ const HomePage = ({ profile, checkUserSession }) => {
           </div>
         </div>
         <div className="rightpanel">
-          <Profile
-            setProfileExpanded={setProfileExpanded}
-            profileExpanded={profileExpanded}
+          <User
+            setUserExpanded={setUserExpanded}
+            userExpanded={userExpanded}
             openAdminCard={openAdminCard}
             isOpened={isOpened}
           />
-          {profile ? <Review /> : null}
+          {user ? <Review /> : null}
         </div>
       </div>
 
-      <CardProfile
-        profileExpanded={profileExpanded}
-        setProfileExpanded={setProfileExpanded}
-      />
+      <CardUser userExpanded={userExpanded} setUserExpanded={setUserExpanded} />
       <CardAdmin
         selectedAdminItem={selectedAdminItem}
         setSelectedAdminItem={setSelectedAdminItem}
@@ -132,7 +129,7 @@ const HomePage = ({ profile, checkUserSession }) => {
 };
 
 const mapStateToProps = (state) => ({
-  profile: state.user.profile,
+  user: state.user.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
