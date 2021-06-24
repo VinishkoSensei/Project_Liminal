@@ -1,14 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 import Track from 'components/track/track.component';
 import { connect } from 'react-redux';
-import '../cards-playlist.styles.scss';
+import '../card-playlist.styles.scss';
 
-const CardPlaylistOrd = ({
-  changedCards,
-  playlist,
-  prevPlaylist,
-  CardBlur,
-}) => {
+const CardPlaylistOrd = ({ playlist, prevPlaylist, CardBlur }) => {
   const hrRef = useRef(null);
 
   useEffect(() => {

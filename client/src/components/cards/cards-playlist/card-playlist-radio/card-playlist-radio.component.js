@@ -1,6 +1,6 @@
 import React from 'react';
 import Track from 'components/track/track.component';
-import '../cards-playlist.styles.scss';
+import '../card-playlist.styles.scss';
 
 const CardPlaylistRadio = ({ radioQueue, setRadioQueue }) => {
   const deleteFromRadioQueue = (index) => async () => {
