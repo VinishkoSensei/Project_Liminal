@@ -9,7 +9,7 @@ import Profile from 'components/profile/profile.component';
 import CardMusic from 'components/cards/card-music/card-music.component';
 import CardAi from 'components/cards/card-ai/card-ai.component';
 import CardPlaylistOrd from 'components/cards/cards-playlist/card-playlist-ord/card-playlist-ord.component';
-import SearchTracks from 'components/cards/card-search/search-tracks/search-tracks.component';
+import SearchTracks from 'components/cards/cards-search/card-search-tracks/search-tracks.component';
 import CardProfile from 'components/cards/card-profile/card-profile.component';
 import CardSignIn from 'components/cards/card-signin/card-signin.component';
 import CardSignUp from 'components/cards/card-signup/card-signup.component';
