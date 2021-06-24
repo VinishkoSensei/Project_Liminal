@@ -10,7 +10,7 @@ const Player = ({
   playNextTrack,
   changePlayingState,
   playerRef,
-  profile,
+  user,
   suggestedPoints,
 }) => {
   const volumeControl = (e) => {
@@ -32,8 +32,8 @@ const Player = ({
   };
 
   return (
-    <div className={`player-container${profile ? ' opened' : ''}`}>
-      {profile ? (
+    <div className={`player-container${user ? ' opened' : ''}`}>
+      {user ? (
         <div className="player">
           <AudioPlayer
             id="audio"
@@ -63,7 +63,7 @@ const mapStateToProps = (state) => ({
   src: state.music.src,
   suggestedPoints: state.music.currentTrack.suggestedPoints,
   isPlaying: state.music.isPlaying,
-  profile: state.user.profile,
+  user: state.user.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({

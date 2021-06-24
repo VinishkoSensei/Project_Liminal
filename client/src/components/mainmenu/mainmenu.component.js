@@ -3,7 +3,7 @@ import './mainmenu.styles.scss';
 import SmallButton from 'components/shared/small-button/small-button.component';
 import { connect } from 'react-redux';
 
-const MainMenu = ({ profile, flipCard, openAdminCard, isOpened }) => {
+const MainMenu = ({ user, flipCard, openAdminCard, isOpened }) => {
   return (
     <div className="mainmenu-cards-container">
       <div className="cards top">
@@ -19,7 +19,7 @@ const MainMenu = ({ profile, flipCard, openAdminCard, isOpened }) => {
           onClick={flipCard}
           style={{ backgroundImage: `url('/images/broadcast.svg')` }}
         ></div>
-        {profile.isadmin ? (
+        {user.isadmin ? (
           <SmallButton
             onClick={openAdminCard('playlist')}
             isHidden={isOpened}
@@ -42,7 +42,7 @@ const MainMenu = ({ profile, flipCard, openAdminCard, isOpened }) => {
           onClick={flipCard}
           style={{ backgroundImage: `url('/images/music.svg')` }}
         ></div>
-        {profile.isadmin ? (
+        {user.isadmin ? (
           <SmallButton onClick={openAdminCard('track')} isHidden={isOpened} />
         ) : null}
       </div>
@@ -51,7 +51,7 @@ const MainMenu = ({ profile, flipCard, openAdminCard, isOpened }) => {
 };
 
 const mapStateToProps = (state) => ({
-  profile: state.user.profile,
+  user: state.user.user,
 });
 
 export default connect(mapStateToProps)(MainMenu);
