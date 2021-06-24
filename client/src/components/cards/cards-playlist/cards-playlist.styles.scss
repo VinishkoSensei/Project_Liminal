@@ -1,18 +1,22 @@
+@use 'components/cards/card-styles.scss';
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
 
-.card-radio-playlist {
-  @include mixins.setwidthandheight(100%, 90%);
-  @include mixins.setborderwithradius(2px solid vars.$primcardcolor, 30px);
+.card-playlist {
+  @extend %card-secondary-base;
   @include mixins.flexeddiv(unset, center);
-  background-color: vars.$cardbackcolor;
   align-items: center;
   margin: 28px 5px 0 2.5px;
-  color: white;
 
   .card-big-table {
     @include mixins.setwidthandheight(90%, 90%);
     @include mixins.setborderwithradius(unset, 3%);
     overflow-y: auto;
+    color: white;
+  }
+
+  &.radio {
+    border-radius: 32px;
+    height: 90%;
   }
 }
