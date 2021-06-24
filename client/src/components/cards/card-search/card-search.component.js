@@ -1,24 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import Track from 'components/track/track.component';
 import { handleChangeSingle } from 'utils/utils';
-import './card-search.styles.scss';
-import { Trans } from '@lingui/macro';
 
-const CardSearch = ({
-  addToRadioQueueStart,
-  addToRadioQueueEnd,
-  noMenu,
-  CardBlur,
-}) => {
+const CardSearch = ({ searchList, url, CardBlur, renderFunction }) => {
   const [query, setQuery] = useState('');
   const [searchbarOnTop, setSearchbarOnTop] = useState(false);
-  const [tracks, setTracks] = useState([]);
+  const [results, setResults] = useState([]);
   const [searchType, setSearchType] = useState('all');
 
   useEffect(() => {
-    const getTrackList = async () => {
+    const getResults = async () => {
       const response = await fetch(
-        `http://localhost:3001/gettracks?` +
+        `http://localhost:3001/${url}?` +
           new URLSearchParams({ type: searchType, query }),
         {
           method: 'get',
@@ -27,27 +19,25 @@ const CardSearch = ({
           },
         }
       );
-      const newTrackList = await response.json();
-      setTracks(newTrackList);
+      const resultList = await response.json();
+      setResults(resultList);
     };
 
-    getTrackList();
-  }, [searchType, query]);
+    getResults();
+  }, [searchType, query, url]);
 
   useEffect(() => {
     setSearchbarOnTop(query.length);
   }, [query]);
 
-  const SearchList = [
-    { name: 'all', label: <Trans>All</Trans> },
-    { name: 'authors', label: <Trans>Authors</Trans> },
-    { name: 'tracks', label: <Trans>Tracks</Trans> },
-  ];
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
 
   return (
     <div className={`card-search${searchbarOnTop ? ' searched' : ''}`}>
       <div className="placeholder" />
-      <form className="searchbar">
+      <form className="searchbar" onSubmit={handleSubmit}>
         <div className="searchbar-image">
           <button type="submit" className="searchbar-image-button">
             <img
@@ -64,7 +54,7 @@ const CardSearch = ({
       </form>
       <div className={`searchlist${searchbarOnTop ? ' searched' : ''}`}>
         <div className="searchlist-buttons">
-          {SearchList.map((searchItem) => (
+          {searchList.map((searchItem) => (
             <div
               key={searchItem.name}
               className={`button${
@@ -77,28 +67,8 @@ const CardSearch = ({
           ))}
         </div>
         <div className="searchlist-list">
-          <div className="searchlist-tracks">
-            {tracks?.map((track, index) =>
-              addToRadioQueueStart && addToRadioQueueEnd ? (
-                <Track
-                  key={index}
-                  track={track}
-                  index={index}
-                  addToRadioQueueStart={addToRadioQueueStart}
-                  addToRadioQueueEnd={addToRadioQueueEnd}
-                />
-              ) : noMenu ? (
-                <Track key={index} track={track} index={index} />
-              ) : (
-                <Track
-                  key={index}
-                  track={track}
-                  index={index}
-                  showAddToStart
-                  showAddToEnd
-                />
-              )
-            )}
+          <div className="searchlist-results">
+            {renderFunction(results, setResults)}
           </div>
         </div>
       </div>
