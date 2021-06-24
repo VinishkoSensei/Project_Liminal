@@ -22,7 +22,7 @@ const User = ({
 
   const handleImgError = (e) => {
     e.target.onError = null;
-    e.target.src = 'images/emptyuser.svg';
+    e.target.src = 'images/sampleavatar.svg';
   };
 
   const handleSignOut = () => {
@@ -43,7 +43,7 @@ const User = ({
           >
             <div className="user-icon-container">
               <img
-                src={`http://localhost:3001/getavatar/${user.avatar}`}
+                src={`http://localhost:3001/getuseravatar/${user.avatar}`}
                 alt="avatar"
                 onError={handleImgError}
               />
