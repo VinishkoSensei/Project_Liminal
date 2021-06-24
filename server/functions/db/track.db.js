@@ -41,6 +41,15 @@ const getTracks = async (req, h) => {
   return h.response(trackList);
 };
 
+const getTrack = async (req, h) => {
+  const trackId = req.params.trackId;
+  const db = req.getDb();
+  const track = await db.func('liminal.gettrack', trackId);
+  const trackpoints = await db.func('liminal.gettrackpoints', trackId);
+  const suggestedPoints = trackpoints.map((p) => p.point);
+  return { ...track[0], suggestedPoints };
+};
+
 const getRadioQueue = async (db) => {
   const radioQueue = await db.func('liminal.gettrackqueue');
   return radioQueue;
@@ -125,6 +134,7 @@ const createTrack = async (req, h) => {
 
 module.exports = {
   getTrackList,
+  getTrack,
   getTracks,
   getNextTrackFromRadioQueue,
   addTrackToRadioQueue,
