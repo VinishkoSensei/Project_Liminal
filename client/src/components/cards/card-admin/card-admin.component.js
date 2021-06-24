@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './card-admin.styles.scss';
-import CardSearch from 'components/cards/card-search/card-search.component';
+import SearchTracks from 'components/cards/card-search/search-tracks/search-tracks.component';
 import CardAddTrack from 'components/cards/card-addtrack/card-addtrack.component';
 import CardRadioPlaylist from 'components/cards/card-radio-playlist/card-radio-playlist.component';
-import CardUserList from 'components/cards/card-userlist/card-userlist.component';
+import SearchUsers from 'components/cards/card-search/search-users/search-users.component';
 
 const CardAdmin = ({
   selectedAdminItem,
@@ -53,20 +53,20 @@ const CardAdmin = ({
       case 'track':
         return (
           <div className="card-admin-main">
-            <CardSearch noMenu />
+            <SearchTracks noMenu />
             <CardAddTrack />
           </div>
         );
       case 'users':
         return (
           <div className="card-admin-main">
-            <CardUserList />
+            <SearchUsers />
           </div>
         );
       case 'playlist':
         return (
           <div className="card-admin-main">
-            <CardSearch
+            <SearchTracks
               addToRadioQueueStart={addToRadioQueueStart}
               addToRadioQueueEnd={addToRadioQueueEnd}
             />

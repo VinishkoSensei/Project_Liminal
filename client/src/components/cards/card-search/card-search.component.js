@@ -1,58 +1,38 @@
-import React, { useState } from 'react';
-import Track from 'components/track/track.component';
+import React, { useState, useEffect } from 'react';
 import { handleChangeSingle } from 'utils/utils';
-import './card-search.styles.scss';
-import { Trans } from '@lingui/macro';
 
-const CardSearch = ({
-  changedCards,
-  addToRadioQueueStart,
-  addToRadioQueueEnd,
-  noMenu,
-  CardBlur,
-}) => {
-  const [tracks, setTracks] = useState();
+const CardSearch = ({ searchList, url, CardBlur, renderFunction }) => {
   const [query, setQuery] = useState('');
   const [searchbarOnTop, setSearchbarOnTop] = useState(false);
+  const [results, setResults] = useState([]);
   const [searchType, setSearchType] = useState('all');
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setSearchbarOnTop(query.length);
-    try {
-      switch (searchType) {
-        case 'authors':
-          const res = await fetch(
-            `http://localhost:3001/gettracksbyauthor/${query}`
-          );
-          const data = await res.json();
-          setTracks(data);
-          break;
-        case 'tracks':
-          const res1 = await fetch(
-            `http://localhost:3001/gettracksbyname/${query}`
-          );
-          const data1 = await res1.json();
-          setTracks(data1);
-          break;
-        default:
-          const res2 = await fetch(
-            `http://localhost:3001/gettracksbynameandauthor/${query}`
-          );
-          const data2 = await res2.json();
-          setTracks(data2);
-          break;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  useEffect(() => {
+    const getResults = async () => {
+      const response = await fetch(
+        `http://localhost:3001/${url}?` +
+          new URLSearchParams({ type: searchType, query }),
+        {
+          method: 'get',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      const resultList = await response.json();
+      setResults(resultList);
+    };
 
-  const SearchList = [
-    { name: 'all', label: <Trans>All</Trans> },
-    { name: 'authors', label: <Trans>Authors</Trans> },
-    { name: 'tracks', label: <Trans>Tracks</Trans> },
-  ];
+    getResults();
+  }, [searchType, query, url]);
+
+  useEffect(() => {
+    setSearchbarOnTop(query.length);
+  }, [query]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
 
   return (
     <div className={`card-search${searchbarOnTop ? ' searched' : ''}`}>
@@ -74,7 +54,7 @@ const CardSearch = ({
       </form>
       <div className={`searchlist${searchbarOnTop ? ' searched' : ''}`}>
         <div className="searchlist-buttons">
-          {SearchList.map((searchItem) => (
+          {searchList.map((searchItem) => (
             <div
               key={searchItem.name}
               className={`button${
@@ -87,28 +67,8 @@ const CardSearch = ({
           ))}
         </div>
         <div className="searchlist-list">
-          <div className="searchlist-tracks">
-            {tracks?.map((track, index) =>
-              addToRadioQueueStart && addToRadioQueueEnd ? (
-                <Track
-                  key={index}
-                  track={track}
-                  index={index}
-                  addToRadioQueueStart={addToRadioQueueStart}
-                  addToRadioQueueEnd={addToRadioQueueEnd}
-                />
-              ) : noMenu ? (
-                <Track key={index} track={track} index={index} />
-              ) : (
-                <Track
-                  key={index}
-                  track={track}
-                  index={index}
-                  showAddToStart
-                  showAddToEnd
-                />
-              )
-            )}
+          <div className="searchlist-results">
+            {renderFunction(results, setResults)}
           </div>
         </div>
       </div>
