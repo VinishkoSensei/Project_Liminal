@@ -1,7 +1,7 @@
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
 
-.profile-main {
+.user-main {
   @include mixins.setborderwithradius(1px solid vars.$primcardcolor, 8px);
   @include mixins.flexeddiv(row, unset);
   @include mixins.animation(all, 0.8s);
@@ -13,7 +13,7 @@
   padding: 2px 5px;
   cursor: pointer;
 
-  .profile-info-main {
+  .user-info-main {
     @include mixins.flexeddiv(column, space-around);
     border-radius: 100%;
     line-height: 200%;
@@ -24,7 +24,7 @@
     word-break: break-word;
   }
 
-  .profile-icon-container {
+  .user-icon-container {
     margin: 0 0 0 0;
     @include mixins.flexeddiv(column, center);
 
@@ -41,7 +41,7 @@
   }
 }
 
-.profile-info {
+.user-info {
   @include mixins.setborderwithradius(1px solid vars.$primcardcolor, 8px);
   @include mixins.flexeddiv(column, space-around);
   @include mixins.animation(all, 0.8s);
@@ -66,7 +66,7 @@
   }
 }
 
-.profile-panel {
+.user-panel {
   .small-btn {
     @include mixins.setwidthandheight(32px, 32px);
     margin-top: 0;

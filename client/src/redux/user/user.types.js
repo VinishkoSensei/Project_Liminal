@@ -1,4 +1,4 @@
-const ProfileActionTypes = {
+const UserActionTypes = {
   SIGN_IN_START: 'SIGN_IN_START',
   SIGN_IN_SUCCESS: 'SIGN_IN_SUCCESS',
   SIGN_IN_FAILURE: 'SIGN_IN_FAILURE',
@@ -14,4 +14,4 @@ const ProfileActionTypes = {
   CHANGE_PROFILE_FAILURE: 'CHANGE_PROFILE_FAILURE',
 };
 
-export default ProfileActionTypes;
+export default UserActionTypes;

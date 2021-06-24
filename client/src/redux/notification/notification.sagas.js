@@ -8,7 +8,7 @@ import {
   hideNotificationSuccess,
   addNotificationStart,
 } from './notification.actions';
-import ProfileActionTypes from '../user/user.types';
+import UserActionTypes from '../user/user.types';
 import _ from 'lodash';
 import { Trans } from '@lingui/macro';
 
@@ -60,12 +60,11 @@ export function* onNotificationHideStart() {
   );
 }
 
-export function* createSuccessNotifyForProfileChange({ payload }) {
+export function* createSuccessNotifyForUserChange({ payload }) {
   yield put(
     addNotificationStart(
       <Trans>
-        Successfully updated your profile, {payload.first_name}{' '}
-        {payload.last_name}
+        Successfully updated your user, {payload.first_name} {payload.last_name}
       </Trans>,
       NotificationTypes.SUCCESS
     )
@@ -91,44 +90,41 @@ export function* createErrorNotify(error) {
   yield put(addNotificationStart(error.payload, NotificationTypes.ERROR));
 }
 
-export function* onChangeProfileSucceeded() {
+export function* onChangeUserSucceeded() {
   yield takeLatest(
-    ProfileActionTypes.CHANGE_PROFILE_SUCCESS,
-    createSuccessNotifyForProfileChange
+    UserActionTypes.CHANGE_PROFILE_SUCCESS,
+    createSuccessNotifyForUserChange
   );
 }
 
 export function* onSignOutSucceeded() {
   yield takeLatest(
-    ProfileActionTypes.SIGN_OUT_SUCCESS,
+    UserActionTypes.SIGN_OUT_SUCCESS,
     createSuccessNotifyForSignOut
   );
 }
 
 export function* onSignInSucceeded() {
   yield takeLatest(
-    ProfileActionTypes.SIGN_IN_SUCCESS,
+    UserActionTypes.SIGN_IN_SUCCESS,
     createSuccessNotifyForSignIn
   );
 }
 
-export function* onChangeProfileFailed() {
-  yield takeLatest(
-    ProfileActionTypes.CHANGE_PROFILE_FAILURE,
-    createErrorNotify
-  );
+export function* onChangeUserFailed() {
+  yield takeLatest(UserActionTypes.CHANGE_PROFILE_FAILURE, createErrorNotify);
 }
 
 export function* onSignOutFailed() {
-  yield takeLatest(ProfileActionTypes.SIGN_OUT_FAILURE, createErrorNotify);
+  yield takeLatest(UserActionTypes.SIGN_OUT_FAILURE, createErrorNotify);
 }
 
 export function* onSignUpFailed() {
-  yield takeLatest(ProfileActionTypes.SIGN_UP_FAILURE, createErrorNotify);
+  yield takeLatest(UserActionTypes.SIGN_UP_FAILURE, createErrorNotify);
 }
 
 export function* onSignInFailed() {
-  yield takeLatest(ProfileActionTypes.SIGN_IN_FAILURE, createErrorNotify);
+  yield takeLatest(UserActionTypes.SIGN_IN_FAILURE, createErrorNotify);
 }
 
 export function* notificationSagas() {
@@ -138,9 +134,9 @@ export function* notificationSagas() {
     call(onSignInFailed),
     call(onSignUpFailed),
     call(onSignOutFailed),
-    call(onChangeProfileFailed),
+    call(onChangeUserFailed),
     call(onSignInSucceeded),
     call(onSignOutSucceeded),
-    call(onChangeProfileSucceeded),
+    call(onChangeUserSucceeded),
   ]);
 }
