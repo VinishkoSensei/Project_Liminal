@@ -1,9 +1,14 @@
 import React, { useRef, useEffect } from 'react';
 import Track from 'components/track/track.component';
 import { connect } from 'react-redux';
-import './card-playlist.styles.scss';
+import '../cards-playlist.styles.scss';
 
-const CardPlaylist = ({ changedCards, playlist, prevPlaylist, CardBlur }) => {
+const CardPlaylistOrd = ({
+  changedCards,
+  playlist,
+  prevPlaylist,
+  CardBlur,
+}) => {
   const hrRef = useRef(null);
 
   useEffect(() => {
@@ -45,4 +50,4 @@ const mapStateToProps = (state) => ({
   prevPlaylist: state.music.prevPlaylist,
 });
 
-export default connect(mapStateToProps)(CardPlaylist);
+export default connect(mapStateToProps)(CardPlaylistOrd);

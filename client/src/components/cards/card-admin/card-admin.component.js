@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './card-admin.styles.scss';
 import SearchTracks from 'components/cards/card-search/search-tracks/search-tracks.component';
 import CardAddTrack from 'components/cards/card-addtrack/card-addtrack.component';
-import CardRadioPlaylist from 'components/cards/card-radio-playlist/card-radio-playlist.component';
+import CardPlaylistRadio from 'components/cards/cards-playlist/card-playlist-radio/card-playlist-radio.component';
 import SearchUsers from 'components/cards/card-search/search-users/search-users.component';
 
 const CardAdmin = ({
@@ -70,7 +70,7 @@ const CardAdmin = ({
               addToRadioQueueStart={addToRadioQueueStart}
               addToRadioQueueEnd={addToRadioQueueEnd}
             />
-            <CardRadioPlaylist
+            <CardPlaylistRadio
               radioQueue={radioQueue}
               setRadioQueue={setRadioQueue}
             />
