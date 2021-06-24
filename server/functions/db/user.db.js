@@ -28,7 +28,7 @@ const createSessions = (redisClient, user) => {
     });
 };
 
-const getProfile = async (req, h) => {
+const getUser = async (req, h) => {
   const { email, password } = req.payload;
   console.log(req.i18n.__('Test'));
   const db = req.getDb();
@@ -38,11 +38,8 @@ const getProfile = async (req, h) => {
   try {
     const signindata = await db.func('liminal.getusercreds', email);
     if (bcrypt.compareSync(password, signindata[0].hash)) {
-      const profile = await db.func(`liminal.getuser`, [
-        signindata[0].id,
-        email,
-      ]);
-      return profile[0];
+      const user = await db.func(`liminal.getuser`, [signindata[0].id, email]);
+      return user[0];
     } else {
       throw Boom.badRequest(req.i18n.__('Wrong email or password'));
     }
@@ -66,9 +63,9 @@ const signinAuth = async (req, h) => {
       throw Boom.unauthorized(req.i18n.__('Unauthorized'));
     }
   } else {
-    const profile = await getProfile(req, h);
-    if (profile.id && profile.email) {
-      const session = await createSessions(redisClient, profile);
+    const user = await getUser(req, h);
+    if (user.id && user.email) {
+      const session = await createSessions(redisClient, user);
       return h.response(session);
     } else {
       throw Boom.badRequest(req.i18n.__('Signinauth error'));
@@ -76,7 +73,7 @@ const signinAuth = async (req, h) => {
   }
 };
 
-const createProfile = async (req, h) => {
+const createUser = async (req, h) => {
   try {
     const { email, firstname, lastname, date, phone, file, password } =
       req.payload;
@@ -120,7 +117,7 @@ const createProfile = async (req, h) => {
   }
 };
 
-const handleGetProfile = async (req, h) => {
+const handleGetUser = async (req, h) => {
   const { id } = req.params;
   const db = req.getDb();
   try {
@@ -132,7 +129,7 @@ const handleGetProfile = async (req, h) => {
   }
 };
 
-const handleChangeProfileInfo = async (db, id, value, changingItemType) => {
+const handleChangeUserInfo = async (db, id, value, changingItemType) => {
   try {
     const user = await db.func(`liminal.changeuserinfo`, [
       id,
@@ -145,7 +142,7 @@ const handleChangeProfileInfo = async (db, id, value, changingItemType) => {
   }
 };
 
-const handleChangeProfilePassword = async (req, db, id, value) => {
+const handleChangeUserPassword = async (req, db, id, value) => {
   try {
     const redisClient = req.getRedis();
     const { authorization } = req.headers;
@@ -161,7 +158,7 @@ const handleChangeProfilePassword = async (req, db, id, value) => {
   }
 };
 
-const handleChangeProfileAvatar = async (db, id, value, changingItemType) => {
+const handleChangeUserAvatar = async (db, id, value, changingItemType) => {
   try {
     const base64Data = value.imagePreviewUrl.split(',')[1];
     const imagename = createFileWithRandomId(
@@ -183,22 +180,22 @@ const handleChangeProfileAvatar = async (db, id, value, changingItemType) => {
   }
 };
 
-const handleChangeProfile = async (req, h) => {
+const handleChangeUser = async (req, h) => {
   const { id, value, changingItemType } = req.payload;
   const db = req.getDb();
 
   switch (changingItemType) {
     case 'password':
-      return h.response(await handleChangeProfilePassword(req, db, id, value));
+      return h.response(await handleChangeUserPassword(req, db, id, value));
     case 'file':
       return h.response(
-        await handleChangeProfileAvatar(db, id, value, changingItemType)
+        await handleChangeUserAvatar(db, id, value, changingItemType)
       );
     case 'first_name':
     case 'last_name':
     case 'phone':
       return h.response(
-        await handleChangeProfileInfo(db, id, value, changingItemType)
+        await handleChangeUserInfo(db, id, value, changingItemType)
       );
     default:
       throw Boom.badRequest(req.i18n.__('Wrong operation type'));
@@ -247,11 +244,11 @@ const createReview = async (req, h) => {
 };
 
 module.exports = {
-  getProfile,
-  createProfile,
+  getUser,
+  createUser,
   signinAuth,
-  handleGetProfile,
-  handleChangeProfile,
+  handleGetUser,
+  handleChangeUser,
   checkAuth,
   getUserList,
   changeRole,
