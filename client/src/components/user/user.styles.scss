@@ -32,6 +32,7 @@
       @include mixins.animation(all, 2s);
       @include mixins.setwidthandheight(30px, 30px);
       @include mixins.setborderwithradius(unset, 50%);
+      background-color: vars.$primcardcolor;
     }
   }
 
