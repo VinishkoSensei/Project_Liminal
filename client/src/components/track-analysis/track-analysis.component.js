@@ -47,7 +47,7 @@ const TrackAnalysis = ({
   };
 
   const createAudioContextAndGetAnalyser = useCallback((audio) => {
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const audioCtx = new (window.AudioContext ?? window.webkitAudioContext)();
     const source = audioCtx.createMediaElementSource(audio);
     const analyser = audioCtx.createAnalyser();
     analyser.fftSize = 1024;
