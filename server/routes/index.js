@@ -80,6 +80,11 @@ const plugin = {
       path: '/gettracklist',
       handler: getTrackList,
       config: {
+        pre: [
+          {
+            method: checkAuth,
+          },
+        ],
         cors: {
           origin: ['*'],
           additionalHeaders: ['cache-control', 'x-requested-with'],
@@ -111,7 +116,7 @@ const plugin = {
       config: {
         pre: [
           {
-            method: checkAuth,
+            method: checkAuth, //ADMIN
           },
         ],
         cors: {
@@ -150,6 +155,11 @@ const plugin = {
       path: '/addtracktoradioqueue',
       handler: addTrackToRadioQueue,
       config: {
+        pre: [
+          {
+            method: checkAuth, //ADMIN
+          },
+        ],
         cors: {
           origin: ['*'],
           additionalHeaders: ['cache-control', 'x-requested-with'],
@@ -162,6 +172,11 @@ const plugin = {
       path: '/deletetrackfromradioqueue',
       handler: deleteTrackFromRadioQueue,
       config: {
+        pre: [
+          {
+            method: checkAuth, //ADMIN
+          },
+        ],
         cors: {
           origin: ['*'],
           additionalHeaders: ['cache-control', 'x-requested-with'],
@@ -174,6 +189,11 @@ const plugin = {
       path: '/getradioqueue',
       handler: getRadioQueueFromFront,
       config: {
+        pre: [
+          {
+            method: checkAuth, //ADMIN
+          },
+        ],
         cors: {
           origin: ['*'],
           additionalHeaders: ['cache-control', 'x-requested-with'],
@@ -186,6 +206,11 @@ const plugin = {
       path: '/createtrack',
       handler: createTrack,
       config: {
+        pre: [
+          {
+            method: checkAuth, //ADMIN
+          },
+        ],
         payload: {
           maxBytes: 52428800,
         },
@@ -201,6 +226,11 @@ const plugin = {
       path: '/gettracks',
       handler: getTracks,
       config: {
+        pre: [
+          {
+            method: checkAuth,
+          },
+        ],
         cors: {
           origin: ['*'],
           additionalHeaders: ['cache-control', 'x-requested-with'],
@@ -213,6 +243,11 @@ const plugin = {
       path: '/getauthors',
       handler: getAuthors,
       config: {
+        pre: [
+          {
+            method: checkAuth,
+          },
+        ],
         cors: {
           origin: ['*'],
           additionalHeaders: ['cache-control', 'x-requested-with'],
@@ -225,6 +260,11 @@ const plugin = {
       path: '/getgenres',
       handler: getGenres,
       config: {
+        pre: [
+          {
+            method: checkAuth,
+          },
+        ],
         cors: {
           origin: ['*'],
           additionalHeaders: ['cache-control', 'x-requested-with'],
@@ -236,6 +276,13 @@ const plugin = {
       method: 'GET',
       path: '/tracks/{trackId}',
       handler: streamTrack,
+      config: {
+        pre: [
+          {
+            method: checkAuth,
+          },
+        ],
+      },
     });
 
     server.route({
@@ -243,6 +290,11 @@ const plugin = {
       path: '/getuserlist',
       handler: getUserList,
       config: {
+        pre: [
+          {
+            method: checkAuth, //ADMIN
+          },
+        ],
         cors: {
           origin: ['*'],
           additionalHeaders: ['cache-control', 'x-requested-with'],
@@ -255,6 +307,11 @@ const plugin = {
       path: '/changerole',
       handler: changeRole,
       config: {
+        pre: [
+          {
+            method: checkAuth, //ADMIN
+          },
+        ],
         cors: {
           origin: ['*'],
           additionalHeaders: ['cache-control', 'x-requested-with'],
@@ -267,6 +324,11 @@ const plugin = {
       path: '/createreview',
       handler: createReview,
       config: {
+        pre: [
+          {
+            method: checkAuth,
+          },
+        ],
         cors: {
           origin: ['*'],
           additionalHeaders: ['cache-control', 'x-requested-with'],

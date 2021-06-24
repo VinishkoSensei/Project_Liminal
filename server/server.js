@@ -30,6 +30,16 @@ const server = Hapi.server({
   },
 });
 
+server.state('token', {
+  ttl: null,
+  isSecure: false,
+  isHttpOnly: true,
+  encoding: 'base64json',
+  clearInvalid: false,
+  strictHeader: true,
+  isSameSite: false,
+});
+
 const startApp = async () => {
   try {
     await server.register(Static);

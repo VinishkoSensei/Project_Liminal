@@ -19,6 +19,7 @@ import {
 
 const saveAuthTokenInSession = (token) => {
   window.sessionStorage.setItem('token', token);
+  //document.cookie = `token=${token};max-age=604800;domain=localhost:3000`;
 };
 
 const deleteAuthTokenFromSession = () => {

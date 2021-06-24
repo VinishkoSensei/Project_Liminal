@@ -16,14 +16,17 @@ const CardSearch = ({ searchList, url, CardBlur, renderFunction }) => {
           method: 'get',
           headers: {
             'Content-Type': 'application/json',
+            authorization: window.sessionStorage.getItem('token'),
           },
         }
       );
       const resultList = await response.json();
+      console.log(resultList);
       setResults(resultList);
     };
-
-    getResults();
+    if (query) {
+      getResults();
+    }
   }, [searchType, query, url]);
 
   useEffect(() => {

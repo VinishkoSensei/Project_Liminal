@@ -54,11 +54,14 @@ const signinAuth = async (req, h) => {
   if (authorization) {
     const reply = await redisClient.get(authorization);
     if (reply) {
-      return h.response({
-        success: 'true',
-        userId: reply,
-        token: authorization,
-      });
+      console.log('Entering', authorization);
+      return h
+        .response({
+          success: 'true',
+          userId: reply,
+          token: authorization,
+        })
+        .state('token', authorization);
     } else {
       throw Boom.unauthorized(req.i18n.__('Unauthorized'));
     }
@@ -205,6 +208,7 @@ const handleChangeUser = async (req, h) => {
 const checkAuth = async (req, h) => {
   const redisClient = req.getRedis();
   const { authorization } = req.headers;
+  console.log('TOKEN?', req.state.token);
   try {
     if (!authorization) {
       throw Boom.unauthorized(req.i18n.__('Unauthorized'));

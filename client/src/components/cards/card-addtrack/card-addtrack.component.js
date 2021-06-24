@@ -44,12 +44,18 @@ const CardAddTrack = () => {
     const getOptions = async () => {
       const genresresponse = await fetch(`http://localhost:3001/getgenres`, {
         method: 'get',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: window.sessionStorage.getItem('token'),
+        },
       });
       const genres = await genresresponse.json();
       const authorsresponse = await fetch(`http://localhost:3001/getauthors`, {
         method: 'get',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: window.sessionStorage.getItem('token'),
+        },
       });
       const authors = await authorsresponse.json();
 
