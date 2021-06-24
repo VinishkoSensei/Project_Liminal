@@ -1,7 +1,7 @@
 const File = require('inert');
 const Boom = require('boom');
 const { streamHandler, streamTrack } = require('../functions/audio');
-const { getTrackCover, getUserImage } = require('../functions/file');
+const { getTrackCover, getUserAvatar } = require('../functions/file');
 const {
   createUser,
   signinAuth,
@@ -65,8 +65,8 @@ const plugin = {
 
     server.route({
       method: 'GET',
-      path: '/getuserimage/{avatar}',
-      handler: getUserImage,
+      path: '/getuseravatar/{avatar}',
+      handler: getUserAvatar,
       config: {
         cors: {
           origin: ['*'],

@@ -11,7 +11,7 @@ const getTrackCover = (req, h) => {
   return h.file('../public/files/covers/' + req.params.trackCoverPath);
 };
 
-const getUserImage = (req, h) => {
+const getUserAvatar = (req, h) => {
   return h.file('../public/files/images/avatars/' + req.params.avatar);
 };
 
@@ -46,7 +46,7 @@ const deleteFile = async (path, filename) => {
 module.exports = {
   radioQueue,
   getTrackCover,
-  getUserImage,
+  getUserAvatar,
   createFileWithRandomId,
   createMusicWithRandomId,
   deleteFile,
