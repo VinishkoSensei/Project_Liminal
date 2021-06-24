@@ -12,7 +12,7 @@
     background-color: vars.$seccardcolor;
   }
 
-  .user-info {
+  .user-search-info {
     @include mixins.flexeddiv(column, space-around);
     width: 40%;
     .user {

@@ -51,7 +51,7 @@ const SearchUsers = () => {
                 />
               ) : null}
             </div>
-            <div className="user-info">
+            <div className="user-search-info">
               <div className={getNameColor(isadmin, subscribed)}>
                 {first_name} {last_name}
               </div>
