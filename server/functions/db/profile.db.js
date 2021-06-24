@@ -226,7 +226,8 @@ const checkAuth = async (req, h) => {
 const getUserList = async (req, h) => {
   const db = req.getDb();
   const { type, query } = req.query;
-  const userList = await db.func(`liminal.getuserlist`, [type, query]);
+  const q = query.replace('*', '%');
+  const userList = await db.func(`liminal.getuserlist`, [type, q]);
   return h.response(userList);
 };
 
