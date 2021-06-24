@@ -1,5 +1,5 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects';
-import ProfileActionTypes from './user.types';
+import UserActionTypes from './user.types';
 import {
   signInSuccess,
   signInFailure,
@@ -7,14 +7,14 @@ import {
   signUpFailure,
   signOutSuccess,
   signOutFailure,
-  changeProfileSuccess,
-  changeProfileFailure,
+  changeUserSuccess,
+  changeUserFailure,
 } from './user.actions';
 import {
   handleSignIn,
   handleSignUp,
-  handleGetProfile,
-  handleChangeProfile,
+  handleGetUser,
+  handleChangeUser,
 } from './user.utils';
 
 const saveAuthTokenInSession = (token) => {
@@ -33,7 +33,7 @@ export function* signIn({ payload: { email, password } }) {
       throw new Error(res.message);
     } else {
       yield saveAuthTokenInSession(res.token);
-      const resp = yield handleGetProfile(res.userId, res.token);
+      const resp = yield handleGetUser(res.userId, res.token);
       const re = yield resp.json();
       yield put(
         signInSuccess({
@@ -47,11 +47,11 @@ export function* signIn({ payload: { email, password } }) {
 }
 
 export function* onSignInStart() {
-  yield takeLatest(ProfileActionTypes.SIGN_IN_START, signIn);
+  yield takeLatest(UserActionTypes.SIGN_IN_START, signIn);
 }
 
 export function* onSignUpSuccess() {
-  yield takeLatest(ProfileActionTypes.SIGN_UP_SUCCESS, signIn);
+  yield takeLatest(UserActionTypes.SIGN_UP_SUCCESS, signIn);
 }
 
 export function* signUp({
@@ -78,7 +78,7 @@ export function* signUp({
 }
 
 export function* onSignUpStart() {
-  yield takeLatest(ProfileActionTypes.SIGN_UP_START, signUp);
+  yield takeLatest(UserActionTypes.SIGN_UP_START, signUp);
 }
 
 export function* isUserAutentificated() {
@@ -90,7 +90,7 @@ export function* isUserAutentificated() {
       if (!response.ok) {
         throw new Error(res.message);
       } else {
-        const resp = yield handleGetProfile(res.userId, res.token);
+        const resp = yield handleGetUser(res.userId, res.token);
         if (!resp.ok) {
           const res = yield resp.json();
           yield deleteAuthTokenFromSession();
@@ -110,7 +110,7 @@ export function* isUserAutentificated() {
 }
 
 export function* onCheckUserSession() {
-  yield takeLatest(ProfileActionTypes.CHECK_USER_SESSION, isUserAutentificated);
+  yield takeLatest(UserActionTypes.CHECK_USER_SESSION, isUserAutentificated);
 }
 
 export function* signOut() {
@@ -123,32 +123,32 @@ export function* signOut() {
 }
 
 export function* onSignOutStart() {
-  yield takeLatest(ProfileActionTypes.SIGN_OUT_START, signOut);
+  yield takeLatest(UserActionTypes.SIGN_OUT_START, signOut);
 }
 
-export function* changeProfile({ payload }) {
+export function* changeUser({ payload }) {
   const token = window.sessionStorage.getItem('token');
   try {
     const { changingItemType } = payload;
-    const newprofile = yield handleChangeProfile(
-      payload.profile.id,
-      payload.profile[changingItemType],
+    const newuser = yield handleChangeUser(
+      payload.user.id,
+      payload.user[changingItemType],
       changingItemType,
       token
     );
-    if (!newprofile.ok) {
-      const res = yield newprofile.json();
+    if (!newuser.ok) {
+      const res = yield newuser.json();
       throw new Error(res.message);
     }
-    const profile = yield newprofile.json();
-    yield put(changeProfileSuccess(profile));
+    const user = yield newuser.json();
+    yield put(changeUserSuccess(user));
   } catch (e) {
-    put(changeProfileFailure(e));
+    put(changeUserFailure(e));
   }
 }
 
-export function* onChangeProfileStart() {
-  yield takeLatest(ProfileActionTypes.CHANGE_PROFILE_START, changeProfile);
+export function* onChangeUserStart() {
+  yield takeLatest(UserActionTypes.CHANGE_PROFILE_START, changeUser);
 }
 
 export function* userSagas() {
@@ -158,6 +158,6 @@ export function* userSagas() {
     call(onCheckUserSession),
     call(onSignUpSuccess),
     call(onSignOutStart),
-    call(onChangeProfileStart),
+    call(onChangeUserStart),
   ]);
 }

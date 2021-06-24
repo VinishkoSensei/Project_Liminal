@@ -1,7 +1,7 @@
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
 
-.card-profile {
+.card-user {
   @include mixins.setwidthandheight(45vw, 75vh);
   @include mixins.setborderwithradius(2px solid vars.$seccardcolor, 52px);
   @include mixins.flexeddiv(row, center);
@@ -11,11 +11,11 @@
   top: 20%;
   left: -100%;
 
-  .card-profile-main {
+  .card-user-main {
     @include mixins.flexeddiv(column, space-evenly);
     @include mixins.setwidthandheight(90%, 100%);
 
-    .card-profile-image {
+    .card-user-image {
       width: 130px;
       height: 130px;
       margin: 0 auto;
@@ -27,12 +27,12 @@
       }
     }
 
-    .profile-info-main {
+    .user-info-main {
       @include mixins.flexeddiv(column, space-around);
       height: 100%;
       text-align: center;
 
-      .profile-info-main-columns {
+      .user-info-main-columns {
         @include mixins.flexeddiv(row, space-evenly);
         height: 100%;
 

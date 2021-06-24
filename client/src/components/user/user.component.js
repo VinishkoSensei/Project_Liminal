@@ -1,69 +1,69 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import './profile.styles.scss';
+import './user.styles.scss';
 import CustomButton from 'components/shared/custombutton/custombutton.component';
 import SmallButton from 'components/shared/small-button/small-button.component';
 import { signInStart, signOutStart } from 'redux/user/user.actions';
 import { Trans } from '@lingui/macro';
 
-const Profile = ({
-  profile,
-  setProfileExpanded,
-  profileExpanded,
+const User = ({
+  user,
+  setUserExpanded,
+  userExpanded,
   openAdminCard,
   isOpened,
   signOutStart,
 }) => {
-  const [minifiedProfile, setMinifiedProfile] = useState(true);
+  const [minifiedUser, setMinifiedUser] = useState(true);
 
   useEffect(() => {
-    if (!profile) setProfileExpanded(false);
-  }, [profile, setProfileExpanded]);
+    if (!user) setUserExpanded(false);
+  }, [user, setUserExpanded]);
 
   const handleImgError = (e) => {
     e.target.onError = null;
-    e.target.src = 'images/emptyprofile.svg';
+    e.target.src = 'images/emptyuser.svg';
   };
 
   const handleSignOut = () => {
-    setProfileExpanded(false);
+    setUserExpanded(false);
     signOutStart();
   };
 
   return (
     <div>
-      {profile ? (
-        <div className="profile-panel">
-          {profile.isadmin ? (
+      {user ? (
+        <div className="user-panel">
+          {user.isadmin ? (
             <SmallButton onClick={openAdminCard('users')} isHidden={isOpened} />
           ) : null}
           <div
-            className={`profile-main`}
-            onClick={() => setMinifiedProfile(!minifiedProfile)}
+            className={`user-main`}
+            onClick={() => setMinifiedUser(!minifiedUser)}
           >
-            <div className="profile-icon-container">
+            <div className="user-icon-container">
               <img
-                src={`http://localhost:3001/getprofileimage/${profile.avatar}`}
-                alt="profileimage"
+                src={`http://localhost:3001/getavatar/${user.avatar}`}
+                alt="avatar"
                 onError={handleImgError}
               />
             </div>
-            <div className="profile-info-main">
-              {profile.first_name}&nbsp;{profile.last_name}
+            <div className="user-info-main">
+              {user.first_name}&nbsp;{user.last_name}
             </div>
           </div>
           <div
-            className={`profile-info${minifiedProfile ? ' minified' : ''}`}
+            className={`user-info${minifiedUser ? ' minified' : ''}`}
             onClick={() =>
-              setProfileExpanded((prevProfileExpanded) => !prevProfileExpanded)
+              setUserExpanded((prevUserExpanded) => !prevUserExpanded)
             }
           >
             <div>
-              <i>{profile.email}</i>
+              <i>{user.email}</i>
             </div>
-            <div>{profile.birth_date}</div>
+            <div>{user.birth_date}</div>
             <div>
-              {profile.subscribed ? (
+              {user.subscribed ? (
                 <Trans>Subscribed</Trans>
               ) : (
                 <Trans>Not subscribed</Trans>
@@ -80,7 +80,7 @@ const Profile = ({
 };
 
 const mapStateToProps = (state) => ({
-  profile: state.user.profile,
+  user: state.user.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -88,4 +88,4 @@ const mapDispatchToProps = (dispatch) => ({
   signOutStart: () => dispatch(signOutStart()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(User);

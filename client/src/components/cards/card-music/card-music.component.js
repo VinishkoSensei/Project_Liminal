@@ -26,7 +26,7 @@ const CardMusic = ({
         {currentTrack.cover ? (
           <img
             src={`http://localhost:3001/gettrackcover/${currentTrack.cover}`}
-            alt="profileimage"
+            alt="avatar"
           />
         ) : null}
       </div>
