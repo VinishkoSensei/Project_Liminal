@@ -41,16 +41,18 @@ const musicReducer = (state = INITIAL_STATE, action) => {
       };
 
     case MusicActionTypes.PLAY_NEXT_TRACK:
-      return {
-        ...state,
-        prevPlaylist: copyTrackFromPlaylistToPrevPlaylist(
-          state.prevPlaylist,
-          state.playlist
-        ),
-        currentTrack: state.playlist[0],
-        src: playNextTrack(state.playlist),
-        playlist: deleteFromPlaylist(state.playlist, 0),
-      };
+      return state.playlist.length > 0
+        ? {
+            ...state,
+            prevPlaylist: copyTrackFromPlaylistToPrevPlaylist(
+              state.prevPlaylist,
+              state.playlist
+            ),
+            currentTrack: state.playlist[0],
+            src: playNextTrack(state.playlist),
+            playlist: deleteFromPlaylist(state.playlist, 0),
+          }
+        : { ...state };
 
     case MusicActionTypes.PLAY_RADIO:
       return {
