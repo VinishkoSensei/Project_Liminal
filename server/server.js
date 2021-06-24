@@ -14,8 +14,8 @@ const cn = {
 const db = pgp(cn);
 
 const redisClient = require('async-redis').createClient({
-  host: 'localhost',
-  password: 'root',
+  host: process.env.REDIS_HOST,
+  password: process.env.REDIS_PASSWORD,
 });
 redisClient.on('error', (err) => console.log('Error ' + err));
 
