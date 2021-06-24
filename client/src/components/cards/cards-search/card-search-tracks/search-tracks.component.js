@@ -1,7 +1,7 @@
 import React from 'react';
 import Track from 'components/track/track.component';
 import '../card-search.styles.scss';
-import CardSearch from 'components/cards/card-search/card-search.component';
+import CardSearch from 'components/cards/cards-search/card-search.component';
 import { Trans } from '@lingui/macro';
 
 const SearchTracks = ({
