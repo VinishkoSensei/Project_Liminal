@@ -208,7 +208,7 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
                     input.type === 'disabled' ? (
                       <FormInput
                         name={input.name}
-                        value={input.value || ''}
+                        value={input.value ?? ''}
                         label={input.label}
                         key={input.key}
                         disabled
@@ -224,7 +224,7 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
                     ) : (
                       <FormInput
                         name={input.name}
-                        value={input.value || ''}
+                        value={input.value ?? ''}
                         label={input.label}
                         handleChange={handleChange(
                           changedProfile,
@@ -290,7 +290,7 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
                     <FormInput
                       name={cardInput.name}
                       type={cardInput.type}
-                      value={cardInput.value || ''}
+                      value={cardInput.value ?? ''}
                       label={cardInput.label}
                       key={cardInput.key}
                       handleChange={handleCardChange}

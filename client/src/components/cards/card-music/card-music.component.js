@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { playNextTrack, playRadio, emptySrc } from 'redux/music/music.actions';
 
 const CardMusic = ({
-  changedCards,
   isNotRadio,
   playRadio,
   isPlaying,
