@@ -7,7 +7,7 @@ import { signInStart } from 'redux/user/user.actions';
 import { handleChange } from 'utils/utils';
 import { Trans } from '@lingui/macro';
 
-const CardSignIn = ({ changedCards, signInStart, CardBlur }) => {
+const CardSignIn = ({ signInStart, CardBlur }) => {
   const selectedItemInitialState = {
     email: '',
     password: '',
