@@ -1,33 +1,33 @@
-import ProfileActionTypes from './user.types';
+import UserActionTypes from './user.types';
 
 const INITIAL_STATE = {
-  profile: null,
+  user: null,
   error: null,
 };
 
-const profileReducer = (state = INITIAL_STATE, action) => {
+const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case ProfileActionTypes.SIGN_IN_SUCCESS:
+    case UserActionTypes.SIGN_IN_SUCCESS:
       return {
         ...state,
-        profile: action.payload.user,
+        user: action.payload.user,
         error: null,
       };
 
-    case ProfileActionTypes.CHANGE_PROFILE_SUCCESS:
+    case UserActionTypes.CHANGE_PROFILE_SUCCESS:
       return {
         ...state,
-        profile: action.payload,
+        user: action.payload,
         error: null,
       };
 
-    case ProfileActionTypes.SIGN_OUT_SUCCESS:
-      return { ...state, profile: null, error: null };
+    case UserActionTypes.SIGN_OUT_SUCCESS:
+      return { ...state, user: null, error: null };
 
-    case ProfileActionTypes.SIGN_IN_FAILURE:
-    case ProfileActionTypes.SIGN_OUT_FAILURE:
-    case ProfileActionTypes.SIGN_UP_FAILURE:
-    case ProfileActionTypes.CHANGE_PROFILE_FAILURE:
+    case UserActionTypes.SIGN_IN_FAILURE:
+    case UserActionTypes.SIGN_OUT_FAILURE:
+    case UserActionTypes.SIGN_UP_FAILURE:
+    case UserActionTypes.CHANGE_PROFILE_FAILURE:
       return {
         ...state,
         error: action.payload,
@@ -38,4 +38,4 @@ const profileReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default profileReducer;
+export default userReducer;

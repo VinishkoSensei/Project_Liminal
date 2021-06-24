@@ -7,8 +7,8 @@ import FormInput from 'components/shared/forminputs/forminput/forminput.componen
 import { handleChange } from 'utils/utils';
 import { Trans } from '@lingui/macro';
 
-const Review = ({ profileid, addNotificationStart }) => {
-  const [minifiedProfile, setMinifiedProfile] = useState(true);
+const Review = ({ userid, addNotificationStart }) => {
+  const [minifiedUser, setMinifiedUser] = useState(true);
   const reviewInitialState = { theme: '', text: '' };
   const [review, setReview] = useState(reviewInitialState);
 
@@ -20,12 +20,12 @@ const Review = ({ profileid, addNotificationStart }) => {
       body: JSON.stringify({
         theme: review.theme,
         reviewtext: review.text,
-        userid: profileid,
+        userid: userid,
       }),
     });
     if (response.ok) {
       addNotificationStart('Your reply was sended', 'success');
-      setMinifiedProfile(true);
+      setMinifiedUser(true);
       setReview(reviewInitialState);
     }
   };
@@ -35,13 +35,13 @@ const Review = ({ profileid, addNotificationStart }) => {
       <div className="review-container">
         <div
           className={`review-main`}
-          onClick={() => setMinifiedProfile(!minifiedProfile)}
+          onClick={() => setMinifiedUser(!minifiedUser)}
         >
           <div className="review-container-main">
             <Trans>Leave a reply</Trans>
           </div>
         </div>
-        <form className={`review-info${minifiedProfile ? ' minified' : ''}`}>
+        <form className={`review-info${minifiedUser ? ' minified' : ''}`}>
           <FormInput
             name="theme"
             value={review.theme}
@@ -65,7 +65,7 @@ const Review = ({ profileid, addNotificationStart }) => {
 };
 
 const mapStateToProps = (state) => ({
-  profileid: state.user.profile.id,
+  userid: state.user.user.id,
 });
 
 const mapDispatchToProps = (dispatch) => ({

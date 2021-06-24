@@ -1,17 +1,17 @@
 const File = require('inert');
 const Boom = require('boom');
 const { streamHandler, streamTrack } = require('../functions/audio');
-const { getTrackCover, getProfileImage } = require('../functions/file');
+const { getTrackCover, getUserAvatar } = require('../functions/file');
 const {
-  createProfile,
+  createUser,
   signinAuth,
-  handleGetProfile,
-  handleChangeProfile,
+  handleGetUser,
+  handleChangeUser,
   checkAuth,
   getUserList,
   changeRole,
   createReview,
-} = require('../functions/db/profile.db');
+} = require('../functions/db/user.db');
 const {
   getTrackList,
   getTracks,
@@ -65,8 +65,8 @@ const plugin = {
 
     server.route({
       method: 'GET',
-      path: '/getprofileimage/{avatar}',
-      handler: getProfileImage,
+      path: '/getuseravatar/{avatar}',
+      handler: getUserAvatar,
       config: {
         cors: {
           origin: ['*'],
@@ -89,8 +89,8 @@ const plugin = {
 
     server.route({
       method: 'GET',
-      path: '/profile/{id}',
-      handler: handleGetProfile,
+      path: '/user/{id}',
+      handler: handleGetUser,
       config: {
         pre: [
           {
@@ -106,8 +106,8 @@ const plugin = {
 
     server.route({
       method: 'POST',
-      path: '/profile/{id}',
-      handler: handleChangeProfile,
+      path: '/user/{id}',
+      handler: handleChangeUser,
       config: {
         pre: [
           {
@@ -135,8 +135,8 @@ const plugin = {
 
     server.route({
       method: 'POST',
-      path: '/createprofile',
-      handler: createProfile,
+      path: '/createuser',
+      handler: createUser,
       config: {
         cors: {
           origin: ['*'],
