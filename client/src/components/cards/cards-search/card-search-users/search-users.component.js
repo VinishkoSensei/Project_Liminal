@@ -1,6 +1,6 @@
 import React from 'react';
 import './search-users.styles.scss';
-import CardSearch from 'components/cards/card-search/card-search.component';
+import CardSearch from 'components/cards/cards-search/card-search.component';
 import { Trans } from '@lingui/macro';
 
 const SearchUsers = () => {
