@@ -8,7 +8,7 @@ import MainMenu from 'components/mainmenu/mainmenu.component';
 import Profile from 'components/profile/profile.component';
 import CardMusic from 'components/cards/card-music/card-music.component';
 import CardAi from 'components/cards/card-ai/card-ai.component';
-import CardPlaylist from 'components/cards/card-playlist/card-playlist.component';
+import CardPlaylistOrd from 'components/cards/cards-playlist/card-playlist-ord/card-playlist-ord.component';
 import SearchTracks from 'components/cards/card-search/search-tracks/search-tracks.component';
 import CardProfile from 'components/cards/card-profile/card-profile.component';
 import CardSignIn from 'components/cards/card-signin/card-signin.component';
@@ -87,7 +87,7 @@ const HomePage = ({ profile, checkUserSession }) => {
                     <ChangingCards>
                       <CardMusic isNotRadio={true} playerRef={playerRef} />
                       {chosenCard === 'playlist' ? (
-                        <CardPlaylist />
+                        <CardPlaylistOrd />
                       ) : (
                         <SearchTracks />
                       )}
