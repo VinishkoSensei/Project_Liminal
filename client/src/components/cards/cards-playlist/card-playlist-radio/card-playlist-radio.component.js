@@ -1,8 +1,8 @@
 import React from 'react';
-import './card-radio-playlist.styles.scss';
 import Track from 'components/track/track.component';
+import '../cards-playlist.styles.scss';
 
-const CardRadioPlaylist = ({ radioQueue, setRadioQueue }) => {
+const CardPlaylistRadio = ({ radioQueue, setRadioQueue }) => {
   const deleteFromRadioQueue = (index) => async () => {
     const response = await fetch(
       `http://localhost:3001/deletetrackfromradioqueue`,
@@ -19,7 +19,7 @@ const CardRadioPlaylist = ({ radioQueue, setRadioQueue }) => {
   };
 
   return (
-    <div className="card-radio-playlist">
+    <div className="card-playlist radio">
       <div className="card-big-table">
         {radioQueue?.map((track, index) => (
           <Track
@@ -34,4 +34,4 @@ const CardRadioPlaylist = ({ radioQueue, setRadioQueue }) => {
   );
 };
 
-export default CardRadioPlaylist;
+export default CardPlaylistRadio;
