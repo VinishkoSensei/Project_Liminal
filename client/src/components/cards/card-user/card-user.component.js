@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import './card-profile.styles.scss';
+import './card-user.styles.scss';
 import { connect } from 'react-redux';
 import CustomButton from 'components/shared/custombutton/custombutton.component';
-import { changeProfileStart } from 'redux/user/user.actions';
+import { changeUserStart } from 'redux/user/user.actions';
 import FormInput from 'components/shared/forminputs/forminput/forminput.component';
 import FormFileInput from 'components/shared/forminputs/formfileinput/formfileinput.component';
 import { handleChange, handleChangeWithFunction } from 'utils/utils';
 import { Trans } from '@lingui/macro';
 import ReactCardFlip from 'react-card-flip';
 
-const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
-  const [changedProfile, setChangedProfile] = useState(null);
+const CardUser = ({ user, userExpanded, changeUserStart }) => {
+  const [changedUser, setChangedUser] = useState(null);
   const [changingItemType, setChangingItemType] = useState(null);
   const [doPasswordsMatch, setDoPasswordsMatch] = useState(true);
   const [isFlipped, setIsFlipped] = useState(false);
   const [cardData, setCardData] = useState({ owner: '', number: '', code: '' });
 
   useEffect(() => {
-    setChangedProfile({ ...profile, password: '', passwordconf: '' });
-  }, [profile]);
+    setChangedUser({ ...user, password: '', passwordconf: '' });
+  }, [user]);
 
   const flipCards = () => setIsFlipped((prevIsFlipped) => !prevIsFlipped);
 
@@ -29,10 +29,10 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
   const checkDoPasswordsMatch = (name, value) => {
     switch (name) {
       case 'password':
-        setDoPasswordsMatch(value === changedProfile.passwordconf);
+        setDoPasswordsMatch(value === changedUser.passwordconf);
         break;
       case 'passwordconf':
-        setDoPasswordsMatch(value === changedProfile.password);
+        setDoPasswordsMatch(value === changedUser.password);
         break;
       default:
         break;
@@ -45,18 +45,18 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
   };
 
   const handlePasswordChange = () => {
-    const { password, passwordconf } = changedProfile;
+    const { password, passwordconf } = changedUser;
     if (password === passwordconf && password !== '') {
-      changeProfileStart(changedProfile, 'password');
+      changeUserStart(changedUser, 'password');
     }
   };
 
   const handleFileChange = () => {
-    if (changedProfile.file.image) changeProfileStart(changedProfile, 'file');
+    if (changedUser.file.image) changeUserStart(changedUser, 'file');
   };
 
   const handleEditingFinish = () => {
-    changeProfileStart(changedProfile, changingItemType);
+    changeUserStart(changedUser, changingItemType);
     setChangingItemType(null);
   };
 
@@ -80,8 +80,8 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setChangedProfile({
-        ...changedProfile,
+      setChangedUser({
+        ...changedUser,
         file: { image: getFileType(file.type), imagePreviewUrl: reader.result },
       });
     };
@@ -90,21 +90,21 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
   const InputsLeft = [
     {
       name: 'email',
-      value: changedProfile?.email,
+      value: changedUser?.email,
       label: '',
       key: 'email',
       type: 'disabled',
     },
     {
       name: 'date',
-      value: changedProfile?.birth_date,
+      value: changedUser?.birth_date,
       label: '',
       key: 'date',
       type: 'disabled',
     },
     {
       name: 'first_name',
-      value: changedProfile?.first_name,
+      value: changedUser?.first_name,
       label: <Trans>First name</Trans>,
       key: 'first_name',
       bordered: changingItemType !== 'first_name',
@@ -113,7 +113,7 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
     },
     {
       name: 'last_name',
-      value: changedProfile?.last_name,
+      value: changedUser?.last_name,
       label: <Trans>Last name</Trans>,
       key: 'last_name',
       bordered: changingItemType !== 'last_name',
@@ -122,7 +122,7 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
     },
     {
       name: 'phone',
-      value: changedProfile?.phone,
+      value: changedUser?.phone,
       label: <Trans>Phone</Trans>,
       key: 'phone',
       bordered: changingItemType !== 'phone',
@@ -148,14 +148,14 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
     {
       name: 'password',
       type: 'password',
-      value: changedProfile?.password,
+      value: changedUser?.password,
       label: <Trans>Password</Trans>,
       key: 'password',
     },
     {
       name: 'passwordconf',
       type: 'password',
-      value: changedProfile?.passwordconf,
+      value: changedUser?.passwordconf,
       label: <Trans>Password confirmation</Trans>,
       key: 'passwordconf',
     },
@@ -186,13 +186,13 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
   ];
 
   return (
-    <div className={`card-profile${profileExpanded ? ' expanded' : ''}`}>
-      {profile ? (
-        <div className="card-profile-main">
-          <div className="card-profile-image">
+    <div className={`card-user${userExpanded ? ' expanded' : ''}`}>
+      {user ? (
+        <div className="card-user-main">
+          <div className="card-user-image">
             <img
-              src={`http://localhost:3001/getprofileimage/${profile.avatar}`}
-              alt="profileimage"
+              src={`http://localhost:3001/getavatar/${user.avatar}`}
+              alt="avatar"
             />
           </div>
           <ReactCardFlip
@@ -201,8 +201,8 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
             flipSpeedFrontToBack={2}
             containerStyle={{ width: '100%', height: '60%' }}
           >
-            <div className="profile-info-main">
-              <div className="profile-info-main-columns">
+            <div className="user-info-main">
+              <div className="user-info-main-columns">
                 <div>
                   {InputsLeft.map((input) =>
                     input.type === 'disabled' ? (
@@ -226,10 +226,7 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
                         name={input.name}
                         value={input.value ?? ''}
                         label={input.label}
-                        handleChange={handleChange(
-                          changedProfile,
-                          setChangedProfile
-                        )}
+                        handleChange={handleChange(changedUser, setChangedUser)}
                         handleChangingItemType={handleChangingItemType}
                         handleEditingFinish={handleEditingFinish}
                         bordered={changingItemType !== input.name}
@@ -264,8 +261,8 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
                         label={input.label}
                         type="password"
                         handleChange={handleChangeWithFunction(
-                          changedProfile,
-                          setChangedProfile,
+                          changedUser,
+                          setChangedUser,
                           checkDoPasswordsMatch
                         )}
                         key={input.key}
@@ -283,7 +280,7 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
                 </div>
               </div>
             </div>
-            <div className="profile-info-main">
+            <div className="user-info-main">
               <div className="subscription-container">
                 <div className="subscription">
                   {CardInputs.map((cardInput) => (
@@ -316,12 +313,12 @@ const CardProfile = ({ profile, profileExpanded, changeProfileStart }) => {
 };
 
 const mapStateToProps = (state) => ({
-  profile: state.user.profile,
+  user: state.user.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeProfileStart: (changedProfile, changingItemType) =>
-    dispatch(changeProfileStart(changedProfile, changingItemType)),
+  changeUserStart: (changedUser, changingItemType) =>
+    dispatch(changeUserStart(changedUser, changingItemType)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CardProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(CardUser);
