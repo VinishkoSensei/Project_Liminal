@@ -58,7 +58,6 @@ const TrackAnalysis = ({
 
   const handleInputChange = (id) => (event) => {
     const { name, value } = event.target;
-    console.log(suggestedPoints);
     setSuggestedPoints(
       suggestedPoints.map((item, ind) =>
         ind === Number(id) ? (item = { ...item, [name]: Number(value) }) : item
@@ -142,7 +141,6 @@ const TrackAnalysis = ({
                         nummin >= 200 &&
                         getAverage(summax) / getAverage(summin) > 20
                       ) {
-                        console.log('Pushing', maybePeak);
                         setSuggestedPoints((prevState) => [
                           ...prevState,
                           {
