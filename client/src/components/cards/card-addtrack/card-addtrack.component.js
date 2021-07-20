@@ -84,7 +84,6 @@ const CardAddTrack = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(newTrack);
     const response = await fetch(`http://localhost:3001/createtrack`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
