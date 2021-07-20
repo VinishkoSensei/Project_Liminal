@@ -120,8 +120,6 @@ const createTrack = async (req, h) => {
 
     const trackId = trackResponse[0].createtrack;
 
-    console.log(trackId);
-    console.log(suggestedPoints);
     suggestedPoints.map(async (point) => {
       await db.proc('liminal.addpointtotrack', [trackId, point]);
     });
