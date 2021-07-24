@@ -1,10 +1,12 @@
+@use 'styles/common';
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
 
 .card-admin {
   @include mixins.setwidthandheight(45vw, 80vh);
-  @include mixins.flexeddiv(column, center);
   @include mixins.animation(left, 2s);
+  @extend %columnflex;
+  @extend %centercontent;
   border-radius: 30px;
   min-width: 717px;
   background-color: vars.$cardbackcolor;
@@ -13,8 +15,10 @@
   left: -100%;
 
   .card-admin-main {
-    @include mixins.setwidthandheight(100%, 90%);
-    @include mixins.flexeddiv(row, space-between);
+    @extend %rowflex;
+    @extend %fullwidth;
+    @extend %spacebetweencontent;
+    height: 90%;
     bottom: 0;
     position: absolute;
 
@@ -47,15 +51,14 @@
   @include mixins.animation(box-shadow, 0.3s);
   @include mixins.setwidthandheight(55px, 55px);
   @include mixins.setborderwithradius(1px solid vars.$seccardcolor, 12px);
+  @extend %pointer;
+  @extend %centeredbackgroundwithnorepeat;
   box-shadow: 0 0 5px vars.$seccardcolor, 0 0 25px vars.$seccardcolor;
   background-color: vars.$seccardcolor;
   position: absolute;
   left: 20px;
   top: 1px;
-  cursor: pointer;
   background-size: 70% 80%;
-  background-position: center;
-  background-repeat: no-repeat;
   background-image: url('http://localhost:3000/images/play.svg');
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);

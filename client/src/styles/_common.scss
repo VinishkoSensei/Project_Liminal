@@ -1,0 +1,77 @@
+%rowflex {
+  display: flex;
+}
+
+%columnflex {
+  @extend %rowflex;
+  flex-direction: column;
+}
+
+%centeritems {
+  align-items: center;
+}
+
+%centercontent {
+  justify-content: center;
+}
+
+%spacebetweencontent {
+  justify-content: space-between;
+}
+
+%spacearoundcontent {
+  justify-content: space-around;
+}
+
+%spaceevenlycontent {
+  justify-content: space-evenly;
+}
+
+%flexstartcontent {
+  justify-content: flex-start;
+}
+
+%flexendcontent {
+  justify-content: flex-end;
+}
+
+%hor-cent-block {
+  margin: 0 auto;
+}
+
+%centtext {
+  text-align: center;
+}
+
+%pointer {
+  cursor: pointer;
+}
+
+%fullwidth {
+  width: 100%;
+}
+
+%fullheight {
+  height: 100%;
+}
+
+%animate-long {
+  -webkit-transition: all 2s;
+  -moz-transition: all 2s;
+  -o-transition: all 2s;
+  -ms-transition: all 2s;
+  transition: all 2s;
+}
+
+%animate-short {
+  -webkit-transition: all 1s;
+  -moz-transition: all 1s;
+  -o-transition: all 1s;
+  -ms-transition: all 1s;
+  transition: all 1s;
+}
+
+%centeredbackgroundwithnorepeat {
+  background-repeat: no-repeat;
+  background-position: center;
+}

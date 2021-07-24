@@ -1,21 +1,24 @@
+@use 'styles/common';
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
 
 .review-main {
   @include mixins.setborderwithradius(1px solid vars.$seccardcolor, 8px);
-  @include mixins.flexeddiv(row, unset);
   @include mixins.animation(all, 0.8s);
-  color: white;
-  text-align: center;
+  @extend %rowflex;
+  @extend %centtext;
+  @extend %pointer;
+  color: vars.$blankcolor;
   margin-bottom: 10px;
   border-radius: 8px;
   padding: 2px 5px;
-  cursor: pointer;
 
   .review-container-main {
-    @include mixins.flexeddiv(column, space-around);
-    @include mixins.setwidthandheight(100%, 100%);
     @include mixins.animation(opacity, 2s);
+    @extend %fullwidth;
+    @extend %fullheight;
+    @extend %columnflex;
+    @extend %spacearoundcontent;
     border-radius: 100%;
     line-height: 200%;
     margin: 0;
@@ -30,12 +33,13 @@
 
 .review-info {
   @include mixins.setborderwithradius(1px solid vars.$seccardcolor, 8px);
-  @include mixins.flexeddiv(column, space-around);
   @include mixins.animation(all, 1.4s);
+  @extend %centtext;
+  @extend %columnflex;
+  @extend %spacearoundcontent;
   overflow: hidden;
   height: 18vh;
-  color: white;
-  text-align: center;
+  color: vars.$blankcolor;
   padding: 10px 2px;
   margin-bottom: 10px;
 

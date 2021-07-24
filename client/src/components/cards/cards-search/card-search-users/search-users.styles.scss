@@ -1,11 +1,13 @@
+@use 'styles/common';
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
 
 .user-item {
-  @include mixins.flexeddiv(row, space-between);
+  @extend %pointer;
+  @extend %rowflex;
+  @extend %spacebetweencontent;
   padding: 10px 20px;
   border-bottom: 1px solid;
-  cursor: pointer;
   height: 60px;
 
   &:hover {
@@ -13,7 +15,8 @@
   }
 
   .user-search-info {
-    @include mixins.flexeddiv(column, space-around);
+    @extend %columnflex;
+    @extend %spacearoundcontent;
     width: 40%;
     .user {
       &.admin {
@@ -34,7 +37,8 @@
 
   &:hover {
     .user-menu {
-      @include mixins.flexeddiv(row, flex-end);
+      @extend %rowflex;
+      @extend %flexendcontent;
     }
     .user-duration {
       display: none;
@@ -50,18 +54,19 @@
     padding-left: 2px;
 
     .user-menu-text {
-      @include mixins.flexeddiv(column, center);
-      height: 100%;
+      @extend %fullheight;
+      @extend %columnflex;
+      @extend %centercontent;
       max-width: 130px;
     }
 
     .user-menu-item {
-      @include mixins.flexeddiv(column, center);
+      @extend %columnflex;
+      @extend %centercontent;
+      @extend %centeredbackgroundwithnorepeat;
       width: 40px;
-      background-repeat: no-repeat;
-      background-position: center;
       background-size: 80% 80%;
-      color: white;
+      color: vars.$blankcolor;
     }
 
     &:hover {
