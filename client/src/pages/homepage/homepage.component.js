@@ -128,16 +128,23 @@ const HomePage = ({ user, checkUserSession }) => {
           </div>
         </div>
 
-        <CardUser
-          userExpanded={userExpanded}
-          setUserExpanded={setUserExpanded}
-        />
-        <CardAdmin
-          selectedAdminItem={selectedAdminItem}
-          setSelectedAdminItem={setSelectedAdminItem}
-          isOpened={isOpened}
-          setIsOpened={setIsOpened}
-        />
+        {user ? (
+          <CardUser
+            user={user}
+            userExpanded={userExpanded}
+            setUserExpanded={setUserExpanded}
+          />
+        ) : null}
+
+        {user && user.isadmin ? (
+          <CardAdmin
+            selectedAdminItem={selectedAdminItem}
+            setSelectedAdminItem={setSelectedAdminItem}
+            isOpened={isOpened}
+            setIsOpened={setIsOpened}
+          />
+        ) : null}
+
         <NotificationContainer />
       </Suspense>
     </div>
