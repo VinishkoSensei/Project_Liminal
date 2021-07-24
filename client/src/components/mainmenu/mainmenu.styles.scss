@@ -1,28 +1,29 @@
+@use 'styles/common';
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
 
 .mainmenu-cards-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 100%;
-  height: 100%;
+  @extend %fullwidth;
+  @extend %fullheight;
+  @extend %columnflex;
+  @extend %spacebetweencontent;
 
   .cards {
-    @include mixins.setwidthandheight(100%, unset);
-    @include mixins.flexeddiv(row, space-between);
+    @extend %rowflex;
+    @extend %spacebetweencontent;
+    @extend %fullwidth;
+    height: unset;
     flex-grow: 1;
 
     .card {
       @include mixins.setwidthandheight(40%, 100%);
       @include mixins.animation(all, 0.8s);
       @include mixins.setborderwithradius(2px solid white, 30px);
+      @extend %pointer;
+      @extend %centeredbackgroundwithnorepeat;
       z-index: 3;
       vertical-align: middle;
-      background-repeat: no-repeat;
-      background-position: center;
       background-size: 55%;
-      cursor: pointer;
 
       &:hover {
         @include mixins.setborderwithradius(2px solid vars.$tercardcolor, 30px);

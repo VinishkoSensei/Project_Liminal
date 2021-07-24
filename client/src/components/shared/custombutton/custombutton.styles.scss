@@ -1,17 +1,20 @@
+@use 'styles/common';
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
 
 .custombutton {
-  @include mixins.flexeddiv(row, center);
-  @include mixins.setwidthandheight(100%, auto);
   @include mixins.setborderwithradius(2px solid vars.$primcardcolor, 6px);
   @include mixins.animation(all, 0.5s);
+  @extend %pointer;
+  @extend %rowflex;
+  @extend %fullwidth;
+  @extend %centercontent;
+  height: auto;
   letter-spacing: 0.5px;
   line-height: 26px;
   padding: 0 10%;
   background-color: vars.$primcardcolor;
-  color: black;
-  cursor: pointer;
+  color: vars.$filledcolor;
   font-size: 11pt;
 
   &:hover {
