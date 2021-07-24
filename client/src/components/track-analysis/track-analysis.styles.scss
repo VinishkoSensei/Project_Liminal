@@ -1,26 +1,28 @@
+@use 'styles/common';
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
 
 canvas {
-  @include mixins.setwidthandheight(100%, 100px);
-  border: 1px black solid;
+  @extend %fullwidth;
+  height: 100px;
+  border: 1px solid vars.$filledcolor;
 }
 
 .preview-audio {
-  @include mixins.setwidthandheight(100%, 30px);
+  @extend %fullwidth;
+  height: 30px;
 }
 
 .suggested-points-container {
-  display: flex;
-  flex-direction: column;
+  @extend %columnflex;
   max-height: 100px;
   overflow-y: auto;
   overflow-x: hidden;
 
   .suggested-point {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
+    @extend %fullwidth;
+    @extend %rowflex;
+    @extend %spacearoundcontent;
     padding: 7px 0 3px 0;
     margin-bottom: 5px;
     border-top: 1px solid vars.$primcardcolor;
@@ -30,15 +32,14 @@ canvas {
     }
 
     .switch-button {
+      @extend %pointer;
+      @extend %centeredbackgroundwithnorepeat;
       background-color: #2196f3;
       -webkit-transition: 0.4s;
       transition: 0.4s;
       border-radius: 34px;
       width: 35px;
-      cursor: pointer;
       border: 0;
-      background-repeat: no-repeat;
-      background-position: center;
       background-size: contain;
     }
   }

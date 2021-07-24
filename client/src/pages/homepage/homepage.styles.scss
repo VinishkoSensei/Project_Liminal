@@ -1,9 +1,10 @@
+@use 'styles/common';
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
 
 .main {
   @include mixins.setwidthandheight(100vw, 100vh);
-  @include mixins.flexeddiv(column, unset);
+  @extend %columnflex;
   background-color: vars.$cardbackcolor;
 
   .toppart {
@@ -17,8 +18,10 @@
   }
 
   .main-part {
-    @include mixins.setwidthandheight(100%, unset);
-    @include mixins.flexeddiv(row, space-between);
+    @extend %rowflex;
+    @extend %spacebetweencontent;
+    @extend %fullwidth;
+    height: unset;
     flex-grow: 2;
     background-image: url('http://localhost:3000/images/back.png');
     background-size: 45% 45%;
@@ -31,11 +34,13 @@
 
       .main-container {
         @include mixins.setwidthandheight(595px, 100%);
-        margin: 0 auto;
+        @extend %hor-cent-block;
 
         .cards-container {
-          @include mixins.flexeddiv(column, space-between);
-          @include mixins.setwidthandheight(100%, 100%);
+          @extend %fullwidth;
+          @extend %fullheight;
+          @extend %columnflex;
+          @extend %spacebetweencontent;
 
           .auth {
             .card-big-primary,
@@ -49,14 +54,15 @@
           }
 
           .card-center {
-            @include mixins.setwidthandheight(100%, 5%);
+            @extend %fullwidth;
+            height: 5%;
             z-index: 3;
 
             .card-center-icon {
               @include mixins.setwidthandheight(30px, 30px);
               @include mixins.setborderwithradius(2px solid white, 100%);
+              @extend %hor-cent-block;
               z-index: 3;
-              margin: 0 auto;
             }
           }
         }
@@ -73,7 +79,7 @@
 
     .rightpanel {
       @include mixins.setwidthandheight(12%, 50vh);
-      @include mixins.flexeddiv(column, unset);
+      @extend %columnflex;
       margin-right: 3%;
       font-size: 11pt;
 
@@ -90,7 +96,8 @@
   }
 
   .footer {
-    @include mixins.setwidthandheight(100%, 20px);
+    @extend %fullwidth;
+    height: 20px;
     border-top: 1px solid black;
     background-color: lightgray;
   }

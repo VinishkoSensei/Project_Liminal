@@ -1,8 +1,10 @@
+@use 'styles/common';
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
 
 %card {
-  @include mixins.setwidthandheight(100%, 100%);
+  @extend %fullwidth;
+  @extend %fullheight;
   background-color: vars.$cardbackcolor;
 }
 
@@ -16,12 +18,17 @@
   @include mixins.setborderwithradius(2px solid vars.$seccardcolor, 52px);
 }
 
+%cards-flex-justify {
+  @extend %columnflex;
+  @extend %spacearoundcontent;
+}
+
 %card-primary {
   @extend %card-primary-base;
-  @include mixins.flexeddiv(column, space-around);
+  @extend %cards-flex-justify;
 }
 
 %card-secondary {
   @extend %card-secondary-base;
-  @include mixins.flexeddiv(column, space-around);
+  @extend %cards-flex-justify;
 }

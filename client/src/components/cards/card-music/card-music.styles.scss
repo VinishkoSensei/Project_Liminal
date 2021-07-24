@@ -1,22 +1,24 @@
 @use 'components/cards/card-styles.scss';
+@use 'styles/common';
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
 
 .card-music {
   @extend %card-primary-base;
-  @include mixins.flexeddiv(column, space-evenly);
+  @extend %columnflex;
+  @extend %spaceevenlycontent;
 
   .card-big-cover-container {
     @include mixins.setwidthandheight(230px, 230px);
     @include mixins.setborderwithradius(2px solid vars.$primcardcolor, 20px);
+    @extend %hor-cent-block;
+    @extend %centeredbackgroundwithnorepeat;
     overflow: hidden;
-    margin: 0 auto;
-    background-repeat: no-repeat;
     background-size: 50% 50%;
-    background-position: center;
 
     img {
-      @include mixins.setwidthandheight(100%, 100%);
+      @extend %fullwidth;
+      @extend %fullheight;
     }
 
     @media screen and (orientation: portrait) {
@@ -25,23 +27,24 @@
   }
 
   .card-big-controls {
-    @include mixins.flexeddiv(row, space-around);
+    @extend %rowflex;
+    @extend %spacearoundcontent;
     padding: 0 20px;
     vertical-align: middle;
     border-radius: 20%;
 
     .card-big-control {
       @include mixins.setwidthandheight(30%, 60px);
-      @include mixins.flexeddiv(row, center);
+      @extend %rowflex;
+      @extend %centercontent;
       vertical-align: middle;
 
       div {
+        @extend %pointer;
+        @extend %fullheight;
+        @extend %centeredbackgroundwithnorepeat;
         width: 50%;
-        height: 100%;
-        background-repeat: no-repeat;
         background-size: 90% 90%;
-        background-position: center;
-        cursor: pointer;
 
         &:hover {
           background-size: 100% 100%;

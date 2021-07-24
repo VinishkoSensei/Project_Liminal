@@ -6,7 +6,8 @@
   @extend %card-secondary;
 
   .card-ai-switch {
-    @include mixins.flexeddiv(row, space-evenly);
+    @extend %rowflex;
+    @extend %spaceevenlycontent;
     color: vars.$primcardcolor;
   }
 }

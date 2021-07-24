@@ -1,8 +1,6 @@
+@use 'styles/common';
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
-
-$sub-color: black;
-$main-color: black;
 
 %shrinkLabel {
   top: -14px;
@@ -14,16 +12,16 @@ $main-color: black;
   position: relative;
 
   .forminput {
+    @extend %fullwidth;
     background: none;
-    background-color: white;
-    color: $sub-color;
+    background-color: vars.$blankcolor;
+    color: vars.$filledcolor;
     font-size: 15px;
     padding: 6px 0;
     display: block;
-    width: 100%;
     border: none;
     border-radius: 6px;
-    border-bottom: 1px solid $sub-color;
+    border-bottom: 1px solid vars.$filledcolor;
 
     &.ord {
       &:focus {
@@ -42,21 +40,21 @@ $main-color: black;
     }
 
     &.border {
-      border: 1px solid black;
-      cursor: pointer;
+      @extend %pointer;
+      border: 1px solid vars.$filledcolor;
     }
 
     &.file {
-      cursor: pointer;
+      @extend %pointer;
+      @extend %fullwidth;
       background: none;
-      background-color: white;
-      color: $sub-color;
+      background-color: vars.$blankcolor;
+      color: vars.$filledcolor;
       padding: 6px 0;
       display: block;
-      width: 100%;
       border: none;
       border-radius: 6px;
-      border-bottom: 1px solid $sub-color;
+      border-bottom: 1px solid vars.$filledcolor;
       font-size: 15px;
       position: absolute;
       padding: 3px 0;
@@ -69,7 +67,7 @@ $main-color: black;
   }
 
   .forminputlabel {
-    color: $sub-color;
+    color: vars.$filledcolor;
     font-size: 15px;
     font-weight: normal;
     position: absolute;
@@ -85,5 +83,5 @@ $main-color: black;
 }
 
 ::-webkit-file-upload-button {
-  cursor: pointer;
+  @extend %pointer;
 }
