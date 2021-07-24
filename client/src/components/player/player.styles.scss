@@ -1,34 +1,35 @@
+@use 'styles/common';
 @use 'styles/mixins' as mixins;
 
 .player-container {
-  @include mixins.animation(all, 1s);
+  @extend %animate-short;
   width: 0;
   height: 58%;
 
   .rhap_container {
-    @include mixins.animation(all, 1s);
+    @extend %animate-short;
     width: 0;
     padding: 0;
   }
 
   .player {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+    @extend %fullwidth;
+    @extend %fullheight;
+    @extend %rowflex;
+    @extend %spacebetweencontent;
 
     audio {
-      width: 100%;
+      @extend %fullwidth;
       margin: auto 0;
       outline: none;
     }
   }
 
   &.opened {
-    width: 100%;
+    @extend %fullwidth;
 
     .rhap_container {
-      width: 100%;
+      @extend %fullwidth;
       padding: 10px 15px;
       background-color: transparent;
     }

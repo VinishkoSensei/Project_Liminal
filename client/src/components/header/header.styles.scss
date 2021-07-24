@@ -1,25 +1,27 @@
+@use 'styles/common';
+
 .header {
+  @extend %fullwidth;
+  @extend %rowflex;
+  @extend %spacebetweencontent;
   height: 7vh;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
 
   .header-logo {
+    @extend %fullheight;
     padding: 0 25px;
     width: 40px;
-    height: 100%;
 
     img {
-      width: 100%;
-      height: 100%;
+      @extend %fullwidth;
+      @extend %fullheight;
     }
   }
 
   .header-links {
+    @extend %centeritems;
+    @extend %fullheight;
+    @extend %rowflex;
+    @extend %flexendcontent;
     width: 50%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
   }
 }

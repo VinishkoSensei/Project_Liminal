@@ -1,11 +1,13 @@
+@use 'styles/common';
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
 
 .track {
-  @include mixins.flexeddiv(row, space-between);
+  @extend %pointer;
+  @extend %rowflex;
+  @extend %spacebetweencontent;
   padding: 10px 20px;
   border-bottom: 1px solid;
-  cursor: pointer;
   height: 60px;
 
   &:hover {
@@ -13,7 +15,8 @@
   }
 
   .track-info {
-    @include mixins.flexeddiv(column, space-around);
+    @extend %columnflex;
+    @extend %spacearoundcontent;
   }
 
   .track-duration {
@@ -25,7 +28,7 @@
 
   &:hover {
     .track-menu {
-      display: flex;
+      @extend %rowflex;
     }
     .track-duration {
       display: none;
@@ -33,20 +36,19 @@
   }
 
   .track-menu {
+    @extend %flexendcontent;
     width: 40%;
     height: 60px;
     display: none;
-    justify-content: flex-end;
     flex-direction: row;
 
     .track-menu-item {
+      @extend %centeredbackgroundwithnorepeat;
       background-color: lightskyblue;
       opacity: 0.8;
-      border: 1px black solid;
+      border: 1px solid vars.$filledcolor;
       border-radius: 5px;
       width: 32%;
-      background-repeat: no-repeat;
-      background-position: center;
       background-size: 65% 70%;
 
       &:hover {

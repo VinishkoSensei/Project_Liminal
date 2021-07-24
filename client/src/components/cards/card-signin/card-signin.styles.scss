@@ -1,13 +1,13 @@
 @use 'components/cards/card-styles.scss';
+@use 'styles/common';
 
 .card-signin {
   @extend %card-primary;
 
   form {
+    @extend %columnflex;
+    @extend %spacearoundcontent;
     margin: auto 15%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
     height: 40%;
   }
 }

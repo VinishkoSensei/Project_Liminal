@@ -1,37 +1,41 @@
+@use 'styles/common';
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
 
 .user-main {
   @include mixins.setborderwithradius(1px solid vars.$primcardcolor, 8px);
-  @include mixins.flexeddiv(row, unset);
   @include mixins.animation(all, 0.8s);
-  color: white;
-  text-align: center;
+  @extend %centtext;
+  @extend %pointer;
+  @extend %rowflex;
+  color: vars.$blankcolor;
   margin-bottom: 10px;
   cursor: default;
   border-radius: 8px;
   padding: 2px 5px;
-  cursor: pointer;
 
   .user-info-main {
-    @include mixins.flexeddiv(column, space-around);
+    @include mixins.animation(opacity, 2s);
+    @extend %fullwidth;
+    @extend %fullheight;
+    @extend %columnflex;
+    @extend %spacearoundcontent;
     border-radius: 100%;
     line-height: 200%;
     margin: 0;
-    @include mixins.setwidthandheight(100%, 100%);
     opacity: 1;
-    @include mixins.animation(opacity, 2s);
     word-break: break-word;
   }
 
   .user-icon-container {
+    @extend %columnflex;
+    @extend %centercontent;
     margin: 0 0 0 0;
-    @include mixins.flexeddiv(column, center);
 
     img {
-      @include mixins.animation(all, 2s);
       @include mixins.setwidthandheight(30px, 30px);
       @include mixins.setborderwithradius(unset, 50%);
+      @extend %animate-long;
       background-color: vars.$primcardcolor;
     }
   }
@@ -44,16 +48,17 @@
 
 .user-info {
   @include mixins.setborderwithradius(1px solid vars.$primcardcolor, 8px);
-  @include mixins.flexeddiv(column, space-around);
   @include mixins.animation(all, 0.8s);
-  text-align: center;
-  color: white;
+  @extend %centtext;
+  @extend %pointer;
+  @extend %columnflex;
+  @extend %spacearoundcontent;
+  color: vars.$blankcolor;
   padding: 10px 2px;
   margin-bottom: 10px;
   cursor: default;
   overflow: hidden;
   height: 12vh;
-  cursor: pointer;
 
   &.minified {
     @include mixins.setborderwithradius(0px solid black, 8px);

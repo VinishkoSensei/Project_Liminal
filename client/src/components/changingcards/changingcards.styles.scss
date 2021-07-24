@@ -1,3 +1,4 @@
+@use 'styles/common';
 @use 'styles/mixins' as mixins;
 
 .react-card-back {
@@ -5,11 +6,12 @@
 }
 
 .card-big-container {
-  @include mixins.setwidthandheight(100%, 100%);
+  @extend %fullwidth;
+  @extend %fullheight;
 
   .card-big-primary {
     @include mixins.setwidthandheight(90%, 80%);
-    @include mixins.animation(all, 2s);
+    @extend %animate-long;
     position: absolute;
     z-index: 6;
 
@@ -21,7 +23,7 @@
 
   .card-big-secondary {
     @include mixins.setwidthandheight(90%, 80%);
-    @include mixins.animation(all, 2s);
+    @extend %animate-long;
     position: absolute;
     z-index: 6;
     background-color: transparent;
@@ -34,8 +36,8 @@
 
   .card-big-blur {
     @include mixins.setborderwithradius(unset, 52px);
+    @extend %pointer;
     position: absolute;
-    cursor: pointer;
 
     @supports (
       (-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))
