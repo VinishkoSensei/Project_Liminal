@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store';
@@ -10,6 +9,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
 import { defaultLocale, dynamicActivate } from './i18n';
+import HomePage from './pages/homepage/homepage.component';
 
 const I18nApp = () => {
   useEffect(() => {
@@ -21,7 +21,7 @@ const I18nApp = () => {
       <Provider store={store}>
         <BrowserRouter>
           <PersistGate persistor={persistor}>
-            <App />
+            <HomePage />
           </PersistGate>
         </BrowserRouter>
       </Provider>
