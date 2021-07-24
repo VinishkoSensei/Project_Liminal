@@ -1,40 +1,45 @@
+@use 'styles/common';
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
 
 .card-user {
   @include mixins.setwidthandheight(45vw, 75vh);
   @include mixins.setborderwithradius(2px solid vars.$seccardcolor, 52px);
-  @include mixins.flexeddiv(row, center);
   @include mixins.animation(left, 2s);
+  @extend %rowflex;
+  @extend %centercontent;
   background-color: vars.$cardbackcolor;
   position: absolute;
   top: 20%;
   left: -100%;
 
   .card-user-main {
-    @include mixins.flexeddiv(column, space-evenly);
     @include mixins.setwidthandheight(90%, 100%);
+    @extend %columnflex;
+    @extend %spaceevenlycontent;
 
     .card-user-image {
-      width: 130px;
-      height: 130px;
-      margin: 0 auto;
+      @extend %hor-cent-block;
+      @include mixins.setwidthandheight(130px, 130px);
       border-radius: 50%;
-      border: 3px solid black;
+      border: 3px solid vars.$filledcolor;
       overflow: hidden;
       img {
-        @include mixins.setwidthandheight(100%, 100%);
+        @extend %fullwidth;
+        @extend %fullheight;
       }
     }
 
     .user-info-main {
-      @include mixins.flexeddiv(column, space-around);
-      height: 100%;
-      text-align: center;
+      @extend %centtext;
+      @extend %fullheight;
+      @extend %columnflex;
+      @extend %spacearoundcontent;
 
       .user-info-main-columns {
-        @include mixins.flexeddiv(row, space-evenly);
-        height: 100%;
+        @extend %fullheight;
+        @extend %rowflex;
+        @extend %spaceevenlycontent;
 
         .forminput.file {
           margin: 0;
@@ -42,8 +47,9 @@
       }
 
       .subscription-container {
-        @include mixins.flexeddiv(row, center);
-        height: 100%;
+        @extend %fullheight;
+        @extend %rowflex;
+        @extend %centercontent;
 
         .subscription {
           width: 60%;
@@ -75,6 +81,7 @@
 }
 
 .buttons {
-  @include mixins.flexeddiv(column, space-evenly);
+  @extend %columnflex;
+  @extend %spaceevenlycontent;
   height: 80px;
 }

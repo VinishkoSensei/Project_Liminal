@@ -1,4 +1,6 @@
+@use 'styles/common';
 @use 'styles/mixins' as mixins;
+@use 'styles/variables' as vars;
 
 // The switch - the box around the slider
 .switch {
@@ -15,8 +17,8 @@
 
 // The slider
 .slider {
+  @extend %pointer;
   position: absolute;
-  cursor: pointer;
   top: 0;
   left: 0;
   right: 0;
@@ -33,7 +35,7 @@
   content: '';
   left: 4px;
   bottom: 4px;
-  background-color: white;
+  background-color: vars.$blankcolor;
   -webkit-transition: 0.4s;
   transition: 0.4s;
   border-radius: 50%;

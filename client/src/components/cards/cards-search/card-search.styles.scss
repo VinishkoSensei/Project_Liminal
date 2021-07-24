@@ -1,4 +1,5 @@
 @use 'components/cards/card-styles.scss';
+@use 'styles/common';
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
 
@@ -10,17 +11,21 @@
 
 .card-search {
   @extend %card-secondary-base;
-  @include mixins.flexeddiv(column, flex-start, center);
-  @include mixins.animation(all, 2s);
+  @extend %animate-long;
+  @extend %columnflex;
+  @extend %centeritems;
+  @extend %flexstartcontent;
   overflow: hidden;
 
   .placeholder {
-    @include mixins.animation(all, 2s);
-    @include mixins.setwidthandheight(100%, 46%);
+    @extend %animate-long;
+    @extend %fullwidth;
+    height: 46%;
   }
 
   &.searched {
-    @include mixins.flexeddiv(column, flex-start);
+    @extend %columnflex;
+    @extend %flexstartcontent;
     overflow-y: hidden;
 
     .placeholder {
@@ -28,9 +33,10 @@
     }
 
     .searchbar {
-      @include mixins.setwidthandheight(100%, 8%);
-      @include mixins.animation(all, 1s);
       @include mixins.setborderwithradius(0px solid vars.$seccardcolor, 0);
+      @extend %animate-short;
+      @extend %fullwidth;
+      height: 8%;
       border-bottom: 2px solid vars.$seccardcolor;
 
       .searchbar-image {
@@ -50,30 +56,34 @@
 
   .searchbar {
     @include mixins.setwidthandheight(90%, 50px);
-    @include mixins.animation(all, 1s);
     @include mixins.setborderwithradius(2px solid vars.$seccardcolor, 15px);
-    text-align: center;
-    display: flex;
+    @extend %animate-short;
+    @extend %centtext;
+    @extend %rowflex;
 
     .searchbar-image {
       @include mixins.setwidthandheight(20%, 100%);
-      @include mixins.animation(all, 2s);
+      @extend %animate-long;
       @extend %appearance;
       border-right: 1px solid vars.$seccardcolor;
 
       .searchbar-image-button {
-        @include mixins.setwidthandheight(100%, 100%);
+        @extend %fullwidth;
+        @extend %fullheight;
+        @extend %pointer;
         background-color: transparent;
         border: 0;
         outline: none;
-        cursor: pointer;
       }
     }
 
     .searchbar-query {
-      @include mixins.animation(all, 2s);
-      @include mixins.flexeddiv(row, center, center);
-      @include mixins.setwidthandheight(100%, 100%);
+      @extend %animate-long;
+      @extend %fullwidth;
+      @extend %fullheight;
+      @extend %rowflex;
+      @extend %centeritems;
+      @extend %centercontent;
 
       input {
         @include mixins.setwidthandheight(90%, 65%);
@@ -87,28 +97,33 @@
   }
 
   .searchlist {
-    @include mixins.animation(all, 1s);
-    @include mixins.setwidthandheight(100%, 0);
+    @extend %animate-short;
+    @extend %fullwidth;
+    height: 0;
 
     &.searched {
-      @include mixins.animation(all, 1s);
-      height: 100%;
+      @extend %animate-short;
+      @extend %fullheight;
 
       .searchlist-buttons {
-        @include mixins.flexeddiv(row, space-around);
+        @extend %rowflex;
+        @extend %spacearoundcontent;
       }
     }
 
     .searchlist-buttons {
-      @include mixins.setwidthandheight(100%, 10%);
+      @extend %fullwidth;
+      height: 10%;
       border-bottom: vars.$seccardcolor solid 2px;
       display: none;
-      color: white;
+      color: vars.$blankcolor;
 
       .button {
-        @include mixins.flexeddiv(column, center, center);
+        @extend %pointer;
+        @extend %columnflex;
+        @extend %centeritems;
+        @extend %centercontent;
         width: 80px;
-        cursor: pointer;
         margin: 5px 0px;
         border-radius: 8px;
 
@@ -123,8 +138,9 @@
       }
     }
     .searchlist-list {
-      @include mixins.setwidthandheight(100%, 90%);
-      color: white;
+      @extend %fullwidth;
+      height: 90%;
+      color: vars.$blankcolor;
 
       .searchlist-results {
         overflow-y: auto;

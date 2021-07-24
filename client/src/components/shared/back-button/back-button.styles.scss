@@ -1,3 +1,4 @@
+@use 'styles/common';
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
 
@@ -5,13 +6,12 @@
   @include mixins.animation(box-shadow, 0.3s);
   @include mixins.setwidthandheight(55px, 55px);
   @include mixins.setborderwithradius(1px solid vars.$seccardcolor, 12px);
+  @extend %pointer;
+  @extend %centeredbackgroundwithnorepeat;
   box-shadow: 0 0 5px vars.$seccardcolor, 0 0 25px vars.$seccardcolor;
   position: absolute;
   margin-left: 3%;
-  cursor: pointer;
   background-size: 70% 80%;
-  background-position: center;
-  background-repeat: no-repeat;
 
   &:hover {
     background-color: vars.$tercardcolor;

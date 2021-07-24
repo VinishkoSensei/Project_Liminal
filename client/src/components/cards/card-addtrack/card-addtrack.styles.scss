@@ -1,12 +1,15 @@
+@use 'styles/common';
 @use 'styles/mixins' as mixins;
 @use 'styles/variables' as vars;
 
 .card-admin-main-addtrack {
-  @include mixins.setwidthandheight(100%, 90%);
   @include mixins.setborderwithradius(2px solid vars.$primcardcolor, 30px);
-  @include mixins.flexeddiv(unset, center);
+  @extend %centeritems;
+  @extend %rowflex;
+  @extend %fullwidth;
+  @extend %centercontent;
+  height: 90%;
   background-color: vars.$cardbackcolor;
-  align-items: center;
   margin: 28px 5px 0 2.5px;
 
   .forminput {
