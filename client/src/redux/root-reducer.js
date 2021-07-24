@@ -8,7 +8,7 @@ import notificationReducer from './notification/notification.reducer';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['musicReducer', 'userReducer', 'notificationReducer'],
+  whitelist: ['musicReducer'],
 };
 
 const rootReducer = combineReducers({
