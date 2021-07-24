@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './card-user.styles.scss';
 import { connect } from 'react-redux';
 import CustomButton from 'components/shared/custombutton/custombutton.component';
@@ -10,15 +10,15 @@ import { Trans } from '@lingui/macro';
 import ReactCardFlip from 'react-card-flip';
 
 const CardUser = ({ user, userExpanded, changeUserStart }) => {
-  const [changedUser, setChangedUser] = useState(null);
+  const [changedUser, setChangedUser] = useState({
+    ...user,
+    password: '',
+    passwordconf: '',
+  });
   const [changingItemType, setChangingItemType] = useState(null);
   const [doPasswordsMatch, setDoPasswordsMatch] = useState(true);
   const [isFlipped, setIsFlipped] = useState(false);
   const [cardData, setCardData] = useState({ owner: '', number: '', code: '' });
-
-  useEffect(() => {
-    setChangedUser({ ...user, password: '', passwordconf: '' });
-  }, [user]);
 
   const flipCards = () => setIsFlipped((prevIsFlipped) => !prevIsFlipped);
 
@@ -312,13 +312,9 @@ const CardUser = ({ user, userExpanded, changeUserStart }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  user: state.user.user,
-});
-
 const mapDispatchToProps = (dispatch) => ({
   changeUserStart: (changedUser, changingItemType) =>
     dispatch(changeUserStart(changedUser, changingItemType)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CardUser);
+export default connect(null, mapDispatchToProps)(CardUser);
