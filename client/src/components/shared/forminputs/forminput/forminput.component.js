@@ -20,7 +20,7 @@ const FormInput = ({
       {...otherProps}
     />
 
-    {label ? (
+    {label && otherProps.value ? (
       <label
         className={`${otherProps.value.length ? 'shrink' : ''} forminputlabel`}
       >
